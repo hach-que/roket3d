@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<root>newton 2.0 file format
+    <mesh>soldier.msh</mesh>
+    <skeleton>soldier.skl</skeleton>
+    <animation>soldierWalking.ani</animation>
+    <animation>soldierRunning.ani</animation>
+</root>

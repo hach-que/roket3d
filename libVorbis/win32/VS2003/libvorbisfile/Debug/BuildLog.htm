@@ -1,0 +1,79 @@
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=Windows-1252">
+</head>
+<body>
+<pre>
+<table width=100% bgcolor=#CFCFE5><tr> <td> <font face=arial size=+3>
+Build Log
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>
+<h3>------- Build started: Project: libvorbisfile, Configuration: Debug|Win32 -------
+</h3>
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Command Lines
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>Creating temporary file "c:\Roket3D\libVorbis\win32\Vs2003\libvorbisfile\Debug\RSP00011E.rsp" with contents
+[
+/Od /I "..\..\..\include" /I "..\..\..\..\libogg\include" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_USRDLL" /D "LIBVORBISFILE_EXPORTS" /D "_WINDLL" /D "_MBCS" /Gm /EHsc /RTC1 /MTd /Fo"Debug/" /Fd"Debug/vc70.pdb" /W3 /c /Wp64 /ZI /TC
+\Roket3D\libVorbis\lib\vorbisfile.c
+]
+Creating command line "cl.exe @c:\Roket3D\libVorbis\win32\Vs2003\libvorbisfile\Debug\RSP00011E.rsp /nologo"
+Creating temporary file "c:\Roket3D\libVorbis\win32\Vs2003\libvorbisfile\Debug\RSP00011F.rsp" with contents
+[
+/OUT:"C:\Roket3D\Windows\Additional Libraries\libvorbisfile.dll" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Roket3D\Windows\Additional Libraries\\" /DLL /DEF:"libvorbisfile.def" /DEBUG /PDB:"Debug/libvorbisfile.pdb" /SUBSYSTEM:WINDOWS /IMPLIB:"C:\Roket3D\Windows\Additional Libraries\libvorbisfile.lib" /MACHINE:X86 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "\Roket3D\Windows\Additional Libraries\libogg.lib" "\Roket3D\Windows\Additional Libraries\libvorbis.lib" "\Program Files\Microsoft Platform SDK\Lib\Kernel32.Lib" "\Program Files\Microsoft Platform SDK\Lib\User32.Lib" "\Program Files\Microsoft Platform SDK\Lib\Gdi32.Lib" "\Program Files\Microsoft Platform SDK\Lib\WinSpool.Lib" "\Program Files\Microsoft Platform SDK\Lib\ComDlg32.Lib" "\Program Files\Microsoft Platform SDK\Lib\AdvAPI32.Lib" "\Program Files\Microsoft Platform SDK\Lib\Shell32.Lib" "\Program Files\Microsoft Platform SDK\Lib\Ole32.Lib" "\Program Files\Microsoft Platform SDK\Lib\OleAut32.Lib" "\Program Files\Microsoft Platform SDK\Lib\Uuid.Lib" "\Program Files\Microsoft Platform SDK\Lib\odbc32.lib" "\Program Files\Microsoft Platform SDK\Lib\odbccp32.lib"
+.\Debug\vorbisfile.obj
+]
+Creating command line "link.exe @c:\Roket3D\libVorbis\win32\Vs2003\libvorbisfile\Debug\RSP00011F.rsp"
+Creating temporary file "c:\Roket3D\libVorbis\win32\Vs2003\libvorbisfile\Debug\BAT000120.bat" with contents
+[
+@echo off
+xcopy /Y "C:\Roket3D\Windows\Additional Libraries\libvorbisfile.dll" "C:\Roket3D\Windows\Release Data\"
+xcopy /Y "C:\Roket3D\Windows\Additional Libraries\libvorbisfile.dll" "C:\Delta9\"
+xcopy /Y "C:\Roket3D\Windows\Additional Libraries\libvorbisfile.dll" "C:\Roket3D\IDE\Data\engine\"
+xcopy /Y "C:\Roket3D\Windows\Additional Libraries\libvorbisfile.dll" "C:\Roket3D\IDE\dist\Data\engine\"
+
+if errorlevel 1 goto VCReportError
+goto VCEnd
+:VCReportError
+echo Project : error PRJ0019: A tool returned an error code from "Performing Post-Build Event..."
+exit 1
+:VCEnd
+]
+Creating command line "c:\Roket3D\libVorbis\win32\Vs2003\libvorbisfile\Debug\BAT000120.bat"
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Output Window
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>Compiling...
+vorbisfile.c
+c:\Roket3D\libVorbis\include\vorbis\vorbisfile.h(53) : warning C4244: 'function' : conversion from 'ogg_int64_t' to 'long', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(68) : warning C4267: 'initializing' : conversion from 'size_t' to 'long', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(216) : warning C4244: 'return' : conversion from 'ogg_int64_t' to 'int', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(259) : warning C4244: 'return' : conversion from 'ogg_int64_t' to 'int', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(276) : warning C4244: 'return' : conversion from 'ogg_int64_t' to 'int', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(278) : warning C4244: 'return' : conversion from 'ogg_int64_t' to 'int', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(287) : warning C4244: 'return' : conversion from 'ogg_int64_t' to 'int', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(569) : warning C4244: 'return' : conversion from 'ogg_int64_t' to 'int', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(800) : warning C4244: 'function' : conversion from 'ogg_int64_t' to 'long', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(1017) : warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(1018) : warning C4244: 'return' : conversion from 'double' to 'long', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(1022) : warning C4244: 'return' : conversion from 'double' to 'long', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(1050) : warning C4244: '=' : conversion from 'double' to 'long', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(1553) : warning C4244: '=' : conversion from 'ogg_int64_t' to 'long', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(1589) : warning C4244: 'initializing' : conversion from 'double' to 'ogg_int64_t', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(1619) : warning C4244: 'initializing' : conversion from 'double' to 'ogg_int64_t', possible loss of data
+c:\Roket3D\libVorbis\lib\vorbisfile.c(1939) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+Linking...
+   Creating library C:\Roket3D\Windows\Additional Libraries\libvorbisfile.lib and object C:\Roket3D\Windows\Additional Libraries\libvorbisfile.exp
+Performing Post-Build Event...
+C:\Roket3D\Windows\Additional Libraries\libvorbisfile.dll
+1 File(s) copied
+C:\Roket3D\Windows\Additional Libraries\libvorbisfile.dll
+1 File(s) copied
+C:\Roket3D\Windows\Additional Libraries\libvorbisfile.dll
+1 File(s) copied
+C:\Roket3D\Windows\Additional Libraries\libvorbisfile.dll
+1 File(s) copied
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Results
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>
+Build log was saved at "file://c:\Roket3D\libVorbis\win32\Vs2003\libvorbisfile\Debug\BuildLog.htm"
+libvorbisfile - 0 error(s), 17 warning(s)</pre></table><table   width=100% height=20 bgcolor=#CFCFE5><tr><td><font face=arial size=+2>
+</font></table></body></html>

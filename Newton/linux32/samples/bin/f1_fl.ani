@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<Mesh vendor="newton 2.0 file format" version="1.0">
+    <MeshAnimation framesCount="2">
+        <node name="FL_tire" keyFramesCount="2">
+            <keys int="0 1" />
+            <positions float4="1.279543 -0.231198 -0.743102 1.000000 1.279543 -0.085348 -0.743102 1.000000" />
+            <rotations float4="0.707106 0.000000 -0.707107 0.000003 0.707106 0.000000 -0.707107 0.000003" />
+        </node>
+        <node name="FL_brake" keyFramesCount="2">
+            <keys int="0 1" />
+            <positions float4="1.245418 -0.249845 -0.600108 1.000000 1.245418 -0.103995 -0.600108 1.000000" />
+            <rotations float4="0.500000 0.499998 0.500002 0.500000 0.500000 0.499998 0.500002 0.500000" />
+        </node>
+        <node name="FL_topSusp" keyFramesCount="2">
+            <keys int="0 1" />
+            <positions float4="1.208720 -0.155606 -0.060118 1.000000 1.208720 -0.155606 -0.060118 1.000000" />
+            <rotations float4="0.000000 0.000000 1.000000 -0.000004 -0.000000 -0.010893 0.994408 0.105042" />
+        </node>
+        <node name="FL_axel" keyFramesCount="2">
+            <keys int="0 1" />
+            <positions float4="1.208720 -0.240270 -0.060118 1.000000 1.208720 -0.240270 -0.060118 1.000000" />
+            <rotations float4="0.000000 -0.000000 1.000000 -0.000004 0.000000 -0.010744 0.994561 0.103599" />
+        </node>
+        <node name="FL_bottomSusp" keyFramesCount="2">
+            <keys int="0 1" />
+            <positions float4="1.208720 -0.328167 -0.060117 1.000000 1.208720 -0.328167 -0.060117 1.000000" />
+            <rotations float4="0.000000 -0.000000 1.000000 -0.000004 0.000000 -0.010278 0.995024 0.099105" />
+        </node>
+    </MeshAnimation>
+</Mesh>

@@ -1,0 +1,15 @@
+-- Roket3D Example
+-- Works with Roket3D 0.5
+
+device = Core.RDevice(Core.Vector2D(640,480),false,false,false);
+
+device:setWindowCaption("My Game");
+
+while (device:isRunning()) do
+	device:getVideoDriver():beginScene(130,130,130,true,true);
+	device:getSceneManager():drawAll();
+	device:getGUIEnvironment():drawAll();
+	device:getVideoDriver():endScene();
+end
+
+device:close();

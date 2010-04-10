@@ -1,0 +1,68 @@
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=Windows-1252">
+</head>
+<body>
+<pre>
+<table width=100% bgcolor=#CFCFE5><tr> <td> <font face=arial size=+3>
+Build Log
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>
+<h3>------- Build started: Project: libogg, Configuration: Debug|Win32 -------
+</h3>
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Command Lines
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>Creating temporary file "c:\Roket3D\libOGG\win32\Vs2003\libogg\Debug\RSP000116.rsp" with contents
+[
+/Od /I "..\..\..\include" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_USRDLL" /D "LIBOGG_EXPORTS" /D "_WINDLL" /D "_MBCS" /Gm /EHsc /RTC1 /MTd /Fo"Debug/" /Fd"Debug/vc70.pdb" /W4 /c /Wp64 /ZI /TC
+\Roket3D\libOGG\src\framing.c
+\Roket3D\libOGG\src\bitwise.c
+]
+Creating command line "cl.exe @c:\Roket3D\libOGG\win32\Vs2003\libogg\Debug\RSP000116.rsp /nologo"
+Creating temporary file "c:\Roket3D\libOGG\win32\Vs2003\libogg\Debug\RSP000117.rsp" with contents
+[
+/OUT:"C:\Roket3D\Windows\Additional Libraries\libogg.dll" /INCREMENTAL /NOLOGO /DLL /DEF:"..\..\ogg.def" /DEBUG /PDB:"Debug/libogg.pdb" /SUBSYSTEM:WINDOWS /IMPLIB:"C:\Roket3D\Windows\Additional Libraries\libogg.lib" /MACHINE:X86 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "\Program Files\Microsoft Platform SDK\Lib\Kernel32.Lib" "\Program Files\Microsoft Platform SDK\Lib\User32.Lib" "\Program Files\Microsoft Platform SDK\Lib\Gdi32.Lib" "\Program Files\Microsoft Platform SDK\Lib\WinSpool.Lib" "\Program Files\Microsoft Platform SDK\Lib\ComDlg32.Lib" "\Program Files\Microsoft Platform SDK\Lib\AdvAPI32.Lib" "\Program Files\Microsoft Platform SDK\Lib\Shell32.Lib" "\Program Files\Microsoft Platform SDK\Lib\Ole32.Lib" "\Program Files\Microsoft Platform SDK\Lib\OleAut32.Lib" "\Program Files\Microsoft Platform SDK\Lib\Uuid.Lib" "\Program Files\Microsoft Platform SDK\Lib\odbc32.lib" "\Program Files\Microsoft Platform SDK\Lib\odbccp32.lib"
+.\Debug\bitwise.obj
+.\Debug\framing.obj
+]
+Creating command line "link.exe @c:\Roket3D\libOGG\win32\Vs2003\libogg\Debug\RSP000117.rsp"
+Creating temporary file "c:\Roket3D\libOGG\win32\Vs2003\libogg\Debug\BAT000118.bat" with contents
+[
+@echo off
+xcopy /Y "C:\Roket3D\Windows\Additional Libraries\libogg.dll" "C:\Roket3D\Windows\Release Data\"
+xcopy /Y "C:\Roket3D\Windows\Additional Libraries\libogg.dll" "C:\Delta9\"
+xcopy /Y "C:\Roket3D\Windows\Additional Libraries\libogg.dll" "C:\Roket3D\IDE\Data\engine\"
+xcopy /Y "C:\Roket3D\Windows\Additional Libraries\libogg.dll" "C:\Roket3D\IDE\dist\Data\engine\"
+
+if errorlevel 1 goto VCReportError
+goto VCEnd
+:VCReportError
+echo Project : error PRJ0019: A tool returned an error code from "Performing Post-Build Event..."
+exit 1
+:VCEnd
+]
+Creating command line "c:\Roket3D\libOGG\win32\Vs2003\libogg\Debug\BAT000118.bat"
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Output Window
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>Compiling...
+framing.c
+c:\Roket3D\libOGG\src\framing.c(627) : warning C4244: '=' : conversion from '__w64 int' to 'int', possible loss of data
+c:\Roket3D\libOGG\src\framing.c(628) : warning C4244: 'return' : conversion from '__w64 int' to 'long', possible loss of data
+bitwise.c
+Generating Code...
+Linking...
+   Creating library C:\Roket3D\Windows\Additional Libraries\libogg.lib and object C:\Roket3D\Windows\Additional Libraries\libogg.exp
+Performing Post-Build Event...
+C:\Roket3D\Windows\Additional Libraries\libogg.dll
+1 File(s) copied
+C:\Roket3D\Windows\Additional Libraries\libogg.dll
+1 File(s) copied
+C:\Roket3D\Windows\Additional Libraries\libogg.dll
+1 File(s) copied
+C:\Roket3D\Windows\Additional Libraries\libogg.dll
+1 File(s) copied
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Results
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>
+Build log was saved at "file://c:\Roket3D\libOGG\win32\Vs2003\libogg\Debug\BuildLog.htm"
+libogg - 0 error(s), 2 warning(s)</pre></table><table   width=100% height=20 bgcolor=#CFCFE5><tr><td><font face=arial size=+2>
+</font></table></body></html>
