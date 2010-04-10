@@ -1,0 +1,137 @@
+-- Roket3D Example
+-- Works with Roket3D 0.5
+
+device = Core.RDevice(Core.Vector2D(640,480),false,false,true);
+
+device:setWindowCaption("My Game");
+
+particlesystem = device:getSceneManager():addParticleSystemSceneNode(Core.Vector3D(0,3,0),Core.Vector3D(0,0,0),Core.Vector3D(0,0,0));
+particlesystem:createBoxEmitter(
+	Core.Area3D(Core.Vector3D(-7,0,-7),Core.Vector3D(7,1,7)),
+--	Core.Vector3D(0,3,0),
+--	3,
+--	0.03,
+	Core.Vector3D(0,0.06,0),
+	80,
+	100,
+	Core.Color(0,255,255,255),
+	Core.Color(0,255,255,255),
+	800,
+	2000,
+	0,
+	Core.Vector2D(10,10),
+	Core.Vector2D(20,20));
+tex = device:getVideoDriver():getTexture("b1.png");
+particlesystem:applyTexture(tex,0);
+particlesystem:applyFlag("LIGHTING",false);
+particlesystem:applyFlag("ZWRITEENABLE",false);
+particlesystem:applyFlag("TRANSPARENT_VERTEX_ALPHA",true);
+--particlesystem:
+
+camera = device:getSceneManager():addCameraSceneNodeFPS(100,1);
+camera:setSourcePosition(Core.Vector3D(50,50,50));
+camera:setDestinationPosition(Core.Vector3D(0,0,0));
+
+causeerror();
+
+camera2 = device:getSceneManager():addCameraSceneNode(Core.Vector3D(50,50,50),Core.Vector3D(0,0,0));
+
+vid = device:getVideoDriver();
+black = Core.Color(255,0,0,0);
+
+pos2d = Core.Vector2D(0,0);
+line2d = Core.Ray2D(50,50,100,100);
+poly2dcenter = Core.Vector2D(250,250);
+rect2d = Core.Area2D(Core.Vector2D(300,300),Core.Vector2D(400,400));
+rect2dcolor = Core.Area2D(Core.Vector2D(300,250),Core.Vector2D(400,350));
+cube3d = Core.Area3D(Core.Vector3D(5,0,5),Core.Vector3D(10,5,10));
+line3d = Core.Ray3D(Core.Vector3D(-5,0,-5),Core.Vector3D(-10,5,-10));
+triangle3d = Core.Triangle3D(
+	Core.Vector3D(5,0,-5),
+	Core.Vector3D(10,5,-10),
+	Core.Vector3D(2,0,2));
+
+viewfull = Core.Area2D(Core.Vector2D(0,0),Core.Vector2D(640,480));
+view1 = Core.Area2D(Core.Vector2D(0,0),Core.Vector2D(320,480));
+view2 = Core.Area2D(Core.Vector2D(320,0),Core.Vector2D(640,480));
+
+-- Set the transformation matrix and material
+material = Video.RMaterial();
+material:applyTexture(tex,0);
+material:applyFlag("WIREFRAME",false);
+device:getVideoDriver():transformationReset();
+device:getVideoDriver():materialSet(material);
+
+rotation = Core.Vector3D(0,0,0);
+
+sound = device:getAudioController():createFromFile("mysound","bling2.ogg");
+sound:play2D(true);
+
+window = device:getGUIEnvironment():addWindow(Core.Area2D(Core.Vector2D(40,40),Core.Vector2D(248,96)),"Sound Control",true);
+button = device:getGUIEnvironment():addButton(Core.Area2D(Core.Vector2D(8,24),Core.Vector2D(200,48)),-1,"btnToggle",window);
+button:setText("Stop Sound");
+
+-- Create an event receiver
+eventreceiver = Core.RoketEventReceiver();
+
+-- Define the event receiver function
+function handleEvent(ud1, ud2, ud3, ud4)
+	if (ud2=="btnToggle") then
+		if (ud1=="Clicked") then
+			if (button:getText() == "Stop Sound") then
+				sound:pause();
+				button:setText("Loop Sound");
+			else
+				sound:play();
+				button:setText("Stop Sound");
+			end
+		end
+	end
+end
+
+-- Set the event receiver's function
+eventreceiver:setGUIEventCapturer("handleEvent");
+
+-- Assign the event receiver to the device
+device:setEventReceiver(eventreceiver);
+
+while (device:isRunning()) do
+	rotation.Y = rotation.Y + 1;
+	device:getVideoDriver():setViewPort(viewfull);
+	device:getVideoDriver():beginScene(130,130,130,true,true);
+
+	device:getSceneManager():setActiveCamera(camera2);
+	device:getVideoDriver():setViewPort(view1);
+	device:getSceneManager():drawAllNoShader();
+
+	device:getSceneManager():setActiveCamera(camera);
+	device:getVideoDriver():setViewPort(view2);
+	device:getSceneManager():drawAllNoShader();
+	device:getVideoDriver():transformationSetRotation(rotation);
+	vid:draw3DBox(cube3d,black);
+	vid:draw3DLine(line3d,black);
+	vid:draw3DTriangle(triangle3d,black);
+
+	device:getVideoDriver():setViewPort(viewfull);
+	device:getGUIEnvironment():drawAll();
+
+	-- Test drawing functions
+	--vid:draw2DImage(pos2d,tex);
+	vid:draw2DLine(line2d,black);
+	vid:draw2DPolygon(poly2dcenter,25,black);
+	vid:draw2DRectangle(rect2d,black);
+	--vid:draw2DRectangleColor(rect2d,black);
+
+	device:getVideoDriver():setViewPort(viewfull);
+	device:getGUIEnvironment():drawAll();
+
+	device:getVideoDriver():endScene();
+
+	-- Update sound
+	device:getAudioController():setListenerPosition(camera:getSourcePosition());
+	device:getAudioController():setListenerOrientation(camera:getRotation());
+
+	device:getAudioController():update();
+end
+
+device:close();

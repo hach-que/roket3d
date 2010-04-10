@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<root>newton 2.0 file format
+    <mesh>f1.msh</mesh>
+    <skeleton>f1.skl</skeleton>
+    <animation>f1_fl.ani</animation>
+    <animation>f1_fr.ani</animation>
+    <animation>f1_rl.ani</animation>
+    <animation>f1_rr.ani</animation>
+</root>

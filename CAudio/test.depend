@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1233192523 source:c:\roket3d\caudio\main.cpp
+	<iostream>
+	<fstream>
+	"include/IAudioManager.h"
+	"include/IAudio.h"
+
+1233052096 c:\roket3d\caudio\include\iaudiomanager.h
+	"../export.h"
+	<string>
+
+1233051407 c:\roket3d\caudio\export.h
+
+1233051961 c:\roket3d\caudio\include\iaudio.h
+	"../export.h"
+	"IAudioDecoder.h"
+
+1233051934 c:\roket3d\caudio\include\iaudiodecoder.h
+	"../export.h"
+	"IDataSource.h"
+
+1233051941 c:\roket3d\caudio\include\idatasource.h
+	"../export.h"
+

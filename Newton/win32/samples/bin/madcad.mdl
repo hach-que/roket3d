@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<root>newton 2.0 file format
+    <mesh>madcad.msh</mesh>
+    <skeleton>madcad.skl</skeleton>
+</root>

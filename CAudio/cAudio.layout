@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="ALL" />
+	<File name="Headers\cAudio.h" open="1" top="0" tabpos="1">
+		<Cursor position="2593" topLine="25" />
+	</File>
+	<File name="Headers\cAudioManager.h" open="1" top="0" tabpos="2">
+		<Cursor position="1847" topLine="11" />
+	</File>
+	<File name="Headers\cFileSource.h" open="1" top="0" tabpos="3">
+		<Cursor position="980" topLine="5" />
+	</File>
+	<File name="Headers\cListener.h" open="1" top="0" tabpos="4">
+		<Cursor position="2309" topLine="47" />
+	</File>
+	<File name="Headers\cMemorySource.h" open="1" top="0" tabpos="5">
+		<Cursor position="1116" topLine="5" />
+	</File>
+	<File name="Headers\cOggAudioDecoderFactory.h" open="1" top="0" tabpos="6">
+		<Cursor position="508" topLine="0" />
+	</File>
+	<File name="Headers\cOggDecoder.h" open="1" top="0" tabpos="7">
+		<Cursor position="1439" topLine="12" />
+	</File>
+	<File name="Headers\cUtils.h" open="1" top="0" tabpos="8">
+		<Cursor position="374" topLine="0" />
+	</File>
+	<File name="Headers\cWavAudioDecoderFacotry.h" open="1" top="0" tabpos="9">
+		<Cursor position="528" topLine="0" />
+	</File>
+	<File name="Headers\cWavDecoder.h" open="1" top="0" tabpos="10">
+		<Cursor position="1265" topLine="15" />
+	</File>
+	<File name="Source\cAudio.cpp" open="1" top="0" tabpos="11">
+		<Cursor position="7201" topLine="251" />
+	</File>
+	<File name="Source\cAudioManager.cpp" open="1" top="1" tabpos="12">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="Source\cFileSource.cpp" open="1" top="0" tabpos="13">
+		<Cursor position="911" topLine="25" />
+	</File>
+	<File name="Source\cListener.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="10" topLine="0" />
+	</File>
+	<File name="Source\cMemorySource.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="10" topLine="0" />
+	</File>
+	<File name="Source\cOggAudioDecoderFactory.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="10" topLine="0" />
+	</File>
+	<File name="Source\cOggDecoder.cpp" open="1" top="0" tabpos="14">
+		<Cursor position="805" topLine="1" />
+	</File>
+	<File name="Source\cWavAudioDecoderFactory.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="10" topLine="0" />
+	</File>
+	<File name="Source\cWavDecoder.cpp" open="1" top="0" tabpos="21">
+		<Cursor position="713" topLine="14" />
+	</File>
+	<File name="include\IAudio.h" open="1" top="0" tabpos="15">
+		<Cursor position="2038" topLine="3" />
+	</File>
+	<File name="include\IAudioDecoder.h" open="1" top="0" tabpos="16">
+		<Cursor position="1161" topLine="10" />
+	</File>
+	<File name="include\IAudioDecoderFactory.h" open="1" top="0" tabpos="17">
+		<Cursor position="373" topLine="0" />
+	</File>
+	<File name="include\IAudioManager.h" open="1" top="0" tabpos="18">
+		<Cursor position="410" topLine="1" />
+	</File>
+	<File name="include\IDataSource.h" open="1" top="0" tabpos="19">
+		<Cursor position="741" topLine="0" />
+	</File>
+	<File name="include\IListener.h" open="1" top="0" tabpos="20">
+		<Cursor position="400" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>
