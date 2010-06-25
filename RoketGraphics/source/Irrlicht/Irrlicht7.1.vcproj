@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="RoketGraphics"
-	ProjectGUID="{E08E042A-6C45-411B-92BE-3CC31331019F}"
+	ProjectGUID="{F564E903-593D-4454-B8B9-A67D9D6919DB}"
 	RootNamespace="Irrlicht"
 	TargetFrameworkVersion="131072"
 	>
