@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="vorbisenc"
 	ProjectGUID="{E48B6A8B-F7FE-4DA8-8248-E64DBAC4F56C}"
+	RootNamespace="vorbisenc"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -357,6 +358,14 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{3A214E06-B95E-4D61-A291-1F8DF2EC10FD}"
+			RelativePathToProject=".\libVorbis\win32\VS2005\libvorbis\libvorbis.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{15CBFEFF-7965-41F5-B4E2-21E8795C9159}"
+			RelativePathToProject=".\libOGG\win32\VS2003\libogg\libogg.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter

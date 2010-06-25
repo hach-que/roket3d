@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="alut"
 	ProjectGUID="{07149BCB-BE8A-4503-BE18-815D64233116}"
+	RootNamespace="alut"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -41,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;;C:\Roket3D\libALUT\include"
+				AdditionalIncludeDirectories="&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;;&quot;C:\Users\James Rhodes\Documents\Projects\Roket3D\libALUT\include&quot;"
 				PreprocessorDefinitions="ALUT_BUILD_LIBRARY;HAVE__STAT;HAVE_BASETSD_H;HAVE_SLEEP;HAVE_WINDOWS_H"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -124,7 +125,7 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;;C:\Roket3D\libALUT\include"
+				AdditionalIncludeDirectories="&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;;&quot;$(SolutionDir)\libALUT\include&quot;"
 				PreprocessorDefinitions="ALUT_BUILD_LIBRARY;HAVE__STAT;HAVE_BASETSD_H;HAVE_SLEEP;HAVE_WINDOWS_H"
 				StringPooling="true"
 				RuntimeLibrary="2"

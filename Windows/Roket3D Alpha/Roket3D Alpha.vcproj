@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\Roket3D\Windows\Additional Includes\Lua&quot;;&quot;C:\Roket3D\Windows\Additional Includes\SDL&quot;;&quot;C:\Roket3D\Windows\Additional Includes\Newton&quot;;&quot;C:\Roket3D\Windows\Additional Includes\CAudio&quot;;C:\Roket3D\libALUT\include;&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;;C:\Roket3D\CAudio\include;C:\Roket3D\CAudio\Headers;C:\Roket3D\CAudio\dependencies\Headers;C:\Roket3D\CAudio\dependencies\Headers\AL;C:\Roket3D\CAudio\dependencies\Headers\ALUT;C:\Roket3D\CAudio\dependencies\Headers\ALUT\AL"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\Windows\Additional Includes\Lua&quot;;&quot;$(SolutionDir)\Windows\Additional Includes\SDL&quot;;&quot;$(SolutionDir)\Windows\Additional Includes\Newton&quot;;&quot;$(SolutionDir)\Windows\Additional Includes\CAudio&quot;;&quot;$(SolutionDir)\libALUT\include&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;;&quot;$(SolutionDir)\CAudio\include&quot;;&quot;$(SolutionDir)\CAudio\Headers&quot;;&quot;$(SolutionDir)\CAudio\dependencies\Headers&quot;;&quot;$(SolutionDir)\CAudio\dependencies\Headers\AL&quot;;&quot;$(SolutionDir)\CAudio\dependencies\Headers\ALUT&quot;;&quot;$(SolutionDir)\CAudio\dependencies\Headers\ALUT\AL&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -67,7 +67,7 @@
 				AdditionalDependencies="lua51.lib lua5.1.lib SDL.lib SDLmain.lib RoketGraphics.lib newton.lib SDL_net.lib libvorbisfile.lib libvorbis.lib libogg.lib alut.lib OpenAL32.lib"
 				OutputFile="$(OutDir)/Roket3D Alpha.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;C:\Server Storage\Roket3D\Windows\Additional Libraries&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\libs\Win32&quot;"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\Windows\Additional Libraries&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\libs\Win32&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/Roket3D Alpha.pdb"
@@ -126,7 +126,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;C:\Server Storage\Roket3D\Windows\Additional Includes\Lua&quot;;&quot;C:\Server Storage\Roket3D\Windows\Additional Includes\SDL&quot;;&quot;C:\Server Storage\Roket3D\Windows\Additional Includes\Newton&quot;;&quot;C:\Server Storage\Roket3D\Windows\Additional Includes\CAudio&quot;;&quot;C:\Server Storage\Roket3D\libALUT\include&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;;&quot;C:\Server Storage\Roket3D\CAudio\include&quot;;&quot;C:\Server Storage\Roket3D\CAudio\Headers&quot;;&quot;C:\Server Storage\Roket3D\CAudio\dependencies\Headers&quot;;&quot;C:\Server Storage\Roket3D\CAudio\dependencies\Headers\AL&quot;;&quot;C:\Server Storage\Roket3D\CAudio\dependencies\Headers\ALUT&quot;;&quot;C:\Server Storage\Roket3D\CAudio\dependencies\Headers\ALUT\AL&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\Windows\Additional Includes\Lua&quot;;&quot;$(SolutionDir)\Windows\Additional Includes\SDL&quot;;&quot;$(SolutionDir)\Windows\Additional Includes\Newton&quot;;&quot;$(SolutionDir)\Windows\Additional Includes\CAudio&quot;;&quot;$(SolutionDir)\libALUT\include&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;;&quot;$(SolutionDir)\CAudio\include&quot;;&quot;$(SolutionDir)\CAudio\Headers&quot;;&quot;$(SolutionDir)\CAudio\dependencies\Headers&quot;;&quot;$(SolutionDir)\CAudio\dependencies\Headers\AL&quot;;&quot;$(SolutionDir)\CAudio\dependencies\Headers\ALUT&quot;;&quot;$(SolutionDir)\CAudio\dependencies\Headers\ALUT\AL&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -148,7 +148,7 @@
 				AdditionalDependencies="lua51.lib lua5.1.lib SDL.lib SDLmain.lib RoketGraphics.lib newton.lib SDL_net.lib libvorbisfile.lib libvorbis.lib libogg.lib alut.lib OpenAL32.lib"
 				OutputFile="$(OutDir)/Roket3D Alpha.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;C:\Server Storage\Roket3D\Windows\Additional Libraries&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\libs\Win32&quot;"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\Windows\Additional Libraries&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\libs\Win32&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -180,7 +180,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying Files..."
-				CommandLine="xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Roket3D Alpha\Release\Roket3D Alpha.exe&quot; &quot;C:\Server Storage\Roket3D\Windows\Release Data\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Roket3D Alpha\Release\Roket3D Alpha.exe&quot; &quot;C:\Server Storage\Roket3D\IDE\Data\publishengine\Roket3D.exe&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Roket3D Alpha\Release\Roket3D Alpha.exe&quot; &quot;C:\Server Storage\Roket3D\IDE\dist\Data\publishengine\Roket3D.exe&quot;&#x0D;&#x0A;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Additional Libraries\*.dll&quot; &quot;C:\Server Storage\Roket3D\Windows\Release Data\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Additional Libraries\*.dll&quot; &quot;C:\Server Storage\Roket3D\IDE\Data\engine\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Additional Libraries\*.dll&quot; &quot;C:\Server Storage\Roket3D\IDE\dist\Data\engine\&quot;"
+				CommandLine="xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Roket3D Alpha\Release\Roket3D Alpha.exe&quot; &quot;C:\Server Storage\Roket3D\Windows\Release Data\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Roket3D Alpha\Release\Roket3D Alpha.exe&quot; &quot;C:\Server Storage\Roket3D\IDE\Data\publishengine\Roket3D.exe&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Roket3D Alpha\Release\Roket3D Alpha.exe&quot; &quot;C:\Server Storage\Roket3D\IDE\dist\Data\publishengine\Roket3D.exe&quot;&#x0D;&#x0A;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Additional Libraries\*.dll&quot; &quot;C:\Server Storage\Roket3D\Windows\Release Data\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Additional Libraries\*.dll&quot; &quot;C:\Server Storage\Roket3D\IDE\Data\engine\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Additional Libraries\*.dll&quot; &quot;C:\Server Storage\Roket3D\IDE\dist\Data\engine\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -206,7 +206,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;C:\Roket3D\Windows\Additional Includes\Lua&quot;;&quot;C:\Roket3D\Windows\Additional Includes\SDL&quot;;&quot;C:\Roket3D\Windows\Additional Includes\Newton&quot;;&quot;C:\Roket3D\Windows\Additional Includes\CAudio&quot;;C:\Roket3D\libALUT\include;&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;;C:\Roket3D\CAudio\include;C:\Roket3D\CAudio\Headers;C:\Roket3D\CAudio\dependencies\Headers;C:\Roket3D\CAudio\dependencies\Headers\AL;C:\Roket3D\CAudio\dependencies\Headers\ALUT;C:\Roket3D\CAudio\dependencies\Headers\ALUT\AL"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\Windows\Additional Includes\Lua&quot;;&quot;$(SolutionDir)\Windows\Additional Includes\SDL&quot;;&quot;$(SolutionDir)\Windows\Additional Includes\Newton&quot;;&quot;$(SolutionDir)\Windows\Additional Includes\CAudio&quot;;&quot;$(SolutionDir)\libALUT\include&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;;&quot;$(SolutionDir)\CAudio\include&quot;;&quot;$(SolutionDir)\CAudio\Headers&quot;;&quot;$(SolutionDir)\CAudio\dependencies\Headers&quot;;&quot;$(SolutionDir)\CAudio\dependencies\Headers\AL&quot;;&quot;$(SolutionDir)\CAudio\dependencies\Headers\ALUT&quot;;&quot;$(SolutionDir)\CAudio\dependencies\Headers\ALUT\AL&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -220,7 +220,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="lua51.lib lua5.1.lib SDL.lib SDLmain.lib RoketGraphics.lib newton.lib SDL_net.lib libvorbisfile.lib libvorbis.lib libogg.lib alut.lib OpenAL32.lib"
-				AdditionalLibraryDirectories="&quot;C:\Server Storage\Roket3D\Windows\Additional Libraries&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\libs\Win32&quot;"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\Windows\Additional Libraries&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\libs\Win32&quot;"
 				SubSystem="2"
 				EntryPointSymbol=""
 				RandomizedBaseAddress="1"
@@ -1102,11 +1102,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\roket3d.ico"
+				RelativePath=".\roket3d.ico"
 				>
 			</File>
 			<File
-				RelativePath=".\roket3d.ico"
+				RelativePath="..\roket3d.ico"
 				>
 			</File>
 		</Filter>

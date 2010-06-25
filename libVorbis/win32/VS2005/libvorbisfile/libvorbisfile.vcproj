@@ -176,6 +176,14 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{15CBFEFF-7965-41F5-B4E2-21E8795C9159}"
+			RelativePathToProject=".\libOGG\win32\VS2003\libogg\libogg.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{3A214E06-B95E-4D61-A291-1F8DF2EC10FD}"
+			RelativePathToProject=".\libVorbis\win32\VS2005\libvorbis\libvorbis.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter

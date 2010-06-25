@@ -110,7 +110,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Additional Libraries\RoketGraphics.dll&quot; &quot;C:\Server Storage\Roket3D\Windows\Release Data\RoketGraphics.dll&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Additional Libraries\RoketGraphics.dll&quot; &quot;C:\Server Storage\Roket3D\IDE\Data\publishengine\RoketGraphics.dll&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Additional Libraries\RoketGraphics.dll&quot; &quot;C:\Server Storage\Roket3D\IDE\dist\Data\publishengine\RoketGraphics.dll&quot;&#x0D;&#x0A;&#x0D;&#x0A;&#x0D;&#x0A;"
+				CommandLine="xcopy /Y &quot;$(SolutionDir)\Windows\Additional Libraries\RoketGraphics.dll&quot; &quot;$(SolutionDir)\Windows\Release Data\RoketGraphics.dll&quot;&#x0D;&#x0A;&#x0D;&#x0A;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -210,7 +210,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Additional Libraries\RoketGraphics.dll&quot; &quot;C:\Server Storage\Roket3D\Windows\Release Data\RoketGraphics.dll&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Additional Libraries\RoketGraphics.dll&quot; &quot;C:\Server Storage\Roket3D\IDE\Data\publishengine\RoketGraphics.dll&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Server Storage\Roket3D\Windows\Additional Libraries\RoketGraphics.dll&quot; &quot;C:\Server Storage\Roket3D\IDE\dist\Data\publishengine\RoketGraphics.dll&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy /Y &quot;$(SolutionDir)\Windows\Additional Libraries\RoketGraphics.dll&quot; &quot;$(SolutionDir)\Windows\Release Data\RoketGraphics.dll&quot;"
 			/>
 		</Configuration>
 		<Configuration
