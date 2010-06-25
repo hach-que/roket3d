@@ -368,6 +368,10 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{15CBFEFF-7965-41F5-B4E2-21E8795C9159}"
+			RelativePathToProject=".\libOGG\win32\VS2003\libogg\libogg.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter

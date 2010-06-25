@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="libogg"
 	ProjectGUID="{15CBFEFF-7965-41F5-B4E2-21E8795C9159}"
+	RootNamespace="libogg"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -94,7 +95,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Roket3D\Windows\Release Data\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Delta9\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Roket3D\IDE\Data\publishengine\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Roket3D\IDE\dist\Data\publishengine\&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy /Y &quot;$(SolutionDir)\Windows\Additional Libraries\libogg.dll&quot; &quot;$(SolutionDir)\Windows\Release Data\&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -184,7 +185,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Roket3D\Windows\Release Data\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Delta9\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Roket3D\IDE\Data\publishengine\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Roket3D\IDE\dist\Data\publishengine\&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy /Y &quot;$(SolutionDir)\Windows\Additional Libraries\libogg.dll&quot; &quot;$(SolutionDir)\Windows\Release Data\&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -275,7 +276,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Roket3D\Windows\Release Data\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Delta9\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Roket3D\IDE\Data\publishengine\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Roket3D\IDE\dist\Data\publishengine\&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy /Y &quot;$(SolutionDir)\Windows\Additional Libraries\libogg.dll&quot; &quot;$(SolutionDir)\Windows\Release Data\&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -366,7 +367,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Roket3D\Windows\Release Data\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Delta9\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Roket3D\IDE\Data\publishengine\&quot;&#x0D;&#x0A;xcopy /Y &quot;C:\Roket3D\Windows\Additional Libraries\libogg.dll&quot; &quot;C:\Roket3D\IDE\dist\Data\publishengine\&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy /Y &quot;$(SolutionDir)\Windows\Additional Libraries\libogg.dll&quot; &quot;$(SolutionDir)\Windows\Release Data\&quot;"
 			/>
 		</Configuration>
 	</Configurations>
