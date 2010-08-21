@@ -1,4 +1,4 @@
-﻿namespace Roket3D.Content_Editors
+﻿namespace Roket3D.ContentEditors
 {
     partial class SpecialStartForm
     {

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using DockPanelSuite;
 using Roket3D.LuaDebugging;
 using System.Threading;
+using System.IO;
 
 namespace Roket3D.ContentEditors
 {
@@ -50,18 +51,19 @@ namespace Roket3D.ContentEditors
 
     public partial class CodeScriptForm : EditorBase
     {
-        public static Font fontSetting = new Font("Courier New", 9.0f);
-        public Int32 styleCount = 0;
+        private static Font m_FontSetting = new Font("Courier New", 9.0f);
+        private Int32 m_StyleCount = 0;
         public MainForm MainForm;
-        public bool canSyntaxCheck = true;
-        public List<LuaError> errors = new List<LuaError>();
-        private ToolTip toolTip = new ToolTip();
+        private bool m_CanSyntaxCheck = true;
+        private List<LuaError> m_Errors = new List<LuaError>();
+        private ToolTip m_ToolTip = new ToolTip();
 
-        public CodeScriptForm(MainForm myMain, ScintillaNet.Scintilla editor)
+        public CodeScriptForm(MainForm main, ScintillaNet.Scintilla editor)
         {
             InitializeComponent();
-            this.MainForm = myMain;
-            this.scintillaEditor = editor;
+            this.MainForm = main;
+            this.ScintillaEditor = editor;
+            this.Properties.CanSave = true;
 
             InitalizeScintilla();
         }
@@ -69,77 +71,77 @@ namespace Roket3D.ContentEditors
         private void InitalizeScintilla()
         {
             #region Windows Forms Designer Generated Code
-            ((System.ComponentModel.ISupportInitialize)(this.scintillaEditor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ScintillaEditor)).BeginInit();
             // 
             // scintillaEditor
             // 
-            this.scintillaEditor.CallTip.BackColor = System.Drawing.SystemColors.Window;
-            this.scintillaEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scintillaEditor.LineWrap.Mode = ScintillaNet.WrapMode.Word;
-            this.scintillaEditor.Location = new System.Drawing.Point(0, 0);
-            this.scintillaEditor.LongLines.EdgeColumn = 160;
-            this.scintillaEditor.LongLines.EdgeMode = ScintillaNet.EdgeMode.Line;
-            this.scintillaEditor.Margins.Margin2.Width = 16;
-            this.scintillaEditor.Name = "scintillaEditor";
-            this.scintillaEditor.Size = new System.Drawing.Size(553, 534);
-            this.scintillaEditor.Styles.BraceBad.BackColor = System.Drawing.SystemColors.Window;
-            this.scintillaEditor.Styles.BraceBad.FontName = "Courier New";
-            this.scintillaEditor.Styles.BraceBad.Size = 8.25F;
-            this.scintillaEditor.Styles.BraceLight.BackColor = System.Drawing.SystemColors.Window;
-            this.scintillaEditor.Styles.BraceLight.FontName = "Courier New";
-            this.scintillaEditor.Styles.BraceLight.Size = 8.25F;
-            this.scintillaEditor.Styles.CallTip.BackColor = System.Drawing.SystemColors.Window;
-            this.scintillaEditor.Styles.CallTip.FontName = "Courier New";
-            this.scintillaEditor.Styles.ControlChar.BackColor = System.Drawing.SystemColors.Window;
-            this.scintillaEditor.Styles.ControlChar.FontName = "Courier New";
-            this.scintillaEditor.Styles.ControlChar.Size = 8.25F;
-            this.scintillaEditor.Styles.Default.BackColor = System.Drawing.SystemColors.Window;
-            this.scintillaEditor.Styles.Default.CharacterSet = ScintillaNet.CharacterSet.Ansi;
-            this.scintillaEditor.Styles.Default.FontName = "Courier New";
-            this.scintillaEditor.Styles.Default.Size = 8.25F;
-            this.scintillaEditor.Styles.IndentGuide.BackColor = System.Drawing.SystemColors.Window;
-            this.scintillaEditor.Styles.IndentGuide.FontName = "Courier New";
-            this.scintillaEditor.Styles.IndentGuide.Size = 8.25F;
-            this.scintillaEditor.Styles.LastPredefined.BackColor = System.Drawing.SystemColors.Window;
-            this.scintillaEditor.Styles.LastPredefined.FontName = "Courier New";
-            this.scintillaEditor.Styles.LastPredefined.Size = 8.25F;
-            this.scintillaEditor.Styles.LineNumber.FontName = "Courier New";
-            this.scintillaEditor.Styles.LineNumber.Size = 8.25F;
-            this.scintillaEditor.Styles.Max.BackColor = System.Drawing.SystemColors.Window;
-            this.scintillaEditor.Styles.Max.FontName = "Courier New";
-            this.scintillaEditor.Styles.Max.Size = 8.25F;
-            this.scintillaEditor.TabIndex = 0;
-            this.scintillaEditor.DwellStart += new System.EventHandler<ScintillaNet.ScintillaMouseEventArgs>(this.scintillaEditor_DwellStart);
-            this.scintillaEditor.KeyUp += new System.Windows.Forms.KeyEventHandler(this.scintillaEditor_KeyUp);
-            this.scintillaEditor.DwellEnd += new System.EventHandler<ScintillaNet.ScintillaMouseEventArgs>(this.scintillaEditor_DwellEnd);
+            this.ScintillaEditor.CallTip.BackColor = System.Drawing.SystemColors.Window;
+            this.ScintillaEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ScintillaEditor.LineWrap.Mode = ScintillaNet.WrapMode.Word;
+            this.ScintillaEditor.Location = new System.Drawing.Point(0, 0);
+            this.ScintillaEditor.LongLines.EdgeColumn = 160;
+            this.ScintillaEditor.LongLines.EdgeMode = ScintillaNet.EdgeMode.Line;
+            this.ScintillaEditor.Margins.Margin2.Width = 16;
+            this.ScintillaEditor.Name = "scintillaEditor";
+            this.ScintillaEditor.Size = new System.Drawing.Size(553, 534);
+            this.ScintillaEditor.Styles.BraceBad.BackColor = System.Drawing.SystemColors.Window;
+            this.ScintillaEditor.Styles.BraceBad.FontName = "Courier New";
+            this.ScintillaEditor.Styles.BraceBad.Size = 8.25F;
+            this.ScintillaEditor.Styles.BraceLight.BackColor = System.Drawing.SystemColors.Window;
+            this.ScintillaEditor.Styles.BraceLight.FontName = "Courier New";
+            this.ScintillaEditor.Styles.BraceLight.Size = 8.25F;
+            this.ScintillaEditor.Styles.CallTip.BackColor = System.Drawing.SystemColors.Window;
+            this.ScintillaEditor.Styles.CallTip.FontName = "Courier New";
+            this.ScintillaEditor.Styles.ControlChar.BackColor = System.Drawing.SystemColors.Window;
+            this.ScintillaEditor.Styles.ControlChar.FontName = "Courier New";
+            this.ScintillaEditor.Styles.ControlChar.Size = 8.25F;
+            this.ScintillaEditor.Styles.Default.BackColor = System.Drawing.SystemColors.Window;
+            this.ScintillaEditor.Styles.Default.CharacterSet = ScintillaNet.CharacterSet.Ansi;
+            this.ScintillaEditor.Styles.Default.FontName = "Courier New";
+            this.ScintillaEditor.Styles.Default.Size = 8.25F;
+            this.ScintillaEditor.Styles.IndentGuide.BackColor = System.Drawing.SystemColors.Window;
+            this.ScintillaEditor.Styles.IndentGuide.FontName = "Courier New";
+            this.ScintillaEditor.Styles.IndentGuide.Size = 8.25F;
+            this.ScintillaEditor.Styles.LastPredefined.BackColor = System.Drawing.SystemColors.Window;
+            this.ScintillaEditor.Styles.LastPredefined.FontName = "Courier New";
+            this.ScintillaEditor.Styles.LastPredefined.Size = 8.25F;
+            this.ScintillaEditor.Styles.LineNumber.FontName = "Courier New";
+            this.ScintillaEditor.Styles.LineNumber.Size = 8.25F;
+            this.ScintillaEditor.Styles.Max.BackColor = System.Drawing.SystemColors.Window;
+            this.ScintillaEditor.Styles.Max.FontName = "Courier New";
+            this.ScintillaEditor.Styles.Max.Size = 8.25F;
+            this.ScintillaEditor.TabIndex = 0;
+            this.ScintillaEditor.DwellStart += new System.EventHandler<ScintillaNet.ScintillaMouseEventArgs>(this.ScintillaEditor_DwellStart);
+            this.ScintillaEditor.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ScintillaEditor_KeyUp);
+            this.ScintillaEditor.DwellEnd += new System.EventHandler<ScintillaNet.ScintillaMouseEventArgs>(this.ScintillaEditor_DwellEnd);
 
             this.Refresh();
-            this.initalizationLabel.Dispose();
+            this.c_InitalizationLabel.Dispose();
 
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.scintillaEditor);
+            this.c_ToolStripContainer.ContentPanel.Controls.Add(this.ScintillaEditor);
 
-            ((System.ComponentModel.ISupportInitialize)(this.scintillaEditor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ScintillaEditor)).EndInit();
             #endregion
 
             #region Manual Setup
             // Set up the font settings.
-            this.scintillaEditor.Font = CodeScriptForm.fontSetting;
-            this.scintillaEditor.Styles.Default.Font = CodeScriptForm.fontSetting;
-            this.scintillaEditor.UseFont = true;
+            this.ScintillaEditor.Font = CodeScriptForm.m_FontSetting;
+            this.ScintillaEditor.Styles.Default.Font = CodeScriptForm.m_FontSetting;
+            this.ScintillaEditor.UseFont = true;
 
             // Set up the margins.
-            this.scintillaEditor.Margins.Left = 5;
-            this.scintillaEditor.Margins[0].Width = 45;
-            this.scintillaEditor.Margins[2].Width = 16;
+            this.ScintillaEditor.Margins.Left = 5;
+            this.ScintillaEditor.Margins[0].Width = 45;
+            this.ScintillaEditor.Margins[2].Width = 16;
 
             // Set the dwell time.
-            this.scintillaEditor.NativeInterface.SetMouseDwellTime(200);
+            this.ScintillaEditor.NativeInterface.SetMouseDwellTime(200);
 
             // Set up the lexer.
-            this.scintillaEditor.ConfigurationManager.Language = "lua";
-            this.scintillaEditor.Styles.LineNumber.BackColor = Color.White;
-            this.scintillaEditor.NativeInterface.SetFoldMarginColour(true, 0xE6F0FA); // Color.FromArgb(250, 240, 230)
-            this.scintillaEditor.NativeInterface.SetFoldMarginHiColour(true, 0xF5F5F5); // Color.FromArgb(245, 245, 245)
+            this.ScintillaEditor.ConfigurationManager.Language = "lua";
+            this.ScintillaEditor.Styles.LineNumber.BackColor = Color.White;
+            this.ScintillaEditor.NativeInterface.SetFoldMarginColour(true, 0xE6F0FA); // Color.FromArgb(250, 240, 230)
+            this.ScintillaEditor.NativeInterface.SetFoldMarginHiColour(true, 0xF5F5F5); // Color.FromArgb(245, 245, 245)
 
             // Configure keywords.
             this.SetScintillaKeywords(LexerKeywordGroupConstants.LUA_KEYWORDS,
@@ -235,50 +237,51 @@ namespace Roket3D.ContentEditors
             this.SetScintillaStyle(LexerStyleConstants.SCE_LUA_STRINGEOL, Color.FromArgb(163, 21, 21));
 
             // Configure indicators.
-            this.scintillaEditor.Indicators[0].Style = ScintillaNet.IndicatorStyle.Squiggle;
-            this.scintillaEditor.Indicators[0].Color = Color.Red;
+            this.ScintillaEditor.Indicators[0].Style = ScintillaNet.IndicatorStyle.Squiggle;
+            this.ScintillaEditor.Indicators[0].Color = Color.Red;
 
             // Start the timer so that we get proper syntax checking after the lexer
             // has finished lexing the text (unfortunatly there is no event for when
             // the lexer has finished parsing the text).
-            this.syntaxTimerLimit.Start();
+            this.c_SyntaxLimitTimer.Start();
             #endregion
         }
 
         public void SyntaxCheck()
         {
             // Prevent flicker.
-            if (this.canSyntaxCheck)
+            if (this.m_CanSyntaxCheck)
             {
                 this.MainForm.ErrorList.Refresh();
             }
 
             // Clear all the indicators.
-            this.scintillaEditor.GetRange(0, this.scintillaEditor.Text.Length).ClearIndicator(0);
+            this.ScintillaEditor.GetRange(0, this.ScintillaEditor.Text.Length).ClearIndicator(0);
 
             // Get errors.
-            errors = SyntaxChecker.Check(this.scintillaEditor.Text, this.scintillaEditor);
+            m_Errors = SyntaxChecker.Check(this.ScintillaEditor.Text, this.ScintillaEditor);
 
             // Apply highlighting to the errors.
             // TODO: Use a class variable to store the current filename.
-            if (this.canSyntaxCheck)
+            if (this.m_CanSyntaxCheck)
             {
-                this.MainForm.ErrorList.ClearErrorsForFile(this.TabText, "");
+                this.MainForm.ErrorList.ClearErrorsForFile(this.File.Name, this.File.Project.Filename);
             }
-            foreach (LuaError err in errors)
+            foreach (LuaError err in m_Errors)
             {
                 // Indicators have an offset by one.
-                this.scintillaEditor.GetRange(err.IndicatorIndex, err.Index + err.Length).SetIndicator(0);
+                this.ScintillaEditor.GetRange(err.IndicatorIndex, err.Index + err.Length).SetIndicator(0);
 
                 // Add the error to the error list.
-                if (this.canSyntaxCheck)
+                if (this.m_CanSyntaxCheck)
                 {
-                    this.MainForm.ErrorList.AddError(err.ErrorMsg, this.TabText, err.Line, err.Column, "");
+                    this.MainForm.ErrorList.AddError(err.ErrorMsg, this.File.Name,
+                        err.Line, err.Column, this.File.Project.Filename);
                 }
             }
 
             // Prevent flicker.
-            if (this.canSyntaxCheck)
+            if (this.m_CanSyntaxCheck)
             {
                 this.MainForm.ErrorList.Refresh();
             }
@@ -286,47 +289,47 @@ namespace Roket3D.ContentEditors
 
         private void SetScintillaStyle(LexerStyleConstants style, Color forecolor)
         {
-            this.scintillaEditor.Styles[(Int32)style].ForeColor = forecolor;
-            this.scintillaEditor.Styles[(Int32)style].BackColor = Color.Transparent;
+            this.ScintillaEditor.Styles[(Int32)style].ForeColor = forecolor;
+            this.ScintillaEditor.Styles[(Int32)style].BackColor = Color.Transparent;
         }
 
         private void SetScintillaKeywords(LexerKeywordGroupConstants group, String keywordslist)
         {
-            this.scintillaEditor.Lexing.SetKeywords((Int32)group, keywordslist);
+            this.ScintillaEditor.Lexing.SetKeywords((Int32)group, keywordslist);
         }
 
-        private void scintillaEditor_DwellStart(object sender, ScintillaNet.ScintillaMouseEventArgs e)
+        private void ScintillaEditor_DwellStart(object sender, ScintillaNet.ScintillaMouseEventArgs e)
         {
             // The user may want to find out what the error is.
-            foreach (LuaError error in this.errors)
+            foreach (LuaError error in this.m_Errors)
             {
                 if (e.Position >= error.IndicatorIndex && e.Position <= error.Index + error.Length)
                 {
-                    toolTip.UseFading = false;
-                    toolTip.UseAnimation = false;
-                    toolTip.Show(error.ErrorMsg, this.scintillaEditor, e.X+20, e.Y+10);
+                    m_ToolTip.UseFading = false;
+                    m_ToolTip.UseAnimation = false;
+                    m_ToolTip.Show(error.ErrorMsg, this.ScintillaEditor, e.X+20, e.Y+10);
                 }
             }
         }
 
-        private void scintillaEditor_KeyUp(object sender, KeyEventArgs e)
+        private void ScintillaEditor_KeyUp(object sender, KeyEventArgs e)
         {
-            this.canSyntaxCheck = false;
+            this.m_CanSyntaxCheck = false;
             SyntaxCheck();
-            syntaxTimerLimit.Stop();
-            syntaxTimerLimit.Start();
+            c_SyntaxLimitTimer.Stop();
+            c_SyntaxLimitTimer.Start();
         }
 
-        private void syntaxTimerLimit_Tick(object sender, EventArgs e)
+        private void SyntaxLimitTimer_Tick(object sender, EventArgs e)
         {
-            this.canSyntaxCheck = true;
+            this.m_CanSyntaxCheck = true;
             SyntaxCheck();
-            syntaxTimerLimit.Stop();
+            c_SyntaxLimitTimer.Stop();
         }
 
-        private void scintillaEditor_DwellEnd(object sender, ScintillaNet.ScintillaMouseEventArgs e)
+        private void ScintillaEditor_DwellEnd(object sender, ScintillaNet.ScintillaMouseEventArgs e)
         {
-            toolTip.Hide(this.scintillaEditor);
+            m_ToolTip.Hide(this.ScintillaEditor);
         }
 
         #region Unused Callbacks
@@ -339,20 +342,54 @@ namespace Roket3D.ContentEditors
 
         public override void OnActiveTabChanged()
         {
-            if (this.MainForm.dockWorkspace.ActiveTab == this)
-                this.scintillaEditor.Focus();
+            if (this.MainForm.DockWorkspace.ActiveTab == this)
+                this.ScintillaEditor.Focus();
         }
 
         public override void TerminateThread()
         {
-            this.toolStripContainer1.ContentPanel.Controls.Remove(this.scintillaEditor);
-            this.MainForm.RetireInuseEditor(this.scintillaEditor);
+            this.c_ToolStripContainer.ContentPanel.Controls.Remove(this.ScintillaEditor);
+            this.MainForm.RetireInuseEditor(this.ScintillaEditor);
+        }
+
+        public override void OnSaveFile()
+        {
+            try
+            {
+                StreamWriter sfile = new StreamWriter(this.Path);
+                sfile.Write(this.ScintillaEditor.Text);
+                sfile.Close();
+            }
+            catch (IOException e)
+            {
+                MessageBox.Show("Unable to save the document.  Make sure the file is writable " +
+                                "and that you have appropriate permissions to access the file " +
+                                "and try again.");
+            }
+        }
+
+        public override void OnSaveFile(string SaveAsName)
+        {
+            try
+            {
+                StreamWriter sfile = new StreamWriter(SaveAsName);
+                sfile.Write(this.ScintillaEditor.Text);
+                sfile.Close();
+                this.Path = SaveAsName;
+                this.File = null;
+            }
+            catch (IOException e)
+            {
+                MessageBox.Show("Unable to save the document.  Make sure the file is writable " +
+                                "and that you have appropriate permissions to access the file " +
+                                "and try again.");
+            }
         }
 
         private void CodeScriptForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.toolStripContainer1.ContentPanel.Controls.Remove(this.scintillaEditor);
-            this.MainForm.RetireInuseEditor(this.scintillaEditor);
+            this.c_ToolStripContainer.ContentPanel.Controls.Remove(this.ScintillaEditor);
+            this.MainForm.RetireInuseEditor(this.ScintillaEditor);
         }
     }
 }

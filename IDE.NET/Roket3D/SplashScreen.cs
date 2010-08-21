@@ -11,13 +11,13 @@ namespace Roket3D
 {
     public partial class SplashScreen : FloatingWindow
     {
-        private TextureBrush backgroundBrush;
-        private SolidBrush textBrush = new SolidBrush(Color.Black);
-        private Font textFont;
-        private Image progressOutsideBrush;
-        private Image progressInsideBrush;
-        private Int32 Progress = 0;
-        private String Message = "Initalizing Roket3D...";
+        private TextureBrush m_BackgroundBrush;
+        private SolidBrush m_TextBrush = new SolidBrush(Color.Black);
+        private Font m_TextFont;
+        private Image m_ProgressOutsideBrush;
+        private Image m_ProgressInsideBrush;
+        private Int32 m_Progress = 0;
+        private String m_Message = "Initalizing Roket3D...";
 
         public SplashScreen()
         {
@@ -29,11 +29,11 @@ namespace Roket3D
                     );
 
             Image texBack = Properties.Resources.splashscreen_back;
-            this.progressOutsideBrush = Properties.Resources.splashscreen_progress_outside;
-            this.progressInsideBrush = Properties.Resources.splashscreen_progress_inside;
-            this.backgroundBrush = new TextureBrush(texBack);
+            this.m_ProgressOutsideBrush = Properties.Resources.splashscreen_progress_outside;
+            this.m_ProgressInsideBrush = Properties.Resources.splashscreen_progress_inside;
+            this.m_BackgroundBrush = new TextureBrush(texBack);
 
-            this.textFont = SystemFonts.DialogFont;// new Font(FontFamily.GenericSerif, 10, FontStyle.Regular, GraphicsUnit.Pixel);
+            this.m_TextFont = SystemFonts.DialogFont;// new Font(FontFamily.GenericSerif, 10, FontStyle.Regular, GraphicsUnit.Pixel);
         }
 
         public new void Invalidate()
@@ -52,8 +52,8 @@ namespace Roket3D
 
         public void SetProgress(Int32 progress, String message)
         {
-            this.Progress = progress;
-            this.Message = message;
+            this.m_Progress = progress;
+            this.m_Message = message;
             this.Invalidate();
         }
 
@@ -65,23 +65,23 @@ namespace Roket3D
                 g.SmoothingMode = SmoothingMode.HighQuality;
 
                 // Draw background
-                g.FillRectangle(this.backgroundBrush, this.Bound);
+                g.FillRectangle(this.m_BackgroundBrush, this.Bound);
 
                 // Draw progress bar
-                g.DrawImage(this.progressOutsideBrush, 10, 188, 1, 4);
-                g.DrawImage(this.progressInsideBrush, 11, 188, 1, 4);
-                g.DrawImage(this.progressInsideBrush, (Int32)(12 + (float)this.Progress / 100 * 406 + 1), 188, 1, 4);
-                g.DrawImage(this.progressOutsideBrush, (Int32)(12 + (float)this.Progress / 100 * 406 + 2), 188, 1, 4);
+                g.DrawImage(this.m_ProgressOutsideBrush, 10, 188, 1, 4);
+                g.DrawImage(this.m_ProgressInsideBrush, 11, 188, 1, 4);
+                g.DrawImage(this.m_ProgressInsideBrush, (Int32)(12 + (float)this.m_Progress / 100 * 406 + 1), 188, 1, 4);
+                g.DrawImage(this.m_ProgressOutsideBrush, (Int32)(12 + (float)this.m_Progress / 100 * 406 + 2), 188, 1, 4);
 
-                g.DrawImage(this.progressInsideBrush, 12, 188, (Int32)(1 + (float)this.Progress / 100 * 406), 4);
+                g.DrawImage(this.m_ProgressInsideBrush, 12, 188, (Int32)(1 + (float)this.m_Progress / 100 * 406), 4);
 
                 // Draw message
-                g.DrawString(this.Message, this.textFont, this.textBrush, 9, 163);
+                g.DrawString(this.m_Message, this.m_TextFont, this.m_TextBrush, 9, 163);
                 g.DrawString(@"Roket3D is an open source project, available under a GPL license.  The GPL license
-only pertains to the IDE and engine.  Games created with Roket3D may be licensed", this.textFont, this.textBrush, 9, 202);
+only pertains to the IDE and engine.  Games created with Roket3D may be licensed", this.m_TextFont, this.m_TextBrush, 9, 202);
                 g.DrawString(@"
 
-as the author wishes.  See the About box for more information.", this.textFont, this.textBrush, 9, 203);
+as the author wishes.  See the About box for more information.", this.m_TextFont, this.m_TextBrush, 9, 203);
 
                 //g.DrawImageUnscaled(this.progressOutsideBrush, 20 + this.Progress / 100 * 408, 188);
                 //g.DrawImage(this.progressInsideBrush, 13, 188, 20, 4);

@@ -13,7 +13,7 @@ using Roket3D.Xml;
 using LuaInterface;
 using System.IO;
 using Roket3D.Menus;
-using Roket3D.Content_Editors;
+using Roket3D.ContentEditors;
 
 namespace Roket3D
 {
@@ -25,7 +25,7 @@ namespace Roket3D
         public ToolErrorList ErrorList = new ToolErrorList();
         public ToolBuildOutput BuildOutput = new ToolBuildOutput();
         public Stack<ScintillaNet.Scintilla> ScintillaAvailable = new Stack<ScintillaNet.Scintilla>();
-        private FormWindowState OldWindowState = FormWindowState.Normal;
+        private FormWindowState m_OldWindowState = FormWindowState.Normal;
         private SplashScreen SplashScreen = null;
         public List<Roket3D.Menus.Action> MenuActions = new List<Roket3D.Menus.Action>();
 
@@ -55,7 +55,7 @@ namespace Roket3D
             this.Controls.Add(Loader.MainMenu);
             this.MainMenuStrip = Loader.MainMenu;
             //this.toolStripContainer1.TopToolStripPanel.Renderer = new ToolBarRenderer();
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(Loader.ToolBar);
+            this.ToolStripContainer.TopToolStripPanel.Controls.Add(Loader.ToolBar);
 
             // Load a solution.
             //CurrentSolution.Load("X:\\IDE.NET\\TestSolution\\MyGame.rsln");
@@ -64,18 +64,18 @@ namespace Roket3D
             // Set up the workspace.
             this.SolutionExplorer = new ToolSolutionExplorer(this);
             this.SolutionExplorer.Text = "Solution Explorer";
-            this.SolutionExplorer.Show(dockWorkspace, DockState.DockLeft);
+            this.SolutionExplorer.Show(DockWorkspace, DockState.DockLeft);
             this.LuaConsole.Text = "Lua Console";
-            this.LuaConsole.Show(dockWorkspace, DockState.DockBottom);
+            this.LuaConsole.Show(DockWorkspace, DockState.DockBottom);
             this.ErrorList.Text = "Error List";
-            this.ErrorList.Show(dockWorkspace, DockState.DockBottom);
+            this.ErrorList.Show(DockWorkspace, DockState.DockBottom);
             this.BuildOutput.Text = "Build Output";
-            this.BuildOutput.Show(dockWorkspace, DockState.DockBottom);
+            this.BuildOutput.Show(DockWorkspace, DockState.DockBottom);
 
             SpecialStartForm startPage = new SpecialStartForm();
             startPage.Text = "Start Page";
             startPage.TabText = "Start Page";
-            startPage.Show(dockWorkspace);
+            startPage.Show(DockWorkspace);
 
             /*String syntaxTest = @"-- Syntax Check
 
@@ -192,7 +192,7 @@ invalidproperty5 = a.2;
 
             // Search through all the tabs that are currently
             // open and make sure we're not reloading the file.
-            foreach (IDockContent f in dockWorkspace.Documents)
+            foreach (IDockContent f in DockWorkspace.Documents)
             {
                 if (f.DockHandler.Form is EditorBase)
                 {
@@ -229,16 +229,16 @@ invalidproperty5 = a.2;
                     try
                     {
                         StreamReader f = new StreamReader(codeTab.Path);
-                        codeTab.scintillaEditor.Text = f.ReadToEnd();
+                        codeTab.ScintillaEditor.Text = f.ReadToEnd();
                         f.Close();
                     }
                     catch (FileNotFoundException)
                     {
-                        codeTab.scintillaEditor.Text = "";
+                        codeTab.ScintillaEditor.Text = "";
                     }
 
-                    codeTab.Show(dockWorkspace);
-                    dockWorkspace.ActiveTab = codeTab;
+                    codeTab.Show(DockWorkspace);
+                    DockWorkspace.ActiveTab = codeTab;
                     OnActiveTabChanged();
                     break;
                 case FileType.Model:
@@ -248,8 +248,8 @@ invalidproperty5 = a.2;
                     modelTab.File = file;
                     modelTab.Text = path.Name;
                     modelTab.TabText = path.Name;
-                    modelTab.Show(dockWorkspace);
-                    dockWorkspace.ActiveTab = modelTab;
+                    modelTab.Show(DockWorkspace);
+                    DockWorkspace.ActiveTab = modelTab;
                     OnActiveTabChanged();
                     break;
                 case FileType.Image:
@@ -259,8 +259,8 @@ invalidproperty5 = a.2;
                     imageTab.File = file;
                     imageTab.Text = path.Name;
                     imageTab.TabText = path.Name;
-                    imageTab.Show(dockWorkspace);
-                    dockWorkspace.ActiveTab = imageTab;
+                    imageTab.Show(DockWorkspace);
+                    DockWorkspace.ActiveTab = imageTab;
                     OnActiveTabChanged();
                     break;
                 case FileType.Folder:
@@ -313,8 +313,8 @@ invalidproperty5 = a.2;
 
         private void MainForm_ResizeEnd(object sender, EventArgs e)
         {
-            IEnumerable<IDockContent> copy = dockWorkspace.Documents;
-            foreach (IDockContent f in dockWorkspace.Documents)
+            IEnumerable<IDockContent> copy = DockWorkspace.Documents;
+            foreach (IDockContent f in DockWorkspace.Documents)
             {
                 if (f.DockHandler.Form is EditorBase)
                 {
@@ -336,12 +336,12 @@ invalidproperty5 = a.2;
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
             if ((this.WindowState == FormWindowState.Normal &&
-                 this.OldWindowState == FormWindowState.Maximized) ||
+                 this.m_OldWindowState == FormWindowState.Maximized) ||
                 (this.WindowState == FormWindowState.Maximized &&
-                 this.OldWindowState == FormWindowState.Normal))
+                 this.m_OldWindowState == FormWindowState.Normal))
             {
                 this.MainForm_ResizeEnd(sender, e);
-                this.OldWindowState = this.WindowState;
+                this.m_OldWindowState = this.WindowState;
             }
         }
 
@@ -357,7 +357,7 @@ invalidproperty5 = a.2;
 
         private void OnActiveTabChanged()
         {
-            foreach (DockContent f in dockWorkspace.Documents)
+            foreach (DockContent f in DockWorkspace.Documents)
             {
                 if (f.DockHandler.Form is EditorBase)
                 {

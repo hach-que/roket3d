@@ -20,6 +20,7 @@ namespace Roket3D
             Program.ROOT_PATH = Environment.CurrentDirectory;
             Program.DEFAULT_PROJECT_AREA = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                                                 + "\\Roket3D Projects";
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             SplashScreen splash = new SplashScreen();

@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Roket3D.ContentEditors;
 
-namespace Roket3D.Content_Editors
+namespace Roket3D.ContentEditors
 {
     public partial class SpecialStartForm : EditorBase
     {

@@ -29,70 +29,70 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.dockWorkspace = new DockPanelSuite.DockPanel();
-            this.statusStrip.SuspendLayout();
-            this.toolStripContainer1.ContentPanel.SuspendLayout();
-            this.toolStripContainer1.SuspendLayout();
+            this.StatusStrip = new System.Windows.Forms.StatusStrip();
+            this.ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ToolStripContainer = new System.Windows.Forms.ToolStripContainer();
+            this.DockWorkspace = new DockPanelSuite.DockPanel();
+            this.StatusStrip.SuspendLayout();
+            this.ToolStripContainer.ContentPanel.SuspendLayout();
+            this.ToolStripContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
             // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip.Location = new System.Drawing.Point(0, 628);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(852, 22);
-            this.statusStrip.TabIndex = 2;
-            this.statusStrip.Text = "statusStrip1";
+            this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripStatusLabel});
+            this.StatusStrip.Location = new System.Drawing.Point(0, 628);
+            this.StatusStrip.Name = "statusStrip";
+            this.StatusStrip.Size = new System.Drawing.Size(852, 22);
+            this.StatusStrip.TabIndex = 2;
+            this.StatusStrip.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(837, 17);
-            this.toolStripStatusLabel1.Spring = true;
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ToolStripStatusLabel.Name = "toolStripStatusLabel1";
+            this.ToolStripStatusLabel.Size = new System.Drawing.Size(837, 17);
+            this.ToolStripStatusLabel.Spring = true;
+            this.ToolStripStatusLabel.Text = "toolStripStatusLabel1";
+            this.ToolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toolStripContainer1
             // 
             // 
             // toolStripContainer1.ContentPanel
             // 
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.dockWorkspace);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(852, 603);
-            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
-            this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(852, 628);
-            this.toolStripContainer1.TabIndex = 8;
-            this.toolStripContainer1.Text = "toolStripContainer1";
+            this.ToolStripContainer.ContentPanel.Controls.Add(this.DockWorkspace);
+            this.ToolStripContainer.ContentPanel.Size = new System.Drawing.Size(852, 603);
+            this.ToolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ToolStripContainer.Location = new System.Drawing.Point(0, 0);
+            this.ToolStripContainer.Name = "toolStripContainer1";
+            this.ToolStripContainer.Size = new System.Drawing.Size(852, 628);
+            this.ToolStripContainer.TabIndex = 8;
+            this.ToolStripContainer.Text = "toolStripContainer1";
             // 
             // dockWorkspace
             // 
-            this.dockWorkspace.ActiveAutoHideContent = null;
-            this.dockWorkspace.ActiveTab = null;
-            this.dockWorkspace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dockWorkspace.DockBottomPortion = 200;
-            this.dockWorkspace.DockLeftPortion = 250;
-            this.dockWorkspace.DockRightPortion = 200;
-            this.dockWorkspace.DockTopPortion = 150;
-            this.dockWorkspace.DocumentStyle = DockPanelSuite.DocumentStyle.DockingWindow;
-            this.dockWorkspace.Location = new System.Drawing.Point(0, 0);
-            this.dockWorkspace.Name = "dockWorkspace";
-            this.dockWorkspace.Size = new System.Drawing.Size(852, 603);
-            this.dockWorkspace.TabIndex = 0;
-            this.dockWorkspace.ActiveTabChanged += new System.EventHandler(this.dockWorkspace_ActiveTabChanged);
+            this.DockWorkspace.ActiveAutoHideContent = null;
+            this.DockWorkspace.ActiveTab = null;
+            this.DockWorkspace.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DockWorkspace.DockBottomPortion = 200;
+            this.DockWorkspace.DockLeftPortion = 250;
+            this.DockWorkspace.DockRightPortion = 200;
+            this.DockWorkspace.DockTopPortion = 150;
+            this.DockWorkspace.DocumentStyle = DockPanelSuite.DocumentStyle.DockingWindow;
+            this.DockWorkspace.Location = new System.Drawing.Point(0, 0);
+            this.DockWorkspace.Name = "dockWorkspace";
+            this.DockWorkspace.Size = new System.Drawing.Size(852, 603);
+            this.DockWorkspace.TabIndex = 0;
+            this.DockWorkspace.ActiveTabChanged += new System.EventHandler(this.dockWorkspace_ActiveTabChanged);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(852, 650);
-            this.Controls.Add(this.toolStripContainer1);
-            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.ToolStripContainer);
+            this.Controls.Add(this.StatusStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Name = "MainForm";
@@ -103,11 +103,11 @@
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
-            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
-            this.toolStripContainer1.ResumeLayout(false);
-            this.toolStripContainer1.PerformLayout();
+            this.StatusStrip.ResumeLayout(false);
+            this.StatusStrip.PerformLayout();
+            this.ToolStripContainer.ContentPanel.ResumeLayout(false);
+            this.ToolStripContainer.ResumeLayout(false);
+            this.ToolStripContainer.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -115,10 +115,10 @@
 
         #endregion
 
-        private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
-        public DockPanelSuite.DockPanel dockWorkspace;
+        private System.Windows.Forms.StatusStrip StatusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel ToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripContainer ToolStripContainer;
+        public DockPanelSuite.DockPanel DockWorkspace;
     }
 }
 

@@ -20,65 +20,65 @@ namespace Roket3D
             {
                 Directory.CreateDirectory(Program.DEFAULT_PROJECT_AREA);
             }
-            solutionLocationTextBox.Text = Program.DEFAULT_PROJECT_AREA;
+            c_SolutionLocationTextBox.Text = Program.DEFAULT_PROJECT_AREA;
             UpdateProjectFolderLabel();
         }
 
-        private void useSolutionFolderCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void UseSolutionFolderCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (useSolutionFolderCheckBox.Checked)
+            if (c_UseSolutionFolderCheckBox.Checked)
             {
-                lblFolder.Text = "Solution Location:";
-                solutionFolderTextBox.Enabled = true;
-                solutionFolderTextBox.ReadOnly = false;
+                c_FolderLabel.Text = "Solution Location:";
+                c_SolutionFolderTextBox.Enabled = true;
+                c_SolutionFolderTextBox.ReadOnly = false;
             }
             else
             {
-                lblFolder.Text = "Project Location:";
-                solutionFolderTextBox.Enabled = false;
-                solutionFolderTextBox.ReadOnly = true;
+                c_FolderLabel.Text = "Project Location:";
+                c_SolutionFolderTextBox.Enabled = false;
+                c_SolutionFolderTextBox.ReadOnly = true;
             }
             UpdateProjectFolderLabel();
         }
 
         private void UpdateProjectFolderLabel()
         {
-            String fL = solutionLocationTextBox.Text;
+            String fL = c_SolutionLocationTextBox.Text;
             if (!fL.EndsWith("\\"))
                 fL += "\\";
-            if (useSolutionFolderCheckBox.Checked)
+            if (c_UseSolutionFolderCheckBox.Checked)
             {
-                solutionLocationLabel.Text = fL + solutionFolderTextBox.Text + "\\" + projectNameTextBox.Text;
+                c_SolutionLocationLabel.Text = fL + c_SolutionFolderTextBox.Text + "\\" + c_ProjectNameTextBox.Text;
             }
             else
             {
-                solutionLocationLabel.Text = fL + projectNameTextBox.Text;
+                c_SolutionLocationLabel.Text = fL + c_ProjectNameTextBox.Text;
             }
         }
 
-        private void projectNameTextBox_TextChanged(object sender, EventArgs e)
+        private void ProjectNameTextBox_TextChanged(object sender, EventArgs e)
         {
             UpdateProjectFolderLabel();
-            projectNameInvalidPictureBox.Visible = !this.IsValidName(projectNameTextBox.Text);
+            c_ProjectNameInvalidPictureBox.Visible = !this.IsValidName(c_ProjectNameTextBox.Text);
         }
 
-        private void solutionLocationTextBox_TextChanged(object sender, EventArgs e)
+        private void SolutionLocationTextBox_TextChanged(object sender, EventArgs e)
         {
             UpdateProjectFolderLabel();
-            solutionLocationInvalidPictureBox.Visible = !System.IO.Directory.Exists(solutionLocationTextBox.Text);
+            c_SolutionLocationInvalidPictureBox.Visible = !System.IO.Directory.Exists(c_SolutionLocationTextBox.Text);
         }
 
-        private void solutionFolderTextBox_TextChanged(object sender, EventArgs e)
+        private void SolutionFolderTextBox_TextChanged(object sender, EventArgs e)
         {
             UpdateProjectFolderLabel();
-            solutionFolderInvalidPictureBox.Visible = !this.IsValidName(solutionFolderTextBox.Text);
+            c_SolutionFolderInvalidPictureBox.Visible = !this.IsValidName(c_SolutionFolderTextBox.Text);
         }
 
         private void NewSolutionForm_Load(object sender, EventArgs e)
         {
             // Select Managed by default.
-            projectTypeListView.SelectedIndices.Clear();
-            projectTypeListView.SelectedIndices.Add(0);
+            c_ProjectTypeListView.SelectedIndices.Clear();
+            c_ProjectTypeListView.SelectedIndices.Add(0);
         }
 
         private Boolean IsValidName(String Name)
@@ -86,7 +86,7 @@ namespace Roket3D
             return (Name.IndexOfAny(new char[] { '\\', '/', ':', '*', '?', '"', '<', '>', '|' }) == -1);
         }
 
-        private void browseSolutionLocationButton_Click(object sender, EventArgs e)
+        private void BrowseSolutionLocationButton_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.Description = "Select a location to store the project or solution folder in.";
@@ -98,29 +98,29 @@ namespace Roket3D
             fbd.ShowNewFolderButton = true;
             if (fbd.ShowDialog() == DialogResult.OK)
             {
-                solutionLocationTextBox.Text = fbd.SelectedPath;
+                c_SolutionLocationTextBox.Text = fbd.SelectedPath;
             }
         }
 
-        private void projectTypeListView_SelectedIndexChanged(object sender, EventArgs e)
+        private void ProjectTypeListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            projectTypeInvalidPictureBox.Visible = (projectTypeListView.SelectedItems.Count == 0);
+            c_ProjectTypeInvalidPictureBox.Visible = (c_ProjectTypeListView.SelectedItems.Count == 0);
 
-            if (projectTypeListView.SelectedItems.Count == 1)
+            if (c_ProjectTypeListView.SelectedItems.Count == 1)
             {
                 ListViewItem selectedItem = null;
                 Boolean shouldProjectChangeName = false;
                 Boolean shouldSolutionChangeName = false;
-                selectedItem = projectTypeListView.SelectedItems[0];
+                selectedItem = c_ProjectTypeListView.SelectedItems[0];
 
-                switch (projectNameTextBox.Text)
+                switch (c_ProjectNameTextBox.Text)
                 {
                     case "ManagedGame":
                     case "UnmanagedGame":
                         shouldProjectChangeName = true;
                         break;
                 }
-                switch (solutionFolderTextBox.Text)
+                switch (c_SolutionFolderTextBox.Text)
                 {
                     case "ManagedSolution":
                     case "UnmanagedSolution":
@@ -132,17 +132,17 @@ namespace Roket3D
                 {
                     case "Managed Lua":
                         if (shouldProjectChangeName)
-                            projectNameTextBox.Text = "ManagedGame";
+                            c_ProjectNameTextBox.Text = "ManagedGame";
                         if (shouldSolutionChangeName)
-                            solutionFolderTextBox.Text = "ManagedSolution";
-                        templateDescriptionTextBox.Text = "Creates an IDE managed, Roket3D project with Lua as the scripting language.";
+                            c_SolutionFolderTextBox.Text = "ManagedSolution";
+                        c_TemplateDescriptionTextBox.Text = "Creates an IDE managed, Roket3D project with Lua as the scripting language.";
                         break;
                     case "Unmanaged Lua":
                         if (shouldProjectChangeName)
-                            projectNameTextBox.Text = "UnmanagedGame";
+                            c_ProjectNameTextBox.Text = "UnmanagedGame";
                         if (shouldSolutionChangeName)
-                            solutionFolderTextBox.Text = "UnmanagedSolution";
-                        templateDescriptionTextBox.Text = "Creates an unmanaged Roket3D project with Lua as the scripting language.  Some features may not be available.";
+                            c_SolutionFolderTextBox.Text = "UnmanagedSolution";
+                        c_TemplateDescriptionTextBox.Text = "Creates an unmanaged Roket3D project with Lua as the scripting language.  Some features may not be available.";
                         break;
                 }
             }
@@ -150,8 +150,8 @@ namespace Roket3D
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            if (projectNameInvalidPictureBox.Visible || projectTypeInvalidPictureBox.Visible ||
-                solutionFolderInvalidPictureBox.Visible || solutionLocationInvalidPictureBox.Visible)
+            if (c_ProjectNameInvalidPictureBox.Visible || c_ProjectTypeInvalidPictureBox.Visible ||
+                c_SolutionFolderInvalidPictureBox.Visible || c_SolutionLocationInvalidPictureBox.Visible)
             {
                 MessageBox.Show("One or more of the provided fields is invalid.  Make sure that all of the fields are valid and a project type is selected and try again.",
                     "Invalid Information Provided", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -162,7 +162,7 @@ namespace Roket3D
             this.Close();
         }
 
-        private void cancelButton_Click(object sender, EventArgs e)
+        private void CancelButton_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
@@ -170,31 +170,31 @@ namespace Roket3D
 
         static public Boolean HandleNewProjectCreation(NewSolutionForm nsf)
         {
-            String projectName = nsf.projectNameTextBox.Text;
+            String projectName = nsf.c_ProjectNameTextBox.Text;
             String solutionName = null;
-            if (nsf.useSolutionFolderCheckBox.Checked)
-                solutionName = nsf.solutionFolderTextBox.Text;
+            if (nsf.c_UseSolutionFolderCheckBox.Checked)
+                solutionName = nsf.c_SolutionFolderTextBox.Text;
             else
                 solutionName = projectName;
 
-            String projectFileLocation = nsf.solutionLocationLabel.Text + "\\" + projectName + ".rproj";
-            String projectFolderLocation = nsf.solutionLocationLabel.Text;
+            String projectFileLocation = nsf.c_SolutionLocationLabel.Text + "\\" + projectName + ".rproj";
+            String projectFolderLocation = nsf.c_SolutionLocationLabel.Text;
             String solutionFileLocation = null;
             String solutionFolderLocation = null;
 
-            String fL = nsf.solutionLocationTextBox.Text;
+            String fL = nsf.c_SolutionLocationTextBox.Text;
             if (!fL.EndsWith("\\"))
                 fL += "\\";
 
-            if (nsf.useSolutionFolderCheckBox.Checked)
+            if (nsf.c_UseSolutionFolderCheckBox.Checked)
             {
-                solutionFileLocation = fL + nsf.solutionFolderTextBox.Text + "\\" + solutionName + ".rsln";
-                solutionFolderLocation = fL + nsf.solutionFolderTextBox.Text;
+                solutionFileLocation = fL + nsf.c_SolutionFolderTextBox.Text + "\\" + solutionName + ".rsln";
+                solutionFolderLocation = fL + nsf.c_SolutionFolderTextBox.Text;
             }
             else
             {
-                solutionFileLocation = nsf.solutionLocationLabel.Text + "\\" + solutionName + ".rsln";
-                solutionFolderLocation = nsf.solutionLocationLabel.Text;
+                solutionFileLocation = nsf.c_SolutionLocationLabel.Text + "\\" + solutionName + ".rsln";
+                solutionFolderLocation = nsf.c_SolutionLocationLabel.Text;
             }
 
             // Create the directories
