@@ -10,37 +10,47 @@ using IrrlichtNETCP;
 using IrrlichtNETCP.Inheritable;
 using System.Threading;
 using DockPanelSuite;
+using Roket3D.ContentEditors.Classes;
 
 namespace Roket3D.ContentEditors
 {
     public partial class DesignerModelForm : EditorBase
     {
         public MainForm MainForm;
-        private IrrlichtDevice device;
-        private Rect dimensions;
-        private Boolean deviceClosed = false;
-        private Boolean isActive = true;
-        private IntPtr windowHandle;
-        private Thread deviceThread = null;
-        private AnimatedMeshSceneNode node;
-        private GUIStaticText modelInformation;
-        private Boolean isRotating = false;
-        private Double xRotate = 0;
-        private Double yRotate = 0;
-        private CameraSceneNode cam;
-        private Point originalPoint = new Point(0, 0);
-        private String currentTextureName = "";
+        private IrrlichtDevice p_Device;
+        private Rect p_Dimensions;
+        private Boolean p_DeviceClosed = false;
+        private Boolean p_IsActive = true;
+        private IntPtr p_WindowHandle;
+        private Thread p_DeviceThread = null;
+        private AnimatedMeshSceneNode p_Node;
+        private GUIStaticText p_ModelInformation;
+        private Model p_Model = null;
+        private Boolean p_IsRotating = false;
+        private Double p_XRotate = 0;
+        private Double p_YRotate = 0;
+        private CameraSceneNode p_Camera;
+        private Point p_OriginalPoint = new Point(0, 0);
+        private String m_Texture = "";
 
-        public DesignerModelForm(MainForm myMain)
+        public DesignerModelForm(MainForm main)
         {
             InitializeComponent();
-            this.MainForm = myMain;
+            this.MainForm = main;
         }
 
         private void DesignerModelForm_Load(object sender, EventArgs e)
         {
-            this.windowHandle = this.Handle;
+            this.p_WindowHandle = this.Handle;
 
+            // Create the model information object.
+            this.p_Model = new Model();
+            this.p_Model.SetInitial("Unknown", "Unknown");
+            this.p_Model.SetModelInformation(4, 5, 2);
+            this.p_Model.SetTextureInformation(512, 512);
+            this.PropertyEditor.SelectedObject = this.p_Model;
+
+            /*
             this.textureToolStripComboBox.Items.Clear();
             this.textureToolStripComboBox.Items.AddRange(this.MainForm.GetAllFilesOfType(Xml.FileType.Image).ToArray());
             if (this.textureToolStripComboBox.Items.Count == 0)
@@ -67,35 +77,36 @@ namespace Roket3D.ContentEditors
                         // TODO: Implement add-to-project prompt.
                         this.textureToolStripComboBox.Items.Insert(0, "<image not in project>");
                         this.textureToolStripComboBox.SelectedIndex = 0;
-                        currentTextureName = tex;
+                        m_Texture = tex;
                     }
                     else
                     {
                         // Just select the correct index for the combo box.
                         this.textureToolStripComboBox.SelectedItem = imageFile;
-                        currentTextureName = this.textureToolStripComboBox.SelectedItem.ToString();
+                        m_Texture = this.textureToolStripComboBox.SelectedItem.ToString();
                     }
                 }
                 catch (KeyNotFoundException)
                 {
                     this.textureToolStripComboBox.SelectedIndex = 0;
-                    currentTextureName = this.textureToolStripComboBox.SelectedItem.ToString();
+                    m_Texture = this.textureToolStripComboBox.SelectedItem.ToString();
                 }
-            }
+            }*/
         }
 
         private void DesignerModelForm_Shown(object sender, EventArgs e)
         {
             //GenerateDevice();
 
-            deviceThread = new Thread(new ThreadStart(RunIrrlichtLoop));
-            deviceThread.Start();
+            p_DeviceThread = new Thread(new ThreadStart(RunIrrlichtLoop));
+            p_DeviceThread.Start();
         }
 
         private void textureToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Change the texture.
-            if (currentTextureName != "") // when the index is first begin set, this will still be "".  Since
+            /*
+            if (m_Texture != "") // when the index is first begin set, this will still be "".  Since
                                           // we dont want to prompt the user when the first open the model
                                           // this prevents the message from showing.
             {
@@ -111,55 +122,56 @@ namespace Roket3D.ContentEditors
                 }
             }
 
-            if (device != null)
+            if (p_Device != null)
             {
-                device.FileSystem.WorkingDirectory = Environment.CurrentDirectory;
-                node.SetMaterialTexture(0, device.VideoDriver.GetTexture(
+                p_Device.FileSystem.WorkingDirectory = Environment.CurrentDirectory;
+                p_Node.SetMaterialTexture(0, p_Device.VideoDriver.GetTexture(
                     textureToolStripComboBox.SelectedItem.ToString()
                     ));
-                currentTextureName = textureToolStripComboBox.SelectedItem.ToString();
+                m_Texture = textureToolStripComboBox.SelectedItem.ToString();
             }
+            */
         }
 
         private void RegenerateDevice()
         {
             // If the device is null, then it hasn't been
             // set up at all yet.
-            if (device != null)
+            if (p_Device != null)
             {
                 // Close the existing device.
-                deviceClosed = true;
-                deviceThread.Join();
+                p_DeviceClosed = true;
+                p_DeviceThread.Join();
 
-                deviceClosed = false;
+                p_DeviceClosed = false;
                 this.Refresh();
 
                 //GenerateDevice();
 
-                deviceThread = new Thread(new ThreadStart(RunIrrlichtLoop));
-                deviceThread.Start();
+                p_DeviceThread = new Thread(new ThreadStart(RunIrrlichtLoop));
+                p_DeviceThread.Start();
             }
         }
 
         private void GenerateDevice()
         {
-            device = new IrrlichtDevice(DriverType.Direct3D9,
+            p_Device = new IrrlichtDevice(DriverType.Direct3D9,
                                             new Dimension2D(640, 480),
-                                            32, false, true, true, true, this.windowHandle);
-            this.dimensions = new Rect(0, 0, this.Width, this.Height);
+                                            32, false, true, true, true, this.p_WindowHandle);
+            this.p_Dimensions = new Rect(0, 0, this.Width, this.Height);
 
             /*Now we set the caption of the window to some nice text. Note that there is a 'L' in front of the string: the Irrlicht Engine uses
 wide character strings when displaying text.
             */
-            device.WindowCaption = "Hello World! - Irrlicht Engine Demo";
-            device.FileSystem.WorkingDirectory = Environment.CurrentDirectory;
+            p_Device.WindowCaption = "Hello World! - Irrlicht Engine Demo";
+            p_Device.FileSystem.WorkingDirectory = Environment.CurrentDirectory;
 
             //
-            VideoDriver driver = device.VideoDriver;
-            SceneManager smgr = device.SceneManager;
-            GUIEnvironment guienv = device.GUIEnvironment;
+            VideoDriver driver = p_Device.VideoDriver;
+            SceneManager smgr = p_Device.SceneManager;
+            GUIEnvironment guienv = p_Device.GUIEnvironment;
 
-            modelInformation = guienv.AddStaticText("Hello World! This is the Irrlicht Software engine!",
+            p_ModelInformation = guienv.AddStaticText("Hello World! This is the Irrlicht Software engine!",
                 new Rect(new Position2D(10, 36), new Dimension2D(500, 16)), true, false, guienv.RootElement, -1, true);
 
             // We need to write the irrlicht font to the temporary folder so that the
@@ -167,12 +179,12 @@ wide character strings when displaying text.
             if (!System.IO.Directory.Exists(System.IO.Path.GetTempPath() + "\\Roket3D"))
                 System.IO.Directory.CreateDirectory(System.IO.Path.GetTempPath() + "\\Roket3D");
             Roket3D.Properties.Resources.irrlicht_font.Save(System.IO.Path.GetTempPath() + "\\Roket3D\\irrlicht_font.png");
-            modelInformation.OverrideFont = guienv.GetFont(System.IO.Path.GetTempPath() + "\\Roket3D\\irrlicht_font.png");
+            p_ModelInformation.OverrideFont = guienv.GetFont(System.IO.Path.GetTempPath() + "\\Roket3D\\irrlicht_font.png");
             System.IO.File.Delete(System.IO.Path.GetTempPath() + "\\Roket3D\\irrlicht_font.png");
 
             //
             AnimatedMesh mesh = smgr.GetMesh(this.Path);
-            node = smgr.AddAnimatedMeshSceneNode(mesh);
+            p_Node = smgr.AddAnimatedMeshSceneNode(mesh);
             //node.SetMaterialFlag(MaterialFlag.NormalizeNormals, false);
             //node.SetMaterialFlag(MaterialFlag.PointCloud, false);
             //node.SetMaterialFlag(MaterialFlag.Wireframe, false);
@@ -189,23 +201,23 @@ wide character strings when displaying text.
             //MessageBox.Show(((Int32)MaterialFlag.MaterialFlagCount).ToString());
 
             //
-            if (node != null)
+            if (p_Node != null)
             {
-                node.SetMaterialFlag(MaterialFlag.Lighting, false);
-                node.SetMaterialTexture(0, driver.GetTexture(currentTextureName));
+                p_Node.SetMaterialFlag(MaterialFlag.Lighting, false);
+                p_Node.SetMaterialTexture(0, driver.GetTexture(m_Texture));
             }
             //
-            cam = smgr.AddCameraSceneNode(smgr.RootSceneNode);
+            p_Camera = smgr.AddCameraSceneNode(smgr.RootSceneNode);
             //cam.Position = new Vector3D(0, 30, -40);
-            cam.Target = new Vector3D(0, 0, 0);
+            p_Camera.Target = new Vector3D(0, 0, 0);
 
-            float newY = (float)Math.Sin(this.yRotate * Math.PI / 180) * 80;
-            float dist = (float)Math.Cos(this.yRotate * Math.PI / 180) * 80;
+            float newY = (float)Math.Sin(this.p_YRotate * Math.PI / 180) * 80;
+            float dist = (float)Math.Cos(this.p_YRotate * Math.PI / 180) * 80;
 
-            float newX = (float)Math.Sin(this.xRotate * Math.PI / 180) * dist;
-            float newZ = (float)Math.Cos(this.xRotate * Math.PI / 180) * dist;
+            float newX = (float)Math.Sin(this.p_XRotate * Math.PI / 180) * dist;
+            float newZ = (float)Math.Cos(this.p_XRotate * Math.PI / 180) * dist;
 
-            cam.Position = new Vector3D(newX, newY, newZ);
+            p_Camera.Position = new Vector3D(newX, newY, newZ);
         }
 
         public override void OnActiveTabChanged()
@@ -215,25 +227,25 @@ wide character strings when displaying text.
 
         private void CheckIfActive()
         {
-            this.isActive = (this.MainForm.dockWorkspace.ActiveTab == this);
+            this.p_IsActive = (this.MainForm.DockWorkspace.ActiveTab == this);
 
-            if (!this.isActive)
+            if (!this.p_IsActive)
             {
-                if (!deviceClosed)
+                if (!p_DeviceClosed)
                 {
-                    deviceClosed = true;
-                    deviceThread.Join();
+                    p_DeviceClosed = true;
+                    p_DeviceThread.Join();
                 }
             }
             else
             {
-                if (deviceClosed)
+                if (p_DeviceClosed)
                 {
-                    deviceClosed = false;
+                    p_DeviceClosed = false;
                     GenerateDevice();
 
-                    deviceThread = new Thread(new ThreadStart(RunIrrlichtLoop));
-                    deviceThread.Start();
+                    p_DeviceThread = new Thread(new ThreadStart(RunIrrlichtLoop));
+                    p_DeviceThread.Start();
                 }
             }
         }
@@ -242,13 +254,13 @@ wide character strings when displaying text.
         {
             GenerateDevice();
             
-            while (device.Run() && !deviceClosed)
+            while (p_Device.Run() && !p_DeviceClosed)
             {
-                modelInformation.Text = "Model Current Texture: " + currentTextureName;
+                p_ModelInformation.Text = "Model Current Texture: " + m_Texture;
 
-                device.VideoDriver.BeginScene(true, true, new IrrlichtNETCP.Color(255, 100, 101, 140));
-                device.SceneManager.DrawAll();
-                device.GUIEnvironment.DrawAll();
+                p_Device.VideoDriver.BeginScene(true, true, new IrrlichtNETCP.Color(255, 100, 101, 140));
+                p_Device.SceneManager.DrawAll();
+                p_Device.GUIEnvironment.DrawAll();
 
                 /*device.VideoDriver.Draw2DRectangle(
                         new Rect(
@@ -260,10 +272,10 @@ wide character strings when displaying text.
                         IrrlichtNETCP.Color.From(255,244, 243, 241)
                         );*/
 
-                device.VideoDriver.EndScene();
+                p_Device.VideoDriver.EndScene();
             }
 
-            device.Dispose();
+            p_Device.Dispose();
         }
 
         // This is the event reciever.
@@ -305,27 +317,27 @@ wide character strings when displaying text.
 
         private void DesignerModelForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!deviceClosed)
+            if (!p_DeviceClosed)
             {
-                deviceClosed = true;
-                deviceThread.Abort();
-                device.Close();
+                p_DeviceClosed = true;
+                p_DeviceThread.Abort();
+                p_Device.Close();
             }
         }
 
         public override void TerminateThread()
         {
-            if (!deviceClosed)
+            if (!p_DeviceClosed)
             {
-                deviceClosed = true;
-                deviceThread.Abort();
-                device.Close();
+                p_DeviceClosed = true;
+                p_DeviceThread.Abort();
+                p_Device.Close();
             }
         }
 
         public override void OnResizeEnd()
         {
-            if (this.dimensions.Width != this.Width || this.dimensions.Height != this.Height)
+            if (this.p_Dimensions.Width != this.Width || this.p_Dimensions.Height != this.Height)
             {
                 RegenerateDevice();
             }
@@ -342,9 +354,9 @@ wide character strings when displaying text.
             // If so, we should go into rotate model mode.
             if (e.Button == MouseButtons.Left)
             {
-                device.CursorControl.Visible = false;
-                isRotating = true;
-                originalPoint = e.Location;
+                p_Device.CursorControl.Visible = false;
+                p_IsRotating = true;
+                p_OriginalPoint = e.Location;
             }
         }
 
@@ -352,22 +364,22 @@ wide character strings when displaying text.
         {
             // If we are in rotate mode, move the model depending
             // on the mouse position.
-            if (isRotating)
+            if (p_IsRotating)
             {
                 // Do the camera rotation here.
-                this.xRotate += e.X - originalPoint.X;
-                this.yRotate += e.Y - originalPoint.Y;
-                if (this.yRotate > 89) this.yRotate = 89;
-                if (this.yRotate < -89) this.yRotate = -89;
-                originalPoint = e.Location;
+                this.p_XRotate += e.X - p_OriginalPoint.X;
+                this.p_YRotate += e.Y - p_OriginalPoint.Y;
+                if (this.p_YRotate > 89) this.p_YRotate = 89;
+                if (this.p_YRotate < -89) this.p_YRotate = -89;
+                p_OriginalPoint = e.Location;
                 
-                float newY = (float)Math.Sin(this.yRotate * Math.PI / 180) * 80;
-                float dist = (float)Math.Cos(this.yRotate * Math.PI / 180) * 80;
+                float newY = (float)Math.Sin(this.p_YRotate * Math.PI / 180) * 80;
+                float dist = (float)Math.Cos(this.p_YRotate * Math.PI / 180) * 80;
 
-                float newX = (float)Math.Sin(this.xRotate * Math.PI / 180) * dist;
-                float newZ = (float)Math.Cos(this.xRotate * Math.PI / 180) * dist;
+                float newX = (float)Math.Sin(this.p_XRotate * Math.PI / 180) * dist;
+                float newZ = (float)Math.Cos(this.p_XRotate * Math.PI / 180) * dist;
 
-                cam.Position = new Vector3D(newX, newY, newZ);
+                p_Camera.Position = new Vector3D(newX, newY, newZ);
             }
         }
 
@@ -376,8 +388,8 @@ wide character strings when displaying text.
             // See if the mouse left cursor was released
             if (e.Button == MouseButtons.Left)
             {
-                device.CursorControl.Visible = true;
-                isRotating = false;
+                p_Device.CursorControl.Visible = true;
+                p_IsRotating = false;
             }
         }
     }

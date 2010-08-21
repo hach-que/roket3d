@@ -33,304 +33,304 @@
             System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Managed Lua", "LuaManaged");
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Unmanaged Lua", "LuaUnmanaged");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewSolutionForm));
-            this.projectTypeListView = new System.Windows.Forms.ListView();
-            this.imageList = new System.Windows.Forms.ImageList(this.components);
-            this.templateDescriptionTextBox = new System.Windows.Forms.TextBox();
-            this.nameLabel = new System.Windows.Forms.Label();
-            this.projectNameTextBox = new System.Windows.Forms.TextBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.OKButton = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.solutionLocationTextBox = new System.Windows.Forms.TextBox();
-            this.lblFolder = new System.Windows.Forms.Label();
-            this.solutionFolderTextBox = new System.Windows.Forms.TextBox();
-            this.useSolutionFolderCheckBox = new System.Windows.Forms.CheckBox();
-            this.solutionLocationLabel = new System.Windows.Forms.Label();
-            this.solutionFolderInvalidPictureBox = new System.Windows.Forms.PictureBox();
-            this.solutionLocationInvalidPictureBox = new System.Windows.Forms.PictureBox();
-            this.projectNameInvalidPictureBox = new System.Windows.Forms.PictureBox();
-            this.browseSolutionLocationButton = new System.Windows.Forms.Button();
-            this.projectTypeInvalidPictureBox = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.solutionFolderInvalidPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.solutionLocationInvalidPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectNameInvalidPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectTypeInvalidPictureBox)).BeginInit();
+            this.c_ProjectTypeListView = new System.Windows.Forms.ListView();
+            this.c_ImageList = new System.Windows.Forms.ImageList(this.components);
+            this.c_TemplateDescriptionTextBox = new System.Windows.Forms.TextBox();
+            this.c_NameLabel = new System.Windows.Forms.Label();
+            this.c_ProjectNameTextBox = new System.Windows.Forms.TextBox();
+            this.c_FlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.c_CancelButton = new System.Windows.Forms.Button();
+            this.c_OKButton = new System.Windows.Forms.Button();
+            this.c_GroupBox = new System.Windows.Forms.GroupBox();
+            this.c_SolutionLocationTextBox = new System.Windows.Forms.TextBox();
+            this.c_FolderLabel = new System.Windows.Forms.Label();
+            this.c_SolutionFolderTextBox = new System.Windows.Forms.TextBox();
+            this.c_UseSolutionFolderCheckBox = new System.Windows.Forms.CheckBox();
+            this.c_SolutionLocationLabel = new System.Windows.Forms.Label();
+            this.c_SolutionFolderInvalidPictureBox = new System.Windows.Forms.PictureBox();
+            this.c_SolutionLocationInvalidPictureBox = new System.Windows.Forms.PictureBox();
+            this.c_ProjectNameInvalidPictureBox = new System.Windows.Forms.PictureBox();
+            this.c_BrowseSolutionLocationButton = new System.Windows.Forms.Button();
+            this.c_ProjectTypeInvalidPictureBox = new System.Windows.Forms.PictureBox();
+            this.c_ProjectCreationLabel = new System.Windows.Forms.Label();
+            this.c_FlowLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.c_SolutionFolderInvalidPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c_SolutionLocationInvalidPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c_ProjectNameInvalidPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c_ProjectTypeInvalidPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // projectTypeListView
+            // c_ProjectTypeListView
             // 
-            this.projectTypeListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.c_ProjectTypeListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             listViewGroup2.Header = "Roket3D Templates";
             listViewGroup2.Name = "lvgTemplates";
-            this.projectTypeListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            this.c_ProjectTypeListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
             listViewGroup2});
-            this.projectTypeListView.HideSelection = false;
+            this.c_ProjectTypeListView.HideSelection = false;
             listViewItem3.Group = listViewGroup2;
             listViewItem4.Group = listViewGroup2;
-            this.projectTypeListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            this.c_ProjectTypeListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem3,
             listViewItem4});
-            this.projectTypeListView.LargeImageList = this.imageList;
-            this.projectTypeListView.Location = new System.Drawing.Point(12, 12);
-            this.projectTypeListView.MultiSelect = false;
-            this.projectTypeListView.Name = "projectTypeListView";
-            this.projectTypeListView.Size = new System.Drawing.Size(592, 138);
-            this.projectTypeListView.TabIndex = 0;
-            this.projectTypeListView.UseCompatibleStateImageBehavior = false;
-            this.projectTypeListView.SelectedIndexChanged += new System.EventHandler(this.projectTypeListView_SelectedIndexChanged);
+            this.c_ProjectTypeListView.LargeImageList = this.c_ImageList;
+            this.c_ProjectTypeListView.Location = new System.Drawing.Point(12, 12);
+            this.c_ProjectTypeListView.MultiSelect = false;
+            this.c_ProjectTypeListView.Name = "c_ProjectTypeListView";
+            this.c_ProjectTypeListView.Size = new System.Drawing.Size(592, 138);
+            this.c_ProjectTypeListView.TabIndex = 0;
+            this.c_ProjectTypeListView.UseCompatibleStateImageBehavior = false;
+            this.c_ProjectTypeListView.SelectedIndexChanged += new System.EventHandler(this.ProjectTypeListView_SelectedIndexChanged);
             // 
-            // imageList
+            // c_ImageList
             // 
-            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList.Images.SetKeyName(0, "LuaManaged");
-            this.imageList.Images.SetKeyName(1, "LuaUnmanaged");
+            this.c_ImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("c_ImageList.ImageStream")));
+            this.c_ImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.c_ImageList.Images.SetKeyName(0, "LuaManaged");
+            this.c_ImageList.Images.SetKeyName(1, "LuaUnmanaged");
             // 
-            // templateDescriptionTextBox
+            // c_TemplateDescriptionTextBox
             // 
-            this.templateDescriptionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.c_TemplateDescriptionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.templateDescriptionTextBox.Location = new System.Drawing.Point(13, 156);
-            this.templateDescriptionTextBox.Name = "templateDescriptionTextBox";
-            this.templateDescriptionTextBox.ReadOnly = true;
-            this.templateDescriptionTextBox.Size = new System.Drawing.Size(591, 20);
-            this.templateDescriptionTextBox.TabIndex = 1;
-            this.templateDescriptionTextBox.Text = "Creates an IDE managed, Roket3D project with Lua as the primary scripting languag" +
+            this.c_TemplateDescriptionTextBox.Location = new System.Drawing.Point(13, 156);
+            this.c_TemplateDescriptionTextBox.Name = "c_TemplateDescriptionTextBox";
+            this.c_TemplateDescriptionTextBox.ReadOnly = true;
+            this.c_TemplateDescriptionTextBox.Size = new System.Drawing.Size(591, 20);
+            this.c_TemplateDescriptionTextBox.TabIndex = 1;
+            this.c_TemplateDescriptionTextBox.Text = "Creates an IDE managed, Roket3D project with Lua as the primary scripting languag" +
                 "e.";
             // 
-            // nameLabel
+            // c_NameLabel
             // 
-            this.nameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(12, 186);
-            this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(38, 13);
-            this.nameLabel.TabIndex = 2;
-            this.nameLabel.Text = "Name:";
+            this.c_NameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.c_NameLabel.AutoSize = true;
+            this.c_NameLabel.Location = new System.Drawing.Point(12, 186);
+            this.c_NameLabel.Name = "c_NameLabel";
+            this.c_NameLabel.Size = new System.Drawing.Size(38, 13);
+            this.c_NameLabel.TabIndex = 2;
+            this.c_NameLabel.Text = "Name:";
             // 
-            // projectNameTextBox
+            // c_ProjectNameTextBox
             // 
-            this.projectNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.c_ProjectNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.projectNameTextBox.Location = new System.Drawing.Point(154, 183);
-            this.projectNameTextBox.Name = "projectNameTextBox";
-            this.projectNameTextBox.Size = new System.Drawing.Size(353, 20);
-            this.projectNameTextBox.TabIndex = 3;
-            this.projectNameTextBox.Text = "ManagedGame";
-            this.projectNameTextBox.TextChanged += new System.EventHandler(this.projectNameTextBox_TextChanged);
+            this.c_ProjectNameTextBox.Location = new System.Drawing.Point(154, 183);
+            this.c_ProjectNameTextBox.Name = "c_ProjectNameTextBox";
+            this.c_ProjectNameTextBox.Size = new System.Drawing.Size(353, 20);
+            this.c_ProjectNameTextBox.TabIndex = 3;
+            this.c_ProjectNameTextBox.Text = "ManagedGame";
+            this.c_ProjectNameTextBox.TextChanged += new System.EventHandler(this.ProjectNameTextBox_TextChanged);
             // 
-            // flowLayoutPanel1
+            // c_FlowLayoutPanel
             // 
-            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowLayoutPanel1.Controls.Add(this.cancelButton);
-            this.flowLayoutPanel1.Controls.Add(this.OKButton);
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(439, 281);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(168, 29);
-            this.flowLayoutPanel1.TabIndex = 4;
+            this.c_FlowLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.c_FlowLayoutPanel.Controls.Add(this.c_CancelButton);
+            this.c_FlowLayoutPanel.Controls.Add(this.c_OKButton);
+            this.c_FlowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.c_FlowLayoutPanel.Location = new System.Drawing.Point(439, 281);
+            this.c_FlowLayoutPanel.Name = "c_FlowLayoutPanel";
+            this.c_FlowLayoutPanel.Size = new System.Drawing.Size(168, 29);
+            this.c_FlowLayoutPanel.TabIndex = 4;
             // 
-            // cancelButton
+            // c_CancelButton
             // 
-            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(90, 3);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 1;
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            this.c_CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.c_CancelButton.Location = new System.Drawing.Point(90, 3);
+            this.c_CancelButton.Name = "c_CancelButton";
+            this.c_CancelButton.Size = new System.Drawing.Size(75, 23);
+            this.c_CancelButton.TabIndex = 1;
+            this.c_CancelButton.Text = "Cancel";
+            this.c_CancelButton.UseVisualStyleBackColor = true;
+            this.c_CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
-            // OKButton
+            // c_OKButton
             // 
-            this.OKButton.Location = new System.Drawing.Point(9, 3);
-            this.OKButton.Name = "OKButton";
-            this.OKButton.Size = new System.Drawing.Size(75, 23);
-            this.OKButton.TabIndex = 0;
-            this.OKButton.Text = "OK";
-            this.OKButton.UseVisualStyleBackColor = true;
-            this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
+            this.c_OKButton.Location = new System.Drawing.Point(9, 3);
+            this.c_OKButton.Name = "c_OKButton";
+            this.c_OKButton.Size = new System.Drawing.Size(75, 23);
+            this.c_OKButton.TabIndex = 0;
+            this.c_OKButton.Text = "OK";
+            this.c_OKButton.UseVisualStyleBackColor = true;
+            this.c_OKButton.Click += new System.EventHandler(this.OKButton_Click);
             // 
-            // groupBox1
+            // c_GroupBox
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.c_GroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Location = new System.Drawing.Point(15, 259);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(589, 7);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
+            this.c_GroupBox.Location = new System.Drawing.Point(15, 259);
+            this.c_GroupBox.Name = "c_GroupBox";
+            this.c_GroupBox.Size = new System.Drawing.Size(589, 7);
+            this.c_GroupBox.TabIndex = 5;
+            this.c_GroupBox.TabStop = false;
             // 
-            // solutionLocationTextBox
+            // c_SolutionLocationTextBox
             // 
-            this.solutionLocationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.c_SolutionLocationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.solutionLocationTextBox.Location = new System.Drawing.Point(154, 209);
-            this.solutionLocationTextBox.Name = "solutionLocationTextBox";
-            this.solutionLocationTextBox.Size = new System.Drawing.Size(353, 20);
-            this.solutionLocationTextBox.TabIndex = 7;
-            this.solutionLocationTextBox.Text = "Z:\\My Documents\\Roket3D Projects\\";
-            this.solutionLocationTextBox.TextChanged += new System.EventHandler(this.solutionLocationTextBox_TextChanged);
+            this.c_SolutionLocationTextBox.Location = new System.Drawing.Point(154, 209);
+            this.c_SolutionLocationTextBox.Name = "c_SolutionLocationTextBox";
+            this.c_SolutionLocationTextBox.Size = new System.Drawing.Size(353, 20);
+            this.c_SolutionLocationTextBox.TabIndex = 7;
+            this.c_SolutionLocationTextBox.Text = "Z:\\My Documents\\Roket3D Projects\\";
+            this.c_SolutionLocationTextBox.TextChanged += new System.EventHandler(this.SolutionLocationTextBox_TextChanged);
             // 
-            // lblFolder
+            // c_FolderLabel
             // 
-            this.lblFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblFolder.AutoSize = true;
-            this.lblFolder.Location = new System.Drawing.Point(12, 212);
-            this.lblFolder.Name = "lblFolder";
-            this.lblFolder.Size = new System.Drawing.Size(87, 13);
-            this.lblFolder.TabIndex = 6;
-            this.lblFolder.Text = "Project Location:";
+            this.c_FolderLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.c_FolderLabel.AutoSize = true;
+            this.c_FolderLabel.Location = new System.Drawing.Point(12, 212);
+            this.c_FolderLabel.Name = "c_FolderLabel";
+            this.c_FolderLabel.Size = new System.Drawing.Size(87, 13);
+            this.c_FolderLabel.TabIndex = 6;
+            this.c_FolderLabel.Text = "Project Location:";
             // 
-            // solutionFolderTextBox
+            // c_SolutionFolderTextBox
             // 
-            this.solutionFolderTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.c_SolutionFolderTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.solutionFolderTextBox.Enabled = false;
-            this.solutionFolderTextBox.Location = new System.Drawing.Point(154, 235);
-            this.solutionFolderTextBox.Name = "solutionFolderTextBox";
-            this.solutionFolderTextBox.ReadOnly = true;
-            this.solutionFolderTextBox.Size = new System.Drawing.Size(353, 20);
-            this.solutionFolderTextBox.TabIndex = 9;
-            this.solutionFolderTextBox.Text = "ManagedSolution";
-            this.solutionFolderTextBox.TextChanged += new System.EventHandler(this.solutionFolderTextBox_TextChanged);
+            this.c_SolutionFolderTextBox.Enabled = false;
+            this.c_SolutionFolderTextBox.Location = new System.Drawing.Point(154, 235);
+            this.c_SolutionFolderTextBox.Name = "c_SolutionFolderTextBox";
+            this.c_SolutionFolderTextBox.ReadOnly = true;
+            this.c_SolutionFolderTextBox.Size = new System.Drawing.Size(353, 20);
+            this.c_SolutionFolderTextBox.TabIndex = 9;
+            this.c_SolutionFolderTextBox.Text = "ManagedSolution";
+            this.c_SolutionFolderTextBox.TextChanged += new System.EventHandler(this.SolutionFolderTextBox_TextChanged);
             // 
-            // useSolutionFolderCheckBox
+            // c_UseSolutionFolderCheckBox
             // 
-            this.useSolutionFolderCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.useSolutionFolderCheckBox.AutoSize = true;
-            this.useSolutionFolderCheckBox.CheckAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.useSolutionFolderCheckBox.Location = new System.Drawing.Point(15, 236);
-            this.useSolutionFolderCheckBox.Name = "useSolutionFolderCheckBox";
-            this.useSolutionFolderCheckBox.Size = new System.Drawing.Size(121, 17);
-            this.useSolutionFolderCheckBox.TabIndex = 10;
-            this.useSolutionFolderCheckBox.Text = "Use Solution Folder:";
-            this.useSolutionFolderCheckBox.UseVisualStyleBackColor = true;
-            this.useSolutionFolderCheckBox.CheckedChanged += new System.EventHandler(this.useSolutionFolderCheckBox_CheckedChanged);
+            this.c_UseSolutionFolderCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.c_UseSolutionFolderCheckBox.AutoSize = true;
+            this.c_UseSolutionFolderCheckBox.CheckAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.c_UseSolutionFolderCheckBox.Location = new System.Drawing.Point(15, 236);
+            this.c_UseSolutionFolderCheckBox.Name = "c_UseSolutionFolderCheckBox";
+            this.c_UseSolutionFolderCheckBox.Size = new System.Drawing.Size(121, 17);
+            this.c_UseSolutionFolderCheckBox.TabIndex = 10;
+            this.c_UseSolutionFolderCheckBox.Text = "Use Solution Folder:";
+            this.c_UseSolutionFolderCheckBox.UseVisualStyleBackColor = true;
+            this.c_UseSolutionFolderCheckBox.CheckedChanged += new System.EventHandler(this.UseSolutionFolderCheckBox_CheckedChanged);
             // 
-            // solutionLocationLabel
+            // c_SolutionLocationLabel
             // 
-            this.solutionLocationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.c_SolutionLocationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.solutionLocationLabel.AutoEllipsis = true;
-            this.solutionLocationLabel.Location = new System.Drawing.Point(37, 281);
-            this.solutionLocationLabel.Name = "solutionLocationLabel";
-            this.solutionLocationLabel.Size = new System.Drawing.Size(400, 41);
-            this.solutionLocationLabel.TabIndex = 11;
-            this.solutionLocationLabel.Text = "Z:\\My Documents\\Roket3D Projects\\ManagedGame";
-            this.solutionLocationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.c_SolutionLocationLabel.AutoEllipsis = true;
+            this.c_SolutionLocationLabel.Location = new System.Drawing.Point(37, 281);
+            this.c_SolutionLocationLabel.Name = "c_SolutionLocationLabel";
+            this.c_SolutionLocationLabel.Size = new System.Drawing.Size(400, 41);
+            this.c_SolutionLocationLabel.TabIndex = 11;
+            this.c_SolutionLocationLabel.Text = "Z:\\My Documents\\Roket3D Projects\\ManagedGame";
+            this.c_SolutionLocationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // solutionFolderInvalidPictureBox
+            // c_SolutionFolderInvalidPictureBox
             // 
-            this.solutionFolderInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.solutionFolderInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
-            this.solutionFolderInvalidPictureBox.Location = new System.Drawing.Point(513, 235);
-            this.solutionFolderInvalidPictureBox.Name = "solutionFolderInvalidPictureBox";
-            this.solutionFolderInvalidPictureBox.Size = new System.Drawing.Size(20, 20);
-            this.solutionFolderInvalidPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.solutionFolderInvalidPictureBox.TabIndex = 14;
-            this.solutionFolderInvalidPictureBox.TabStop = false;
-            this.solutionFolderInvalidPictureBox.Visible = false;
+            this.c_SolutionFolderInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.c_SolutionFolderInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
+            this.c_SolutionFolderInvalidPictureBox.Location = new System.Drawing.Point(513, 235);
+            this.c_SolutionFolderInvalidPictureBox.Name = "c_SolutionFolderInvalidPictureBox";
+            this.c_SolutionFolderInvalidPictureBox.Size = new System.Drawing.Size(20, 20);
+            this.c_SolutionFolderInvalidPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.c_SolutionFolderInvalidPictureBox.TabIndex = 14;
+            this.c_SolutionFolderInvalidPictureBox.TabStop = false;
+            this.c_SolutionFolderInvalidPictureBox.Visible = false;
             // 
-            // solutionLocationInvalidPictureBox
+            // c_SolutionLocationInvalidPictureBox
             // 
-            this.solutionLocationInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.solutionLocationInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
-            this.solutionLocationInvalidPictureBox.Location = new System.Drawing.Point(545, 209);
-            this.solutionLocationInvalidPictureBox.Name = "solutionLocationInvalidPictureBox";
-            this.solutionLocationInvalidPictureBox.Size = new System.Drawing.Size(20, 20);
-            this.solutionLocationInvalidPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.solutionLocationInvalidPictureBox.TabIndex = 13;
-            this.solutionLocationInvalidPictureBox.TabStop = false;
-            this.solutionLocationInvalidPictureBox.Visible = false;
+            this.c_SolutionLocationInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.c_SolutionLocationInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
+            this.c_SolutionLocationInvalidPictureBox.Location = new System.Drawing.Point(545, 209);
+            this.c_SolutionLocationInvalidPictureBox.Name = "c_SolutionLocationInvalidPictureBox";
+            this.c_SolutionLocationInvalidPictureBox.Size = new System.Drawing.Size(20, 20);
+            this.c_SolutionLocationInvalidPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.c_SolutionLocationInvalidPictureBox.TabIndex = 13;
+            this.c_SolutionLocationInvalidPictureBox.TabStop = false;
+            this.c_SolutionLocationInvalidPictureBox.Visible = false;
             // 
-            // projectNameInvalidPictureBox
+            // c_ProjectNameInvalidPictureBox
             // 
-            this.projectNameInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.projectNameInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
-            this.projectNameInvalidPictureBox.Location = new System.Drawing.Point(513, 183);
-            this.projectNameInvalidPictureBox.Name = "projectNameInvalidPictureBox";
-            this.projectNameInvalidPictureBox.Size = new System.Drawing.Size(20, 20);
-            this.projectNameInvalidPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.projectNameInvalidPictureBox.TabIndex = 12;
-            this.projectNameInvalidPictureBox.TabStop = false;
-            this.projectNameInvalidPictureBox.Visible = false;
+            this.c_ProjectNameInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.c_ProjectNameInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
+            this.c_ProjectNameInvalidPictureBox.Location = new System.Drawing.Point(513, 183);
+            this.c_ProjectNameInvalidPictureBox.Name = "c_ProjectNameInvalidPictureBox";
+            this.c_ProjectNameInvalidPictureBox.Size = new System.Drawing.Size(20, 20);
+            this.c_ProjectNameInvalidPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.c_ProjectNameInvalidPictureBox.TabIndex = 12;
+            this.c_ProjectNameInvalidPictureBox.TabStop = false;
+            this.c_ProjectNameInvalidPictureBox.Visible = false;
             // 
-            // browseSolutionLocationButton
+            // c_BrowseSolutionLocationButton
             // 
-            this.browseSolutionLocationButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.browseSolutionLocationButton.Location = new System.Drawing.Point(513, 209);
-            this.browseSolutionLocationButton.Name = "browseSolutionLocationButton";
-            this.browseSolutionLocationButton.Size = new System.Drawing.Size(26, 20);
-            this.browseSolutionLocationButton.TabIndex = 15;
-            this.browseSolutionLocationButton.Text = "...";
-            this.browseSolutionLocationButton.UseVisualStyleBackColor = true;
-            this.browseSolutionLocationButton.Click += new System.EventHandler(this.browseSolutionLocationButton_Click);
+            this.c_BrowseSolutionLocationButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.c_BrowseSolutionLocationButton.Location = new System.Drawing.Point(513, 209);
+            this.c_BrowseSolutionLocationButton.Name = "c_BrowseSolutionLocationButton";
+            this.c_BrowseSolutionLocationButton.Size = new System.Drawing.Size(26, 20);
+            this.c_BrowseSolutionLocationButton.TabIndex = 15;
+            this.c_BrowseSolutionLocationButton.Text = "...";
+            this.c_BrowseSolutionLocationButton.UseVisualStyleBackColor = true;
+            this.c_BrowseSolutionLocationButton.Click += new System.EventHandler(this.BrowseSolutionLocationButton_Click);
             // 
-            // projectTypeInvalidPictureBox
+            // c_ProjectTypeInvalidPictureBox
             // 
-            this.projectTypeInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.projectTypeInvalidPictureBox.BackColor = System.Drawing.Color.White;
-            this.projectTypeInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
-            this.projectTypeInvalidPictureBox.Location = new System.Drawing.Point(581, 16);
-            this.projectTypeInvalidPictureBox.Name = "projectTypeInvalidPictureBox";
-            this.projectTypeInvalidPictureBox.Size = new System.Drawing.Size(20, 20);
-            this.projectTypeInvalidPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.projectTypeInvalidPictureBox.TabIndex = 16;
-            this.projectTypeInvalidPictureBox.TabStop = false;
-            this.projectTypeInvalidPictureBox.Visible = false;
+            this.c_ProjectTypeInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.c_ProjectTypeInvalidPictureBox.BackColor = System.Drawing.Color.White;
+            this.c_ProjectTypeInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
+            this.c_ProjectTypeInvalidPictureBox.Location = new System.Drawing.Point(581, 16);
+            this.c_ProjectTypeInvalidPictureBox.Name = "c_ProjectTypeInvalidPictureBox";
+            this.c_ProjectTypeInvalidPictureBox.Size = new System.Drawing.Size(20, 20);
+            this.c_ProjectTypeInvalidPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.c_ProjectTypeInvalidPictureBox.TabIndex = 16;
+            this.c_ProjectTypeInvalidPictureBox.TabStop = false;
+            this.c_ProjectTypeInvalidPictureBox.Visible = false;
             // 
-            // label1
+            // c_ProjectCreationLabel
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.c_ProjectCreationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoEllipsis = true;
-            this.label1.Location = new System.Drawing.Point(16, 269);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(417, 14);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "Project will be created at:";
+            this.c_ProjectCreationLabel.AutoEllipsis = true;
+            this.c_ProjectCreationLabel.Location = new System.Drawing.Point(16, 269);
+            this.c_ProjectCreationLabel.Name = "c_ProjectCreationLabel";
+            this.c_ProjectCreationLabel.Size = new System.Drawing.Size(417, 14);
+            this.c_ProjectCreationLabel.TabIndex = 17;
+            this.c_ProjectCreationLabel.Text = "Project will be created at:";
             // 
             // NewSolutionForm
             // 
-            this.AcceptButton = this.OKButton;
+            this.AcceptButton = this.c_OKButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.cancelButton;
+            this.CancelButton = this.c_CancelButton;
             this.ClientSize = new System.Drawing.Size(616, 322);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.projectTypeInvalidPictureBox);
-            this.Controls.Add(this.browseSolutionLocationButton);
-            this.Controls.Add(this.solutionFolderInvalidPictureBox);
-            this.Controls.Add(this.solutionLocationInvalidPictureBox);
-            this.Controls.Add(this.projectNameInvalidPictureBox);
-            this.Controls.Add(this.solutionLocationLabel);
-            this.Controls.Add(this.useSolutionFolderCheckBox);
-            this.Controls.Add(this.solutionFolderTextBox);
-            this.Controls.Add(this.solutionLocationTextBox);
-            this.Controls.Add(this.lblFolder);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.projectNameTextBox);
-            this.Controls.Add(this.nameLabel);
-            this.Controls.Add(this.templateDescriptionTextBox);
-            this.Controls.Add(this.projectTypeListView);
+            this.Controls.Add(this.c_ProjectCreationLabel);
+            this.Controls.Add(this.c_ProjectTypeInvalidPictureBox);
+            this.Controls.Add(this.c_BrowseSolutionLocationButton);
+            this.Controls.Add(this.c_SolutionFolderInvalidPictureBox);
+            this.Controls.Add(this.c_SolutionLocationInvalidPictureBox);
+            this.Controls.Add(this.c_ProjectNameInvalidPictureBox);
+            this.Controls.Add(this.c_SolutionLocationLabel);
+            this.Controls.Add(this.c_UseSolutionFolderCheckBox);
+            this.Controls.Add(this.c_SolutionFolderTextBox);
+            this.Controls.Add(this.c_SolutionLocationTextBox);
+            this.Controls.Add(this.c_FolderLabel);
+            this.Controls.Add(this.c_GroupBox);
+            this.Controls.Add(this.c_FlowLayoutPanel);
+            this.Controls.Add(this.c_ProjectNameTextBox);
+            this.Controls.Add(this.c_NameLabel);
+            this.Controls.Add(this.c_TemplateDescriptionTextBox);
+            this.Controls.Add(this.c_ProjectTypeListView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(624, 349);
             this.Name = "NewSolutionForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "New Solution";
             this.Load += new System.EventHandler(this.NewSolutionForm_Load);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.solutionFolderInvalidPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.solutionLocationInvalidPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectNameInvalidPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectTypeInvalidPictureBox)).EndInit();
+            this.c_FlowLayoutPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.c_SolutionFolderInvalidPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c_SolutionLocationInvalidPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c_ProjectNameInvalidPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c_ProjectTypeInvalidPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -338,25 +338,25 @@
 
         #endregion
 
-        private System.Windows.Forms.ImageList imageList;
-        private System.Windows.Forms.TextBox templateDescriptionTextBox;
-        private System.Windows.Forms.Label nameLabel;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button OKButton;
-        private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.GroupBox groupBox1;
-        public System.Windows.Forms.TextBox projectNameTextBox;
-        public System.Windows.Forms.ListView projectTypeListView;
-        public System.Windows.Forms.TextBox solutionLocationTextBox;
-        private System.Windows.Forms.Label lblFolder;
-        public System.Windows.Forms.TextBox solutionFolderTextBox;
-        private System.Windows.Forms.PictureBox projectNameInvalidPictureBox;
-        private System.Windows.Forms.PictureBox solutionLocationInvalidPictureBox;
-        private System.Windows.Forms.PictureBox solutionFolderInvalidPictureBox;
-        private System.Windows.Forms.Button browseSolutionLocationButton;
-        private System.Windows.Forms.PictureBox projectTypeInvalidPictureBox;
-        private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.CheckBox useSolutionFolderCheckBox;
-        public System.Windows.Forms.Label solutionLocationLabel;
+        private System.Windows.Forms.ImageList c_ImageList;
+        private System.Windows.Forms.TextBox c_TemplateDescriptionTextBox;
+        private System.Windows.Forms.Label c_NameLabel;
+        private System.Windows.Forms.FlowLayoutPanel c_FlowLayoutPanel;
+        private System.Windows.Forms.Button c_OKButton;
+        private System.Windows.Forms.Button c_CancelButton;
+        private System.Windows.Forms.GroupBox c_GroupBox;
+        private System.Windows.Forms.Label c_FolderLabel;
+        private System.Windows.Forms.PictureBox c_ProjectNameInvalidPictureBox;
+        private System.Windows.Forms.PictureBox c_SolutionLocationInvalidPictureBox;
+        private System.Windows.Forms.PictureBox c_SolutionFolderInvalidPictureBox;
+        private System.Windows.Forms.Button c_BrowseSolutionLocationButton;
+        private System.Windows.Forms.PictureBox c_ProjectTypeInvalidPictureBox;
+        private System.Windows.Forms.Label c_ProjectCreationLabel;
+        private System.Windows.Forms.TextBox c_ProjectNameTextBox;
+        private System.Windows.Forms.ListView c_ProjectTypeListView;
+        private System.Windows.Forms.TextBox c_SolutionLocationTextBox;
+        private System.Windows.Forms.TextBox c_SolutionFolderTextBox;
+        private System.Windows.Forms.CheckBox c_UseSolutionFolderCheckBox;
+        private System.Windows.Forms.Label c_SolutionLocationLabel;
     }
 }

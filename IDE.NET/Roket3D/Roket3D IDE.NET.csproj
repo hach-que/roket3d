@@ -93,6 +93,7 @@
     <Compile Include="Content Editors\CodeScriptForm.Designer.cs">
       <DependentUpon>CodeScriptForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Content Editors\Content Classes\Model.cs" />
     <Compile Include="Content Editors\ControlColorSelector.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -170,33 +171,43 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Content Editors\CodeScriptForm.resx">
       <DependentUpon>CodeScriptForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Content Editors\ControlColorSelector.resx">
       <DependentUpon>ControlColorSelector.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Content Editors\ControlColorSelectorDropDown.resx">
       <DependentUpon>ControlColorSelectorDropDown.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Content Editors\ControlImageEditor.resx">
       <DependentUpon>ControlImageEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Content Editors\DesignerImageForm.resx">
       <DependentUpon>DesignerImageForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Content Editors\DesignerModelForm.resx">
       <DependentUpon>DesignerModelForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Content Editors\SpecialStartForm.resx">
       <DependentUpon>SpecialStartForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Management\NewImageForm.resx">
       <DependentUpon>NewImageForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Management\NewSolutionForm.resx">
       <DependentUpon>NewSolutionForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -205,15 +216,19 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tool Windows\ToolConsole.resx">
       <DependentUpon>ToolConsole.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Tool Windows\ToolErrorList.resx">
       <DependentUpon>ToolErrorList.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Tool Windows\ToolBuildOutput.resx">
       <DependentUpon>ToolBuildOutput.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Tool Windows\ToolSolutionExplorer.resx">
       <DependentUpon>ToolSolutionExplorer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -17,13 +17,13 @@ namespace Roket3D.Compilation
 
     class ProjectBuilder
     {
-        Project Project;
-        ToolBuildOutput Output;
+        Project m_Project;
+        ToolBuildOutput m_Output;
 
         ProjectBuilder(Project Project, ToolBuildOutput Output)
         {
-            this.Project = Project;
-            this.Output = Output;
+            this.m_Project = Project;
+            this.m_Output = Output;
         }
 
         void Build(BuildMode Mode)
@@ -74,7 +74,7 @@ namespace Roket3D.Compilation
 
             // Now fetch a list of the engine files.
             FileInfo[] SourceFiles = LibraryFolder.GetFiles();
-            FileInfo[] DestinationFiles = this.Project.GetRootFolder().GetFiles();
+            FileInfo[] DestinationFiles = this.m_Project.GetRootFolder().GetFiles();
             Dictionary<String, FileInfo> DestinationDict = DestinationFiles.ToDictionary(
                 new Func<FileInfo,String>(
                     delegate(FileInfo target)
@@ -109,7 +109,7 @@ namespace Roket3D.Compilation
                 {
                     try
                     {
-                        sF.CopyTo(this.Project.GetRootFolder() + "\\" + sF.Name, true);
+                        sF.CopyTo(this.m_Project.GetRootFolder() + "\\" + sF.Name, true);
                         this.Log("3)     Copying " + sF.Name + "... success.");
                     }
                     catch
@@ -127,30 +127,30 @@ namespace Roket3D.Compilation
 
         void Log(String Message)
         {
-            if (this.Output.InvokeRequired)
-                this.Output.Invoke(new LogD(LogP), new object[] { Message });
+            if (this.m_Output.InvokeRequired)
+                this.m_Output.Invoke(new LogD(LogP), new object[] { Message });
             else
-                this.Output.AddLogEntry(Message);
+                this.m_Output.AddLogEntry(Message);
         }
 
         delegate void LogD(String Message);
         void LogP(String Message)
         {
-            this.Output.AddLogEntry(Message);
+            this.m_Output.AddLogEntry(Message);
         }
 
         void LogClear()
         {
-            if (this.Output.InvokeRequired)
-                this.Output.Invoke(new LogClearD(LogClearP));
+            if (this.m_Output.InvokeRequired)
+                this.m_Output.Invoke(new LogClearD(LogClearP));
             else
-                this.Output.ClearLog();
+                this.m_Output.ClearLog();
         }
 
         delegate void LogClearD();
         void LogClearP()
         {
-            this.Output.ClearLog();
+            this.m_Output.ClearLog();
         }
     }
 }

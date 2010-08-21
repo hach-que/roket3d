@@ -41,6 +41,12 @@ namespace Roket3D.Menus.Definitions.Actions
             this.Enabled = false;
         }
 
+        public override void OnActivate()
+        {
+            // TODO: Add proper unsaved changes checking etc.. here
+            Program.MainWindow.Close();
+        }
+
         public override String GetText()
         {
             return "Save document.lua";

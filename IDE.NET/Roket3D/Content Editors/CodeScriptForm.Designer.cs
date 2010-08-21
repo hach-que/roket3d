@@ -30,69 +30,69 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CodeScriptForm));
-            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.initalizationLabel = new System.Windows.Forms.Label();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.syntaxTimerLimit = new System.Windows.Forms.Timer(this.components);
-            this.toolStripContainer1.ContentPanel.SuspendLayout();
-            this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
-            this.toolStripContainer1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.c_ToolStripContainer = new System.Windows.Forms.ToolStripContainer();
+            this.c_InitalizationLabel = new System.Windows.Forms.Label();
+            this.c_ToolStrip = new System.Windows.Forms.ToolStrip();
+            this.c_SyntaxReportToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.c_SyntaxLimitTimer = new System.Windows.Forms.Timer(this.components);
+            this.c_ToolStripContainer.ContentPanel.SuspendLayout();
+            this.c_ToolStripContainer.TopToolStripPanel.SuspendLayout();
+            this.c_ToolStripContainer.SuspendLayout();
+            this.c_ToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // toolStripContainer1
+            // ToolStripContainer
             // 
             // 
-            // toolStripContainer1.ContentPanel
+            // ToolStripContainer.ContentPanel
             // 
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.initalizationLabel);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(553, 534);
-            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
-            this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(553, 534);
-            this.toolStripContainer1.TabIndex = 1;
-            this.toolStripContainer1.Text = "toolStripContainer1";
+            this.c_ToolStripContainer.ContentPanel.Controls.Add(this.c_InitalizationLabel);
+            this.c_ToolStripContainer.ContentPanel.Size = new System.Drawing.Size(553, 534);
+            this.c_ToolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.c_ToolStripContainer.Location = new System.Drawing.Point(0, 0);
+            this.c_ToolStripContainer.Name = "ToolStripContainer";
+            this.c_ToolStripContainer.Size = new System.Drawing.Size(553, 534);
+            this.c_ToolStripContainer.TabIndex = 1;
+            this.c_ToolStripContainer.Text = "toolStripContainer1";
             // 
-            // toolStripContainer1.TopToolStripPanel
+            // ToolStripContainer.TopToolStripPanel
             // 
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            this.c_ToolStripContainer.TopToolStripPanel.Controls.Add(this.c_ToolStrip);
             // 
-            // initalizationLabel
+            // InitalizationLabel
             // 
-            this.initalizationLabel.BackColor = System.Drawing.Color.White;
-            this.initalizationLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.initalizationLabel.Location = new System.Drawing.Point(0, 0);
-            this.initalizationLabel.Name = "initalizationLabel";
-            this.initalizationLabel.Size = new System.Drawing.Size(553, 534);
-            this.initalizationLabel.TabIndex = 0;
-            this.initalizationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.c_InitalizationLabel.BackColor = System.Drawing.Color.White;
+            this.c_InitalizationLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.c_InitalizationLabel.Location = new System.Drawing.Point(0, 0);
+            this.c_InitalizationLabel.Name = "InitalizationLabel";
+            this.c_InitalizationLabel.Size = new System.Drawing.Size(553, 534);
+            this.c_InitalizationLabel.TabIndex = 0;
+            this.c_InitalizationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // toolStrip1
+            // ToolStrip
             // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(91, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Visible = false;
+            this.c_ToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.c_ToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.c_SyntaxReportToolStripButton});
+            this.c_ToolStrip.Location = new System.Drawing.Point(3, 0);
+            this.c_ToolStrip.Name = "ToolStrip";
+            this.c_ToolStrip.Size = new System.Drawing.Size(126, 25);
+            this.c_ToolStrip.TabIndex = 0;
+            this.c_ToolStrip.Visible = false;
             // 
-            // toolStripButton1
+            // SyntaxReportToolStripButton
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(81, 22);
-            this.toolStripButton1.Text = "Syntax Report";
+            this.c_SyntaxReportToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.c_SyntaxReportToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("SyntaxReportToolStripButton.Image")));
+            this.c_SyntaxReportToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.c_SyntaxReportToolStripButton.Name = "SyntaxReportToolStripButton";
+            this.c_SyntaxReportToolStripButton.Size = new System.Drawing.Size(83, 22);
+            this.c_SyntaxReportToolStripButton.Text = "Syntax Report";
             // 
-            // syntaxTimerLimit
+            // SyntaxLimitTimer
             // 
-            this.syntaxTimerLimit.Interval = 500;
-            this.syntaxTimerLimit.Tick += new System.EventHandler(this.syntaxTimerLimit_Tick);
+            this.c_SyntaxLimitTimer.Interval = 500;
+            this.c_SyntaxLimitTimer.Tick += new System.EventHandler(this.SyntaxLimitTimer_Tick);
             // 
             // CodeScriptForm
             // 
@@ -100,30 +100,30 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(553, 534);
-            this.Controls.Add(this.toolStripContainer1);
+            this.Controls.Add(this.c_ToolStripContainer);
             this.DockAreas = DockPanelSuite.DockAreas.Document;
             this.Name = "CodeScriptForm";
             this.TabText = "CodeScriptForm";
             this.Text = "singlePlayerWorld.rkw [code]";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CodeScriptForm_FormClosing);
-            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
-            this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
-            this.toolStripContainer1.TopToolStripPanel.PerformLayout();
-            this.toolStripContainer1.ResumeLayout(false);
-            this.toolStripContainer1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.c_ToolStripContainer.ContentPanel.ResumeLayout(false);
+            this.c_ToolStripContainer.TopToolStripPanel.ResumeLayout(false);
+            this.c_ToolStripContainer.TopToolStripPanel.PerformLayout();
+            this.c_ToolStripContainer.ResumeLayout(false);
+            this.c_ToolStripContainer.PerformLayout();
+            this.c_ToolStrip.ResumeLayout(false);
+            this.c_ToolStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        public ScintillaNet.Scintilla scintillaEditor;
-        private System.Windows.Forms.Timer syntaxTimerLimit;
-        private System.Windows.Forms.Label initalizationLabel;
+        private System.Windows.Forms.ToolStripContainer c_ToolStripContainer;
+        private System.Windows.Forms.ToolStrip c_ToolStrip;
+        private System.Windows.Forms.ToolStripButton c_SyntaxReportToolStripButton;
+        public ScintillaNet.Scintilla ScintillaEditor;
+        private System.Windows.Forms.Timer c_SyntaxLimitTimer;
+        private System.Windows.Forms.Label c_InitalizationLabel;
     }
 }
