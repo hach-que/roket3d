@@ -1,0 +1,8 @@
+C:\Users\James Rhodes\Documents\Projects\Roket3D\IDE.NET\Dependencies\DockPanelSuite\bin\Debug\DockPanelSuite.dll
+C:\Users\James Rhodes\Documents\Projects\Roket3D\IDE.NET\Dependencies\DockPanelSuite\bin\Debug\DockPanelSuite.pdb
+C:\Users\James Rhodes\Documents\Projects\Roket3D\IDE.NET\Dependencies\DockPanelSuite\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\James Rhodes\Documents\Projects\Roket3D\IDE.NET\Dependencies\DockPanelSuite\obj\Debug\DockPanelSuite.Properties.Resources.resources
+C:\Users\James Rhodes\Documents\Projects\Roket3D\IDE.NET\Dependencies\DockPanelSuite\obj\Debug\DockPanelSuite.Strings.resources
+C:\Users\James Rhodes\Documents\Projects\Roket3D\IDE.NET\Dependencies\DockPanelSuite\obj\Debug\DockPanelSuite.csproj.GenerateResource.Cache
+C:\Users\James Rhodes\Documents\Projects\Roket3D\IDE.NET\Dependencies\DockPanelSuite\obj\Debug\DockPanelSuite.dll
+C:\Users\James Rhodes\Documents\Projects\Roket3D\IDE.NET\Dependencies\DockPanelSuite\obj\Debug\DockPanelSuite.pdb
