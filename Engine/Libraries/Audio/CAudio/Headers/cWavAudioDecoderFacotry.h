@@ -3,7 +3,7 @@
 
 #include "../include/IAudioDecoderFactory.h"
 #include "cWavDecoder.h"
-#include "../export.h"
+#include "export.h"
 
 
 namespace cAudio

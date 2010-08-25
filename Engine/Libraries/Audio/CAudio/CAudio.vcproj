@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Include&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\ALUT\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\OGG\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\Vorbis\Include&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,9 +63,9 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="OpenAL32.lib alut.lib libogg.lib libvorbis.lib libvorbisfile.lib"
-				OutputFile="C:\Roket3D\Windows\Additional Libraries\cAudio.lib"
-				AdditionalLibraryDirectories="&quot;C:\Roket3D\Windows\Additional Libraries&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\libs\Win32&quot;"
+				AdditionalDependencies=" openal32.lib"
+				OutputFile="$(OutDir)\$(ProjectName).lib"
+				AdditionalLibraryDirectories="&quot;C:\Program Files\OpenAL 1.1 SDK\libs\Win32&quot;"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -108,7 +108,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="C:\Roket3D\CAudio\include;C:\Roket3D\CAudio\Headers;C:\Roket3D\CAudio\dependencies\Headers;C:\Roket3D\CAudio\dependencies\Headers\AL;C:\Roket3D\CAudio\dependencies\Headers\ALUT;C:\Roket3D\CAudio\dependencies\Headers\ALUT\AL"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\ALUT\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\OGG\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\Vorbis\Include&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -127,8 +127,9 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="C:\Roket3D\Windows\Additional Libraries\cAudio.lib"
-				AdditionalLibraryDirectories="&quot;C:\Roket3D\Windows\Additional Libraries&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\libs\Win32&quot;"
+				AdditionalDependencies=" openal32.lib"
+				OutputFile="$(OutDir)\$(ProjectName).lib"
+				AdditionalLibraryDirectories="&quot;C:\Program Files\OpenAL 1.1 SDK\libs\Win32&quot;"
 				IgnoreAllDefaultLibraries="true"
 				IgnoreDefaultLibraryNames="msvcprt;MSVCRT"
 			/>

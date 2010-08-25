@@ -2,12 +2,12 @@
 #define COGGDECODER_H_INCLUDED
 
 #include "../include/IAudioDecoder.h"
-#include <ogg/ogg.h>
-#include <vorbis/codec.h>
-#include <vorbis/vorbisenc.h>
-#include <vorbis/vorbisfile.h>
+#include <ogg.h>
+#include <codec.h>
+#include <vorbisenc.h>
+#include <vorbisfile.h>
 #include <iostream>
-#include "../export.h"
+#include "export.h"
 
 namespace cAudio
 {

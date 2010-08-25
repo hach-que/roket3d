@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include "../export.h"
+#include "export.h"
 
 namespace cAudio
 {

@@ -2,13 +2,13 @@
 #define CAUDIO_H_INCLUDED
 #include <string>
 #include <iostream>
-#include "AL/al.h"
-#include "AL/alut.h"
+#include "al.h"
+#include "alut.h"
 #include <vector>
 
 #define BUFFER_SIZE ( 1024 * 32 )
 #include "../include/IAudio.h"
-#include "../export.h"
+#include "export.h"
 namespace cAudio
 {
     class cAudio : public IAudio
