@@ -44,9 +44,9 @@ using namespace std;
 	#include <boost/bind.hpp>
 #endif
 
-#include "../RoketGraphics/include/irrlicht.h"
-#include "../RoketGraphics/XEffects/Source/effectWrapper.h"
-#include "../RoketGraphics/XEffects/Source/effectWrapperCB.h"
+#include "irrlicht.h"
+#include "effectWrapper.h"
+#include "effectWrapperCB.h"
 
 extern lua_State *RoketLUA;
 extern int debuglevel;
@@ -414,16 +414,16 @@ int luaErrorHandler_syntaxErr(const char* msg);
  *********************************************/
 
 // include all R3D classes
-#include "robject.h"
-#include "eventreciever.h"
-#include "gui.h"
-#include "core.h"
-#include "scene.h"
-#include "video.h"
-#include "ext.h"
-#include "physics.h"
-#include "net.h"
-#include "audio.h"
+#include "E.Unmanaged/Core/robject.h"
+#include "E.Unmanaged/Core/eventreciever.h"
+#include "E.Unmanaged/GUI/gui.h"
+#include "E.Unmanaged/Core/core.h"
+#include "E.Unmanaged/Scene/scene.h"
+#include "E.Unmanaged/Video/video.h"
+#include "E.Unmanaged/Ext/ext.h"
+#include "E.Unmanaged/Physics/physics.h"
+#include "E.Unmanaged/Net/net.h"
+#include "E.Unmanaged/Audio/audio.h"
 
 void initalizeRoket3D (lua_State * L, int argc, char* argv[]);
 void registerConstant (lua_State * L, const char* name, const char* value, const char* namespac);

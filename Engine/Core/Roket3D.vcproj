@@ -40,6 +40,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Lua\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Newton\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\SDL\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\XEffects\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Irrlicht\Include&quot;"
+				PreprocessorDefinitions="WIN32"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -109,6 +111,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Lua\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Newton\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\SDL\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\XEffects\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Irrlicht\Include&quot;"
+				PreprocessorDefinitions="WIN32"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"

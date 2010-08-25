@@ -12,6 +12,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Roket3D", "Engine\Core\Roke
 	ProjectSection(ProjectDependencies) = postProject
 		{B7415036-4667-4E22-BA1C-D4F336399DAC} = {B7415036-4667-4E22-BA1C-D4F336399DAC}
 		{89F5E05C-7868-47CC-912B-250C0BF8170E} = {89F5E05C-7868-47CC-912B-250C0BF8170E}
+		{E0BBB1C5-C5A1-4297-BA1D-B191ACCDB325} = {E0BBB1C5-C5A1-4297-BA1D-B191ACCDB325}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Irrlicht", "Engine\Libraries\Irrlicht\Irrlicht.vcproj", "{659A346E-1481-42AD-8991-64F903F8A1C5}"
@@ -34,6 +35,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vorbis", "Engine\Libraries\Audio\Vorbis\Vorbis.vcproj", "{3A214E06-B95E-4D61-A291-1F8DF2EC10FD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VorbisFile", "Engine\Libraries\Audio\Vorbis\VorbisFile.vcproj", "{CEBDE98B-A6AA-46E6-BC79-FAAF823DB9EC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XEffects", "Engine\Libraries\XEffects\XEffects.vcproj", "{E0BBB1C5-C5A1-4297-BA1D-B191ACCDB325}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -165,6 +168,16 @@ Global
 		{CEBDE98B-A6AA-46E6-BC79-FAAF823DB9EC}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{CEBDE98B-A6AA-46E6-BC79-FAAF823DB9EC}.Release|Win32.ActiveCfg = Release|Win32
 		{CEBDE98B-A6AA-46E6-BC79-FAAF823DB9EC}.Release|Win32.Build.0 = Release|Win32
+		{E0BBB1C5-C5A1-4297-BA1D-B191ACCDB325}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{E0BBB1C5-C5A1-4297-BA1D-B191ACCDB325}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{E0BBB1C5-C5A1-4297-BA1D-B191ACCDB325}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{E0BBB1C5-C5A1-4297-BA1D-B191ACCDB325}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E0BBB1C5-C5A1-4297-BA1D-B191ACCDB325}.Debug|Win32.Build.0 = Debug|Win32
+		{E0BBB1C5-C5A1-4297-BA1D-B191ACCDB325}.Release|Any CPU.ActiveCfg = Release|Win32
+		{E0BBB1C5-C5A1-4297-BA1D-B191ACCDB325}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{E0BBB1C5-C5A1-4297-BA1D-B191ACCDB325}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{E0BBB1C5-C5A1-4297-BA1D-B191ACCDB325}.Release|Win32.ActiveCfg = Release|Win32
+		{E0BBB1C5-C5A1-4297-BA1D-B191ACCDB325}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
