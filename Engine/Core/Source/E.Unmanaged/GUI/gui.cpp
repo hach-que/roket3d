@@ -1,5 +1,5 @@
 #include "roket3d.h"
-#include "gui.h"
+#include "E.Unmanaged/GUI/gui.h"
 
 void GUIInitalize (lua_State * L)
 {

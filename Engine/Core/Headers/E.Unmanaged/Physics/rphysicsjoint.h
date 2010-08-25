@@ -1,11 +1,11 @@
 #ifndef HEADER_RPHYSICSJOINT
 #define HEADER_RPHYSICSJOINT
 
-#include "roket_physicsjointball.h"
-#include "roket_physicsjointhinge.h"
-#include "roket_physicsjointslider.h"
-#include "roket_physicsjointcorkscrew.h"
-#include "roket_physicsjointuniversal.h"
+#include "E.Unmanaged/Physics/Internal/roket_physicsjointball.h"
+#include "E.Unmanaged/Physics/Internal/roket_physicsjointhinge.h"
+#include "E.Unmanaged/Physics/Internal/roket_physicsjointslider.h"
+#include "E.Unmanaged/Physics/Internal/roket_physicsjointcorkscrew.h"
+#include "E.Unmanaged/Physics/Internal/roket_physicsjointuniversal.h"
 
 namespace physics
 {

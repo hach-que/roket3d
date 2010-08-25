@@ -1,5 +1,5 @@
 #include "roket3d.h"
-#include "rscenemeshnode.h"
+#include "E.Unmanaged/Scene/rscenemeshnode.h"
 
 namespace scene
 {

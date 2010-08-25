@@ -1,6 +1,6 @@
 #include "roket3d.h"
-#include "rguielement.h"
-#include "rguibutton.h"
+#include "E.Unmanaged/GUI/rguielement.h"
+#include "E.Unmanaged/GUI/rguibutton.h"
 
 namespace gui
 {

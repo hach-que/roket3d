@@ -1,5 +1,5 @@
 #include "roket3d.h"
-#include "rguistatictext.h"
+#include "E.Unmanaged/GUI/rguistatictext.h"
 
 namespace gui
 {

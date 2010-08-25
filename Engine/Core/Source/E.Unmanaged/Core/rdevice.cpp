@@ -1,6 +1,6 @@
 #include "roket3d.h"
-#include "eventreciever.h"
-#include "rdevice.h"
+#include "E.Unmanaged/Core/eventreciever.h"
+#include "E.Unmanaged/Core/rdevice.h"
 
 namespace core
 {
