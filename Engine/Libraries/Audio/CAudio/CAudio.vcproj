@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug"
-			IntermediateDirectory="Debug"
+			OutputDirectory="$(SolutionDir)\Engine\Build\Output\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)\Engine\Build\Objects\$(ConfigurationName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="C:\Roket3D\CAudio\include;C:\Roket3D\CAudio\Headers;C:\Roket3D\CAudio\dependencies\Headers;C:\Roket3D\CAudio\dependencies\Headers\AL;C:\Roket3D\CAudio\dependencies\Headers\ALUT;C:\Roket3D\CAudio\dependencies\Headers\ALUT\AL"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -85,8 +85,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release"
-			IntermediateDirectory="Release"
+			OutputDirectory="$(SolutionDir)\Engine\Build\Output\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)\Engine\Build\Objects\$(ConfigurationName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
@@ -150,12 +150,26 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{07149BCB-BE8A-4503-BE18-815D64233116}"
+			RelativePathToProject=".\Engine\Libraries\Audio\ALUT\alut.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{3A214E06-B95E-4D61-A291-1F8DF2EC10FD}"
+			RelativePathToProject=".\Engine\Libraries\Audio\Vorbis\Vorbis.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{CEBDE98B-A6AA-46E6-BC79-FAAF823DB9EC}"
+			RelativePathToProject=".\Engine\Libraries\Audio\Vorbis\VorbisFile.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{15CBFEFF-7965-41F5-B4E2-21E8795C9159}"
+			RelativePathToProject=".\Engine\Libraries\Audio\Ogg\OGG.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			Name="Source"
 			>
 			<File
 				RelativePath=".\Source\cAudio.cpp"
@@ -195,15 +209,35 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			Name="Include"
 			>
+			<File
+				RelativePath=".\Include\IAudio.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\IAudioDecoder.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\IAudioDecoderFactory.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\IAudioManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\IDataSource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\IListener.h"
+				>
+			</File>
 		</Filter>
 		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			Name="Headers"
 			>
 			<File
 				RelativePath=".\Headers\cAudio.h"
@@ -246,14 +280,10 @@
 				>
 			</File>
 			<File
-				RelativePath=".\export.h"
+				RelativePath=".\Headers\export.h"
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\ReadMe.txt"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>
