@@ -39,7 +39,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/wd4996"
 				Optimization="0"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Headers&quot;;&quot;$(ProjectDir)\Include&quot;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -99,8 +101,10 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/wd4996"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Headers&quot;;&quot;$(ProjectDir)\Include&quot;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
@@ -143,115 +147,115 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\lapi.c"
+				RelativePath=".\Source\lapi.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lauxlib.c"
+				RelativePath=".\Source\lauxlib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lbaselib.c"
+				RelativePath=".\Source\lbaselib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lcode.c"
+				RelativePath=".\Source\lcode.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ldblib.c"
+				RelativePath=".\Source\ldblib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ldebug.c"
+				RelativePath=".\Source\ldebug.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ldo.c"
+				RelativePath=".\Source\ldo.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ldump.c"
+				RelativePath=".\Source\ldump.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lfunc.c"
+				RelativePath=".\Source\lfunc.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lgc.c"
+				RelativePath=".\Source\lgc.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\linit.c"
+				RelativePath=".\Source\linit.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\liolib.c"
+				RelativePath=".\Source\liolib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\llex.c"
+				RelativePath=".\Source\llex.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lmathlib.c"
+				RelativePath=".\Source\lmathlib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lmem.c"
+				RelativePath=".\Source\lmem.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\loadlib.c"
+				RelativePath=".\Source\loadlib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lobject.c"
+				RelativePath=".\Source\lobject.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lopcodes.c"
+				RelativePath=".\Source\lopcodes.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\loslib.c"
+				RelativePath=".\Source\loslib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lparser.c"
+				RelativePath=".\Source\lparser.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lstate.c"
+				RelativePath=".\Source\lstate.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lstring.c"
+				RelativePath=".\Source\lstring.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lstrlib.c"
+				RelativePath=".\Source\lstrlib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ltable.c"
+				RelativePath=".\Source\ltable.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ltablib.c"
+				RelativePath=".\Source\ltablib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ltm.c"
+				RelativePath=".\Source\ltm.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lua.c"
+				RelativePath=".\Source\lua.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\luac.c"
+				RelativePath=".\Source\luac.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -263,19 +267,19 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\src\lundump.c"
+				RelativePath=".\Source\lundump.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lvm.c"
+				RelativePath=".\Source\lvm.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lzio.c"
+				RelativePath=".\Source\lzio.c"
 				>
 			</File>
 			<File
-				RelativePath=".\src\print.c"
+				RelativePath=".\Source\print.c"
 				>
 			</File>
 		</Filter>
@@ -284,95 +288,95 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\src\lapi.h"
+				RelativePath=".\Include\lapi.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lauxlib.h"
+				RelativePath=".\Include\lauxlib.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lcode.h"
+				RelativePath=".\Include\lcode.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ldebug.h"
+				RelativePath=".\Include\ldebug.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ldo.h"
+				RelativePath=".\Include\ldo.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lfunc.h"
+				RelativePath=".\Include\lfunc.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lgc.h"
+				RelativePath=".\Include\lgc.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\llex.h"
+				RelativePath=".\Include\llex.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\llimits.h"
+				RelativePath=".\Include\llimits.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lmem.h"
+				RelativePath=".\Include\lmem.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lobject.h"
+				RelativePath=".\Include\lobject.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lopcodes.h"
+				RelativePath=".\Include\lopcodes.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lparser.h"
+				RelativePath=".\Include\lparser.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lstate.h"
+				RelativePath=".\Include\lstate.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lstring.h"
+				RelativePath=".\Include\lstring.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ltable.h"
+				RelativePath=".\Include\ltable.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ltm.h"
+				RelativePath=".\Include\ltm.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lua.h"
+				RelativePath=".\Include\lua.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\luaconf.h"
+				RelativePath=".\Include\luaconf.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lualib.h"
+				RelativePath=".\Include\lualib.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lundump.h"
+				RelativePath=".\Include\lundump.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lvm.h"
+				RelativePath=".\Include\lvm.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\lzio.h"
+				RelativePath=".\Include\lzio.h"
 				>
 			</File>
 		</Filter>
