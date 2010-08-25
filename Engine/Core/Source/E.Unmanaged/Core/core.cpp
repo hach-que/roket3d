@@ -1,5 +1,5 @@
 #include "roket3d.h"
-#include "core.h"
+#include "E.Unmanaged/Core/core.h"
 
 void CoreInitalize (lua_State * L)
 {

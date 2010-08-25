@@ -3,18 +3,18 @@
 
 // These are the actual classes
 //#include "roket_physicsmaterialhandler.h"
-#include "roket_physicsmanager.h"
-#include "roket_physicsjointball.h"
-#include "roket_physicsjointhinge.h"
-#include "roket_physicsjointslider.h"
-#include "roket_physicsjointcorkscrew.h"
-#include "roket_physicsjointuniversal.h"
+#include "E.Unmanaged/Physics/Internal/roket_physicsmanager.h"
+#include "E.Unmanaged/Physics/Internal/roket_physicsjointball.h"
+#include "E.Unmanaged/Physics/Internal/roket_physicsjointhinge.h"
+#include "E.Unmanaged/Physics/Internal/roket_physicsjointslider.h"
+#include "E.Unmanaged/Physics/Internal/roket_physicsjointcorkscrew.h"
+#include "E.Unmanaged/Physics/Internal/roket_physicsjointuniversal.h"
 
 
 // And these are the LUA wrappers
 //#include "rphysicsmaterialhandler.h"
-#include "rphysicsmanager.h"
-#include "rphysicsjoint.h"
+#include "E.Unmanaged/Physics/rphysicsmanager.h"
+#include "E.Unmanaged/Physics/rphysicsjoint.h"
 
 void PhysicsInitalize (lua_State * L);
 

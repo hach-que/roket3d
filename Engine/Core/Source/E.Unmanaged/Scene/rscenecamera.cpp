@@ -1,5 +1,5 @@
 #include "roket3d.h"
-#include "rscenecamera.h"
+#include "E.Unmanaged/Scene/rscenecamera.h"
 
 namespace scene
 {

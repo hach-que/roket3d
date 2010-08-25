@@ -413,6 +413,27 @@ int luaErrorHandler_syntaxErr(const char* msg);
  * END CORE DEFINITIONS                      *
  *********************************************/
 
+// Predefine the namespaces
+namespace Engine
+{
+	namespace Unmanaged
+	{
+		namespace Audio {};
+		namespace Core {};
+		namespace Ext {};
+		namespace GUI {};
+		namespace Net {};
+		namespace Physics
+		{
+			namespace Internal {};
+		}
+		namespace Scene {};
+		namespace Video {};
+	}
+	namespace Library {};
+	namespace Collections {};
+};
+
 // include all R3D classes
 #include "E.Unmanaged/Core/robject.h"
 #include "E.Unmanaged/Core/eventreciever.h"

@@ -1,8 +1,8 @@
 #include "roket3d.h"
-#include "rscenelightnode.h"
+#include "E.Unmanaged/Scene/rscenelightnode.h"
 
-#include "../RoketGraphics/XEffects/Source/effectWrapper.h"
-#include "../RoketGraphics/XEffects/Source/effectWrapperCB.h"
+#include "effectWrapper.h"
+#include "effectWrapperCB.h"
 
 namespace scene
 {

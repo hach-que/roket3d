@@ -1,6 +1,6 @@
 #include "roket3d.h"
-#include "roket_physicsjointcorkscrew.h"
-#include "roket_physicscallbacks.h"
+#include "E.Unmanaged/Physics/Internal/roket_physicsjointcorkscrew.h"
+#include "E.Unmanaged/Physics/Internal/roket_physicscallbacks.h"
 
 namespace physics
 {

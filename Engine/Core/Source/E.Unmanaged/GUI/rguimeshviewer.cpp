@@ -1,6 +1,6 @@
 #include "roket3d.h"
-#include "rguielement.h"
-#include "rguimeshviewer.h"
+#include "E.Unmanaged/GUI/rguielement.h"
+#include "E.Unmanaged/GUI/rguimeshviewer.h"
 
 namespace gui
 {

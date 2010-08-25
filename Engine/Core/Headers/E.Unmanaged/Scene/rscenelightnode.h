@@ -1,8 +1,8 @@
 #ifndef HEADER_RSCENELIGHTNODE
 #define HEADER_RSCENELIGHTNODE
 
-#include "../RoketGraphics/XEffects/Source/effectWrapper.h"
-#include "../RoketGraphics/XEffects/Source/effectWrapperCB.h"
+#include "effectWrapper.h"
+#include "effectWrapperCB.h"
 
 namespace scene
 {
