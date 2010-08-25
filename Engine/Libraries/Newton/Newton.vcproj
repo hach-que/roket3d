@@ -16,7 +16,7 @@
 	</ToolFiles>
 	<Configurations>
 		<Configuration
-			Name="Distribute|Win32"
+			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)\Engine\Build\Output\$(ConfigurationName)"
 			IntermediateDirectory="$(SolutionDir)\Engine\Build\Objects\$(ConfigurationName)"
 			ConfigurationType="10"
@@ -33,6 +33,30 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Copying prebuilt binaries..."
+				CommandLine="xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\Newton.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\Newton.lib&quot; &quot;$(OutDir)\&quot;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="10"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Copying prebuilt binaries..."
+				CommandLine="xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\Newton.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\Newton.lib&quot; &quot;$(OutDir)\&quot;"
 			/>
 		</Configuration>
 	</Configurations>
