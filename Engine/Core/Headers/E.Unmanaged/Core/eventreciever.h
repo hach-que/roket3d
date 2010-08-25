@@ -1,9 +1,9 @@
 #ifndef HEADER_EVENTRECIEVER
 #define HEADER_EVENTRECIEVER
 
-#include "rguielement.h"
-#include "rguiwindow.h"
-#include "rscenenode.h"
+#include "E.Unmanaged/GUI/rguielement.h"
+#include "E.Unmanaged/GUI/rguiwindow.h"
+#include "E.Unmanaged/Scene/rscenenode.h"
 
 class RoketEventReceiver : public irr::IEventReceiver
 {
