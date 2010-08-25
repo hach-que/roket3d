@@ -2,7 +2,7 @@
 #define CMEMORYSOURCE_H
 
 #include "../include/IDataSource.h"
-#include "../export.h"
+#include "export.h"
 
 namespace cAudio
 {

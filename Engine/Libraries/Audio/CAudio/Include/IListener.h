@@ -1,7 +1,7 @@
 
 #ifndef ILISTENER_H
 #define ILISTENER_H
-#include "../export.h"
+#include "export.h"
 
 namespace cAudio
 {

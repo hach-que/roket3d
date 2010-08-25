@@ -1,12 +1,12 @@
 #ifndef CLISTENER_H_INCLUDED
 #define CLISTENER_H_INCLUDED
-#include <AL/al.h>
-#include <AL/alut.h>
+#include <al.h>
+#include <alut.h>
 //!#include <AL/alext.h>
 //!#include <AL/efx.h>
 #include <iostream>
 #define LOAD_AL_FUNC(x) (x = (typeof(x))alGetProcAddress(#x))
-#include "../export.h"
+#include "export.h"
 
 namespace cAudio
 {
