@@ -1,0 +1,65 @@
+"Name"     = 'B++ (AutoBind)'
+"Author"   = 'James Rhodes'
+"Version"  = '1.0'
+"About"    = 'Grammer for the AutoBind transformation program.'
+
+"Start Symbol" = <Program>
+
+! -------------------------------------------------
+! Character Sets
+! -------------------------------------------------
+
+{WS}           = {Whitespace} - {CR} - {LF}
+{ID Head}      = {Letter} + [_]
+{ID Tail}      = {Alphanumeric} + [_]
+{String Chars} = {Printable} + {HT} - ["\]
+{Terminator}   = [;]
+
+{Hash} = [#]
+{Quote} = ["]
+{COBracket} = [{]
+{CCBracket} = [}]
+{Dot} = [.]
+{ProcessorLine} = {Printable} - {CR} - {LF}
+
+! -------------------------------------------------
+! Terminals (Lexer)
+! -------------------------------------------------
+
+Whitespace    = {WS}+
+NewLine       = {CR}{LF} | {CR} | {LF}
+
+Identifier    = {ID Head}{ID Tail}*
+StringLiteral = '"' ( {String Chars} | '\' {Printable} )* '"'
+
+CodeOpenBracket   = {COBracket}
+CodeCloseBracket  = {CCBracket}
+
+PreprocessorIgnore = {ProcessorLine}+
+
+ClassIdentifier = Identifier ( {Dot} Identifier )+
+ClassDeclaration = 'class' ClassIdentifier ( 'as' ClassIdentifier )?
+
+! -------------------------------------------------
+! Rules (Parser)
+! -------------------------------------------------
+
+! The grammar starts below
+<Program> ::= <Top Statement>
+            | <Program> <Top Statement>
+
+! These are all the different statements to interpret at the
+! top level of the code.
+<Top Statement> ::= '#import' ClassIdentifier NewLine
+                  | PreprocessorStart PreprocessorIgnore NewLine
+                  | KeywordUsing ClassIdentifier Terminator
+                  | ClassDeclaration Terminator
+                  | ClassDeclaration <Code Block> Terminator
+
+<PreprocessorStart> ::= '#'
+
+! Definition of code block
+<Code Block> ::= CodeOpenBracket <Block Content> CodeCloseBracket
+
+! Define a rule to go here which correctly determines {} levels
+<Block Content> ::=
