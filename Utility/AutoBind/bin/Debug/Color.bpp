@@ -1,6 +1,10 @@
 #import Engine.Unmanaged.Core.RDevice
 using Engine.Unmanaged.Core;
 
+#ifdef DEBUG
+#warning This is a test.
+#endif
+
 class Engine.Unmanaged.Core.RColor
    as Engine.Unmanaged.Core.Color
 {
