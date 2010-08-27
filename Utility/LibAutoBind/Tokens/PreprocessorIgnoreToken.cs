@@ -6,17 +6,17 @@ using LibAutoBind.Nodes;
 
 namespace LibAutoBind.Tokens
 {
-    class PreprocessorImportToken : Token
+    class PreprocessorIgnoreToken : Token
     {
         private bool m_KeepOwnership = false;
 
-        public PreprocessorImportToken() { }
+        public PreprocessorIgnoreToken() { }
 
         public override void Run(Lexer l)
         {
-            if (l.Text == "#import")
+            if (l.Text.StartsWith("#") && (l.MatchNext(" ") || l.MatchNext("\n")) && l.Text != "#import")
                 l.TakeOwnership();
-            else if (!l.Text.StartsWith("#"))
+            else if (!l.Text.StartsWith("#") || l.Text == "#import")
                 l.ForceExclude();
 
             if (l.HasOwnership())
@@ -27,12 +27,13 @@ namespace LibAutoBind.Tokens
                 }
                 else if (l.Char == '\n' && !this.m_KeepOwnership)
                 {
-                    l.AddNode(new ImportNode(l.Text.Substring("#import".Length).Trim()));
+                    l.AddNode(new DirectNode(l.Text));
                     l.EndOwnership();
                 }
                 else if (this.m_KeepOwnership)
                     this.m_KeepOwnership = false;
             }
+            
         }
     }
 }

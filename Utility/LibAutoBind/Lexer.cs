@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibAutoBind.Tokens;
+using LibAutoBind.Nodes;
 
 namespace LibAutoBind
 {
@@ -13,6 +14,7 @@ namespace LibAutoBind
 
         private Machine m_Machine = null;
         private List<Token> m_Tokens = new List<Token>();
+        private List<Token> m_ExcludedTokens = new List<Token>();
         private Token m_TokenWithOwnership = null;
         private Token m_CurrentToken = null;
         private List<Node> m_LexerList = new List<Node>();
@@ -25,6 +27,8 @@ namespace LibAutoBind
 
             // Add all the tokens we should recognise.
             this.m_Tokens.Add(new PreprocessorImportToken());
+            this.m_Tokens.Add(new PreprocessorIgnoreToken());
+            this.m_Tokens.Add(new UsingToken());
         }
 
         /// <summary>
@@ -43,17 +47,36 @@ namespace LibAutoBind
                 {
                     c = this.m_SeekCache[0];
                     this.m_SeekCache = this.m_SeekCache.Substring(1);
+                    c = this.ConvertNewline(c);
                 }
                 else
+                {
                     c = (char)this.m_Machine.InputFile.Read();
+                    c = this.ConvertNewline(c);
+                }
                 this.p_Char = c;
 
                 this.p_TextCache += c;
 
                 if (this.m_TokenWithOwnership == null)
                 {
+                    // If all of the tokens have placed themselves in
+                    // the excluded list, we add a new DirectNode (since
+                    // we don't understand the content) and clear the
+                    // text state.
+                    if (this.m_Tokens.Count == this.m_ExcludedTokens.Count)
+                    {
+                        this.AddNode(new DirectNode(this.Text));
+                        this.p_TextCache = "";
+                        this.m_ExcludedTokens.Clear();
+                        continue;
+                    }
+
                     foreach (Token t in this.m_Tokens)
                     {
+                        if (this.m_ExcludedTokens.Contains(t))
+                            continue;
+
                         this.m_CurrentToken = t;
                         t.Run(this);
                         if (this.m_ShouldResetText)
@@ -80,6 +103,31 @@ namespace LibAutoBind
         }
 
         /// <summary>
+        /// Ensures that newlines are represented by single \n characters.
+        /// </summary>
+        private char ConvertNewline(char c)
+        {
+            if (c == '\r')
+            {
+                if (this.m_SeekCache.Length > 0)
+                {
+                    if (this.m_SeekCache[0] == '\n')
+                        this.m_SeekCache = this.m_SeekCache.Substring(1);
+                    c = '\n';
+                }
+                else
+                {
+                    if ((char)this.m_Machine.InputFile.Peek() == '\n')
+                        c = (char)this.m_Machine.InputFile.Read();
+                    else
+                        c = '\n';
+                }
+            }
+
+            return c;
+        }
+
+        /// <summary>
         /// Check the text before the current text state to see if
         /// it matches the specified string argument.
         /// </summary>
@@ -95,7 +143,7 @@ namespace LibAutoBind
         /// </summary>
         public string Text
         {
-            get { return this.p_TextCache; }
+            get { return this.p_TextCache.TrimStart(' '); }
         }
 
         /// <summary>
@@ -114,12 +162,6 @@ namespace LibAutoBind
         /// </summary>
         public bool MatchNext(string str)
         {
-            if (str.Length == 1)
-            {
-                // No need to deal with the seek cache, we can just use Peek().
-                return (str[0] == (char)this.m_Machine.InputFile.Peek());
-            }
-
             string res = "";
             for (int i = 0; i < str.Length; i += 1)
             {
@@ -128,6 +170,7 @@ namespace LibAutoBind
                 else
                 {
                     char c = (char)this.m_Machine.InputFile.Read();
+                    c = ConvertNewline(c);
                     res += c;
                     this.m_SeekCache += c;
                 }
@@ -152,6 +195,7 @@ namespace LibAutoBind
         /// </summary>
         public void AddNode(Node node)
         {
+            Console.WriteLine(node.GetType().ToString() + ": " + node.Content);
             this.m_LexerList.Add(node);
         }
 
@@ -166,6 +210,7 @@ namespace LibAutoBind
             {
                 this.m_TokenWithOwnership = null;
                 this.p_TextCache = "";
+                this.m_ExcludedTokens.Clear();
             }
         }
 
@@ -176,6 +221,17 @@ namespace LibAutoBind
         public bool HasOwnership()
         {
             return (this.m_TokenWithOwnership == this.m_CurrentToken);
+        }
+
+        /// <summary>
+        /// Forces the lexer to not include the current token in any further text
+        /// state testing (i.e. Run() will not be called) until another Token
+        /// successfully handles the current state.
+        /// </summary>
+        public void ForceExclude()
+        {
+            if (!this.m_ExcludedTokens.Contains(this.m_CurrentToken))
+                this.m_ExcludedTokens.Add(this.m_CurrentToken);
         }
     }
 }
