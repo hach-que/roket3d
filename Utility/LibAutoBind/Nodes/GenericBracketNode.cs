@@ -5,14 +5,9 @@ using System.Text;
 
 namespace LibAutoBind.Nodes
 {
-    class DirectNode : Node
+    class GenericBracketNode : Node
     {
-        internal DirectNode(string content)
-        {
-            this.p_Content = content;
-        }
-
-        internal void SetContent(string content)
+        internal GenericBracketNode(string content)
         {
             this.p_Content = content;
         }

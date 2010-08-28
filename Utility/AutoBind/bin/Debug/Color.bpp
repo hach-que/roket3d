@@ -38,6 +38,12 @@ class Engine.Unmanaged.Core.RColor
         set: call SetG;
     }
     
+    bound property numeric B
+    {
+        get: p_B;
+        set: p_B;
+    }
+    
     private numeric GetG()
     {
         return this->p_G;
