@@ -5,10 +5,11 @@ using System.Text;
 
 namespace LibAutoBind
 {
-    class Transformer
+    abstract class Transformer
     {
-        internal Transformer(Machine m)
-        {
-        }
+        protected Machine m_M;
+
+        abstract public void WriteHeaderFile(List<Node> nodes);
+        abstract public void WriteCodeFile(List<Node> nodes);
     }
 }

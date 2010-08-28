@@ -19,7 +19,7 @@ namespace LibAutoBind
         private Stack<Token> m_ParentStack = new Stack<Token>();
         private Token m_TokenWithOwnership = null;
         private Token m_CurrentToken = null;
-        private List<Node> m_LexerList = new List<Node>();
+        private List<Node> p_LexerList = new List<Node>();
         private string m_SeekCache = "";
         private bool m_ShouldResetText = false;
 
@@ -161,7 +161,7 @@ namespace LibAutoBind
                 this.m_CurrentToken = null;
             }
 
-            foreach (Node n in this.m_LexerList)
+            foreach (Node n in this.p_LexerList)
             {
                 string indent = "".PadLeft(n.ParentCount * 4);
                 Console.WriteLine(indent + n.GetType().ToString() + ": " + n.Content);
@@ -174,17 +174,17 @@ namespace LibAutoBind
         /// </summary>
         private void CompactDirectNodes()
         {
-            if (this.m_LexerList.Count < 2) return;
+            if (this.p_LexerList.Count < 2) return;
 
-            Node nl = this.m_LexerList[this.m_LexerList.Count - 1];
-            Node ns = this.m_LexerList[this.m_LexerList.Count - 2];
-            while (ns is DirectNode && nl is DirectNode && this.m_LexerList.Count >= 2)
+            Node nl = this.p_LexerList[this.p_LexerList.Count - 1];
+            Node ns = this.p_LexerList[this.p_LexerList.Count - 2];
+            while (ns is DirectNode && nl is DirectNode && this.p_LexerList.Count >= 2)
             {
                 ((DirectNode)ns).SetContent(ns.Content + nl.Content);
-                this.m_LexerList.Remove(nl);
+                this.p_LexerList.Remove(nl);
 
-                nl = this.m_LexerList[this.m_LexerList.Count - 1];
-                ns = this.m_LexerList[this.m_LexerList.Count - 2];
+                nl = this.p_LexerList[this.p_LexerList.Count - 1];
+                ns = this.p_LexerList[this.p_LexerList.Count - 2];
             }
         }
 
@@ -230,6 +230,14 @@ namespace LibAutoBind
         internal string Text
         {
             get { return this.p_TextCache; } //.TrimStart(); }
+        }
+
+        /// <summary>
+        /// A list of nodes built from the lexer during scanning the input file.
+        /// </summary>
+        internal List<Node> Nodes
+        {
+            get { return this.p_LexerList; }
         }
 
         /// <summary>
@@ -282,7 +290,7 @@ namespace LibAutoBind
         internal void AddNode(Node node)
         {
             node.ParentCount = this.m_ParentStack.Count;
-            this.m_LexerList.Add(node);
+            this.p_LexerList.Add(node);
             this.CompactDirectNodes();
         }
 

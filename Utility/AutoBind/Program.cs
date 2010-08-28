@@ -18,6 +18,7 @@ namespace AutoBind
 
             Machine m = new Machine(args[0], args[1], args[2]);
             m.Run();
+            m.Close();
 		}
 	}
 }
