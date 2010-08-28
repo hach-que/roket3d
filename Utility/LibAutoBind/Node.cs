@@ -9,7 +9,7 @@ namespace LibAutoBind
     {
         protected string p_Content;
 
-        public string Content
+        internal virtual string Content
         {
             get { return this.p_Content; }
         }

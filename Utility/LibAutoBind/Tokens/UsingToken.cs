@@ -8,9 +8,9 @@ namespace LibAutoBind.Tokens
 {
     class UsingToken : Token
     {
-        public UsingToken() { }
+        internal UsingToken() { }
 
-        public override void Run(Lexer l)
+        internal override void Detect(Lexer l)
         {
             if (l.Text.StartsWith("using ") && !l.HasOwnership())
                 l.TakeOwnership();

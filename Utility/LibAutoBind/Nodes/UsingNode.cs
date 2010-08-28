@@ -7,7 +7,7 @@ namespace LibAutoBind.Nodes
 {
     class UsingNode : Node
     {
-        public UsingNode(string content)
+        internal UsingNode(string content)
         {
             this.p_Content = content;
         }

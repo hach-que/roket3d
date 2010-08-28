@@ -15,13 +15,14 @@ namespace LibAutoBind
         private Machine m_Machine = null;
         private List<Token> m_Tokens = new List<Token>();
         private List<Token> m_ExcludedTokens = new List<Token>();
+        private Stack<Token> m_ParentStack = new Stack<Token>();
         private Token m_TokenWithOwnership = null;
         private Token m_CurrentToken = null;
         private List<Node> m_LexerList = new List<Node>();
         private string m_SeekCache = "";
         private bool m_ShouldResetText = false;
 
-        public Lexer(Machine m)
+        internal Lexer(Machine m)
         {
             this.m_Machine = m;
 
@@ -29,12 +30,13 @@ namespace LibAutoBind
             this.m_Tokens.Add(new PreprocessorImportToken());
             this.m_Tokens.Add(new PreprocessorIgnoreToken());
             this.m_Tokens.Add(new UsingToken());
+            this.m_Tokens.Add(new ClassDefinitionToken());
         }
 
         /// <summary>
         /// Runs the lexer on the machine's input file.
         /// </summary>
-        public void Run()
+        internal void Run()
         {
             while (!this.m_Machine.InputFile.EndOfStream || this.m_SeekCache.Length > 0)
             {
@@ -58,6 +60,43 @@ namespace LibAutoBind
 
                 this.p_TextCache += c;
 
+                // The length of the string is 0, which causes problems with
+                // tokens that rely on StartsWith.  Since there's no characters,
+                // and hence nothing that any token can make a decision on, we
+                // just continue the loop.
+                if (this.p_TextCache.TrimStart().Length == 0)
+                {
+                    continue;
+                }
+
+                // First check the immediate parent to see whether or not it wants
+                // to be unloaded from the list (and to consume the current text
+                // state).
+                if (this.m_ParentStack.Count > 0)
+                {
+                    Token t = this.m_ParentStack.Peek();
+                    this.m_CurrentToken = t;
+                    bool r = t.DetectEnd(this);
+                    this.m_CurrentToken = null;
+
+                    if (r)
+                    {
+                        // Find the current instance of the token type in the
+                        // lexer list and replace it with the parent instance.
+                        for (int i = 0; i < this.m_Tokens.Count; i++)
+                        {
+                            if (this.m_Tokens[i].GetType() == t.GetType())
+                            {
+                                this.m_Tokens[i] = this.m_ParentStack.Pop();
+                                break;
+                            }
+                        }
+                        this.p_TextCache = "";
+                        this.m_ExcludedTokens.Clear();
+                        continue;
+                    }
+                }
+
                 if (this.m_TokenWithOwnership == null)
                 {
                     // If all of the tokens have placed themselves in
@@ -72,13 +111,21 @@ namespace LibAutoBind
                         continue;
                     }
 
-                    foreach (Token t in this.m_Tokens)
+                    for (int a = 0; a < this.m_Tokens.Count; a++)
                     {
+                        Token t = this.m_Tokens[a];
                         if (this.m_ExcludedTokens.Contains(t))
                             continue;
 
                         this.m_CurrentToken = t;
-                        t.Run(this);
+                        t.Detect(this);
+                        
+                        // The AddParent() call modifies the m_CurrentToken
+                        // variable.  Make sure it's saved back into the
+                        // token list.
+                        int i = this.m_Tokens.IndexOf(t);
+                        this.m_Tokens[i] = this.m_CurrentToken;
+
                         if (this.m_ShouldResetText)
                         {
                             this.p_TextCache = "";
@@ -90,7 +137,7 @@ namespace LibAutoBind
                 else
                 {
                     this.m_CurrentToken = this.m_TokenWithOwnership;
-                    this.m_TokenWithOwnership.Run(this);
+                    this.m_TokenWithOwnership.Detect(this);
                     if (this.m_ShouldResetText)
                     {
                         this.p_TextCache = "";
@@ -131,7 +178,7 @@ namespace LibAutoBind
         /// Check the text before the current text state to see if
         /// it matches the specified string argument.
         /// </summary>
-        public bool MatchPrev(string str)
+        internal bool MatchPrev(string str)
         {
             throw new NotImplementedException();
         }
@@ -141,15 +188,15 @@ namespace LibAutoBind
         /// are continually added to the text until a Token takes ownership and
         /// handles the block of text.
         /// </summary>
-        public string Text
+        internal string Text
         {
-            get { return this.p_TextCache.TrimStart(' '); }
+            get { return this.p_TextCache.TrimStart(); }
         }
 
         /// <summary>
         /// The current character that was last read.
         /// </summary>
-        public char Char
+        internal char Char
         {
             get { return this.p_Char; }
         }
@@ -160,7 +207,7 @@ namespace LibAutoBind
         /// or not there is whitespace (i.e. end of a token) before taking
         /// ownership of it.
         /// </summary>
-        public bool MatchNext(string str)
+        internal bool MatchNext(string str)
         {
             string res = "";
             for (int i = 0; i < str.Length; i += 1)
@@ -184,7 +231,7 @@ namespace LibAutoBind
         /// function, it is the only Token that will recieve Run() calls.  This
         /// ensures that other tokens don't add nodes when they are not meant to.
         /// </summary>
-        public void TakeOwnership()
+        internal void TakeOwnership()
         {
             this.m_TokenWithOwnership = this.m_CurrentToken;
         }
@@ -193,9 +240,10 @@ namespace LibAutoBind
         /// Adds a node to the lexer list.  Nodes are then passed to the Transformer
         /// once lexing is complete.
         /// </summary>
-        public void AddNode(Node node)
+        internal void AddNode(Node node)
         {
-            Console.WriteLine(node.GetType().ToString() + ": " + node.Content);
+            string indent = "".PadLeft(this.m_ParentStack.Count * 4);
+            Console.WriteLine(indent + node.GetType().ToString() + ": " + node.Content);
             this.m_LexerList.Add(node);
         }
 
@@ -204,7 +252,7 @@ namespace LibAutoBind
         /// a Token that has previously taken ownership, the lexer clears the text
         /// state and moves onto reading the next set of characters.
         /// </summary>
-        public void EndOwnership()
+        internal void EndOwnership()
         {
             if (this.m_TokenWithOwnership == this.m_CurrentToken)
             {
@@ -218,7 +266,7 @@ namespace LibAutoBind
         /// Returns whether or not the Token currently has ownership of the text
         /// state.
         /// </summary>
-        public bool HasOwnership()
+        internal bool HasOwnership()
         {
             return (this.m_TokenWithOwnership == this.m_CurrentToken);
         }
@@ -228,10 +276,48 @@ namespace LibAutoBind
         /// state testing (i.e. Run() will not be called) until another Token
         /// successfully handles the current state.
         /// </summary>
-        public void ForceExclude()
+        internal void ForceExclude()
         {
             if (!this.m_ExcludedTokens.Contains(this.m_CurrentToken))
                 this.m_ExcludedTokens.Add(this.m_CurrentToken);
+        }
+
+        /// <summary>
+        /// Adds the current token as a parent to future tokens (i.e. a
+        /// ClassDefinitionToken becomes the parent so that variables within
+        /// classes will be transformed correctly).  When a token is the
+        /// immediate parent, it will have DetectEnd() called at the start of
+        /// the lexer loop.  If this function returns true, it indicates that
+        /// the token no longer wants to own the current block and the lexer
+        /// loop restarts with the parent removed from the list.
+        /// </summary>
+        internal void AddParent()
+        {
+            // You can't be a parent if you currently own the text.  However,
+            // it's assumed that if you are calling this function, you want to
+            // implicitly end ownership of the text.  There's no harm done if
+            // a token calls EndOwnership after AddParent (and it reads nicer
+            // as well).
+            if (this.HasOwnership())
+            {
+                this.EndOwnership();
+            }
+
+            // We actually create a new instance of the same token since
+            // we may have token detectors that are children of the same
+            // type of token detectors, and the parent status would be
+            // shared if we were using the same token detector in the
+            // parent list.
+            this.m_ParentStack.Push(this.m_CurrentToken);
+            this.m_CurrentToken = (Token)this.m_CurrentToken.GetType().GetConstructor(Type.EmptyTypes).Invoke(null);
+        }
+
+        /// <summary>
+        /// Returns whether the current token is acting as a parent.
+        /// </summary>
+        internal bool IsParent()
+        {
+            return this.m_ParentStack.Contains(this.m_CurrentToken);
         }
     }
 }
