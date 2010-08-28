@@ -45,14 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Keywords.cs" />
     <Compile Include="Lexer.cs" />
     <Compile Include="Machine.cs" />
     <Compile Include="Node.cs" />
+    <Compile Include="Nodes\ClassDefinitionNode.cs" />
     <Compile Include="Nodes\DirectNode.cs" />
     <Compile Include="Nodes\ImportNode.cs" />
     <Compile Include="Nodes\UsingNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Token.cs" />
+    <Compile Include="Tokens\ClassDefinitionToken.cs" />
+    <Compile Include="Tokens\ClassVariableDeclarationToken.cs" />
     <Compile Include="Tokens\PreprocessorIgnoreToken.cs" />
     <Compile Include="Tokens\PreprocessorImportToken.cs" />
     <Compile Include="Tokens\UsingToken.cs" />

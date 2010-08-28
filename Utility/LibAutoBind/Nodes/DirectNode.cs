@@ -7,7 +7,7 @@ namespace LibAutoBind.Nodes
 {
     class DirectNode : Node
     {
-        public DirectNode(string content)
+        internal DirectNode(string content)
         {
             this.p_Content = content;
         }

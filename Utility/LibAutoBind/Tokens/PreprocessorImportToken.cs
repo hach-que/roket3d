@@ -10,9 +10,9 @@ namespace LibAutoBind.Tokens
     {
         private bool m_KeepOwnership = false;
 
-        public PreprocessorImportToken() { }
+        internal PreprocessorImportToken() { }
 
-        public override void Run(Lexer l)
+        internal override void Detect(Lexer l)
         {
             if (l.Text == "#import")
                 l.TakeOwnership();

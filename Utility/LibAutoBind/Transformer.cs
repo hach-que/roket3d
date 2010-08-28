@@ -7,7 +7,7 @@ namespace LibAutoBind
 {
     class Transformer
     {
-        public Transformer(Machine m)
+        internal Transformer(Machine m)
         {
         }
     }

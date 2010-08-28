@@ -7,7 +7,7 @@ namespace LibAutoBind.Nodes
 {
     class ImportNode : Node
     {
-        public ImportNode(string content)
+        internal ImportNode(string content)
         {
             this.p_Content = content;
         }
