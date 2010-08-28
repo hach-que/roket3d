@@ -51,6 +51,9 @@
     <Compile Include="Node.cs" />
     <Compile Include="Nodes\ClassDefinitionNode.cs" />
     <Compile Include="Nodes\ClassVariableDeclarationNode.cs" />
+    <Compile Include="Nodes\ClassFunctionDeclarationNode.cs" />
+    <Compile Include="Nodes\ClassPropertyDeclarationNode.cs" />
+    <Compile Include="Nodes\GenericBracketNode.cs" />
     <Compile Include="Nodes\DirectNode.cs" />
     <Compile Include="Nodes\ImportNode.cs" />
     <Compile Include="Nodes\UsingNode.cs" />
@@ -58,6 +61,9 @@
     <Compile Include="Token.cs" />
     <Compile Include="Tokens\ClassDefinitionToken.cs" />
     <Compile Include="Tokens\ClassVariableDeclarationToken.cs" />
+    <Compile Include="Tokens\ClassFunctionDeclarationToken.cs" />
+    <Compile Include="Tokens\ClassPropertyDeclarationToken.cs" />
+    <Compile Include="Tokens\GenericBracketToken.cs" />
     <Compile Include="Tokens\PreprocessorIgnoreToken.cs" />
     <Compile Include="Tokens\PreprocessorImportToken.cs" />
     <Compile Include="Tokens\UsingToken.cs" />

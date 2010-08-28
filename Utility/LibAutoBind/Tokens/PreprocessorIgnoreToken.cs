@@ -14,9 +14,9 @@ namespace LibAutoBind.Tokens
 
         internal override void Detect(Lexer l)
         {
-            if (l.Text.StartsWith("#") && (l.MatchNext(" ") || l.MatchNext("\n")) && l.Text != "#import")
+            if (l.Text.TrimStart().StartsWith("#") && (l.MatchNext(" ") || l.MatchNext("\n")) && l.Text != "#import")
                 l.TakeOwnership();
-            else if (!l.Text.StartsWith("#") || l.Text == "#import")
+            else if (!l.Text.TrimStart().StartsWith("#") || l.Text == "#import")
                 l.ForceExclude();
 
             if (l.HasOwnership())

@@ -16,7 +16,7 @@ namespace LibAutoBind.Tokens
         {
             if (l.Text == "#import")
                 l.TakeOwnership();
-            else if (!l.Text.StartsWith("#"))
+            else if (!l.Text.TrimStart().StartsWith("#"))
                 l.ForceExclude();
 
             if (l.HasOwnership())

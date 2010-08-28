@@ -12,14 +12,14 @@ namespace LibAutoBind.Tokens
 
         internal override void Detect(Lexer l)
         {
-            if (l.Text.StartsWith("using ") && !l.HasOwnership())
+            if (l.Text.TrimStart().StartsWith("using ") && !l.HasOwnership())
                 l.TakeOwnership();
             else if (l.HasOwnership() && l.Char == ';')
             {
                 l.AddNode(new UsingNode(l.Text.Substring("using ".Length, l.Text.Length - "using ".Length - 1)));
                 l.EndOwnership();
             }
-            else if (!l.HasOwnership() && !"using ".StartsWith(l.Text))
+            else if (!l.HasOwnership() && !"using ".StartsWith(l.Text.TrimStart()))
                 l.ForceExclude();
         }
     }

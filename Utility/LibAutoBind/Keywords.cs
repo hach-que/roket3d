@@ -15,6 +15,7 @@ namespace LibAutoBind
         // by the tokens and removed in the final source code.
         internal static string[] LuaVisibilityKeywords = { "bound", "unbound" };
         internal static string[] LuaTypeKeywords = { "string", "numeric", "table" };
+        internal static string[] LuaDeclKeywords = { "property" };
 
         /// <summary>
         /// Detects keywords in the specified string and returns a list of them.  Stops
@@ -91,6 +92,8 @@ namespace LibAutoBind
                 if (s == text) return s;
             foreach (string s in Keywords.LuaTypeKeywords)
                 if (s == text) return s;
+            foreach (string s in Keywords.LuaDeclKeywords)
+                if (s == text) return s;
             return "";
         }
 
@@ -104,13 +107,15 @@ namespace LibAutoBind
         {
             text = text.Trim();
             foreach (string s in Keywords.CPPVisibilityKeywords)
-                if (s.StartsWith(text)) return true;
+                if (s.TrimStart().StartsWith(text)) return true;
             foreach (string s in Keywords.CPPTypeKeywords)
-                if (s.StartsWith(text)) return true;
+                if (s.TrimStart().StartsWith(text)) return true;
             foreach (string s in Keywords.LuaVisibilityKeywords)
-                if (s.StartsWith(text)) return true;
+                if (s.TrimStart().StartsWith(text)) return true;
             foreach (string s in Keywords.LuaTypeKeywords)
-                if (s.StartsWith(text)) return true;
+                if (s.TrimStart().StartsWith(text)) return true;
+            foreach (string s in Keywords.LuaDeclKeywords)
+                if (s.TrimStart().StartsWith(text)) return true;
             return false;
         }
     }

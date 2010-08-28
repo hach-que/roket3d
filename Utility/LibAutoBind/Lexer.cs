@@ -33,6 +33,9 @@ namespace LibAutoBind
             this.m_Tokens.Add(new UsingToken());
             this.m_Tokens.Add(new ClassDefinitionToken());
             this.m_Tokens.Add(new ClassVariableDeclarationToken());
+            this.m_Tokens.Add(new ClassPropertyDeclarationToken());
+            this.m_Tokens.Add(new ClassFunctionDeclarationToken());
+            this.m_Tokens.Add(new GenericBracketToken());
         }
 
         /// <summary>
@@ -94,6 +97,7 @@ namespace LibAutoBind
                             }
                         }
                         this.p_TextCache = "";
+                        this.p_Char = '\0';
                         this.m_ExcludedTokens.Clear();
                         continue;
                     }
@@ -107,8 +111,9 @@ namespace LibAutoBind
                     // text state.
                     if (this.m_Tokens.Count == this.m_ExcludedTokens.Count)
                     {
-                        this.AddNode(new DirectNode(this.Text));
+                        this.AddNode(new DirectNode(this.p_TextCache));
                         this.p_TextCache = "";
+                        this.p_Char = '\0';
                         this.m_ExcludedTokens.Clear();
                         continue;
                     }
@@ -130,7 +135,10 @@ namespace LibAutoBind
 
                         if (this.m_ShouldResetText)
                         {
+                            this.m_TokenWithOwnership = null;
                             this.p_TextCache = "";
+                            this.p_Char = '\0';
+                            this.m_ExcludedTokens.Clear();
                             this.m_ShouldResetText = false;
                             break; // Skip the rest of the tokens.
                         }
@@ -142,12 +150,41 @@ namespace LibAutoBind
                     this.m_TokenWithOwnership.Detect(this);
                     if (this.m_ShouldResetText)
                     {
+                        this.m_TokenWithOwnership = null;
                         this.p_TextCache = "";
+                        this.p_Char = '\0';
+                        this.m_ExcludedTokens.Clear();
                         this.m_ShouldResetText = false;
                     }
                 }
 
                 this.m_CurrentToken = null;
+            }
+
+            foreach (Node n in this.m_LexerList)
+            {
+                string indent = "".PadLeft(n.ParentCount * 4);
+                Console.WriteLine(indent + n.GetType().ToString() + ": " + n.Content);
+            }
+        }
+
+        /// <summary>
+        /// Compacts the number of direct nodes to allow for easier debugging when
+        /// there is a whole bunch of unrecognized text.
+        /// </summary>
+        private void CompactDirectNodes()
+        {
+            if (this.m_LexerList.Count < 2) return;
+
+            Node nl = this.m_LexerList[this.m_LexerList.Count - 1];
+            Node ns = this.m_LexerList[this.m_LexerList.Count - 2];
+            while (ns is DirectNode && nl is DirectNode && this.m_LexerList.Count >= 2)
+            {
+                ((DirectNode)ns).SetContent(ns.Content + nl.Content);
+                this.m_LexerList.Remove(nl);
+
+                nl = this.m_LexerList[this.m_LexerList.Count - 1];
+                ns = this.m_LexerList[this.m_LexerList.Count - 2];
             }
         }
 
@@ -192,7 +229,7 @@ namespace LibAutoBind
         /// </summary>
         internal string Text
         {
-            get { return this.p_TextCache.TrimStart(); }
+            get { return this.p_TextCache; } //.TrimStart(); }
         }
 
         /// <summary>
@@ -244,9 +281,9 @@ namespace LibAutoBind
         /// </summary>
         internal void AddNode(Node node)
         {
-            string indent = "".PadLeft(this.m_ParentStack.Count * 4);
-            Console.WriteLine(indent + node.GetType().ToString() + ": " + node.Content);
+            node.ParentCount = this.m_ParentStack.Count;
             this.m_LexerList.Add(node);
+            this.CompactDirectNodes();
         }
 
         /// <summary>
@@ -258,9 +295,7 @@ namespace LibAutoBind
         {
             if (this.m_TokenWithOwnership == this.m_CurrentToken)
             {
-                this.m_TokenWithOwnership = null;
-                this.p_TextCache = "";
-                this.m_ExcludedTokens.Clear();
+                this.m_ShouldResetText = true;
             }
         }
 

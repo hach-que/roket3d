@@ -13,9 +13,9 @@ namespace LibAutoBind.Tokens
 
         internal override void Detect(Lexer l)
         {
-            if (l.Text.StartsWith("class ") && !l.HasOwnership())
+            if (l.Text.TrimStart().StartsWith("class ") && !l.HasOwnership())
                 l.TakeOwnership();
-            else if (!l.HasOwnership() && !"class ".StartsWith(l.Text))
+            else if (!l.HasOwnership() && !"class ".StartsWith(l.Text.TrimStart()))
                 l.ForceExclude();
 
             if (l.HasOwnership())
@@ -54,7 +54,7 @@ namespace LibAutoBind.Tokens
         {
             if (l.Char == '}')
             {
-                l.AddNode(new DirectNode(l.Text.Substring(0, l.Text.Length - 1)));
+                l.AddNode(new DirectNode(l.Text));
                 return true;
             }
 
