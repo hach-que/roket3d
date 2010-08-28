@@ -13,52 +13,43 @@ namespace LibAutoBind.Tokens
 
         internal override void Detect(Lexer l)
         {
-            if (l.Text.StartsWith("class ") && !l.HasOwnership())
-                l.TakeOwnership();
-            else if (!l.HasOwnership() && !"class ".StartsWith(l.Text))
-                l.ForceExclude();
+            if (!(l.Char == ' ' || (l.Char >= '0' && l.Char <= '9') || (l.Char >= 'a' && l.Char <= 'z') ||
+                (l.Char >= 'A' && l.Char <= 'Z') || l.Char == '\n' || l.Char == '\t' || l.Char == '\r' ||
+                l.Char == ';' || l.Char == '_'))
+                l.ForceExclude(); // contains characters we can't accept.
+            if (!(l.GetParent() is ClassDefinitionToken))
+                l.ForceExclude(); // not within a class.
 
-            if (l.HasOwnership())
+            // If we run GetKeywords when the text ends in a space
+            // then PossibleKeyword can be false, but without a
+            // variable declaration.
+            //if (l.Text.EndsWith(" "))
+            //    return;
+
+            KeywordResult res = Keywords.GetKeywords(l.Text);
+
+            if (res.Keywords.Count > 0 && res.PossibleKeyword == false)
             {
-                if (l.Char == '{')
+                // Now use regular expression checking against the substring starting
+                // at res.DeclIndex to determine whether it's a variable declaration.
+
+                string decl = l.Text.Substring(res.DeclIndex).Trim();
+                if (!decl.EndsWith(";") && !decl.EndsWith("{")) return; // Skip if we don't have a terminating character.
+                Regex r = new Regex("[a-zA-Z][a-zA-z0-9_]+[ \t\r\n]*;");
+                Match m = r.Match(decl);
+                if (m.Success)
                 {
-                    string n = l.Text.Substring("class ".Length, l.Text.Length - "class ".Length - 1);
-                    Regex r = new Regex("[ \n\r]as[ \n\r]", RegexOptions.Multiline);
-                    Match m = r.Match(n);
-                    if (m.Success)
-                    {
-                        l.AddNode(new ClassDefinitionNode(
-                            n.Substring(0, m.Index),
-                            n.Substring(m.Index + m.Length)
-                            ));
-                    }
-                    else
-                    {
-                        l.AddNode(new ClassDefinitionNode(
-                            n,
-                            ""
-                            ));
-                    }
-                    l.AddParent();
+                    // It's a variable declaration.
+                    l.TakeOwnership();
+                    l.AddNode(new ClassVariableDeclarationNode(res.Keywords, m.Value.Substring(0, m.Value.Length - 1).Trim()));
                     l.EndOwnership();
                 }
-                else if (l.Char == ';')
+                else
                 {
-                    l.AddNode(new DirectNode(l.Text.Substring(0, l.Text.Length - 1)));
-                    l.EndOwnership();
+                    // A different kind of declaration that we aren't handling...
+                    l.ForceExclude();
                 }
             }
-        }
-
-        internal override bool DetectEnd(Lexer l)
-        {
-            if (l.Char == '}')
-            {
-                l.AddNode(new DirectNode(l.Text.Substring(0, l.Text.Length - 1)));
-                return true;
-            }
-
-            return false;
         }
     }
 }

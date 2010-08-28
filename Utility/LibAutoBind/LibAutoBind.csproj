@@ -50,6 +50,7 @@
     <Compile Include="Machine.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Nodes\ClassDefinitionNode.cs" />
+    <Compile Include="Nodes\ClassVariableDeclarationNode.cs" />
     <Compile Include="Nodes\DirectNode.cs" />
     <Compile Include="Nodes\ImportNode.cs" />
     <Compile Include="Nodes\UsingNode.cs" />

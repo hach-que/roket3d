@@ -22,30 +22,56 @@ namespace LibAutoBind
         /// </summary>
         /// <param name="text">The text to scan.</param>
         /// <returns>A list of keywords.</returns>
-        internal static List<string> GetKeywords(string text)
+        internal static KeywordResult GetKeywords(string text)
         {
             string buf = "";
-            List<string> ret = new List<string>();
+            KeywordResult ret = new KeywordResult();
             for (int i = 0; i < text.Length; i++)
             {
-                if (text[i] == " ")
+                if ((text[i] == ' ' || text[i] == '\t' || text[i] == '\n' || text[i] == '\r') && buf.Trim().Length > 0)
                 {
+                    buf = buf.Trim();
                     // End of building up the buffer.
                     if (Keywords.GetKeyword(buf) != "")
                     {
-                        ret.Add(buf);
+                        ret.Keywords.Add(buf);
+                        ret.DeclIndex = i;
                         buf = "";
                     }
                     else
                     {
-                        // No more keywords.
+                        // No more keywords.  It's not possible
+                        // to have a partial keyword here since
+                        // the last character was whitespace.
+                        ret.PossibleKeyword = false;
                         return ret;
                     }
                 }
                 else
                     buf += text[i];
             }
-            return ret;
+            if (buf.Length > 0)
+            {
+                if (Keywords.GetKeyword(buf) != "")
+                {
+                    ret.Keywords.Add(buf);
+                    ret.DeclIndex = text.Length;
+                    ret.PossibleKeyword = false;
+                    buf = "";
+                    return ret;
+                }
+                else
+                {
+                    // Check to see whether it's a partial keyword.
+                    ret.PossibleKeyword = Keywords.IsPartialKeyword(buf);
+                    return ret;
+                }
+            }
+            else
+            {
+                ret.PossibleKeyword = false;
+                return ret;
+            }
         }
 
         /// <summary>
@@ -67,5 +93,49 @@ namespace LibAutoBind
                 if (s == text) return s;
             return "";
         }
+
+        /// <summary>
+        /// Returns whether or not the text is a partial keyword (i.e. looks like
+        /// the start of a keyword).
+        /// </summary>
+        /// <param name="text">The text to scan.</param>
+        /// <returns>Whether or not the text is a partial keyword.</returns>
+        internal static bool IsPartialKeyword(string text)
+        {
+            text = text.Trim();
+            foreach (string s in Keywords.CPPVisibilityKeywords)
+                if (s.StartsWith(text)) return true;
+            foreach (string s in Keywords.CPPTypeKeywords)
+                if (s.StartsWith(text)) return true;
+            foreach (string s in Keywords.LuaVisibilityKeywords)
+                if (s.StartsWith(text)) return true;
+            foreach (string s in Keywords.LuaTypeKeywords)
+                if (s.StartsWith(text)) return true;
+            return false;
+        }
+    }
+
+    class KeywordResult
+    {
+        /// <summary>
+        /// A list of keywords found in the search.
+        /// </summary>
+        internal List<string> Keywords = new List<string>();
+
+        /// <summary>
+        /// The index in the string at which the first unrecognized text was
+        /// found (i.e. where the actual declaration of the variable or function
+        /// starts).
+        /// </summary>
+        internal int DeclIndex;
+
+        /// <summary>
+        /// Whether or not the text after DeclIndex looks like it might be the
+        /// start of another keyword.  If this is false, the token can check the
+        /// rest of the text to see if it can handle it.
+        /// </summary>
+        internal bool PossibleKeyword;
+
+        internal KeywordResult() { }
     }
 }

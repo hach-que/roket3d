@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using LibAutoBind.Tokens;
 using LibAutoBind.Nodes;
+using System.Reflection;
 
 namespace LibAutoBind
 {
@@ -31,6 +32,7 @@ namespace LibAutoBind
             this.m_Tokens.Add(new PreprocessorIgnoreToken());
             this.m_Tokens.Add(new UsingToken());
             this.m_Tokens.Add(new ClassDefinitionToken());
+            this.m_Tokens.Add(new ClassVariableDeclarationToken());
         }
 
         /// <summary>
@@ -309,15 +311,34 @@ namespace LibAutoBind
             // shared if we were using the same token detector in the
             // parent list.
             this.m_ParentStack.Push(this.m_CurrentToken);
-            this.m_CurrentToken = (Token)this.m_CurrentToken.GetType().GetConstructor(Type.EmptyTypes).Invoke(null);
+            Type t = this.m_CurrentToken.GetType();
+            ConstructorInfo ci = t.GetConstructor(Type.EmptyTypes);
+            if (ci == null)
+            {
+                throw new MethodAccessException("The token object which attempted to raise itself as a parent does not have a public constructor.");
+            }
+            this.m_CurrentToken = (Token)ci.Invoke(null);
         }
 
         /// <summary>
         /// Returns whether the current token is acting as a parent.
         /// </summary>
+        /// <returns>Whether the current token is acting as a parent.</returns>
         internal bool IsParent()
         {
             return this.m_ParentStack.Contains(this.m_CurrentToken);
+        }
+
+        /// <summary>
+        /// Gets the immediate parent.
+        /// </summary>
+        /// <returns>Returns the immediate parent, or null if there is none.</returns>
+        internal Token GetParent()
+        {
+            if (this.m_ParentStack.Count == 0)
+                return null;
+            else
+                return this.m_ParentStack.Peek();
         }
     }
 }
