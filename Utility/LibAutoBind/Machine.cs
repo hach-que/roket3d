@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using LibAutoBind.Transformers;
 
 namespace LibAutoBind
 {
@@ -23,7 +24,7 @@ namespace LibAutoBind
             this.p_FilePath = inpath;
 
             this.p_Lexer = new Lexer(this);
-            this.p_Transformer = new Transformer(this);
+            this.p_Transformer = new LuaTransformer(this);
         }
 
         /// <summary>
@@ -32,6 +33,22 @@ namespace LibAutoBind
         public void Run()
         {
             this.p_Lexer.Run();
+            this.p_Transformer.WriteHeaderFile(this.p_Lexer.Nodes);
+            this.p_Transformer.WriteCodeFile(this.p_Lexer.Nodes);
+
+            this.p_OutputCFile.Flush();
+            this.p_OutputHFile.Flush();
+        }
+
+        /// <summary>
+        /// Closes the files associated with the lexer.  Do not call
+        /// Run() after calling this function.
+        /// </summary>
+        public void Close()
+        {
+            this.p_OutputCFile.Close();
+            this.p_OutputHFile.Close();
+            this.p_InputFile.Close();
         }
 
         /// <summary>
