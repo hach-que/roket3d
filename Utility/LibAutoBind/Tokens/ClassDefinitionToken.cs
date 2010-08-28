@@ -9,7 +9,7 @@ namespace LibAutoBind.Tokens
 {
     class ClassDefinitionToken : Token
     {
-        internal ClassDefinitionToken() { }
+        public ClassDefinitionToken() { }
 
         internal override void Detect(Lexer l)
         {
