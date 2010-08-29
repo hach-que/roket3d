@@ -174,6 +174,7 @@ namespace LibAutoBind
         /// </summary>
         private void CompactDirectNodes()
         {
+            return;
             if (this.p_LexerList.Count < 2) return;
 
             Node nl = this.p_LexerList[this.p_LexerList.Count - 1];

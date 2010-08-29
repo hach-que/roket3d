@@ -52,7 +52,9 @@ namespace LibAutoBind.Tokens
 
         internal override bool DetectEnd(Lexer l)
         {
-            if (l.Char == '}')
+            if (l.Char == '}' && l.Text.IndexOf("property") == -1) // If the keyword 'property' exists, then the
+                                                                   // ClassPropertyDeclarationToken will pick this
+                                                                   // text up.
             {
                 l.AddNode(new DirectNode(l.Text));
                 return true;

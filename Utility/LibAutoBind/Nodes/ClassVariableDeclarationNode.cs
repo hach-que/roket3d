@@ -21,5 +21,33 @@ namespace LibAutoBind.Nodes
             keys = keys.Trim();
             this.p_Content = keys + " " + name;
         }
+
+        internal List<string> AllKeywords
+        {
+            get { return this.m_Keywords; }
+        }
+
+        internal List<string> CPPKeywords
+        {
+            get
+            {
+                List<string> ret = new List<string>();
+                foreach (string k in this.m_Keywords)
+                {
+                    if (!Keywords.LuaDeclKeywords.Contains(k) && !Keywords.LuaVisibilityKeywords.Contains(k))
+                    {
+                        ret.Add(k);
+                    }
+                    else if (k == "bound")
+                        ret.Add("public");
+                }
+                return ret;
+            }
+        }
+
+        internal string Name
+        {
+            get { return this.m_Name; }
+        }
     }
 }

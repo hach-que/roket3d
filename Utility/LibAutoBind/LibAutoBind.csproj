@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassName.cs" />
     <Compile Include="Keywords.cs" />
     <Compile Include="Lexer.cs" />
     <Compile Include="Machine.cs" />

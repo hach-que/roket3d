@@ -12,7 +12,7 @@ namespace LibAutoBind.Tokens
 
         internal override void Detect(Lexer l)
         {
-            if (l.Char == '{')
+            if (l.Char == '{' && !(l.GetParent() is ClassDefinitionToken))
             {
                 l.TakeOwnership();
                 l.AddNode(new DirectNode(l.Text));
