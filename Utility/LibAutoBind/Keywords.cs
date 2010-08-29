@@ -9,7 +9,7 @@ namespace LibAutoBind
     {
         // Keywords specific to C++, they are kept untouched.
         internal static string[] CPPVisibilityKeywords = { "private", "protected", "public", "friend" };
-        internal static string[] CPPTypeKeywords = { "char", "bool", "short", "int", "long", "longlong", "float", "double" };
+        internal static string[] CPPTypeKeywords = { "char", "bool", "short", "int", "long", "longlong", "float", "double", "void" };
 
         // Keywords specific to the automatic binding system.  These are read
         // by the tokens and removed in the final source code.

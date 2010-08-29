@@ -1,4 +1,6 @@
 #import Engine.Unmanaged.Core.RDevice
+#import Engine.Unmanaged.Core.EventReciever
+#import Engine.Collections.Vector3D
 using Engine.Unmanaged.Core;
 
 #ifdef DEBUG
@@ -32,16 +34,16 @@ class Engine.Unmanaged.Core.RColor
         set: p_R;
     }
     
-    bound property numeric G
-    {
-        get: call GetG;
-        set: call SetG;
-    }
-    
     bound property numeric B
     {
         get: p_B;
         set: p_B;
+    }
+    
+    bound property numeric G
+    {
+        get: call GetG;
+        set: call SetG;
     }
     
     private numeric GetG()

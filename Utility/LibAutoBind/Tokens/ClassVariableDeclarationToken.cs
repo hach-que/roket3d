@@ -16,9 +16,15 @@ namespace LibAutoBind.Tokens
             if (!(l.Char == ' ' || (l.Char >= '0' && l.Char <= '9') || (l.Char >= 'a' && l.Char <= 'z') ||
                 (l.Char >= 'A' && l.Char <= 'Z') || l.Char == '\n' || l.Char == '\t' || l.Char == '\r' ||
                 l.Char == ';' || l.Char == '_'))
+            {
                 l.ForceExclude(); // contains characters we can't accept.
+                return;
+            }
             if (!(l.GetParent() is ClassDefinitionToken))
+            {
                 l.ForceExclude(); // not within a class.
+                return;
+            }
 
             KeywordResult res = Keywords.GetKeywords(l.Text);
 
