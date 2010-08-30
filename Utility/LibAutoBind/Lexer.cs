@@ -160,12 +160,6 @@ namespace LibAutoBind
 
                 this.m_CurrentToken = null;
             }
-
-            foreach (Node n in this.p_LexerList)
-            {
-                string indent = "".PadLeft(n.ParentCount * 4);
-                Console.WriteLine(indent + n.GetType().ToString() + ": " + n.Content);
-            }
         }
 
         /// <summary>
