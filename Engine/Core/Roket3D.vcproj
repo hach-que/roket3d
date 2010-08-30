@@ -13,6 +13,9 @@
 		/>
 	</Platforms>
 	<ToolFiles>
+		<ToolFile
+			RelativePath="..\..\Utility\AutoBind\AutoBind.rules"
+		/>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
@@ -26,9 +29,13 @@
 				Name="VCPreBuildEventTool"
 				Description="Generating automatic source and header files (AutoBind)..."
 				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;&quot;$(SolutionDir)\Utility\AutoBind\bin\Debug\AutoBind.exe&quot;"
+				ExcludedFromBuild="true"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="AutoBind"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -102,9 +109,13 @@
 				Name="VCPreBuildEventTool"
 				Description="Generating automatic source and header files (AutoBind)..."
 				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;&quot;$(SolutionDir)\Utility\AutoBind\bin\Debug\AutoBind.exe&quot;"
+				ExcludedFromBuild="true"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="AutoBind"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -937,6 +948,20 @@
 			<Filter
 				Name="E.Collections"
 				>
+				<File
+					RelativePath=".\Autobind Source\E.Collections\RColor.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							CPPBaseLocation="$(ProjectDir)\Generated Source"
+							ClassPath="E.Collections"
+							HBaseLocation="$(ProjectDir)\Generated Headers"
+						/>
+					</FileConfiguration>
+				</File>
 			</Filter>
 			<Filter
 				Name="E.Library"
