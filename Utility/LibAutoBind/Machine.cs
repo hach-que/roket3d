@@ -23,6 +23,9 @@ namespace LibAutoBind
             this.p_OutputCFile = new StreamWriter(outcpath);
             this.p_FilePath = inpath;
 
+            this.p_OutputHFile.NewLine = "\n";
+            this.p_OutputCFile.NewLine = "\n";
+
             this.p_Lexer = new Lexer(this);
             this.p_Transformer = new LuaTransformer(this);
         }
