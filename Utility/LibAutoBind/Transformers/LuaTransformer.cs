@@ -27,6 +27,7 @@ namespace LibAutoBind.Transformers
             
             // Get the class node.
             ClassDefinitionNode cls = (ClassDefinitionNode)(this.GetNodesOfType(nodes, typeof(ClassDefinitionNode))[0]);
+            Console.WriteLine("(h  ) " + cls.ClassOnly);
             this.WriteHeaderLine("#ifndef CLASS_" + cls.Class.Replace('.', '_'));
             this.WriteHeaderLine("#define CLASS_" + cls.Class.Replace('.', '_'));
             this.WriteHeaderLine();
@@ -158,6 +159,7 @@ namespace LibAutoBind.Transformers
 
             // Get the class node.
             ClassDefinitionNode cls = (ClassDefinitionNode)(this.GetNodesOfType(nodes, typeof(ClassDefinitionNode))[0]);
+            Console.WriteLine("(cpp) " + cls.ClassOnly);
             this.WriteCodeLine("#include \"autobind/types.h\"");
             this.WriteCodeLine("#include \"autobind/binding/lua.h\"");
             this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(cls.Class) + "\"");

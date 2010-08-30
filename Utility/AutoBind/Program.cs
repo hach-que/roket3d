@@ -3,165 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibAutoBind;
-using System.Xml;
-using System.IO;
 
 namespace AutoBind
 {
-    class XmlNode
+    class Program
     {
-        public string Name;
-        public Dictionary<string, string> Attributes = new Dictionary<string,string>();
-        public string Text;
-    }
-
-	class Program
-	{
-        static Dictionary<string, string> BuildConfiguration = null;
-
-		static void Main(string[] args)
-		{
-            // Check to make sure the build configuration file exists.
-            if (!File.Exists("./AutoBind.xml"))
-            {
-                Program.CompilerError("A0001", null);
-                return;
-            }
-
-            // Read the build configuration.
-            Dictionary<string, string> info = Program.GetBuildConfiguration();
-
-            // Check to make sure all of the output / input folders exist.
-            if (Directory.Exists(info["Input"]))
-            {
-                Program.CompilerError("A0002", new string[] { info["Input"] });
-                return;
-            }
-            if (!Directory.Exists(info["OutputH"]))
-            {
-                Program.CompilerError("A0003", new string[] { info["OutputH"] });
-                return;
-            }
-            if (!Directory.Exists(info["OutputC"]))
-            {
-                Program.CompilerError("A0004", new string[] { info["OutputC"] });
-                return;
-            }
-
-            Program.BuildConfiguration = info;
-
-            // Now perform the automatic binding process.
-            Program.BindFolder(info["Input"], info["OutputH"], info["OutputC"]);
-		}
-
-        private static void BindFolder(string input, string outputh, string outputc)
+        static int Main(string[] args)
         {
-            input = input.TrimEnd('/');
-            outputh = outputh.TrimEnd('/');
-            outputc = outputc.TrimEnd('/');
-
-            // Get the DirectoryInfo for the input folder.
-            DirectoryInfo dir = new DirectoryInfo(input);
-
-            // Convert directories.
-            foreach (DirectoryInfo d in dir.GetDirectories())
+            if (args.Length != 3)
             {
-                string namespc = input.Substring(BuildConfiguration["Input"].Length).Replace('/', '.');
-                Console.WriteLine(Program.ConvertAliases(namespc + "." + d.Name));
-                if (!Directory.Exists(outputh + "/" + d.Name))
-                    Directory.CreateDirectory(outputh + "/" + d.Name);
-                if (!Directory.Exists(outputc + "/" + d.Name))
-                    Directory.CreateDirectory(outputc + "/" + d.Name);
-                Program.BindFolder(input + "/" + d.Name, outputh + "/" + d.Name, outputc + "/" + d.Name);
+                Console.WriteLine("usage: autobind CPPBASE HBASE INPUT");
+                return 1;
             }
-            foreach (FileInfo f in dir.GetFiles("*.bpp"))
-            {
-                string namespc = input.Substring(BuildConfiguration["Input"].Length).Replace('/', '.');
-                Console.WriteLine(Program.ConvertAliases(namespc + "." + f.Name.Substring(0, f.Name.Length - f.Extension.Length)));
-                Program.BindFile(input + "/" + f.Name, outputh + "/" + f.Name, outputc + "/" + f.Name);
-            }
-        }
 
-        private static void BindFile(string input, string outputh, string outputc)
-        {
-            Machine m = new Machine(input, outputh, outputc);
+            string cppbase = args[0];
+            string hbase = args[1];
+            string input = args[2];
+            string basename = input.Substring(input.LastIndexOf('/') + 1, input.Length - (input.LastIndexOf('/') + 1) - input.IndexOf('.'));
+
+            Machine m = new Machine(input, hbase + '/' + basename + ".h", cppbase + '/' + basename + ".cpp");
             m.Run();
             m.Close();
+
+            return 0;
         }
-
-        private static string ConvertAliases(string clsname)
-        {
-            if (clsname.StartsWith("E."))
-            {
-                clsname = "Engine." + clsname.Substring("E.".Length);
-            }
-            return clsname;
-        }
-
-        /// <summary>
-        /// Gets the build configuration information from the AutoBind.xml
-        /// document located in the current directory.
-        /// </summary>
-        /// <returns>Returns the build configuration.</returns>
-        static Dictionary<string, string> GetBuildConfiguration()
-        {
-            // Open and read the parameters from the AutoBind.xml file
-            // located in the current working directory.
-            XmlReader xml = XmlReader.Create("./AutoBind.xml");
-            Stack<XmlNode> stack = new Stack<XmlNode>();
-            Dictionary<string, string> info = new Dictionary<string, string>();
-            while (xml.Read())
-            {
-                XmlNode xnode = null;
-                switch (xml.NodeType)
-                {
-                    case XmlNodeType.Element:
-                        xnode = new XmlNode();
-                        xnode.Name = xml.Name;
-
-                        switch (xml.Name)
-                        {
-                            case "output":
-                                xnode.Attributes.Add("type", xml.GetAttribute("type"));
-                                break;
-                        }
-
-                        stack.Push(xnode);
-                        break;
-                    case XmlNodeType.Text:
-                    case XmlNodeType.CDATA:
-                        xnode = stack.Peek();
-                        xnode.Text += xml.Value;
-                        break;
-                    case XmlNodeType.EndElement:
-                        xnode = stack.Pop();
-
-                        // Handle nodes.
-                        if (xnode.Name == "input")
-                            info.Add("Input", xnode.Text);
-                        else if (xnode.Name == "output")
-                        {
-                            if (xnode.Attributes["type"] == "code")
-                                info.Add("OutputC", xnode.Text);
-                            else if (xnode.Attributes["type"] == "headers")
-                                info.Add("OutputH", xnode.Text);
-                        }
-
-                        break;
-                }
-            }
-            return info;
-        }
-
-        static void CompilerError(string id, string[] args)
-        {
-            string msg = CompileErrorList.Default.Properties[id].DefaultValue.ToString();
-            if (args != null)
-            {
-                for (int i = 0; i < args.Length; i++)
-                    msg = msg.Replace("${" + (i + 1).ToString() + "}", args[i]);
-            }
-            Console.WriteLine("error " + id + ": " + msg);
-        }
-	}
+    }
 }
