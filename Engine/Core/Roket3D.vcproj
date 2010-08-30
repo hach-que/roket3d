@@ -24,6 +24,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Generating automatic source and header files (AutoBind)..."
+				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;&quot;$(SolutionDir)\Utility\AutoBind\bin\Debug\AutoBind.exe&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -98,6 +100,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Generating automatic source and header files (AutoBind)..."
+				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;&quot;$(SolutionDir)\Utility\AutoBind\bin\Debug\AutoBind.exe&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -180,61 +184,53 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source"
+			Name="Generated Source"
 			>
-			<File
-				RelativePath=".\Source\main.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\roket3d.cpp"
-				>
-			</File>
 			<Filter
 				Name="E.Collections"
 				>
 				<File
-					RelativePath=".\Source\E.Collections\rcolor.cpp"
+					RelativePath=".\Generated Source\E.Collections\rcolor.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Source\E.Collections\rcube3d.cpp"
+					RelativePath=".\Generated Source\E.Collections\rcube3d.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Source\E.Collections\rmatrix.cpp"
+					RelativePath=".\Generated Source\E.Collections\rmatrix.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Source\E.Collections\rplane.cpp"
+					RelativePath=".\Generated Source\E.Collections\rplane.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Source\E.Collections\rquaternion.cpp"
+					RelativePath=".\Generated Source\E.Collections\rquaternion.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Source\E.Collections\rray2d.cpp"
+					RelativePath=".\Generated Source\E.Collections\rray2d.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Source\E.Collections\rray3d.cpp"
+					RelativePath=".\Generated Source\E.Collections\rray3d.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Source\E.Collections\rrectangle.cpp"
+					RelativePath=".\Generated Source\E.Collections\rrectangle.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Source\E.Collections\rtriangle3d.cpp"
+					RelativePath=".\Generated Source\E.Collections\rtriangle3d.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Source\E.Collections\rvector2d.cpp"
+					RelativePath=".\Generated Source\E.Collections\rvector2d.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\Source\E.Collections\rvector3d.cpp"
+					RelativePath=".\Generated Source\E.Collections\rvector3d.cpp"
 					>
 				</File>
 			</Filter>
@@ -249,7 +245,7 @@
 					Name="__Old"
 					>
 					<File
-						RelativePath=".\Source\E.Unmanaged\__Old\irrlazycamera.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\__Old\irrlazycamera.cpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -273,15 +269,15 @@
 					Name="Audio"
 					>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Audio\audio.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Audio\audio.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Audio\raudiocontroller.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Audio\raudiocontroller.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Audio\raudiosound.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Audio\raudiosound.cpp"
 						>
 					</File>
 				</Filter>
@@ -289,19 +285,19 @@
 					Name="Core"
 					>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Core\core.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Core\core.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Core\eventreciever.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Core\eventreciever.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Core\rcursorcontrol.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Core\rcursorcontrol.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Core\rdevice.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Core\rdevice.cpp"
 						>
 					</File>
 				</Filter>
@@ -309,67 +305,67 @@
 					Name="GUI"
 					>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\gui.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\gui.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguibutton.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguibutton.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguicheckbox.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguicheckbox.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguicombobox.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguicombobox.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguieditbox.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguieditbox.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguielement.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguielement.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguienvironment.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguienvironment.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguifileopendialog.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguifileopendialog.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguifont.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguifont.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguiimage.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguiimage.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguilistbox.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguilistbox.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguimeshviewer.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguimeshviewer.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguiscrollbar.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguiscrollbar.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguiskin.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguiskin.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguistatictext.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguistatictext.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\GUI\rguiwindow.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguiwindow.cpp"
 						>
 					</File>
 				</Filter>
@@ -377,11 +373,11 @@
 					Name="Net"
 					>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Net\net.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Net\net.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Net\rnetsocket.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Net\rnetsocket.cpp"
 						>
 					</File>
 				</Filter>
@@ -389,19 +385,19 @@
 					Name="Video"
 					>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Video\rvideodriver.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Video\rvideodriver.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Video\rvideomaterial.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Video\rvideomaterial.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Video\rvideotexture.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Video\rvideotexture.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Video\video.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Video\video.cpp"
 						>
 					</File>
 				</Filter>
@@ -409,59 +405,59 @@
 					Name="Scene"
 					>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\rparticlesystemnode.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\rparticlesystemnode.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\rscenebillboardnode.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\rscenebillboardnode.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\rscenebillboardtextnode.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\rscenebillboardtextnode.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\rscenecamera.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\rscenecamera.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\rscenecollisionmanager.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\rscenecollisionmanager.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\rscenelazycamera.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\rscenelazycamera.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\rscenelightnode.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\rscenelightnode.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\rscenemanager.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\rscenemanager.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\rscenemesh.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\rscenemesh.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\rscenemeshnode.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\rscenemeshnode.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\rscenenode.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\rscenenode.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\rscenespecialeffects.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\rscenespecialeffects.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\rsceneterrainnode.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\rsceneterrainnode.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Scene\scene.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\scene.cpp"
 						>
 					</File>
 				</Filter>
@@ -469,59 +465,19 @@
 					Name="Physics"
 					>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\physics.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Physics\physics.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\Internal\roket_physicsbody.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Physics\rphysicsjoint.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\Internal\roket_physicscallbacks.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Physics\rphysicsmanager.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\Internal\roket_physicsjointball.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\Internal\roket_physicsjointcorkscrew.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\Internal\roket_physicsjointcustom.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\Internal\roket_physicsjointhinge.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\Internal\roket_physicsjointslider.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\Internal\roket_physicsjointuniversal.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\Internal\roket_physicsmanager.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\Internal\roket_physicsmaterialhandler.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\rphysicsjoint.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\rphysicsmanager.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Source\E.Unmanaged\Physics\rphysicsmaterialhandler.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Physics\rphysicsmaterialhandler.cpp"
 						>
 					</File>
 				</Filter>
@@ -529,11 +485,11 @@
 					Name="Ext"
 					>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Ext\ext.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Ext\ext.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Ext\rthread.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Ext\rthread.cpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -553,7 +509,7 @@
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath=".\Source\E.Unmanaged\Ext\threadenc.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Ext\threadenc.cpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -576,65 +532,53 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="Headers"
+			Name="Generated Headers"
 			>
-			<File
-				RelativePath=".\Headers\luna.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\luna_rthread_override.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\roket3d.h"
-				>
-			</File>
 			<Filter
 				Name="E.Collections"
 				>
 				<File
-					RelativePath=".\Headers\E.Collections\rcolor.h"
+					RelativePath=".\Generated Headers\E.Collections\rcolor.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Headers\E.Collections\rcube3d.h"
+					RelativePath=".\Generated Headers\E.Collections\rcube3d.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Headers\E.Collections\rmatrix.h"
+					RelativePath=".\Generated Headers\E.Collections\rmatrix.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Headers\E.Collections\rplane.h"
+					RelativePath=".\Generated Headers\E.Collections\rplane.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Headers\E.Collections\rquaternion.h"
+					RelativePath=".\Generated Headers\E.Collections\rquaternion.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Headers\E.Collections\rray2d.h"
+					RelativePath=".\Generated Headers\E.Collections\rray2d.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Headers\E.Collections\rray3d.h"
+					RelativePath=".\Generated Headers\E.Collections\rray3d.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Headers\E.Collections\rrectangle.h"
+					RelativePath=".\Generated Headers\E.Collections\rrectangle.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Headers\E.Collections\rtriangle3d.h"
+					RelativePath=".\Generated Headers\E.Collections\rtriangle3d.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Headers\E.Collections\rvector2d.h"
+					RelativePath=".\Generated Headers\E.Collections\rvector2d.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Headers\E.Collections\rvector3d.h"
+					RelativePath=".\Generated Headers\E.Collections\rvector3d.h"
 					>
 				</File>
 			</Filter>
@@ -649,7 +593,7 @@
 					Name="__Old"
 					>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\__Old\irrlazycamera.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\__Old\irrlazycamera.h"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -673,15 +617,15 @@
 					Name="Audio"
 					>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Audio\audio.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Audio\audio.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Audio\raudiocontroller.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Audio\raudiocontroller.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Audio\raudiosound.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Audio\raudiosound.h"
 						>
 					</File>
 				</Filter>
@@ -689,23 +633,23 @@
 					Name="Core"
 					>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Core\core.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Core\core.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Core\eventreciever.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Core\eventreciever.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Core\rcursorcontrol.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Core\rcursorcontrol.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Core\rdevice.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Core\rdevice.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Core\robject.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Core\robject.h"
 						>
 					</File>
 				</Filter>
@@ -713,67 +657,67 @@
 					Name="GUI"
 					>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\gui.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\gui.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguibutton.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguibutton.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguicheckbox.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguicheckbox.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguicombobox.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguicombobox.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguieditbox.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguieditbox.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguielement.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguielement.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguienvironment.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguienvironment.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguifileopendialog.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguifileopendialog.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguifont.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguifont.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguiimage.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguiimage.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguilistbox.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguilistbox.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguimeshviewer.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguimeshviewer.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguiscrollbar.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguiscrollbar.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguiskin.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguiskin.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguistatictext.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguistatictext.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\GUI\rguiwindow.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguiwindow.h"
 						>
 					</File>
 				</Filter>
@@ -781,11 +725,11 @@
 					Name="Net"
 					>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Net\net.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Net\net.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Net\rnetsocket.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Net\rnetsocket.h"
 						>
 					</File>
 				</Filter>
@@ -793,19 +737,19 @@
 					Name="Video"
 					>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Video\rvideodriver.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Video\rvideodriver.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Video\rvideomaterial.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Video\rvideomaterial.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Video\rvideotexture.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Video\rvideotexture.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Video\video.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Video\video.h"
 						>
 					</File>
 				</Filter>
@@ -813,59 +757,59 @@
 					Name="Scene"
 					>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\rparticlesystemnode.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rparticlesystemnode.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\rscenebillboardnode.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rscenebillboardnode.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\rscenebillboardtextnode.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rscenebillboardtextnode.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\rscenecamera.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rscenecamera.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\rscenecollisionmanager.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rscenecollisionmanager.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\rscenelazycamera.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rscenelazycamera.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\rscenelightnode.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rscenelightnode.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\rscenemanager.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rscenemanager.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\rscenemesh.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rscenemesh.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\rscenemeshnode.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rscenemeshnode.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\rscenenode.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rscenenode.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\rscenespecialeffects.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rscenespecialeffects.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\rsceneterrainnode.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rsceneterrainnode.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Scene\scene.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\scene.h"
 						>
 					</File>
 				</Filter>
@@ -873,59 +817,19 @@
 					Name="Physics"
 					>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\physics.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Physics\physics.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\Internal\roket_physicsbody.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Physics\rphysicsjoint.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\Internal\roket_physicscallbacks.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Physics\rphysicsmanager.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\Internal\roket_physicsjointball.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\Internal\roket_physicsjointcorkscrew.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\Internal\roket_physicsjointcustom.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\Internal\roket_physicsjointhinge.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\Internal\roket_physicsjointslider.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\Internal\roket_physicsjointuniversal.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\Internal\roket_physicsmanager.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\Internal\roket_physicsmaterialhandler.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\rphysicsjoint.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\rphysicsmanager.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Headers\E.Unmanaged\Physics\rphysicsmaterialhandler.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Physics\rphysicsmaterialhandler.h"
 						>
 					</File>
 				</Filter>
@@ -933,11 +837,11 @@
 					Name="Ext"
 					>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Ext\ext.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Ext\ext.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Ext\rthread.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Ext\rthread.h"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -957,7 +861,7 @@
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath=".\Headers\E.Unmanaged\Ext\threadenc.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Ext\threadenc.h"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -987,6 +891,138 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="AutoBind Source"
+			>
+		</Filter>
+		<Filter
+			Name="Static Headers"
+			>
+			<File
+				RelativePath=".\Static Headers\roket3d.h"
+				>
+			</File>
+			<Filter
+				Name="E.Unmanaged"
+				>
+				<Filter
+					Name="Physics"
+					>
+					<Filter
+						Name="Internal"
+						>
+						<File
+							RelativePath=".\Static Headers\E.Unmanaged\Physics\Internal\roket_physicsbody.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Headers\E.Unmanaged\Physics\Internal\roket_physicscallbacks.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Headers\E.Unmanaged\Physics\Internal\roket_physicsjointball.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Headers\E.Unmanaged\Physics\Internal\roket_physicsjointcorkscrew.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Headers\E.Unmanaged\Physics\Internal\roket_physicsjointcustom.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Headers\E.Unmanaged\Physics\Internal\roket_physicsjointhinge.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Headers\E.Unmanaged\Physics\Internal\roket_physicsjointslider.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Headers\E.Unmanaged\Physics\Internal\roket_physicsjointuniversal.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Headers\E.Unmanaged\Physics\Internal\roket_physicsmanager.h"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Headers\E.Unmanaged\Physics\Internal\roket_physicsmaterialhandler.h"
+							>
+						</File>
+					</Filter>
+				</Filter>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Static Source"
+			>
+			<File
+				RelativePath=".\Static Source\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Static Source\roket3d.cpp"
+				>
+			</File>
+			<Filter
+				Name="E.Unmanaged"
+				>
+				<Filter
+					Name="Physics"
+					>
+					<Filter
+						Name="Internal"
+						>
+						<File
+							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsbody.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicscallbacks.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointball.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointcorkscrew.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointcustom.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointhinge.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointslider.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointuniversal.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsmanager.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsmaterialhandler.cpp"
+							>
+						</File>
+					</Filter>
+				</Filter>
+			</Filter>
+		</Filter>
+		<File
+			RelativePath=".\AutoBind.xml"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

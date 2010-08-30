@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<autobind>
+  <input>./Source/</input>
+  <output type="code">./Generated Source/</output>
+  <output type="headers">./Generated Headers/</output>
+</autobind>
