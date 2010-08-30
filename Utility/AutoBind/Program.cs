@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibAutoBind;
+using System.IO;
 
 namespace AutoBind
 {
@@ -19,10 +20,26 @@ namespace AutoBind
             string cppbase = args[0];
             string hbase = args[1];
             string input = args[2];
-            string basename = input.Substring(input.LastIndexOf('/') + 1, input.Length - (input.LastIndexOf('/') + 1) - input.IndexOf('.'));
+            int start = input.LastIndexOf('\\') + 1;
+            string basename = input.Substring(start);
+            int end = basename.IndexOf('.');
+            basename = basename.Substring(0, end);
 
+            if (!Directory.Exists(hbase))
+                Directory.CreateDirectory(hbase);
+            if (!Directory.Exists(cppbase))
+                Directory.CreateDirectory(cppbase);
             Machine m = new Machine(input, hbase + '/' + basename + ".h", cppbase + '/' + basename + ".cpp");
-            m.Run();
+            try
+            {
+                m.Run();
+            }
+            catch (InvalidOperationException e)
+            {
+                Console.WriteLine("Unable to automatically bind " + input + ".  Make sure there");
+                Console.WriteLine("is only one class defined in the file.");
+                return 1;
+            }
             m.Close();
 
             return 0;
