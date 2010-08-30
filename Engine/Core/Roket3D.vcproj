@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/wd4244"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Lua\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Newton\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\SDL\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\XEffects\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Irrlicht\Include&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Static Headers&quot;;&quot;$(ProjectDir)\Generated Headers&quot;;&quot;$(SolutionDir)\Utility\AutoBind\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Lua\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Newton\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\SDL\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\XEffects\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Irrlicht\Include&quot;"
 				PreprocessorDefinitions="WIN32"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -120,7 +120,7 @@
 				AdditionalOptions="/wd4244"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Lua\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Newton\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\SDL\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\XEffects\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Irrlicht\Include&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Static Headers&quot;;&quot;$(ProjectDir)\Generated Headers&quot;;&quot;$(SolutionDir)\Utility\AutoBind\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Lua\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Newton\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\SDL\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\XEffects\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Irrlicht\Include&quot;"
 				PreprocessorDefinitions="WIN32"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -894,6 +894,54 @@
 		<Filter
 			Name="AutoBind Source"
 			>
+			<Filter
+				Name="E.Unmanaged"
+				>
+				<Filter
+					Name="__Old"
+					>
+				</Filter>
+				<Filter
+					Name="Audio"
+					>
+				</Filter>
+				<Filter
+					Name="Core"
+					>
+				</Filter>
+				<Filter
+					Name="Ext"
+					>
+				</Filter>
+				<Filter
+					Name="GUI"
+					>
+				</Filter>
+				<Filter
+					Name="Net"
+					>
+				</Filter>
+				<Filter
+					Name="Video"
+					>
+				</Filter>
+				<Filter
+					Name="Scene"
+					>
+				</Filter>
+				<Filter
+					Name="Physics"
+					>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="E.Collections"
+				>
+			</Filter>
+			<Filter
+				Name="E.Library"
+				>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Static Headers"
