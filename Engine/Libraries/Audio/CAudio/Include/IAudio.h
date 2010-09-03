@@ -1,7 +1,7 @@
 #ifndef IAUDIO_H
 #define IAUDIO_H
 
-#include "export.h"
+#include "CAudioExport.h"
 #include "IAudioDecoder.h"
 
 namespace cAudio

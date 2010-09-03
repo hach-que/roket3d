@@ -7,7 +7,7 @@
 #include "../include/IAudioDecoderFactory.h"
 #include "cListener.h"
 #include "../include/IAudioManager.h"
-#include "export.h"
+#include "CAudioExport.h"
 
 namespace cAudio
 {

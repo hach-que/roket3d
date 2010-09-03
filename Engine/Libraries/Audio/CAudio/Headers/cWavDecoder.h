@@ -3,7 +3,7 @@
 
 #include "../include/IAudioDecoder.h"
 #include <iostream>
-#include "export.h"
+#include "CAudioExport.h"
 
 namespace cAudio
 {

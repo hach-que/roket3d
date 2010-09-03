@@ -6,7 +6,7 @@
 //!#include <AL/efx.h>
 #include <iostream>
 #define LOAD_AL_FUNC(x) (x = (typeof(x))alGetProcAddress(#x))
-#include "export.h"
+#include "CAudioExport.h"
 
 namespace cAudio
 {

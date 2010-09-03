@@ -1,7 +1,7 @@
 #ifndef CUTILS_H_INCLUDED
 #define CUTILS_H_INCLUDED
 #include <string>
-#include "export.h"
+#include "CAudioExport.h"
 
 //!Grabs the current extention of a given string.
 EXPORTDLL std::string getExt(const std::string& filename){

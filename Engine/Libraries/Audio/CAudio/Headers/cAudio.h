@@ -8,7 +8,7 @@
 
 #define BUFFER_SIZE ( 1024 * 32 )
 #include "../include/IAudio.h"
-#include "export.h"
+#include "CAudioExport.h"
 namespace cAudio
 {
     class cAudio : public IAudio

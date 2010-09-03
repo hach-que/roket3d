@@ -7,7 +7,7 @@
 #include <vorbisenc.h>
 #include <vorbisfile.h>
 #include <iostream>
-#include "export.h"
+#include "CAudioExport.h"
 
 namespace cAudio
 {
