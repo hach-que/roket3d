@@ -6,23 +6,30 @@ in bound classes.
 #ifndef STATIC_Exceptions
 #define STATIC_Exceptions
 
+#include <string>
+#include <vector>
+
 namespace Roket3D { namespace Exceptions
 {
 	class Exception
 	{
 		public:
-			virtual static const char* m_Name;
-			virtual static const char* m_Message = 0;
-			int m_LineNumber;
-			std::string m_FileName;
-	}
+			static const char* Name;
+			static const char* Message;
+			int LineNumber;
+			std::string FileName;
+			std::vector<std::string> Arguments;
+
+			std::string GetParsedMessage();
+	};
 
 	class ObjectNotValidException : public Exception
 	{
 		public:
 			ObjectNotValidException();
 
-			static const char* m_Message = "The object you are calling is no longer valid.";
+			static const char* Name;
+			static const char* Message;
 	};
 
 	class ReadOnlyPropertyException : public Exception
@@ -30,7 +37,8 @@ namespace Roket3D { namespace Exceptions
 		public:
 			ReadOnlyPropertyException();
 
-			static const char* m_Message = "The specified property is read-only.";
+			static const char* Name;
+			static const char* Message;
 	};
 
 	class InvalidArgumentTypeException : public Exception
@@ -38,7 +46,8 @@ namespace Roket3D { namespace Exceptions
 		public:
 			InvalidArgumentTypeException(int arg);
 
-			static const char* m_Message = "The specified argument at position ${1} is not of the correct type.";
+			static const char* Name;
+			static const char* Message;
 	};
 
 	class NoContextProvidedException : public Exception
@@ -46,7 +55,8 @@ namespace Roket3D { namespace Exceptions
 		public:
 			NoContextProvidedException();
 
-			static const char* m_Message = "There was no context for this function provided.  Ensure that you use the ':' operator on member functions.";
+			static const char* Name;
+			static const char* Message;
 	};
 
 	class InternalConstructorOnlyException : public Exception
@@ -54,7 +64,8 @@ namespace Roket3D { namespace Exceptions
 		public:
 			InternalConstructorOnlyException();
 
-			static const char* m_Message = "Attempted to construct an object whose constructor is for internal use only.";
+			static const char* Name;
+			static const char* Message;
 	};
 
 	class EntryPointNotFoundException : public Exception
@@ -62,8 +73,64 @@ namespace Roket3D { namespace Exceptions
 		public:
 			EntryPointNotFoundException();
 
-			static const char* m_Message = "The entry point for the game could not be found, due to a missing GameInfo.xml file.";
+			static const char* Name;
+			static const char* Message;
 	};
+
+	class LuaStateNotValidException : public Exception
+	{
+		public:
+			LuaStateNotValidException();
+
+			static const char* Name;
+			static const char* Message;
+	};
+
+	class PathNotFoundException : public Exception
+	{
+		public:
+			PathNotFoundException(std::string path);
+
+			static const char* Name;
+			static const char* Message;
+	};
+
+	class PermissionDeniedException : public Exception
+	{
+		public:
+			PermissionDeniedException(std::string resource);
+
+			static const char* Name;
+			static const char* Message;
+	};
+
+	class DebuggerNotAttachedException : public Exception
+	{
+		public:
+			DebuggerNotAttachedException();
+
+			static const char* Name;
+			static const char* Message;
+	};
+
+	class InvalidSyntaxException : public Exception
+	{
+		public:
+			InvalidSyntaxException();
+
+			static const char* Name;
+			static const char* Message;
+	};
+
+	class OutOfMemoryException : public Exception
+	{
+		public:
+			OutOfMemoryException();
+
+			static const char* Name;
+			static const char* Message;
+	};
+}
 }
 
 #endif

@@ -28,7 +28,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Generating automatic source and header files (AutoBind)..."
-				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;&quot;$(SolutionDir)\Utility\AutoBind\bin\Debug\AutoBind.exe&quot;"
+				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;&quot;$(SolutionDir)\Utility\AutoBind\bin\Debug\AutoBind.exe&quot;&#x0D;&#x0A;"
 				ExcludedFromBuild="true"
 			/>
 			<Tool
@@ -50,7 +50,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/wd4244"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Static Headers&quot;;&quot;$(ProjectDir)\Generated Headers&quot;;&quot;$(SolutionDir)\Utility\AutoBind\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Lua\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Newton\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\SDL\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\XEffects\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Irrlicht\Include&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Static Headers&quot;;&quot;$(ProjectDir)\Generated Headers&quot;;&quot;$(SolutionDir)\Utility\AutoBind\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Lua\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Newton\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\SDL\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\XEffects\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Irrlicht\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\CAudio\Include&quot;"
 				PreprocessorDefinitions="WIN32"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -108,7 +108,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Generating automatic source and header files (AutoBind)..."
-				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;&quot;$(SolutionDir)\Utility\AutoBind\bin\Debug\AutoBind.exe&quot;"
+				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;&quot;$(SolutionDir)\Utility\AutoBind\bin\Debug\AutoBind.exe&quot;&#x0D;&#x0A;"
 				ExcludedFromBuild="true"
 			/>
 			<Tool
@@ -131,7 +131,7 @@
 				AdditionalOptions="/wd4244"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Static Headers&quot;;&quot;$(ProjectDir)\Generated Headers&quot;;&quot;$(SolutionDir)\Utility\AutoBind\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Lua\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Newton\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\SDL\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\XEffects\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Irrlicht\Include&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Static Headers&quot;;&quot;$(ProjectDir)\Generated Headers&quot;;&quot;$(SolutionDir)\Utility\AutoBind\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Lua\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Newton\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\SDL\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\XEffects\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Irrlicht\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\CAudio\Include&quot;"
 				PreprocessorDefinitions="WIN32"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -280,10 +280,6 @@
 					Name="Audio"
 					>
 					<File
-						RelativePath=".\Generated Source\E.Unmanaged\Audio\audio.cpp"
-						>
-					</File>
-					<File
 						RelativePath=".\Generated Source\E.Unmanaged\Audio\raudiocontroller.cpp"
 						>
 					</File>
@@ -295,10 +291,6 @@
 				<Filter
 					Name="Core"
 					>
-					<File
-						RelativePath=".\Generated Source\E.Unmanaged\Core\core.cpp"
-						>
-					</File>
 					<File
 						RelativePath=".\Generated Source\E.Unmanaged\Core\eventreciever.cpp"
 						>
@@ -315,10 +307,6 @@
 				<Filter
 					Name="GUI"
 					>
-					<File
-						RelativePath=".\Generated Source\E.Unmanaged\GUI\gui.cpp"
-						>
-					</File>
 					<File
 						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguibutton.cpp"
 						>
@@ -384,10 +372,6 @@
 					Name="Net"
 					>
 					<File
-						RelativePath=".\Generated Source\E.Unmanaged\Net\net.cpp"
-						>
-					</File>
-					<File
 						RelativePath=".\Generated Source\E.Unmanaged\Net\rnetsocket.cpp"
 						>
 					</File>
@@ -405,10 +389,6 @@
 					</File>
 					<File
 						RelativePath=".\Generated Source\E.Unmanaged\Video\rvideotexture.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\Generated Source\E.Unmanaged\Video\video.cpp"
 						>
 					</File>
 				</Filter>
@@ -467,18 +447,10 @@
 						RelativePath=".\Generated Source\E.Unmanaged\Scene\rsceneterrainnode.cpp"
 						>
 					</File>
-					<File
-						RelativePath=".\Generated Source\E.Unmanaged\Scene\scene.cpp"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="Physics"
 					>
-					<File
-						RelativePath=".\Generated Source\E.Unmanaged\Physics\physics.cpp"
-						>
-					</File>
 					<File
 						RelativePath=".\Generated Source\E.Unmanaged\Physics\rphysicsjoint.cpp"
 						>
@@ -496,31 +468,7 @@
 					Name="Ext"
 					>
 					<File
-						RelativePath=".\Generated Source\E.Unmanaged\Ext\ext.cpp"
-						>
-					</File>
-					<File
 						RelativePath=".\Generated Source\E.Unmanaged\Ext\rthread.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\Generated Source\E.Unmanaged\Ext\threadenc.cpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -628,10 +576,6 @@
 					Name="Audio"
 					>
 					<File
-						RelativePath=".\Generated Headers\E.Unmanaged\Audio\audio.h"
-						>
-					</File>
-					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\Audio\raudiocontroller.h"
 						>
 					</File>
@@ -643,10 +587,6 @@
 				<Filter
 					Name="Core"
 					>
-					<File
-						RelativePath=".\Generated Headers\E.Unmanaged\Core\core.h"
-						>
-					</File>
 					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\Core\eventreciever.h"
 						>
@@ -667,10 +607,6 @@
 				<Filter
 					Name="GUI"
 					>
-					<File
-						RelativePath=".\Generated Headers\E.Unmanaged\GUI\gui.h"
-						>
-					</File>
 					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguibutton.h"
 						>
@@ -736,10 +672,6 @@
 					Name="Net"
 					>
 					<File
-						RelativePath=".\Generated Headers\E.Unmanaged\Net\net.h"
-						>
-					</File>
-					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\Net\rnetsocket.h"
 						>
 					</File>
@@ -757,10 +689,6 @@
 					</File>
 					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\Video\rvideotexture.h"
-						>
-					</File>
-					<File
-						RelativePath=".\Generated Headers\E.Unmanaged\Video\video.h"
 						>
 					</File>
 				</Filter>
@@ -819,18 +747,10 @@
 						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rsceneterrainnode.h"
 						>
 					</File>
-					<File
-						RelativePath=".\Generated Headers\E.Unmanaged\Scene\scene.h"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="Physics"
 					>
-					<File
-						RelativePath=".\Generated Headers\E.Unmanaged\Physics\physics.h"
-						>
-					</File>
 					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\Physics\rphysicsjoint.h"
 						>
@@ -848,31 +768,7 @@
 					Name="Ext"
 					>
 					<File
-						RelativePath=".\Generated Headers\E.Unmanaged\Ext\ext.h"
-						>
-					</File>
-					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\Ext\rthread.h"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCustomBuildTool"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCustomBuildTool"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\Generated Headers\E.Unmanaged\Ext\threadenc.h"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -898,7 +794,12 @@
 			Name="Resources"
 			>
 			<File
-				RelativePath=".\Resources\roket3d.ico"
+				RelativePath=".\Resources\GameInfo.xml"
+				DeploymentContent="true"
+				>
+			</File>
+			<File
+				RelativePath=".\Resources\Roket3D.ico"
 				>
 			</File>
 		</Filter>
@@ -911,38 +812,878 @@
 				<Filter
 					Name="__Old"
 					>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\__Old\IrrLazyCamera.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\__Old"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\__Old"
+							/>
+						</FileConfiguration>
+					</File>
 				</Filter>
 				<Filter
 					Name="Audio"
 					>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Audio\RAudioController.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Audio"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Audio"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Audio\RAudioSound.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Audio"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Audio"
+							/>
+						</FileConfiguration>
+					</File>
 				</Filter>
 				<Filter
 					Name="Core"
 					>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Core\EventReciever.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Core"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Core"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Core\RCursorControl.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Core"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Core"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Core\RDevice.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Core"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Core"
+							/>
+						</FileConfiguration>
+					</File>
 				</Filter>
 				<Filter
 					Name="Ext"
 					>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Ext\RThread.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Ext"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Ext"
+							/>
+						</FileConfiguration>
+					</File>
 				</Filter>
 				<Filter
 					Name="GUI"
 					>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIButton.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUICheckBox.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIComboBox.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIEditBox.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIElement.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIEnvironment.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIFileOpenDialog.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIFont.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIImage.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIListBox.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIMeshViewer.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIScrollBar.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUISkin.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIStaticText.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIWindow.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
 				</Filter>
 				<Filter
 					Name="Net"
 					>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Net\RNetSocket.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Net"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Net"
+							/>
+						</FileConfiguration>
+					</File>
 				</Filter>
 				<Filter
 					Name="Video"
 					>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Video\RVideoDriver.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Video"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Video"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Video\RVideoMaterial.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Video"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Video"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Video\RVideoTexture.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Video"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Video"
+							/>
+						</FileConfiguration>
+					</File>
 				</Filter>
 				<Filter
 					Name="Scene"
 					>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RParticleSystemNode.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneBillboardNode.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneBillboardTextNode.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneCamera.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneCollisionManager.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneLazyCamera.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneLightNode.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneManager.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneMesh.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneMeshNode.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneNode.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneSpecialEffects.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneTerrainNode.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
 				</Filter>
 				<Filter
 					Name="Physics"
 					>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Physics\RPhysicsJoint.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Physics"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Physics"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Physics\RPhysicsManager.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Physics"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Physics"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Physics\RPhysicsMaterialHandler.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Physics"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Physics"
+							/>
+						</FileConfiguration>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter
@@ -961,6 +1702,214 @@
 							HBaseLocation="$(ProjectDir)\Generated Headers"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Autobind Source\E.Collections\RCube3D.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Autobind Source\E.Collections\RMatrix.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Autobind Source\E.Collections\RPlane.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Autobind Source\E.Collections\RQuaternion.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Autobind Source\E.Collections\RRay2D.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Autobind Source\E.Collections\RRay3D.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Autobind Source\E.Collections\RRectangle.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Autobind Source\E.Collections\RTriangle3D.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Autobind Source\E.Collections\RVector2D.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Autobind Source\E.Collections\RVector3D.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -972,7 +1921,31 @@
 			Name="Static Headers"
 			>
 			<File
+				RelativePath=".\Static Headers\ClassRegistration.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Static Headers\Debugger.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Static Headers\Exceptions.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Static Headers\Program.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Static Headers\RObject.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Static Headers\roket3d.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Static Headers\Utility.h"
 				>
 			</File>
 			<Filter
@@ -1026,17 +1999,57 @@
 						</File>
 					</Filter>
 				</Filter>
+				<Filter
+					Name="Ext"
+					>
+					<File
+						RelativePath=".\Static Headers\E.Unmanaged\Ext\threadenc.h"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCustomBuildTool"
+							/>
+						</FileConfiguration>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
 			Name="Static Source"
 			>
 			<File
+				RelativePath=".\Static Source\ClassRegistration.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Static Source\Debugger.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Static Source\Exceptions.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Static Source\main.cpp"
 				>
 			</File>
 			<File
+				RelativePath=".\Static Source\Program.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Static Source\RObject.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Static Source\roket3d.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Static Source\Utility.cpp"
 				>
 			</File>
 			<Filter
@@ -1051,44 +2064,140 @@
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsbody.cpp"
 							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicscallbacks.cpp"
 							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointball.cpp"
 							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointcorkscrew.cpp"
 							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointcustom.cpp"
 							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointhinge.cpp"
 							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointslider.cpp"
 							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointuniversal.cpp"
 							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsmanager.cpp"
 							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsmaterialhandler.cpp"
 							>
+							<FileConfiguration
+								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 					</Filter>
+				</Filter>
+				<Filter
+					Name="Ext"
+					>
+					<File
+						RelativePath=".\Static Source\E.Unmanaged\Ext\threadenc.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+					</File>
 				</Filter>
 			</Filter>
 		</Filter>

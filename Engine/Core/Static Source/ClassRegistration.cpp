@@ -2,7 +2,7 @@
 // with the engine.
 #include "ClassRegistration.h"
 #include "autobind/types.h"
-#include "autobind/bindings/lua.h"
+#include "autobind/binding/lua.h"
 
 // Include all of the classes to be registered.
 #include "E.Collections/RColor.h"

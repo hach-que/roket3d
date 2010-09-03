@@ -1,5 +1,6 @@
 #include "Irrlicht.h"
 #include "SColor.h"
+#include "Exceptions.h"
 
 class Engine.Collections.RColor
 //   as Engine.Collections.Color
@@ -171,7 +172,7 @@ class Engine.Collections.RColor
 
 	unbound void SetAverage(numeric value)
 	{
-		throw new Error::ReadOnlyPropertyException();
+		throw new Roket3D::Exceptions::ReadOnlyPropertyException();
 	}
 
 	unbound numeric GetAverage()
@@ -181,7 +182,7 @@ class Engine.Collections.RColor
 
 	unbound void SetLuminance(numeric value)
 	{
-		throw new Error::ReadOnlyPropertyException();
+		throw new Roket3D::Exceptions::ReadOnlyPropertyException();
 	}
 
 	unbound numeric GetLuminance()

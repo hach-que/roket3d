@@ -8,7 +8,7 @@
 #include <vector>
 #include <lua.hpp>
 #include "roket3d.h" // TODO: Move lua_gettablevalue and luaL_testudata into this file from roket3d.h.
-#include "RError.h"
+#include "Exceptions.h"
 
 template<class T>
 	class Bindings
@@ -100,7 +100,7 @@ template<class T>
 			// the namespace context as well.
 			std::string cls = T::ClassName;
 			std::string buf = "";
-			std::vector<std::string> elms = new std::vector<std::string>();
+			std::vector<std::string> elms;
 			for (int i = 0; i < cls.length(); i++)
 			{
 				if (cls[i] == '.')
@@ -169,7 +169,7 @@ template<class T>
 			// Now set the index of T::ClassName in the registry table
 			// to be associated with the metatable.
 			lua_pushvalue(L, -1);
-			lua_pushstring(L, T::className);
+			lua_pushstring(L, T::ClassName);
 			lua_rawset(L, LUA_REGISTRYINDEX);
 
 			// Add our metatable functions such as __gc, __index and
@@ -496,7 +496,7 @@ template<class T>
 			// context.
 			if (lua_gettop(L) == 0 || !lua_istable(L, 1))
 			{
-				throw new Error::NoContextProvidedException();
+				throw new Roket3D::Exceptions::NoContextProvidedException();
 				return 0;
 			}
 
@@ -553,7 +553,7 @@ inline numeric Bindings<numeric>::GetArgumentBase(lua_State * L, int narg)
 	if (lua_isnumber(L, narg + 1))
 		return lua_tonumber(L, narg + 1);
 	else
-		throw new Error::InvalidArgumentTypeException(narg);
+		throw new Roket3D::Exceptions::InvalidArgumentTypeException(narg);
 }
 
 inline ::string Bindings<::string>::GetArgumentBase(lua_State * L, int narg)
@@ -564,7 +564,7 @@ inline ::string Bindings<::string>::GetArgumentBase(lua_State * L, int narg)
 	if (lua_isstring(L, narg + 1))
 		return lua_tostring(L, narg + 1);
 	else
-		throw new Error::InvalidArgumentTypeException(narg);
+		throw new Roket3D::Exceptions::InvalidArgumentTypeException(narg);
 }
 
 inline bool Bindings<bool>::GetArgumentBase(lua_State * L, int narg)
@@ -573,7 +573,7 @@ inline bool Bindings<bool>::GetArgumentBase(lua_State * L, int narg)
 	// position.  If it isn't, then it can't be a
 	// class.
 	if (lua_isboolean(L, narg + 1))
-		return lua_toboolean(L, narg + 1);
+		return (lua_toboolean(L, narg + 1) == 0);
 	else
-		throw new Error::InvalidArgumentTypeException(narg);
+		throw new Roket3D::Exceptions::InvalidArgumentTypeException(narg);
 }
