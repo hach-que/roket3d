@@ -288,95 +288,95 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\Include\lapi.h"
+				RelativePath=".\Headers\lapi.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lauxlib.h"
+				RelativePath=".\Headers\lauxlib.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lcode.h"
+				RelativePath=".\Headers\lcode.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\ldebug.h"
+				RelativePath=".\Headers\ldebug.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\ldo.h"
+				RelativePath=".\Headers\ldo.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lfunc.h"
+				RelativePath=".\Headers\lfunc.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lgc.h"
+				RelativePath=".\Headers\lgc.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\llex.h"
+				RelativePath=".\Headers\llex.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\llimits.h"
+				RelativePath=".\Headers\llimits.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lmem.h"
+				RelativePath=".\Headers\lmem.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lobject.h"
+				RelativePath=".\Headers\lobject.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lopcodes.h"
+				RelativePath=".\Headers\lopcodes.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lparser.h"
+				RelativePath=".\Headers\lparser.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lstate.h"
+				RelativePath=".\Headers\lstate.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lstring.h"
+				RelativePath=".\Headers\lstring.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\ltable.h"
+				RelativePath=".\Headers\ltable.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\ltm.h"
+				RelativePath=".\Headers\ltm.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lua.h"
+				RelativePath=".\Headers\lua.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\luaconf.h"
+				RelativePath=".\Headers\luaconf.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lualib.h"
+				RelativePath=".\Headers\lualib.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lundump.h"
+				RelativePath=".\Headers\lundump.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lvm.h"
+				RelativePath=".\Headers\lvm.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\lzio.h"
+				RelativePath=".\Headers\lzio.h"
 				>
 			</File>
 		</Filter>
