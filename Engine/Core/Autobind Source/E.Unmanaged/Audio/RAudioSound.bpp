@@ -1,0 +1,305 @@
+#import Engine.Unmanaged.Core.RDevice
+#import Engine.Collections.RVector3D
+#include "IAudio.h"
+#include "RError.h"
+
+class Engine.Unmanaged.Audio.RAudioSound
+{
+	private bool m_IsSoundSet; 
+	private Engine::Unmanaged::Core::RDevice * m_RoketDevice;
+	private cAudio::IAudio * m_CAudioSound;
+
+	/// <summary>
+	/// A non-public constructor for initalizing an RAudioSound instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Error::InternalConstructorOnlyException</exception>
+	bound RAudioSound()
+	{
+		if (byuser)
+		{
+			throw new Error::InternalConstructorOnlyException();
+		}
+		this->m_IsSoundSet = true;
+		this->m_CAudioSound = NULL;
+		this->IsPrecious = true;
+	}
+
+	/// <summary>
+	/// Plays the sound (2D).
+	/// </summary>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void Play()
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->play();
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Plays the sound (2D).
+	/// </summary>
+	/// <param name="loop">Whether the sound should loop or not.</param>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void Play2D(bool loop)
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->play2d(loop);
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Plays the sound (3D).
+	/// </summary>
+	/// <param name="vec">The position in 3D space where the sound should be played.</param>
+	/// <param name="loop">Whether the sound should loop or not.</param>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void Play3D(Engine::Collections::RVector3D vec, bool loop)
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->play3d(loop, vec->GetObject().X, vec->GetObject().Y, vec->GetObject().Z);
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Pauses the currently playing sound.
+	/// </summary>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void Pause()
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->pause();
+			return;
+		} 
+		else
+		{
+			throw new Error::ObjectNotValidException();
+		}
+	}
+
+	/// <summary>
+	/// Stops the currently playing sound.  The current position in the
+	/// sound file is reset to 0.
+	/// </summary>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void Stop()
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->stop();
+			return;
+		}
+		else
+		{
+			throw new Error::ObjectNotValidException();
+		}
+	}
+
+	/// <summary>
+	/// Seeks the sound to a particular point in the file.
+	/// </summary>
+	/// <param name="seconds">Where the sound should continue playing from.</param>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void Seek(numeric seconds)
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->seek(seconds);
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Sets the position in 3D space of the sound.  Used when the default
+	/// <see>RAudioSound::Play</see> function is called.
+	/// </summary>
+	/// <param name="vec">The position of the sound.</param>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void SetPosition(Engine::Collections::RVector3D vec)
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->setPosition(vec->GetObject().X, vec->GetObject().Y, vec->GetObject().Z);
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Sets the velocity of the sound in 3D space.  Each component of the
+	/// vector indicates the speed on that axis.
+	/// </summary>
+	/// <param name="vec">The velocity of the sound.</param>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void SetVelocity(Engine::Collections::RVector3D vec)
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->setVelocity(vec->GetObject().X, vec->GetObject().Y, vec->GetObject().Z);
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Sets the direction of the sound in 3D space.
+	/// </summary>
+	/// <param name="vec">The direction of the sound.</param>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void SetDirection(Engine::Collections::RVector3D vec)
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->setDirection(vec->GetObject().X, vec->GetObject().Y, vec->GetObject().Z);
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Sets the pitch that the sound should be played at.
+	/// </summary>
+	/// <param name="pitch">The pitch of the sound.</param>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void SetPitch(numeric pitch)
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->setPitch(pitch);
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Sets the volume that the sound should be played at.
+	/// </summary>
+	/// <param name="volume">The volume of the sound.</param>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void SetVolume(numeric volume)
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->setVolume(volume);
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Sets the strength that the sound should be played at.
+	/// </summary>
+	/// <param name="strength">The strength of the sound.</param>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void SetStrength(numeric strength)
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->setStrength(strength);
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Sets whether or not the sound should be looped.  Used when the default
+	/// <see>RAudioSound::Play</see> function is called.
+	/// </summary>
+	/// <param name="looping">Whether the sound should loop.</param>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void SetLooping(bool looping)
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->loop(looping);
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Sets the strength of the sound for doppler effects.
+	/// </summary>
+	/// <param name="strength">The strength of the sound for doppler effects.</param>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void SetDopplerStrength(numeric strength)
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->setDopplerStrength(strength);
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Sets the velocity of the sound for doppler effects.  By specifing a zero vector,
+	/// doppler effects are turned off.
+	/// </summary>
+	/// <param name="strength">The velocity of the sound for doppler effects.</param>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void SetDopplerVelocity(Engine::Collections::RVector3D vec)
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->setDopplerVelocity(vec->GetObject().X, vec->GetObject().Y, vec->GetObject().Z);
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Returns whether or not the sound is currently playing.
+	/// </summary>
+	/// <returns>Whether the sound is currently playing.</returns>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound bool IsPlaying()
+	{
+		if (this->m_IsSoundSet)
+			return this->m_CAudioSound->playing();
+		else
+			throw new Error::ObjectNotValidException();
+	}
+
+	/// <summary>
+	/// Frees the sound in memory.  Once the sound is freed, it can no
+	/// longer be played or have any other functions called on it.
+	/// </summary>
+	/// <exception>Error::ObjectNotValidException</exception>
+	bound void Destroy()
+	{
+		if (this->m_IsSoundSet)
+		{
+			this->m_CAudioSound->release();
+			this->m_CAudioSound = NULL;
+			this->m_IsSoundSet = false;
+			return;
+		}
+		else
+			throw new Error::ObjectNotValidException();
+	}
+}
