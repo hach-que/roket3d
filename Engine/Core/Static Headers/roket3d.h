@@ -362,7 +362,7 @@ inline void* lua_multicheck(lua_State* L, const char* type)
 }
 
 // include luna template
-//#include "luna.h"
+#include "luna.h"
 
 /*
 #ifndef VARCHECKER
@@ -435,7 +435,7 @@ namespace Engine
 };
 
 // include all R3D classes
-/*#include "E.Unmanaged/Core/robject.h"
+#include "E.Unmanaged/Core/robject.h"
 #include "E.Unmanaged/Core/eventreciever.h"
 #include "E.Unmanaged/GUI/gui.h"
 #include "E.Unmanaged/Core/core.h"
@@ -444,7 +444,7 @@ namespace Engine
 #include "E.Unmanaged/Ext/ext.h"
 #include "E.Unmanaged/Physics/physics.h"
 #include "E.Unmanaged/Net/net.h"
-#include "E.Unmanaged/Audio/audio.h"*/
+#include "E.Unmanaged/Audio/audio.h"
 
 void initalizeRoket3D (lua_State * L, int argc, char* argv[]);
 void registerConstant (lua_State * L, const char* name, const char* value, const char* namespac);

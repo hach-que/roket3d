@@ -284,14 +284,14 @@ void registerConstant (lua_State * L, int index, double value, const char* names
 
 void initalizeRoket3D (lua_State * L, int argc, char* argv[])
 {
-	/*CoreInitalize		(L);
+	CoreInitalize		(L);
 	GUIInitalize		(L);
 	SceneInitalize		(L);
 	VideoInitalize		(L);
 	ExtInitalize		(L);
 	PhysicsInitalize	(L);
 	NetInitalize		(L);
-	AudioInitalize		(L);*/
+	AudioInitalize		(L);
 
 	// work out the location of Roket3D
 	registerConstant(L, "_SELFEXE",argv[0]);
