@@ -9,12 +9,14 @@ namespace LibAutoBind.Nodes
     {
         private List<string> m_Keywords;
         private string m_Name;
+        private string m_Type;
         private List<string> m_Arguments = new List<string>();
 
-        internal ClassFunctionDeclarationNode(List<string> keywords, string name)
+        internal ClassFunctionDeclarationNode(List<string> keywords, string type, string name)
         {
             this.m_Keywords = keywords;
             name = name.Trim('{').Trim();
+            this.m_Type = type;
 
             // We need to split up the name into the actual function
             // name and the arguments.
@@ -29,6 +31,13 @@ namespace LibAutoBind.Nodes
             string keys = "";
             foreach (string k in keywords)
                 keys += k + " ";
+            if (type == "")
+            {
+                // Must a built-in type.
+                foreach (string k in keywords)
+                    if (Keywords.CPPTypeKeywords.Contains(k) && Keywords.LuaTypeKeywords.Contains(k))
+                        this.m_Type = k;
+            }
             keys = keys.Trim();
             this.p_Content = keys + " " + name;
         }
@@ -59,6 +68,11 @@ namespace LibAutoBind.Nodes
         internal string Name
         {
             get { return this.m_Name; }
+        }
+
+        internal string Type
+        {
+            get { return this.m_Type; }
         }
 
         internal List<string> Arguments

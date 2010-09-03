@@ -77,5 +77,33 @@ namespace LibAutoBind
         {
             get { return this.p_OutputCFile; }
         }
+
+        public string InputName
+        {
+            get
+            {
+                FileInfo f = new FileInfo(this.p_FilePath);
+                return f.Name;
+            }
+        }
+    }
+
+    public class InvalidClassDefinitionException : Exception
+    {
+        public InvalidClassDefinitionException() { }
+        public InvalidClassDefinitionException(string message) : base(message) { }
+        public InvalidClassDefinitionException(string message, Exception inner) : base(message, inner) { }
+    }
+    public class InvalidCharacterException : Exception
+    {
+        public InvalidCharacterException() { }
+        public InvalidCharacterException(string message) : base(message) { }
+        public InvalidCharacterException(string message, Exception inner) : base(message, inner) { }
+    }
+    public class LexingAbortedException : Exception
+    {
+        public LexingAbortedException() { }
+        public LexingAbortedException(string message) : base(message) { }
+        public LexingAbortedException(string message, Exception inner) : base(message, inner) { }
     }
 }

@@ -58,6 +58,10 @@ namespace LibAutoBind.Transformers
             {
                 this.WriteHeaderLine("#include \"" + ClassName.ResolveToHeaderFilename(n.Content.Trim()) + "\"");
             }
+            foreach (Node n in this.GetNodesOfType(nodes, typeof(IncludeNode)))
+            {
+                this.WriteHeaderLine("#include " + n.Content.Trim() + "");
+            }
             this.WriteHeaderLine();
 
             // Now add all of the using declarations.
@@ -91,11 +95,25 @@ namespace LibAutoBind.Transformers
             foreach (ClassVariableDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassVariableDeclarationNode)))
             {
                 string keys = "";
+                string visibility = "private";
                 foreach (string k in n.CPPKeywords)
-                    keys += k + " ";
-                this.WriteHeaderLine("        " + keys + n.Name + ";");
+                {
+                    if (Keywords.CPPVisibilityKeywords.Contains(k))
+                        visibility = k;
+                    else
+                        keys += k + " ";
+                }
+                this.WriteHeaderLine("        " + visibility + ": " + keys + n.Type + " " + n.Name + ";");
             }
             this.WriteHeaderLine();
+
+            // Search for all methods used by properties.
+            List<string> propertyMethods = new List<string>();
+            foreach (ClassPropertyDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassPropertyDeclarationNode)))
+            {
+                if (n.GetIsFunc) propertyMethods.Add(n.GetVal);
+                if (n.SetIsFunc) propertyMethods.Add(n.SetVal);
+            }
 
             // Declare the methods that are in the class.
             this.WriteHeaderLine("        /* Method and constructor declarations */");
@@ -104,16 +122,33 @@ namespace LibAutoBind.Transformers
             foreach (ClassFunctionDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassFunctionDeclarationNode)))
             {
                 string keys = "";
+                string visibility = "private";
+                string functype = n.Type;
                 foreach (string k in n.CPPKeywords)
                 {
                     if (!Keywords.CPPTypeKeywords.Contains(k) && !Keywords.LuaTypeKeywords.Contains(k))
-                        keys += k + " ";
+                    {
+                        if (Keywords.CPPVisibilityKeywords.Contains(k))
+                            visibility = k;
+                        else
+                            keys += k + " ";
+                    }
+                    else if (!n.AllKeywords.Contains("bound") && functype == "")
+                        functype = k;
                 }
                 string decl = "";
                 if (n.Name == clscomponents[clscomponents.Length - 1]) // Constructor
-                    decl = keys + n.Name + "(lua_State * L, bool byuser);";
+                    decl = visibility + ": " + keys + n.Name + "(lua_State * L, bool byuser);";
+                else if (n.AllKeywords.Contains("bound") || propertyMethods.Contains(n.Name))
+                    decl = visibility + ": " + keys + "int " + n.Name + "(lua_State * L);";
                 else
-                    decl = keys + "int " + n.Name + "(lua_State * L);";
+                {
+                    string args = "";
+                    foreach (string a in n.Arguments)
+                        args += a + ", ";
+                    args = args.Substring(0, args.Length - 2);
+                    decl = visibility + ": " + keys + functype + " " + n.Name + "(" + args + ");";
+                }
                 if (!fdecls.Contains(decl))
                     this.WriteHeaderLine("        " + decl);
                 fdecls.Add(decl);
@@ -126,13 +161,20 @@ namespace LibAutoBind.Transformers
             {
                 if (n.GetVal != null && !n.GetIsFunc)
                 {
-                    this.WriteHeaderLine("        int __autobind_property_get_" + n.Name + "(lua_State * L);");
+                    this.WriteHeaderLine("        private: int __autobind_property_get_" + n.Name + "(lua_State * L);");
                 }
                 if (n.SetVal != null && !n.SetIsFunc)
                 {
-                    this.WriteHeaderLine("        int __autobind_property_set_" + n.Name + "(lua_State * L);");
+                    this.WriteHeaderLine("        private: int __autobind_property_set_" + n.Name + "(lua_State * L);");
                 }
             }
+            this.WriteHeaderLine();
+
+            // Write the declarations of the Binding variables.
+            this.WriteHeaderLine("        /* Binding variables */");
+            this.WriteHeaderLine("        public: static const char *ClassName;");
+			this.WriteHeaderLine("        public: static const Bindings<" + cls.ClassOnly + ">::FunctionType Functions[];");
+            this.WriteHeaderLine("        public: static const Bindings<" + cls.ClassOnly + ">::PropertyType Properties[];");
 
             // End the declaration of the class.
             this.WriteHeaderLine("    };");
@@ -162,7 +204,16 @@ namespace LibAutoBind.Transformers
             Console.WriteLine("(cpp) " + cls.ClassOnly);
             this.WriteCodeLine("#include \"autobind/types.h\"");
             this.WriteCodeLine("#include \"autobind/binding/lua.h\"");
-            this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(cls.Class) + "\"");
+            this.WriteCodeLine("#include \"RError.h\"");
+            this.WriteCodeLine("#include \"RObject.h\"");
+            if (cls.Alias == "")
+                this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(cls.Class) + "\"");
+            else
+                this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(cls.Alias) + "\"");
+            foreach (Node n in this.GetNodesOfType(nodes, typeof(IncludeNode)))
+            {
+                this.WriteHeaderLine("#include " + n.Content.Trim() + "");
+            }
             this.WriteCodeLine();
 
             // All of the import declarations will have been made in the header file,
@@ -186,22 +237,20 @@ namespace LibAutoBind.Transformers
                 }
             }
 
-            // Declare all of the variables within the class.
-            this.WriteCodeLine("    /* Variable definitions */");
-            foreach (ClassVariableDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassVariableDeclarationNode)))
+            // Search for all methods used by properties.
+            List<string> propertyMethods = new List<string>();
+            foreach (ClassPropertyDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassPropertyDeclarationNode)))
             {
-                string keys = "";
-                foreach (string k in n.CPPKeywords)
-                    keys += k + " ";
-                this.WriteCodeLine("    " + keys + cls.ClassOnly + "::" + n.Name + ";");
+                if (n.GetIsFunc) propertyMethods.Add(n.GetVal);
+                if (n.SetIsFunc) propertyMethods.Add(n.SetVal);
             }
-            this.WriteCodeLine();
 
             // Declare the methods that are in the class.
             this.WriteCodeLine("    /* Method and constructor definitions */");
 
             List<string> fdefs = new List<string>();
             bool funccontent = false;
+            bool funcbound = false;
             string functype = "";
             foreach (Node r in nodes)
             {
@@ -209,39 +258,64 @@ namespace LibAutoBind.Transformers
                 {
                     ClassFunctionDeclarationNode n = (ClassFunctionDeclarationNode)r;
                     string keys = "";
+                    functype = n.Type;
                     foreach (string k in n.CPPKeywords)
                     {
-                        if (!Keywords.CPPTypeKeywords.Contains(k) && !Keywords.LuaTypeKeywords.Contains(k))
-                            keys += k + " ";
-                        if (Keywords.CPPTypeKeywords.Contains(k) || Keywords.LuaTypeKeywords.Contains(k))
-                            functype = k;
+                        if (!Keywords.CPPVisibilityKeywords.Contains(k))
+                        {
+                            if (!Keywords.CPPTypeKeywords.Contains(k) && !Keywords.LuaTypeKeywords.Contains(k))
+                                keys += k + " ";
+                            if (Keywords.CPPTypeKeywords.Contains(k) || Keywords.LuaTypeKeywords.Contains(k))
+                            {
+                                if (functype == "")
+                                    functype = k;
+                            }
+                        }
                     }
                     string def = "";
-                    if (n.Name == clscomponents[clscomponents.Length - 1]) // Constructor
-                        def = keys + cls.ClassOnly + "::" + n.Name + "(lua_State * L, bool byuser)";
+                    if (n.AllKeywords.Contains("bound") || propertyMethods.Contains(n.Name))
+                    {
+                        if (n.Name == clscomponents[clscomponents.Length - 1]) // Constructor
+                            def = keys + cls.ClassOnly + "::" + n.Name + "(lua_State * L, bool byuser)";
+                        else
+                            def = keys + "int " + cls.ClassOnly + "::" + n.Name + "(lua_State * L)";
+                    }
                     else
-                        def = keys + "int " + cls.ClassOnly + "::" + n.Name + "(lua_State * L)";
+                    {
+                        string args = "";
+                        foreach (string a in n.Arguments)
+                            args += a + ", ";
+                        args = args.Substring(0, args.Length - 2);
+                        def = keys + functype + " " + cls.ClassOnly + "::" + n.Name + "(" + args + ")";
+                    }
                     if (!fdefs.Contains(def))
                     {
                         this.WriteCodeLine("    " + def);
                         this.WriteCodeLine("    {");
                         
                         // Add the argument bindings.
-                        int ai = 0;
-                        foreach (string a in n.Arguments)
+                        if (n.AllKeywords.Contains("bound") || propertyMethods.Contains(n.Name))
                         {
-                            Regex ar = new Regex("(?<Type>[a-zA-Z0-9_\\.]+)[ \r\n\t]+(?<Name>[a-zA-Z0-9_\\.]+)");
-                            Match m = ar.Match(a);
-                            if (m.Success)
+                            int ai = 0;
+                            foreach (string a in n.Arguments)
                             {
-                                string type = m.Groups["Type"].Value;
-                                string name = m.Groups["Name"].Value;
+                                Regex ar = new Regex("(?<Type>[a-zA-Z0-9_\\.\\:]+)[ \r\n\t]+(?<Name>[a-zA-Z0-9_\\.]+)");
+                                Match m = ar.Match(a);
+                                if (m.Success)
+                                {
+                                    string type = m.Groups["Type"].Value;
+                                    string name = m.Groups["Name"].Value;
 
-                                this.WriteCodeLine("        Bindings<" + type + "> " + name + "(L, " + ai + ");");
+                                    if (Keywords.LuaTypeKeywords.Contains(type) || type == "bool")
+                                        this.WriteCodeLine("        " + type + " " + name + " = Bindings<" + type + ">::GetArgumentBase(L, " + ai + ");");
+                                    else
+                                        this.WriteCodeLine("        " + type + " * " + name + " = Bindings<" + type + ">::GetArgument(L, " + ai + ");");
+                                    ai += 1;
+                                }
                             }
-                            ai += 1;
+                            if (ai != 0) this.WriteCodeLine();
                         }
-                        if (ai != 0) this.WriteCodeLine();
+                        funcbound = (n.AllKeywords.Contains("bound") || propertyMethods.Contains(n.Name));
                         funccontent = true;
                     }
                     fdefs.Add(def);
@@ -250,12 +324,37 @@ namespace LibAutoBind.Transformers
                 {
                     // Search the content for any return statements, and use a Regex to
                     // replace them with the appropriate bindings.
-                    Regex rr = new Regex("^([ \r\n\t]*)([^\\/][^\\/])([^/]*)([ \r\n\t]+)return[ \r\n\t]+(?<Val>[^\\;]+)\\;", RegexOptions.Multiline);
-                    string res = rr.Replace(r.Content, "${1}${2}${3}${4}return Bindings<" + functype + ">::Result(${Val});");
-                    Regex brr = new Regex("([ \r\n\t]*)([^\\/][^\\/])([^/]*)([ \r\n\t]+)return[ \r\n\t]*\\;", RegexOptions.Multiline);
-                    res = brr.Replace(res, "${1}${2}${3}${4}return Bindings<" + functype + ">::EmptyResult;");
-                    this.WriteCodeLine("        " + res.TrimStart());
-                    this.WriteCodeLine();
+                    if (funcbound)
+                    {
+                        Regex rr = new Regex("^([ \r\n\t]*)([^\\/][^\\/])([^/]*)([ \r\n\t]+)return[ \r\n\t]+(?<Val>[^\\;]+)\\;", RegexOptions.Multiline);
+                        string res = rr.Replace(r.Content, "${1}${2}${3}${4}return Bindings<" + functype + ">::Result(L, ${Val});");
+                        Regex brr = new Regex("([ \r\n\t]*)([^\\/][^\\/])([^/]*)([ \r\n\t]+)return[ \r\n\t]*\\;", RegexOptions.Multiline);
+                        res = brr.Replace(res, "${1}${2}${3}${4}return Bindings<" + functype + ">::EmptyResult;");
+                        this.WriteCodeLine("        " + res.TrimStart().TrimEnd('\n'));
+                        string cc = res.TrimStart().TrimEnd('\n');
+                        if (cc.LastIndexOf("///") != -1 && !cc.Substring(cc.LastIndexOf("///"), 0).Contains('\n'))
+                        {
+                            // There's a doc-comment on the last line, so we don't want
+                            // to call this.WriteCodeLine() as it will seperate it from
+                            // the function definition.
+                        }
+                        else
+                            this.WriteCodeLine();
+                    }
+                    else
+                    {
+                        this.WriteCodeLine("        " + r.Content.TrimStart().TrimEnd('\n'));
+                        string cc = r.Content.TrimStart().TrimEnd('\n');
+                        if (cc.LastIndexOf("///") != -1 && !cc.Substring(cc.LastIndexOf("///"), 0).Contains('\n'))
+                        {
+                            // There's a doc-comment on the last line, so we don't want
+                            // to call this.WriteCodeLine() as it will seperate it from
+                            // the function definition.
+                        }
+                        else
+                            this.WriteCodeLine();
+                    }
+                    funcbound = false;
                     funccontent = false;
                 }
             }
@@ -268,7 +367,7 @@ namespace LibAutoBind.Transformers
                 {
                     this.WriteCodeLine("    int " + cls.ClassOnly + "::__autobind_property_get_" + n.Name + "(lua_State * L)");
                     this.WriteCodeLine("    {");
-                    this.WriteCodeLine("        return Bindings<numeric>::Result(" + n.GetVal + ");");
+                    this.WriteCodeLine("        return Bindings<numeric>::Result(L, " + n.GetVal + ");");
                     this.WriteCodeLine("    }");
                     this.WriteCodeLine();
                 }
@@ -282,6 +381,43 @@ namespace LibAutoBind.Transformers
                     this.WriteCodeLine();
                 }
             }
+
+            // Write the definitions of the Binding variables.
+            this.WriteCodeLine("    /* Binding variables */");
+            if (cls.Alias != "")
+                this.WriteCodeLine("    const char* " + cls.ClassOnly + "::ClassName = \"" + cls.Alias + "\";");
+            else
+                this.WriteCodeLine("    const char* " + cls.ClassOnly + "::ClassName = \"" + cls.Class + "\";");
+            this.WriteCodeLine("    const Bindings<" + cls.ClassOnly + ">::FunctionType " + cls.ClassOnly + "::Functions[] =");
+            this.WriteCodeLine("    {");
+            foreach (ClassFunctionDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassFunctionDeclarationNode)))
+            {
+                if (n.AllKeywords.Contains("bound") && n.Name != clscomponents[clscomponents.Length - 1])
+                    this.WriteCodeLine("        {\"" + n.Name + "\", &" + cls.ClassOnly + "::" + n.Name + "},");
+            }
+            this.WriteCodeLine("        {0}");
+            this.WriteCodeLine("    };");
+            this.WriteCodeLine("    const Bindings<" + cls.ClassOnly + ">::PropertyType " + cls.ClassOnly + "::Properties[] =");
+            this.WriteCodeLine("    {");
+            foreach (ClassPropertyDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassPropertyDeclarationNode)))
+            {
+                if (n.AllKeywords.Contains("bound"))
+                {
+                    string setfunc = "";
+                    string getfunc = "";
+                    if (n.SetIsFunc)
+                        setfunc = n.SetVal;
+                    else
+                        setfunc = "__autobind_property_set_" + n.Name;
+                    if (n.GetIsFunc)
+                        getfunc = n.GetVal;
+                    else
+                        getfunc = "__autobind_property_get_" + n.Name;
+                    this.WriteCodeLine("        {\"" + n.Name + "\", &" + cls.ClassOnly + "::" + getfunc + ", &" + cls.ClassOnly + "::" + setfunc + "},");
+                }
+            }
+            this.WriteCodeLine("        {0}");
+            this.WriteCodeLine("    };");
 
             // End the definition of the class.
             for (int i = 0; i < clscomponents.Length - 1; i++)
@@ -331,7 +467,7 @@ namespace LibAutoBind.Transformers
             }
 
             if (classCount != 1)
-                throw new InvalidOperationException("There must only be one class defined within a AutoBind source file.");
+                throw new InvalidClassDefinitionException("There must only be one class defined within a AutoBind source file.");
         }
 
         private List<Node> GetNodesOfType(List<Node> nodes, Type t)

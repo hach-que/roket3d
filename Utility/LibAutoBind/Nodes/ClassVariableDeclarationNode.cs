@@ -9,15 +9,24 @@ namespace LibAutoBind.Nodes
     {
         private List<string> m_Keywords;
         private string m_Name;
+        private string m_Type;
 
-        internal ClassVariableDeclarationNode(List<string> keywords, string name)
+        internal ClassVariableDeclarationNode(List<string> keywords, string type, string name)
         {
             this.m_Keywords = keywords;
             this.m_Name = name;
+            this.m_Type = type;
 
             string keys = "";
             foreach (string s in keywords)
                 keys += s + " ";
+            if (type == "")
+            {
+                // Must a built-in type.
+                foreach (string s in keywords)
+                    if (Keywords.CPPTypeKeywords.Contains(s) && Keywords.LuaTypeKeywords.Contains(s))
+                        this.m_Type = s;
+            }
             keys = keys.Trim();
             this.p_Content = keys + " " + name;
         }
@@ -48,6 +57,11 @@ namespace LibAutoBind.Nodes
         internal string Name
         {
             get { return this.m_Name; }
+        }
+
+        internal string Type
+        {
+            get { return this.m_Type; }
         }
     }
 }

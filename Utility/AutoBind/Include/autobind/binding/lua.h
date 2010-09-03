@@ -6,54 +6,52 @@
 
 #include <string>
 #include <vector>
+#include <lua.hpp>
+#include "roket3d.h" // TODO: Move lua_gettablevalue and luaL_testudata into this file from roket3d.h.
+#include "RError.h"
 
 template<class T>
-{
 	class Bindings
 	{
-		// TODO: Do we even use / need this?
+		// Used to store the object within the userdata
+		// field in Lua.
 		typedef struct
 		{
 			T *pT;
 		} UserDataType;
 
-		// TODO: Find out where this enum is used.
-		public enum
-		{
-			NUMBER,
-			STRING
-		};
+	public:
+		// Defines an empty return result.
+		static const int EmptyResult = 0;
 
 		// Defines the structure of the PropertyTypes list
 		// (used for telling the bindings how to handle
 		// properties in a given object).
-		public struct PropertyType
+		struct PropertyType
 		{
 			const char* Name;
 			int (T::*Getter)(lua_State * L);
 			int (T::*Setter)(lua_State * L);
-		}
+		};
 
 		// Defines the structre of the FunctionTypes list
 		// (used for telling the bindings which functions
 		// are bound to Lua).
-		public struct FunctionType
+		struct FunctionType
 		{
 			const char* Name;
 			int (T::*Function)(lua_State * L);
-		}
+		};
 
 		// A static function for retrieving an object from
 		// the arguments provided to a function.  It is also
 		// used during property setting, where arg should be
 		// -1 to get the value that was assigned.
-		public static T* GetArgument(lua_State * L, int arg)
+		static T* GetArgument(lua_State * L, int narg)
 		{
 			// Check to make sure that it's a table at that
 			// position.  If it isn't, then it can't be a
 			// class.
-			// TODO: Check for numeric / strings and handle
-			//       them if T is the correct type.
 			if (lua_istable(L, narg + 1))
 			{
 				// Get the value at the first index of the table, and
@@ -87,8 +85,14 @@ template<class T>
 			}
 		}
 
+		// A static function for retrieving an base object (i.e.
+		// numeric or string value) from the arguments provided
+		// to a function.  It is also used during property setting,
+		// where arg should be -1 to get the value that was assigned.
+		static T GetArgumentBase(lua_State * L, int narg);
+
 		// Registers the given class with the Lua engine.
-		public static void Register(lua_State * L)
+		static void Register(lua_State * L)
 		{
 			// We use the std::string class to parse the
 			// T::ClassName variable.  T::ClassName not only
@@ -184,7 +188,7 @@ template<class T>
 		}
 
 		// The callback function used when a class is constructed.
-		public static int Constructor(lua_State * L)
+		static int Constructor(lua_State * L)
 		{
 			// Create a new table with which to return
 			// our new Lua object.
@@ -225,7 +229,7 @@ template<class T>
 		// Creates a new instance of the C++ object, like the Constructor
 		// callback, but returns the object itself for use in C++ code
 		// (unlike Constructor which is intended to be used from Lua).
-		public static T* CreateNew(lua_State * L)
+		static T* CreateNew(lua_State * L)
 		{
 			// Create a new table with which to return
 			// our new Lua object.
@@ -267,7 +271,7 @@ template<class T>
 		// Creates a new instance of the Lua object, which is wrapping
 		// an existing C++ object.  Returns the object itself for use
 		// in C++ code (which will be the same as the 'existing' argument).
-		public static T* CreateFromExisting(lua_State * L, T* existing)
+		static T* CreateFromExisting(lua_State * L, T* existing)
 		{
 			// Create a new table with which to return
 			// our new Lua object.
@@ -307,10 +311,34 @@ template<class T>
 			return obj;
 		}
 
+		// A dummy wrapper function which simply returns
+		// 1 at the moment.  Eventually, use of CreateNew
+		// and CreateFromExisting within B++ files will be
+		// superseded by automatic conversion at return time.
+		static int Result(lua_State * L, T* ret)
+		{
+			return 1;
+		}
+
+		// Push numeric value onto stack.
+		static int Result(lua_State * L, numeric ret)
+		{
+			lua_pushnumber(L, ret);
+			return 1;
+		}
+
+		// Push string value onto stack.
+		static int Result(lua_State * L, ::string ret)
+		{
+			lua_pushstring(L, ret);
+			return 1;
+		}
+
+	private:
 		// Sets up the object at the specified 'newtable' index and the
 		// userdata associated with it at the specified 'userdata' index.
 		// This function exists to reduce code duplication.
-		private static void SetupObject(lua_State * L, int newtable, int userdata)
+		static void SetupObject(lua_State * L, int newtable, int userdata)
 		{
 			// Retrieve the metatable from the registry index (the
 			// one we set in the Register function) and set it as
@@ -355,9 +383,10 @@ template<class T>
 			}
 		}
 
+	public:
 		// The callback which handles when properties are asked
 		// to be retrieved from the object.
-		public static int PropertyGetter(lua_State * L)
+		static int PropertyGetter(lua_State * L)
 		{
 			// When this function is called, the object
 			// is at index 1 and the name of the property
@@ -406,7 +435,7 @@ template<class T>
 
 		// The callback which handles when properties are asked
 		// to be created or modified on the object.
-		public static int PropertySetter(lua_State * L)
+		static int PropertySetter(lua_State * L)
 		{
 			// When this function is called, the object
 			// is at index 1 and the name of the property
@@ -459,7 +488,7 @@ template<class T>
 
 		// The function is called to handle calling the C++
 		// functions from within Lua.
-		public static int FunctionDispatch(lua_State * L)
+		static int FunctionDispatch(lua_State * L)
 		{
 			// Check to make sure that the function was called
 			// with the : operator and not the . operator.  The
@@ -467,7 +496,7 @@ template<class T>
 			// context.
 			if (lua_gettop(L) == 0 || !lua_istable(L, 1))
 			{
-				throw new Bindings<void>::NoContextProvidedError();
+				throw new Error::NoContextProvidedException();
 				return 0;
 			}
 
@@ -499,13 +528,13 @@ template<class T>
 		// to an object in Lua.  All of the objects that are
 		// binded inherit Bindings<void>::BaseObject at one
 		// point, which means they are reference counted.
-		public static int GCObj(lua_State * L)
+		static int GCObj(lua_State * L)
 		{
 			// Get the userdata from the object.
 			T** obj = static_cast<T**>(luaL_checkudata(L, -1, T::ClassName));
 
 			// IsPrecious won't be required when objects are reference counted.
-			if (!(*obj)->IsExisting) && !(*obj)->IsPrecious))
+			if (!(*obj)->IsExisting && !(*obj)->IsPrecious)
 			{
 				delete *obj;
 			}
@@ -515,4 +544,36 @@ template<class T>
 
 
 	};
+
+inline numeric Bindings<numeric>::GetArgumentBase(lua_State * L, int narg)
+{
+	// Check to make sure that it's a table at that
+	// position.  If it isn't, then it can't be a
+	// class.
+	if (lua_isnumber(L, narg + 1))
+		return lua_tonumber(L, narg + 1);
+	else
+		throw new Error::InvalidArgumentTypeException(narg);
+}
+
+inline ::string Bindings<::string>::GetArgumentBase(lua_State * L, int narg)
+{
+	// Check to make sure that it's a table at that
+	// position.  If it isn't, then it can't be a
+	// class.
+	if (lua_isstring(L, narg + 1))
+		return lua_tostring(L, narg + 1);
+	else
+		throw new Error::InvalidArgumentTypeException(narg);
+}
+
+inline bool Bindings<bool>::GetArgumentBase(lua_State * L, int narg)
+{
+	// Check to make sure that it's a table at that
+	// position.  If it isn't, then it can't be a
+	// class.
+	if (lua_isboolean(L, narg + 1))
+		return lua_toboolean(L, narg + 1);
+	else
+		throw new Error::InvalidArgumentTypeException(narg);
 }
