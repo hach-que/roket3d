@@ -4,6 +4,8 @@
 #ifndef STATIC_ClassRegistration
 #define STATIC_ClassRegistration
 
+#include <lua.hpp>
+
 namespace Roket3D
 {
 	void RegisterAllClasses(lua_State * L);

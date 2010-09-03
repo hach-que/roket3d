@@ -12,6 +12,10 @@ namespace Roket3D
 	{
 		public:
 			static bool FileExists(std::string path);
+			static void ChangeWorkingDirectory(std::string path);
+			static std::string Replace(std::string input, std::string from, std::string to, int count);
+			static std::string ReplaceAll(std::string input, std::string from, std::string to);
+			static std::string ReplaceOnce(std::string input, std::string from, std::string to);
 	};
 }
 

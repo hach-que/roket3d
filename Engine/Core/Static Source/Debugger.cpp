@@ -7,9 +7,11 @@
 
 namespace Roket3D
 {
-	void Debugger::RaiseException(Exceptions::Exception * err, ...)
+	bool Debugger::m_IsConnected = false;
+
+	void Debugger::RaiseException(Exceptions::Exception * err)
 	{
-		if (this->m_IsConnected)
+		if (Debugger::m_IsConnected)
 		{
 			// TODO: Send the exception over the network socket to the IDE.
 		}
@@ -20,9 +22,13 @@ namespace Roket3D
 			std::cout << "Information about the exception is outputted" << std::endl;
 			std::cout << "below:" << std::endl;
 			std::cout << std::endl;
-			std::cout << 
+			std::cout << err->Name << ": " << err->GetParsedMessage() << std::endl;
+			std::cout << std::endl;
+			std::cout << "occurred on line " << err->LineNumber << " in file '" << err->FileName << "'." << std::endl;
+			std::cout << std::endl;
+			std::cout << "Contact the game author with a copy of this message for" << std::endl;
+			std::cout << "further assistance." << std::endl;
+			throw new Exceptions::DebuggerNotAttachedException();
 		}
 	}
 }
-
-#endif

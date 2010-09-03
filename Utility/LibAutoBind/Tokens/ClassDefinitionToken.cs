@@ -22,7 +22,7 @@ namespace LibAutoBind.Tokens
             {
                 if (l.Char == '{')
                 {
-                    string n = l.Text.Substring("class ".Length, l.Text.Length - "class ".Length - 1);
+                    string n = l.Text.TrimStart().Substring("class ".Length, l.Text.TrimStart().Length - "class ".Length - 1);
                     Regex r = new Regex("[ \n\r]as[ \n\r]", RegexOptions.Multiline);
                     Match m = r.Match(n);
                     if (m.Success)

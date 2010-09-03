@@ -54,6 +54,7 @@ namespace LibAutoBind.Transformers
                 }
                 this.WriteHeaderLine();
             }
+            this.WriteHeaderLine("#include \"RObject.h\"");
             foreach (Node n in imports)
             {
                 this.WriteHeaderLine("#include \"" + ClassName.ResolveToHeaderFilename(n.Content.Trim()) + "\"");
@@ -204,7 +205,7 @@ namespace LibAutoBind.Transformers
             Console.WriteLine("(cpp) " + cls.ClassOnly);
             this.WriteCodeLine("#include \"autobind/types.h\"");
             this.WriteCodeLine("#include \"autobind/binding/lua.h\"");
-            this.WriteCodeLine("#include \"RError.h\"");
+            this.WriteCodeLine("#include \"Exceptions.h\"");
             this.WriteCodeLine("#include \"RObject.h\"");
             if (cls.Alias == "")
                 this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(cls.Class) + "\"");
@@ -212,7 +213,7 @@ namespace LibAutoBind.Transformers
                 this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(cls.Alias) + "\"");
             foreach (Node n in this.GetNodesOfType(nodes, typeof(IncludeNode)))
             {
-                this.WriteHeaderLine("#include " + n.Content.Trim() + "");
+                this.WriteCodeLine("#include " + n.Content.Trim() + "");
             }
             this.WriteCodeLine();
 
