@@ -1,0 +1,260 @@
+#include "Irrlicht.h"
+#include "vector3d.h"
+
+class Engine.Collections.RVector3D
+//   as Engine.Collections.Vector3D
+{
+	private double p_X;
+	private double p_Y;
+	private double p_Z;
+	private irr::core::vector3df m_Vector;
+
+	/// <summary>
+	/// The default constructor for an RVector3D object, initalizing
+	/// the vector information to have a value of (0, 0, 0).
+	/// </summary>
+	bound RVector3D()
+	{
+		this->p_X = 0;
+		this->p_Y = 0;
+		this->p_Z = 0;
+		this->m_Vector = irr::core::vector3df(0, 0, 0);
+	}
+
+	/// <summary>
+	/// The recommended constructor for an RVector3D object, initalizing
+	/// the vector information to have a value of (x, y, z).
+	/// </summary>
+	/// <param name="x">The X component.</param>
+	/// <param name="y">The Y component.</param>
+	/// <param name="z">The Z component.</param>
+	bound RVector3D(numeric x, numeric y, numeric z)
+	{
+		this->p_X = x;
+		this->p_Y = y;
+		this->p_Z = z;
+		this->m_Vector = irr::core::vector3df(x, y, z);
+	}
+
+	/// <summary>
+	/// The X value of the vector.
+	/// </summary>	
+	bound property numeric X
+	{
+		get: call GetX;
+		set: call SetX;
+	}
+
+	/// <summary>
+	/// The Y value of the vector.
+	/// </summary>
+	bound property numeric Y
+	{
+		get: call GetY;
+		set: call SetY;
+	}
+
+	/// <summary>
+	/// The Z value of the vector.
+	/// </summary>
+	bound property numeric Z
+	{
+		get: call GetZ;
+		set: call SetZ;
+	}
+
+	bound RVector3D CrossProduct(RVector3D vec)
+	{
+		RVector3D * ret = Bindings<RVector3D>::CreateNew(L);
+		irr::core::vector3df irrvec = this->m_Vector.crossProduct(vec->GetObject());
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	bound numeric DotProduct(RVector3D vec)
+	{
+		return this->m_Vector.dotProduct(vec->GetObject());
+	}
+
+	bound bool Equals(RVector3D vec)
+	{
+		return this->m_Vector.equals(vec->GetObject());
+	}
+
+	bound table GetAs4Values()
+	{
+		// TODO: Waiting on implementation of a Table class in the Lua Bindings class.
+		return;
+	}
+
+	bound numeric GetDistanceFrom(RVector3D vec)
+	{
+		return this->m_Vector.getDistanceFrom(vec->GetObject());
+	}
+
+	bound numeric GetDistanceFromSQ(RVector3D vec)
+	{
+		return this->m_Vector.getDistanceFromSQ(vec->GetObject());
+	}
+
+	bound RVector3D GetHorizontalAngle()
+	{
+		RVector3D * ret = Bindings<RVector3D>::CreateNew(L);
+		irr::core::vector3df irrvec = this->m_Vector.getHorizontalAngle();
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	bound RVector3D GetInterpolated(RVector3D vec, numeric d)
+	{
+		RVector3D * ret = Bindings<RVector3D>::CreateNew(L);
+		irr::core::vector3df irrvec = this->m_Vector.getInterpolated(vec->GetObject(), d);
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	bound RVector3D GetInterpolatedQuadratic(RVector3D vec1, RVector3D vec2, numeric d)
+	{
+		RVector3D * ret = Bindings<RVector3D>::CreateNew(L);
+		irr::core::vector3df irrvec = this->m_Vector.getInterpolated_quadratic(vec1->GetObject(), vec2->GetObject(), d);
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	bound numeric GetLength()
+	{
+		return this->m_Vector.getLength();
+	}
+
+	bound numeric GetLengthSQ()
+	{
+		return this->m_Vector.getLengthSQ();
+	}
+
+	bound void Invert()
+	{
+		this->m_Vector.invert();
+		return;
+	}
+
+	bound bool IsBetweenPoints(RVector3D start, RVector3D end)
+	{
+		return this->m_Vector.isBetweenPoints(start->GetObject(), end->GetObject());
+	}
+
+	bound RVector3D Normalize()
+	{
+		RVector3D * ret = Bindings<RVector3D>::CreateNew(L);
+		irr::core::vector3df irrvec = this->m_Vector.normalize();
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	bound void RotateXYBy(numeric degrees, RVector3D center)
+	{
+		this->m_Vector.rotateXYBy(degrees, center->GetObject());
+		return;
+	}
+
+	bound void RotateXZBy(numeric degrees, RVector3D center)
+	{
+		this->m_Vector.rotateXZBy(degrees, center->GetObject());
+		return;
+	}
+
+	bound void RotateYZBy(numeric degrees, RVector3D center)
+	{
+		this->m_Vector.rotateYZBy(degrees, center->GetObject());
+		return;
+	}
+
+	bound void CopyFrom(RVector3D other)
+	{
+		this->m_Vector.set(other->GetObject());
+		return;
+	}
+
+	bound void Set(numeric x, numeric y, numeric z)
+	{
+		this->m_Vector.set(x, y, z);
+		return;
+	}
+
+	bound void SetLength(numeric length)
+	{
+		this->m_Vector.setLength(length);
+		return;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Irrlicht object to associate with this RVector3D instance.</param>
+	unbound public void SetObject(irr::core::vector3df obj)
+	{
+		this->m_Vector = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::core::vector3df GetObject()
+	{
+		return this->m_Vector;
+	}
+
+	// Property handlers
+	unbound void SetX(numeric value)
+	{
+		this->p_X = value;
+		this->m_Vector.X = value;
+
+		return;
+	}
+
+	unbound numeric GetX()
+	{
+		if ((float)this->p_X == this->m_Vector.X)
+			return this->p_X;
+
+		return this->m_Vector.X;
+	}
+
+	unbound void SetY(numeric value)
+	{
+		this->p_X = value;
+		this->m_Vector.X = value;
+
+		return;
+	}
+
+	unbound numeric GetY()
+	{
+		if ((float)this->p_Y == this->m_Vector.Y)
+			return this->p_Y;
+
+		return this->m_Vector.Y;
+	}
+
+	unbound void SetZ(numeric value)
+	{
+		this->p_Z = value;
+		this->m_Vector.Z = value;
+
+		return;
+	}
+
+	unbound numeric GetZ()
+	{
+		if ((float)this->p_Z == this->m_Vector.Z)
+			return this->p_Z;
+
+		return this->m_Vector.Z;
+	}
+}
