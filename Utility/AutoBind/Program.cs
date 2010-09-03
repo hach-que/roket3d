@@ -17,9 +17,9 @@ namespace AutoBind
                 return 1;
             }
 
-            string cppbase = args[0];
-            string hbase = args[1];
-            string input = args[2];
+            string cppbase = args[0].Trim();
+            string hbase = args[1].Trim();
+            string input = args[2].Trim();
             int start = input.LastIndexOf('\\') + 1;
             string basename = input.Substring(start);
             int end = basename.IndexOf('.');
@@ -34,10 +34,18 @@ namespace AutoBind
             {
                 m.Run();
             }
-            catch (InvalidOperationException e)
+            catch (LibAutoBind.InvalidClassDefinitionException e)
             {
                 Console.WriteLine("Unable to automatically bind " + input + ".  Make sure there");
                 Console.WriteLine("is only one class defined in the file.");
+                return 1;
+            }
+            catch (LibAutoBind.InvalidCharacterException e)
+            {
+                return 1;
+            }
+            catch (LibAutoBind.LexingAbortedException e)
+            {
                 return 1;
             }
             m.Close();

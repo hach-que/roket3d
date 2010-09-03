@@ -52,11 +52,13 @@ namespace LibAutoBind.Tokens
 
         internal override bool DetectEnd(Lexer l)
         {
-            if (l.Char == '}' && l.Text.IndexOf("property") == -1) // If the keyword 'property' exists, then the
-                                                                   // ClassPropertyDeclarationToken will pick this
-                                                                   // text up.
+            if (l.Char == '}' && l.Text.Trim() == "}") // Forces the end detection to only work when it's got a single } at the end.
+                                                       // Ensures that we don't discard any data that we might want.
             {
-                l.AddNode(new DirectNode(l.Text));
+                // HACK: Excludes the end bracket for the class because more transformers
+                //       don't need to know about it, and it frigs with the DirectNode
+                //       compactor.
+                //l.AddNode(new DirectNode(l.Text));
                 return true;
             }
 

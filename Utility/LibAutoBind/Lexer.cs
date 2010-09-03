@@ -5,6 +5,7 @@ using System.Text;
 using LibAutoBind.Tokens;
 using LibAutoBind.Nodes;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace LibAutoBind
 {
@@ -12,6 +13,7 @@ namespace LibAutoBind
     {
         private string p_TextCache = "";
         private char p_Char;
+        private int p_LineNumber = 1;
 
         private Machine m_Machine = null;
         private List<Token> m_Tokens = new List<Token>();
@@ -22,6 +24,8 @@ namespace LibAutoBind
         private List<Node> p_LexerList = new List<Node>();
         private string m_SeekCache = "";
         private bool m_ShouldResetText = false;
+        private bool m_IsComment = false;
+        private bool m_IsLongComment = false;
 
         internal Lexer(Machine m)
         {
@@ -29,6 +33,7 @@ namespace LibAutoBind
 
             // Add all the tokens we should recognise.
             this.m_Tokens.Add(new PreprocessorImportToken());
+            this.m_Tokens.Add(new PreprocessorIncludeToken());
             this.m_Tokens.Add(new PreprocessorIgnoreToken());
             this.m_Tokens.Add(new UsingToken());
             this.m_Tokens.Add(new ClassDefinitionToken());
@@ -43,6 +48,7 @@ namespace LibAutoBind
         /// </summary>
         internal void Run()
         {
+            this.p_LineNumber = 1;
             while (!this.m_Machine.InputFile.EndOfStream || this.m_SeekCache.Length > 0)
             {
                 // Retrieve a character from the seek cache (used because
@@ -64,6 +70,52 @@ namespace LibAutoBind
                 this.p_Char = c;
 
                 this.p_TextCache += c;
+
+                // Check for changes between the comment statuses.
+                if (this.p_Char == '/' && this.p_TextCache.Length > 1)
+                {
+                    if (this.p_TextCache[this.p_TextCache.Length - 2] == '/')
+                        this.m_IsComment = true;
+                    else if (this.p_TextCache[this.p_TextCache.Length - 2] == '*' && this.m_IsLongComment)
+                    {
+                        this.m_IsLongComment = false;
+                        Regex r = new Regex("[ \t\r\n]*\\/\\*.*\\*\\/[ \t\r\n]*", RegexOptions.Multiline);
+                        Match m = r.Match(this.p_TextCache);
+                        this.p_TextCache = r.Replace(this.p_TextCache, "");
+                        this.AddNode(new DirectNode(m.Value));
+                        this.m_ExcludedTokens.Clear();
+                        if (this.p_TextCache.Length > 0)
+                            this.p_Char = this.p_TextCache[this.p_TextCache.Length - 1];
+                        else
+                            this.p_Char = '\0';
+                        continue;
+                    }
+                }
+                else if (this.p_Char == '*' && this.p_TextCache.Length > 1)
+                {
+                    if (this.p_TextCache[this.p_TextCache.Length - 2] == '/')
+                        this.m_IsLongComment = true;
+                }
+                else if (this.p_Char == '\n' && this.m_IsComment)
+                {
+                    this.m_IsComment = false;
+                    Regex r = new Regex("[ \t\r\n]*\\/\\/[^\n]*\n");
+                    Match m = r.Match(this.p_TextCache);
+                    this.p_TextCache = r.Replace(this.p_TextCache, "");
+                    this.AddNode(new DirectNode(m.Value));
+                    this.m_ExcludedTokens.Clear();
+                    if (this.p_TextCache.Length > 0)
+                        this.p_Char = this.p_TextCache[this.p_TextCache.Length - 1];
+                    else
+                        this.p_Char = '\0';
+                    continue;
+                }
+
+                if (this.m_IsComment || this.m_IsLongComment)
+                    continue;
+
+                if (c == '\n')
+                    this.p_LineNumber += 1;
 
                 // The length of the string is 0, which causes problems with
                 // tokens that rely on StartsWith.  Since there's no characters,
@@ -162,13 +214,17 @@ namespace LibAutoBind
             }
         }
 
+        internal void Abort()
+        {
+            throw new LexingAbortedException("An error occurred during lexing.  Check the console window.");
+        }
+
         /// <summary>
         /// Compacts the number of direct nodes to allow for easier debugging when
         /// there is a whole bunch of unrecognized text.
         /// </summary>
         private void CompactDirectNodes()
         {
-            return;
             if (this.p_LexerList.Count < 2) return;
 
             Node nl = this.p_LexerList[this.p_LexerList.Count - 1];
@@ -225,6 +281,16 @@ namespace LibAutoBind
         internal string Text
         {
             get { return this.p_TextCache; } //.TrimStart(); }
+        }
+
+        internal string FileName
+        {
+            get { return this.m_Machine.InputName; }
+        }
+
+        internal int LineNumber
+        {
+            get { return this.p_LineNumber; }
         }
 
         /// <summary>
