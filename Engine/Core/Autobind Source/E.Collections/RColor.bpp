@@ -1,4 +1,191 @@
-class Engine.Collections.RColor
-{
+#include "Irrlicht.h"
+#include "SColor.h"
 
+class Engine.Collections.RColor
+//   as Engine.Collections.Color
+{
+	private irr::video::SColor m_Color;
+
+	/// <summary>
+	/// The default constructor for an RColor object, initalizing
+	/// the color information to have a value of (0, 0, 0, 0).
+	/// </summary>
+	bound RColor()
+	{
+		this->m_Color = irr::video::SColor(0, 0, 0, 0);
+	}
+
+	/// <summary>
+	/// The recommended constructor for an RColor object, initalizing
+	/// the color information to have a value of (alpha, red, green, blue).
+	/// </summary>
+	/// <param name="alpha">The alpha (transparency) component.</param>
+	/// <param name="red">The red component.</param>
+	/// <param name="green">The green component.</param>
+	/// <param name="blue">The blue component.</param>
+	bound RColor(numeric alpha, numeric red, numeric green, numeric blue)
+	{
+		this->m_Color = irr::video::SColor(alpha, red, green, blue);
+	}
+
+	/// <summary>
+	/// The alpha (transparency) component of the color.
+	/// </summary>
+	bound property numeric Alpha
+	{
+		get: call GetAlpha;
+		set: call SetAlpha;
+	}
+
+	/// <summary>
+	/// The red component of the color.
+	/// </summary>
+	bound property numeric Red
+	{
+		get: call GetRed;
+		set: call SetRed; 
+	}
+
+	/// <summary>
+	/// The green component of the color.
+	/// </summary>
+	bound property numeric Green
+	{
+		get: call GetGreen;
+		set: call SetGreen;
+	}
+
+	/// <summary>
+	/// The blue component of the color.
+	/// </summary>
+	bound property numeric Blue
+	{
+		get: call GetBlue;
+		set: call SetBlue;
+	}
+
+	/// <summary>
+	/// The average (saturation) of the color.
+	/// </summary>
+	/// <readonly>true</readonly>
+	bound property numeric Average
+	{
+		get: call GetAverage;
+		set: call SetAverage;
+	}
+
+	/// <summary>
+	/// The luminance (brightness) of the color.
+	/// </summary>
+	/// <readonly>true</readonly>
+	bound property numeric Luminance
+	{
+		get: call GetLuminance;
+		set: call SetLuminance;
+	}
+
+	/// <summary>
+	/// Calculates the interpolated color between the current color and the color specified
+	/// in the col parameter.  The amount to interpolate is indicated by the parameter d,
+	/// which must lie between 0.0f and 1.0f.
+	/// </summary>
+	/// <param name="col">The color to interpolate with.</param>
+	/// <param name="d">
+	/// The amount to interpolate the colors.  0 indicates the same color as the one this
+	/// object represents.  1 indicates the color specified by the 'col' parameter.
+	/// </param>
+	bound RColor GetInterpolated(RColor col, numeric d)
+	{
+		RColor * ret = Bindings<RColor>::CreateNew(L);
+		irr::video::SColor irrcol = this->m_Color.getInterpolated(col->GetObject(), d);
+		ret->SetObject(irrcol);
+
+		return ret;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Irrlicht object to associate with this RColor instance.</param>
+	unbound public void SetObject(irr::video::SColor obj)
+	{
+		this->m_Color = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::video::SColor GetObject()
+	{
+		return this->m_Color;
+	}
+
+	unbound void SetAlpha(numeric value)
+	{
+		this->m_Color.setAlpha(value);
+
+		return;
+	}
+
+	unbound numeric GetAlpha()
+	{
+		return this->m_Color.getAlpha();
+	}
+
+	unbound void SetRed(numeric value)
+	{
+		this->m_Color.setRed(value);
+
+		return;
+	}
+
+	unbound numeric GetRed()
+	{
+		return this->m_Color.getRed();
+	}
+
+	unbound void SetGreen(numeric value)
+	{
+		this->m_Color.setGreen(value);
+
+		return;
+	}
+
+	unbound numeric GetGreen()
+	{
+		return this->m_Color.getGreen();
+	}
+
+	unbound void SetBlue(numeric value)
+	{
+		this->m_Color.setBlue(value);
+
+		return;
+	}
+
+	unbound numeric GetBlue()
+	{
+		return this->m_Color.getBlue();
+	}
+
+	unbound void SetAverage(numeric value)
+	{
+		throw new Error::ReadOnlyPropertyException();
+	}
+
+	unbound numeric GetAverage()
+	{
+		return this->m_Color.getAverage();
+	}
+
+	unbound void SetLuminance(numeric value)
+	{
+		throw new Error::ReadOnlyPropertyException();
+	}
+
+	unbound numeric GetLuminance()
+	{
+		return this->m_Color.getLuminance();
+	}
 }
