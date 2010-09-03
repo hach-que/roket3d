@@ -213,6 +213,10 @@
 			Name="Include"
 			>
 			<File
+				RelativePath=".\Include\export.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Include\IAudio.h"
 				>
 			</File>
@@ -278,10 +282,6 @@
 			</File>
 			<File
 				RelativePath=".\Headers\cWavDecoder.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\export.h"
 				>
 			</File>
 		</Filter>

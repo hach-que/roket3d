@@ -3,7 +3,7 @@
 
 #include "../include/IAudioDecoderFactory.h"
 #include "cOggDecoder.h"
-#include "export.h"
+#include "CAudioExport.h"
 
 namespace cAudio
 {

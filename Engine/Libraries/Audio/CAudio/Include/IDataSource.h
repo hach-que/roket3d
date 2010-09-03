@@ -1,6 +1,6 @@
 #ifndef IDATASOURCE_H
 #define IDATASOURCE_H
-#include "export.h"
+#include "CAudioExport.h"
 
 namespace cAudio
 {

@@ -1,7 +1,7 @@
 
 #ifndef IAUDIOMANAGER_H
 #define IAUDIOMANAGER_H
-#include "export.h"
+#include "CAudioExport.h"
 #include <string>
 
 #ifdef COMPILE_FOR_WINDOWS
