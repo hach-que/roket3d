@@ -181,6 +181,9 @@ OP_LEN,/*	A B	R(A) := length of R(B)				*/
 OP_CONCAT,/*	A B C	R(A) := R(B).. ... ..R(C)			*/
 
 OP_JMP,/*	sBx	pc+=sBx					*/
+OP_TRY,/*	sBx	pc+=sBx					*/
+OP_ENDTRY,
+OP_CATCH,/*	A  R(A)=errorobj	*/
 
 OP_EQ,/*	A B C	if ((RK(B) == RK(C)) ~= A) then pc++		*/
 OP_LT,/*	A B C	if ((RK(B) <  RK(C)) ~= A) then pc++  		*/

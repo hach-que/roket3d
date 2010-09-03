@@ -379,13 +379,45 @@ static void Arith (lua_State *L, StkId ra, const TValue *rb,
           Protect(Arith(L, ra, rb, rc, tm)); \
       }
 
+static void releasetry(lua_State *L) {
+  struct lua_longjmp *pj = L->errorJmp;
+  if (pj->type == JMPTYPE_TRY) {
+    L->errfunc = pj->old_errfunc;
+    L->errorJmp = pj->previous;
+    luaM_free(L, pj);
+  }
+}
 
+static void restoretry(lua_State *L, int seterr, int ra) {
+  struct lua_longjmp *pj = L->errorJmp;
+
+  StkId oldtop = restorestack(L, pj->old_top);
+  luaF_close(L, oldtop);  /* close eventual pending closures */
+
+  L->nCcalls = pj->oldnCcalls;
+  L->ci = restoreci(L, pj->old_ci);
+  L->base = L->ci->base;
+  L->allowhook = pj->old_allowhooks;
+
+  if (seterr)
+    luaD_seterrorobj(L, pj->status, L->base + ra);
+  L->top = oldtop;
+
+  if (L->size_ci > LUAI_MAXCALLS) {  /* there was an overflow? */
+    int inuse = cast_int(L->ci - L->base_ci);
+    if (inuse + 1 < LUAI_MAXCALLS)  /* can `undo' overflow? */
+      luaD_reallocCI(L, LUAI_MAXCALLS);
+  }
+  releasetry(L);
+}
 
 void luaV_execute (lua_State *L, int nexeccalls) {
   LClosure *cl;
   StkId base;
   TValue *k;
   const Instruction *pc;
+  struct lua_longjmp *pj;
+
  reentry:  /* entry point */
   lua_assert(isLua(L->ci));
   pc = L->savedpc;
@@ -766,6 +798,42 @@ void luaV_execute (lua_State *L, int nexeccalls) {
             setnilvalue(ra + j);
           }
         }
+        continue;
+      }
+      case OP_TRY: {
+          int status;
+          pj = luaM_malloc(L, sizeof(struct lua_longjmp));
+          pj->type = JMPTYPE_TRY;
+          pj->status = 0;
+          pj->pc = pc + GETARG_sBx(i);
+          pj->previous = L->errorJmp;
+
+          pj->oldnCcalls = L->nCcalls;
+          pj->old_ci = saveci(L, L->ci);
+          pj->old_allowhooks = L->allowhook;
+          pj->old_errfunc = L->errfunc;
+          pj->old_nexeccalls = nexeccalls;
+          pj->old_top = savestack(L, L->top);
+          L->errorJmp = pj;
+          L->errfunc = 0;
+
+          status = setjmp(pj->b);
+          if (status) {
+            pc = L->errorJmp->pc;
+            nexeccalls = L->errorJmp->old_nexeccalls;
+            restoretry(L, GET_OPCODE(*pc) == OP_CATCH, GETARG_A(*pc));
+            L->savedpc = pc;
+            goto reentry;
+          }
+
+        continue;
+      }
+      case OP_ENDTRY: {
+        releasetry(L);
+        continue;
+      }
+      case OP_CATCH: {
+        // dummy opcode, do nothing here!
         continue;
       }
     }
