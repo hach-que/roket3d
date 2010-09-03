@@ -1,4 +1,9 @@
-#include "roket3d.h"
+// C entry point which simply calls the Program's entry point.
+
+int main(int argc, char *argv[])
+{
+	return Roket3D::Program::Main(argc, argv);
+}
 
 /*#if defined(WIN32) || defined(WIN64)
 #include "windows.h"
