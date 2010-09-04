@@ -5,23 +5,28 @@ in bound classes.
 
 #include "Exceptions.h"
 #include "Utility.h"
+#include <sstream>
 
 namespace Roket3D { namespace Exceptions
 {
 	std::string Exception::GetParsedMessage()
 	{
-		std::string ret = this->Message;
+		std::string ret = this->GetMessage();
 		for (int i = 0; i < this->Arguments.size(); i++)
 		{
-			std::string from = "${";
-			from += i + 1;
-			from += "}";
-			ret = Utility::ReplaceAll(ret, from, this->Arguments[i]);
+			std::stringstream from;
+			from << "${" << (i + 1) << "}";
+			ret = Utility::ReplaceAll(ret, from.str(), this->Arguments[i]);
 		}
 		return ret;
 	}
 
 	// Exceptions with no arguments.
+	Exception::Exception()
+	{
+		this->LineNumber = 0;
+		this->FileName = "<unknown>";
+	}
 	ObjectNotValidException::ObjectNotValidException() { }
 	ReadOnlyPropertyException::ReadOnlyPropertyException() { }
 	NoContextProvidedException::NoContextProvidedException() { }
@@ -50,6 +55,11 @@ namespace Roket3D { namespace Exceptions
 		this->Arguments.push_back(resource);
 	}
 
+	GeneralLuaException::GeneralLuaException(std::string message)
+	{
+		this->Arguments.push_back(message);
+	}
+
 	// Definitions of all of the exception names and messages.
 	const char* Exception::Name = "Exception";
 	const char* ObjectNotValidException::Name = "ObjectNotValidException";
@@ -64,6 +74,7 @@ namespace Roket3D { namespace Exceptions
 	const char* PermissionDeniedException::Name = "PermissionDeniedException";
 	const char* InvalidSyntaxException::Name = "InvalidSyntaxException";
 	const char* OutOfMemoryException::Name = "OutOfMemoryException";
+	const char* GeneralLuaException::Name = "GeneralLuaException";
 
 	const char* Exception::Message
 		= "A general exception was raised.";
@@ -91,5 +102,7 @@ namespace Roket3D { namespace Exceptions
 		= "The engine attempted to load a file which contains one or more syntax errors.";
 	const char* OutOfMemoryException::Message
 		= "There was not enough memory to perform the operation.";
+	const char* GeneralLuaException::Message
+		= "A general Lua exception was raised within the Lua API.  The message raised from the Lua API is '${1}'.";
 }
 }

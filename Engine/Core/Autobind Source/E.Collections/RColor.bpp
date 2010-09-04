@@ -172,7 +172,7 @@ class Engine.Collections.RColor
 
 	unbound void SetAverage(numeric value)
 	{
-		throw new Roket3D::Exceptions::ReadOnlyPropertyException();
+		throw Roket3D::Exceptions::ReadOnlyPropertyException();
 	}
 
 	unbound numeric GetAverage()
@@ -182,7 +182,7 @@ class Engine.Collections.RColor
 
 	unbound void SetLuminance(numeric value)
 	{
-		throw new Roket3D::Exceptions::ReadOnlyPropertyException();
+		throw Roket3D::Exceptions::ReadOnlyPropertyException();
 	}
 
 	unbound numeric GetLuminance()

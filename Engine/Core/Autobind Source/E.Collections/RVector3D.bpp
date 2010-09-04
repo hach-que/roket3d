@@ -228,8 +228,8 @@ class Engine.Collections.RVector3D
 
 	unbound void SetY(numeric value)
 	{
-		this->p_X = value;
-		this->m_Vector.X = value;
+		this->p_Y = value;
+		this->m_Vector.Y = value;
 
 		return;
 	}
