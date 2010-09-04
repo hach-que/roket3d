@@ -14,13 +14,17 @@ namespace Roket3D { namespace Exceptions
 	class Exception
 	{
 		public:
+			Exception();
+
 			static const char* Name;
 			static const char* Message;
 			int LineNumber;
 			std::string FileName;
 			std::vector<std::string> Arguments;
 
-			std::string GetParsedMessage();
+			virtual std::string GetParsedMessage();
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
 	};
 
 	class ObjectNotValidException : public Exception
@@ -30,6 +34,8 @@ namespace Roket3D { namespace Exceptions
 
 			static const char* Name;
 			static const char* Message;
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
 	};
 
 	class ReadOnlyPropertyException : public Exception
@@ -39,6 +45,8 @@ namespace Roket3D { namespace Exceptions
 
 			static const char* Name;
 			static const char* Message;
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
 	};
 
 	class InvalidArgumentTypeException : public Exception
@@ -48,6 +56,8 @@ namespace Roket3D { namespace Exceptions
 
 			static const char* Name;
 			static const char* Message;
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
 	};
 
 	class NoContextProvidedException : public Exception
@@ -57,6 +67,8 @@ namespace Roket3D { namespace Exceptions
 
 			static const char* Name;
 			static const char* Message;
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
 	};
 
 	class InternalConstructorOnlyException : public Exception
@@ -66,6 +78,8 @@ namespace Roket3D { namespace Exceptions
 
 			static const char* Name;
 			static const char* Message;
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
 	};
 
 	class EntryPointNotFoundException : public Exception
@@ -75,6 +89,8 @@ namespace Roket3D { namespace Exceptions
 
 			static const char* Name;
 			static const char* Message;
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
 	};
 
 	class LuaStateNotValidException : public Exception
@@ -84,6 +100,8 @@ namespace Roket3D { namespace Exceptions
 
 			static const char* Name;
 			static const char* Message;
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
 	};
 
 	class PathNotFoundException : public Exception
@@ -93,6 +111,8 @@ namespace Roket3D { namespace Exceptions
 
 			static const char* Name;
 			static const char* Message;
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
 	};
 
 	class PermissionDeniedException : public Exception
@@ -102,6 +122,8 @@ namespace Roket3D { namespace Exceptions
 
 			static const char* Name;
 			static const char* Message;
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
 	};
 
 	class DebuggerNotAttachedException : public Exception
@@ -111,6 +133,8 @@ namespace Roket3D { namespace Exceptions
 
 			static const char* Name;
 			static const char* Message;
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
 	};
 
 	class InvalidSyntaxException : public Exception
@@ -120,6 +144,8 @@ namespace Roket3D { namespace Exceptions
 
 			static const char* Name;
 			static const char* Message;
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
 	};
 
 	class OutOfMemoryException : public Exception
@@ -129,6 +155,19 @@ namespace Roket3D { namespace Exceptions
 
 			static const char* Name;
 			static const char* Message;
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
+	};
+
+	class GeneralLuaException : public Exception
+	{
+		public:
+			GeneralLuaException(std::string message);
+
+			static const char* Name;
+			static const char* Message;
+			virtual inline const char* GetName() { return this->Name; }
+			virtual inline const char* GetMessage() { return this->Message; }
 	};
 }
 }

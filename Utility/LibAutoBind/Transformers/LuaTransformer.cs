@@ -116,6 +116,22 @@ namespace LibAutoBind.Transformers
                 if (n.SetIsFunc) propertyMethods.Add(n.SetVal);
             }
 
+            // Search for all methods with multiple definitions.
+            Dictionary<string, int> tempDefDict = new Dictionary<string, int>();
+            foreach (ClassFunctionDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassFunctionDeclarationNode)))
+            {
+                if (tempDefDict.Keys.Contains(n.Name))
+                    tempDefDict[n.Name] += 1;
+                else
+                    tempDefDict.Add(n.Name, 1);
+            }
+            List<string> duplicates = new List<string>();
+            foreach (string k in tempDefDict.Keys)
+            {
+                if (tempDefDict[k] > 1)
+                    duplicates.Add(k);
+            }
+
             // Declare the methods that are in the class.
             this.WriteHeaderLine("        /* Method and constructor declarations */");
 
@@ -125,6 +141,7 @@ namespace LibAutoBind.Transformers
                 string keys = "";
                 string visibility = "private";
                 string functype = n.Type;
+                string funcname = n.Name;
                 foreach (string k in n.CPPKeywords)
                 {
                     if (!Keywords.CPPTypeKeywords.Contains(k) && !Keywords.LuaTypeKeywords.Contains(k))
@@ -137,22 +154,78 @@ namespace LibAutoBind.Transformers
                     else if (!n.AllKeywords.Contains("bound") && functype == "")
                         functype = k;
                 }
+                if (duplicates.Contains(funcname) && (n.AllKeywords.Contains("bound") || n.Name == clscomponents[clscomponents.Length - 1]))
+                {
+                    // Change the name to a unique identifier.
+                    string args = "";
+                    foreach (string a in n.Arguments)
+                    {
+                        if (a.Trim().Length > 0 && a.Trim().IndexOf(' ') != -1)
+                        {
+                            string _a = a.Trim().Substring(0, a.Trim().IndexOf(' '));
+                            args += "_" + _a.Replace(":", "_");
+                        }
+                    }
+                    funcname = "__" + n.Name + args;
+
+                    // Ensure this function is no longer bounded (as we'll
+                    // have an automatically created function which dispatches
+                    // to the unique functions based on the arguments passed).
+                    if (n.AllKeywords.Contains("bound"))
+                        n.AllKeywords.Remove("bound");
+
+                    // Ensure there is a default type of void, in case this
+                    // function is a constructor.
+                    if (functype == "")
+                        functype = "void";
+                }
                 string decl = "";
-                if (n.Name == clscomponents[clscomponents.Length - 1]) // Constructor
-                    decl = visibility + ": " + keys + n.Name + "(lua_State * L, bool byuser);";
-                else if (n.AllKeywords.Contains("bound") || propertyMethods.Contains(n.Name))
-                    decl = visibility + ": " + keys + "int " + n.Name + "(lua_State * L);";
+                if (funcname == clscomponents[clscomponents.Length - 1]) // Constructor
+                    decl = visibility + ": " + keys + funcname + "(lua_State * L, bool byuser);";
+                else if (n.Name == clscomponents[clscomponents.Length - 1] && duplicates.Contains(n.Name)) // Dispatched Constructor
+                    decl = visibility + ": " + keys + "void " + funcname + "(lua_State * L, bool byuser);";
+                else if (n.AllKeywords.Contains("bound") || propertyMethods.Contains(n.Name) || duplicates.Contains(n.Name))
+                    decl = visibility + ": " + keys + "int " + funcname + "(lua_State * L);";
                 else
                 {
                     string args = "";
                     foreach (string a in n.Arguments)
                         args += a + ", ";
                     args = args.Substring(0, args.Length - 2);
-                    decl = visibility + ": " + keys + functype + " " + n.Name + "(" + args + ");";
+                    decl = visibility + ": " + keys + functype + " " + funcname + "(" + args + ");";
                 }
                 if (!fdecls.Contains(decl))
                     this.WriteHeaderLine("        " + decl);
                 fdecls.Add(decl);
+            }
+            this.WriteHeaderLine();
+
+            // Declare any dispatchers for overloaded methods.
+            this.WriteHeaderLine("        /* Automatic dispatchers for overloaded methods */");
+
+            List<string> fddecls = new List<string>();
+            foreach (ClassFunctionDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassFunctionDeclarationNode)))
+            {
+                if (duplicates.Contains(n.Name) && (n.AllKeywords.Contains("bound") || n.Name == clscomponents[clscomponents.Length - 1]))
+                {
+                    string keys = "";
+                    string decl = "";
+                    foreach (string k in n.CPPKeywords)
+                    {
+                        if (!Keywords.CPPTypeKeywords.Contains(k) && !Keywords.LuaTypeKeywords.Contains(k))
+                        {
+                            if (!Keywords.CPPVisibilityKeywords.Contains(k))
+                                keys += k + " ";
+                        }
+                    }
+                    if (n.Name == clscomponents[clscomponents.Length - 1]) // Constructor
+                        decl = "public: " + keys + n.Name + "(lua_State * L, bool byuser);";
+                    else
+                        decl = "public: " + keys + "int " + n.Name + "(lua_State * L);";
+                    if (!fddecls.Contains(decl))
+                        this.WriteHeaderLine("        " + decl);
+                    fddecls.Add(decl);
+                }
             }
             this.WriteHeaderLine();
 
@@ -246,6 +319,22 @@ namespace LibAutoBind.Transformers
                 if (n.SetIsFunc) propertyMethods.Add(n.SetVal);
             }
 
+            // Search for all methods with multiple definitions.
+            Dictionary<string, int> tempDefDict = new Dictionary<string, int>();
+            foreach (ClassFunctionDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassFunctionDeclarationNode)))
+            {
+                if (tempDefDict.Keys.Contains(n.Name))
+                    tempDefDict[n.Name] += 1;
+                else
+                    tempDefDict.Add(n.Name, 1);
+            }
+            List<string> duplicates = new List<string>();
+            foreach (string k in tempDefDict.Keys)
+            {
+                if (tempDefDict[k] > 1)
+                    duplicates.Add(k);
+            }
+
             // Declare the methods that are in the class.
             this.WriteCodeLine("    /* Method and constructor definitions */");
 
@@ -253,6 +342,7 @@ namespace LibAutoBind.Transformers
             bool funccontent = false;
             bool funcbound = false;
             string functype = "";
+            string funcname = "";
             foreach (Node r in nodes)
             {
                 if (r is ClassFunctionDeclarationNode)
@@ -260,6 +350,7 @@ namespace LibAutoBind.Transformers
                     ClassFunctionDeclarationNode n = (ClassFunctionDeclarationNode)r;
                     string keys = "";
                     functype = n.Type;
+                    funcname = n.Name;
                     foreach (string k in n.CPPKeywords)
                     {
                         if (!Keywords.CPPVisibilityKeywords.Contains(k))
@@ -273,13 +364,40 @@ namespace LibAutoBind.Transformers
                             }
                         }
                     }
-                    string def = "";
-                    if (n.AllKeywords.Contains("bound") || propertyMethods.Contains(n.Name))
+                    if (duplicates.Contains(funcname) && (n.AllKeywords.Contains("bound") || n.Name == clscomponents[clscomponents.Length - 1]))
                     {
-                        if (n.Name == clscomponents[clscomponents.Length - 1]) // Constructor
-                            def = keys + cls.ClassOnly + "::" + n.Name + "(lua_State * L, bool byuser)";
+                        // Change the name to a unique identifier.
+                        string args = "";
+                        foreach (string a in n.Arguments)
+                        {
+                            if (a.Trim().Length > 0 && a.Trim().IndexOf(' ') != -1)
+                            {
+                                string _a = a.Trim().Substring(0, a.Trim().IndexOf(' '));
+                                args += "_" + _a.Replace(":", "_");
+                            }
+                        }
+                        funcname = "__" + n.Name + args;
+
+                        // Ensure this function is no longer bounded (as we'll
+                        // have an automatically created function which dispatches
+                        // to the unique functions based on the arguments passed).
+                        if (n.AllKeywords.Contains("bound"))
+                            n.AllKeywords.Remove("bound");
+
+                        // Ensure there is a default type of void, in case this
+                        // function is a constructor.
+                        if (functype == "")
+                            functype = "void";
+                    }
+                    string def = "";
+                    if (n.AllKeywords.Contains("bound") || propertyMethods.Contains(n.Name) || duplicates.Contains(n.Name))
+                    {
+                        if (funcname == clscomponents[clscomponents.Length - 1]) // Constructor
+                            def = keys + cls.ClassOnly + "::" + funcname + "(lua_State * L, bool byuser)";
+                        else if (n.Name == clscomponents[clscomponents.Length - 1] && duplicates.Contains(n.Name)) // Dispatched Constructor
+                            def = keys + "void " + cls.ClassOnly + "::" + funcname + "(lua_State * L, bool byuser)";
                         else
-                            def = keys + "int " + cls.ClassOnly + "::" + n.Name + "(lua_State * L)";
+                            def = keys + "int " + cls.ClassOnly + "::" + funcname + "(lua_State * L)";
                     }
                     else
                     {
@@ -287,7 +405,7 @@ namespace LibAutoBind.Transformers
                         foreach (string a in n.Arguments)
                             args += a + ", ";
                         args = args.Substring(0, args.Length - 2);
-                        def = keys + functype + " " + cls.ClassOnly + "::" + n.Name + "(" + args + ")";
+                        def = keys + functype + " " + cls.ClassOnly + "::" + funcname + "(" + args + ")";
                     }
                     if (!fdefs.Contains(def))
                     {
@@ -295,9 +413,11 @@ namespace LibAutoBind.Transformers
                         this.WriteCodeLine("    {");
                         
                         // Add the argument bindings.
-                        if (n.AllKeywords.Contains("bound") || propertyMethods.Contains(n.Name))
+                        if (n.AllKeywords.Contains("bound") || propertyMethods.Contains(n.Name) || duplicates.Contains(n.Name))
                         {
-                            int ai = 0;
+                            int ai = 1;
+                            if (propertyMethods.Contains(n.Name)) ai = -1;
+
                             foreach (string a in n.Arguments)
                             {
                                 Regex ar = new Regex("(?<Type>[a-zA-Z0-9_\\.\\:]+)[ \r\n\t]+(?<Name>[a-zA-Z0-9_\\.]+)");
@@ -311,12 +431,13 @@ namespace LibAutoBind.Transformers
                                         this.WriteCodeLine("        " + type + " " + name + " = Bindings<" + type + ">::GetArgumentBase(L, " + ai + ");");
                                     else
                                         this.WriteCodeLine("        " + type + " * " + name + " = Bindings<" + type + ">::GetArgument(L, " + ai + ");");
-                                    ai += 1;
+                                    if (!propertyMethods.Contains(n.Name))
+                                        ai += 1;
                                 }
                             }
-                            if (ai != 0) this.WriteCodeLine();
+                            if (ai != 1) this.WriteCodeLine();
                         }
-                        funcbound = (n.AllKeywords.Contains("bound") || propertyMethods.Contains(n.Name));
+                        funcbound = (n.AllKeywords.Contains("bound") || propertyMethods.Contains(n.Name) || duplicates.Contains(n.Name));
                         funccontent = true;
                     }
                     fdefs.Add(def);
@@ -327,9 +448,9 @@ namespace LibAutoBind.Transformers
                     // replace them with the appropriate bindings.
                     if (funcbound)
                     {
-                        Regex rr = new Regex("^([ \r\n\t]*)([^\\/][^\\/])([^/]*)([ \r\n\t]+)return[ \r\n\t]+(?<Val>[^\\;]+)\\;", RegexOptions.Multiline);
+                        Regex rr = new Regex("^([ \r\n\t]*)([^\\/][^\\/])([^/\n]*)([ \r\n\t]+)return[ \r\n\t]+(?<Val>[^\\;]+)\\;", RegexOptions.Multiline);
                         string res = rr.Replace(r.Content, "${1}${2}${3}${4}return Bindings<" + functype + ">::Result(L, ${Val});");
-                        Regex brr = new Regex("([ \r\n\t]*)([^\\/][^\\/])([^/]*)([ \r\n\t]+)return[ \r\n\t]*\\;", RegexOptions.Multiline);
+                        Regex brr = new Regex("([ \r\n\t]*)([^\\/][^\\/])([^/\n]*)([ \r\n\t]+)return[ \r\n\t]*\\;", RegexOptions.Multiline);
                         res = brr.Replace(res, "${1}${2}${3}${4}return Bindings<" + functype + ">::EmptyResult;");
                         this.WriteCodeLine("        " + res.TrimStart().TrimEnd('\n'));
                         string cc = res.TrimStart().TrimEnd('\n');
@@ -359,6 +480,121 @@ namespace LibAutoBind.Transformers
                     funccontent = false;
                 }
             }
+
+            // Declare any dispatchers for overloaded methods.
+            this.WriteCodeLine("    /* Automatic dispatchers for overloaded methods */");
+            foreach (string d in duplicates)
+            {
+                if (d == clscomponents[clscomponents.Length - 1])
+                {
+                    this.WriteCodeLine("    " + cls.ClassOnly + "::" + d + "(lua_State * L, bool byuser)");
+                    this.WriteCodeLine("    {");
+                    string elsestmt = "";
+                    foreach (ClassFunctionDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassFunctionDeclarationNode)))
+                    {
+                        if (n.Name != d)
+                            continue;
+
+                        // Change the name to a unique identifier.
+                        string functname = n.Name;
+                        string args = "";
+                        foreach (string a in n.Arguments)
+                        {
+                            if (a.Trim().Length > 0 && a.Trim().IndexOf(' ') != -1)
+                            {
+                                string _a = a.Trim().Substring(0, a.Trim().IndexOf(' '));
+                                args += "_" + _a.Replace(":", "_");
+                            }
+                        }
+                        functname = "__" + n.Name + args;
+
+                        if (n.Arguments.Count == 0 || n.Arguments[0] == "")
+                        {
+                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) == 0 || !byuser)");
+                            this.WriteCodeLine("        {");
+                            this.WriteCodeLine("            this->" + functname + "(L, byuser);");
+                            this.WriteCodeLine("        }");
+                        }
+                        else
+                        {
+                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) == " + n.Arguments.Count + " &&");
+                            int ai = 1;
+                            foreach (string a in n.Arguments)
+                            {
+                                string t = a.Trim().Substring(0, a.Trim().IndexOf(' '));
+                                string andd = " &&";
+                                if (ai == n.Arguments.Count) andd = ")";
+                                if (Keywords.LuaTypeKeywords.Contains(t) || t == "bool")
+                                    this.WriteCodeLine("            Bindings<" + t + ">::IsArgumentBase(L, " + ai + ")" + andd);
+                                else
+                                    this.WriteCodeLine("            Bindings<" + t + ">::IsArgument(L, " + ai + ")" + andd);
+                                ai += 1;
+                            }
+                            this.WriteCodeLine("        {");
+                            this.WriteCodeLine("            this->" + functname + "(L, byuser);");
+                            this.WriteCodeLine("        }");
+                        }
+                        if (elsestmt == "") elsestmt = "else ";
+                    }
+                    this.WriteCodeLine("    }");
+                    this.WriteCodeLine();
+                }
+                else
+                {
+                    this.WriteCodeLine("    int " + cls.ClassOnly + "::" + d + "(lua_State * L)");
+                    this.WriteCodeLine("    {");
+                    string elsestmt = "";
+                    foreach (ClassFunctionDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassFunctionDeclarationNode)))
+                    {
+                        if (n.Name != d)
+                            continue;
+
+                        // Change the name to a unique identifier.
+                        string functname = n.Name;
+                        string args = "";
+                        foreach (string a in n.Arguments)
+                        {
+                            if (a.Trim().Length > 0 && a.Trim().IndexOf(' ') != -1)
+                            {
+                                string _a = a.Trim().Substring(0, a.Trim().IndexOf(' '));
+                                args += "_" + _a.Replace(":", "_");
+                            }
+                        }
+                        functname = "__" + n.Name + args;
+
+                        if (n.Arguments.Count == 0 || n.Arguments[0] == "")
+                        {
+                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) == 0)");
+                            this.WriteCodeLine("        {");
+                            this.WriteCodeLine("            return this->" + functname + "(L);");
+                            this.WriteCodeLine("        }");
+                        }
+                        else
+                        {
+                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) == " + n.Arguments.Count + " &&");
+                            int ai = 1;
+                            foreach (string a in n.Arguments)
+                            {
+                                string t = a.Trim().Substring(0, a.Trim().IndexOf(' '));
+                                string andd = " &&";
+                                if (ai == n.Arguments.Count) andd = ")";
+                                if (Keywords.LuaTypeKeywords.Contains(t) || t == "bool")
+                                    this.WriteCodeLine("            Bindings<" + t + ">::IsArgumentBase(L, " + ai + ")" + andd);
+                                else
+                                    this.WriteCodeLine("            Bindings<" + t + ">::IsArgument(L, " + ai + ")" + andd);
+                                ai += 1;
+                            }
+                            this.WriteCodeLine("        {");
+                            this.WriteCodeLine("            return this->" + functname + "(L);");
+                            this.WriteCodeLine("        }");
+                        }
+                        if (elsestmt == "") elsestmt = "else ";
+                    }
+                    this.WriteCodeLine("    }");
+                    this.WriteCodeLine();
+                }
+            }
+            this.WriteHeaderLine();
 
             // Declare automatically generated methods for setting / getting properties.
             this.WriteCodeLine("    /* Automatic property getter-setter definitions */");

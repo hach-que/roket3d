@@ -18,7 +18,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 	{
 		if (byuser)
 		{
-			throw new Roket3D::Exceptions::InternalConstructorOnlyException();
+			throw Roket3D::Exceptions::InternalConstructorOnlyException();
 		}
 		this->m_IsSoundSet = true;
 		this->m_CAudioSound = NULL;
@@ -37,7 +37,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -53,7 +53,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -70,7 +70,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -86,7 +86,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 		} 
 		else
 		{
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 		}
 	}
 
@@ -104,7 +104,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 		}
 		else
 		{
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 		}
 	}
 
@@ -121,7 +121,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -138,7 +138,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -155,7 +155,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -171,7 +171,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -187,7 +187,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -203,7 +203,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -219,7 +219,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -236,7 +236,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -252,7 +252,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -269,7 +269,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -282,7 +282,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 		if (this->m_IsSoundSet)
 			return this->m_CAudioSound->playing();
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 
 	/// <summary>
@@ -300,6 +300,6 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw new Roket3D::Exceptions::ObjectNotValidException();
+			throw Roket3D::Exceptions::ObjectNotValidException();
 	}
 }

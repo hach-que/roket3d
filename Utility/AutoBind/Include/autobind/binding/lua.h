@@ -52,11 +52,11 @@ template<class T>
 			// Check to make sure that it's a table at that
 			// position.  If it isn't, then it can't be a
 			// class.
-			if (lua_istable(L, narg + 1))
+			if (lua_istable(L, narg))
 			{
 				// Get the value at the first index of the table, and
 				// push it onto the stack.
-				lua_gettablevalue(L, narg + 1, 0);
+				lua_gettablevalue(L, narg, 0);
 
 				// Convert the value that was just pushed onto the
 				// stack into userdata if possible.  The luaL_testudata
@@ -85,11 +85,55 @@ template<class T>
 			}
 		}
 
+		// A static function for for detecting whether or not an
+		// argument provided to a function is a specific object.
+		static T* IsArgument(lua_State * L, int narg)
+		{
+			// Check to make sure that it's a table at that
+			// position.  If it isn't, then it can't be a
+			// class.
+			if (lua_istable(L, narg))
+			{
+				// Get the value at the first index of the table, and
+				// push it onto the stack.
+				lua_gettablevalue(L, narg, 0);
+
+				// Convert the value that was just pushed onto the
+				// stack into userdata if possible.  The luaL_testudata
+				// checks to make sure that the class is the correct
+				// type before converting it.
+				UserDataType* ud = static_cast<UserDataType*>(luaL_testudata(L, -1, T::ClassName));
+				if (ud == NULL)
+				{
+					// Return false to indicate that the argument is not
+					// of the specified type.
+					return false;
+				}
+
+				// Pop the value from the stack as we no longer need it.
+				lua_pop(L, 1);
+
+				// Return true since it is of the correct type.
+				return true;
+			}
+			else
+			{
+				// Return false to indicate that the argument could not
+				// be handled by the Bindings<> class.
+				return false;
+			}
+		}
+
 		// A static function for retrieving an base object (i.e.
 		// numeric or string value) from the arguments provided
 		// to a function.  It is also used during property setting,
 		// where arg should be -1 to get the value that was assigned.
 		static T GetArgumentBase(lua_State * L, int narg);
+
+		// A static function for detecting whether or not an
+		// argument provided to a function is a specific base object
+		// (i.e. numeric or string value).
+		static bool IsArgumentBase(lua_State * L, int narg);
 
 		// Registers the given class with the Lua engine.
 		static void Register(lua_State * L)
@@ -135,11 +179,27 @@ template<class T>
 					{
 						// Fetch the first from the global area.
 						lua_getglobal(L, elms[i].c_str());
+						if (lua_isnil(L, -1))
+						{
+							// The namespace does not yet exist, create it.
+							lua_pop(L, 1);
+							lua_newtable(L);
+							lua_setglobal(L, elms[i].c_str());
+							lua_getglobal(L, elms[i].c_str());
+						}
 						topop++;
 					}
 					else
 					{
 						lua_getfield(L, -1, elms[i].c_str());
+						if (lua_isnil(L, -1))
+						{
+							// The namespace does not yet exist, create it.
+							lua_pop(L, 1);
+							lua_newtable(L);
+							lua_setfield(L, -2, elms[i].c_str());
+							lua_getfield(L, -1, elms[i].c_str());
+						}
 						topop++;
 					}
 				}
@@ -149,13 +209,13 @@ template<class T>
 					{
 						// Set directly into the global namespace.
 						lua_pushcfunction(L, &Bindings<T>::Constructor);
-						lua_setglobal(L, T::ClassName);
+						lua_setglobal(L, elms[i].c_str());
 					}
 					else
 					{
 						// Set into the namespace table.
 						lua_pushcfunction(L, &Bindings<T>::Constructor);
-						lua_setfield(L, -2, T::ClassName);
+						lua_setfield(L, -2, elms[i].c_str());
 					}
 				}
 			}
@@ -194,10 +254,6 @@ template<class T>
 			// our new Lua object.
 			lua_newtable(L);
 
-			// Get the address of the new table on the
-			// stack.
-			int newtable = lua_gettop(L);
-
 			// Push the index of the userdata.
 			lua_pushnumber(L, 0);
 
@@ -207,11 +263,32 @@ template<class T>
 			// and getter functions to know what C++ object they
 			// are dealing with.
 			T** ud = (T**)lua_newuserdata(L, sizeof(T*));
+
+			// We have to make sure that the stack only contains
+			// the arguments passed to the function, so that
+			// lua_gettop() returns the number of arguments.
+			// Therefore, we have to temporarily store the new
+			// table and userdata in the C registry.
+			lua_setfield(L, LUA_REGISTRYINDEX, "Roket3D_Class_Construction_Temporary_Userdata");
+			lua_pop(L, 1);
+			lua_setfield(L, LUA_REGISTRYINDEX, "Roket3D_Class_Construction_Temporary_Table");
+
+			// Now call the class constructor.
 			T* obj = new T(L, true);
 			*ud = obj;
 
-			// Get the address of the userdata on the
-			// stack.
+			// Clear the entire stack, and place the userdata,
+			// an index of 0 and new table onto the stack in
+			// their place.
+			lua_pop(L, lua_gettop(L));
+			lua_getfield(L, LUA_REGISTRYINDEX, "Roket3D_Class_Construction_Temporary_Table");
+			lua_pushnil(L);
+			lua_setfield(L, LUA_REGISTRYINDEX, "Roket3D_Class_Construction_Temporary_Table");
+			int newtable = lua_gettop(L);
+			lua_pushnumber(L, 0); // Index which SetupObject expects to have.
+			lua_getfield(L, LUA_REGISTRYINDEX, "Roket3D_Class_Construction_Temporary_Userdata");
+			lua_pushnil(L);
+			lua_setfield(L, LUA_REGISTRYINDEX, "Roket3D_Class_Construction_Temporary_Userdata");
 			int userdata = lua_gettop(L);
 
 			// Call the SetupObject() function which sets up the
@@ -248,7 +325,7 @@ template<class T>
 			// and getter functions to know what C++ object they
 			// are dealing with.
 			T** ud = (T**)lua_newuserdata(L, sizeof(T*));
-			T* obj = new T(L, true);
+			T* obj = new T(L, false);
 			*ud = obj;
 
 			// Get the address of the userdata on the
@@ -392,6 +469,10 @@ template<class T>
 			// is at index 1 and the name of the property
 			// is at index 2.
 
+			const char * func = lua_tostring(L, 1);
+			const char * prop = lua_tostring(L, 2);
+			int top = lua_gettop(L);
+
 			// Retrieve the metatable for the object.
 			lua_getmetatable(L, 1);
 
@@ -409,17 +490,17 @@ template<class T>
 				// Store the index.
 				int index = lua_tonumber(L, -1);
 
-				// Get the first entry in the metatable, which
-				// is the userdata associated with the object.
+				// Get the first entry in the table (not meta),
+				// which is the userdata associated with the
+				// object.
 				lua_pushnumber(L, 0);
 				lua_rawget(L, 1);
 
 				// Retrieve the userdata.
 				T** obj = static_cast<T**>(lua_touserdata(L, -1));
 
-				// Push the value to the top of the stack.
-				// TODO: Work out what this does in the context
-				//       of property retrieval.
+				// Push the metatable to the top of the stack
+				// for the retrieval function to access if needed.
 				lua_pushvalue(L, 3);
 
 				// Call the property retrieval function.
@@ -545,35 +626,44 @@ template<class T>
 
 	};
 
+// Type-specific ArgumentBase handlers.  The contents of the function must
+// change based on the type specified by T, therefore these are declared
+// outside the template.
 inline numeric Bindings<numeric>::GetArgumentBase(lua_State * L, int narg)
 {
-	// Check to make sure that it's a table at that
-	// position.  If it isn't, then it can't be a
-	// class.
-	if (lua_isnumber(L, narg + 1))
-		return lua_tonumber(L, narg + 1);
+	if (lua_isnumber(L, narg))
+		return lua_tonumber(L, narg);
 	else
 		throw new Roket3D::Exceptions::InvalidArgumentTypeException(narg);
 }
 
 inline ::string Bindings<::string>::GetArgumentBase(lua_State * L, int narg)
 {
-	// Check to make sure that it's a table at that
-	// position.  If it isn't, then it can't be a
-	// class.
-	if (lua_isstring(L, narg + 1))
-		return lua_tostring(L, narg + 1);
+	if (lua_isstring(L, narg))
+		return lua_tostring(L, narg);
 	else
 		throw new Roket3D::Exceptions::InvalidArgumentTypeException(narg);
 }
 
 inline bool Bindings<bool>::GetArgumentBase(lua_State * L, int narg)
 {
-	// Check to make sure that it's a table at that
-	// position.  If it isn't, then it can't be a
-	// class.
-	if (lua_isboolean(L, narg + 1))
-		return (lua_toboolean(L, narg + 1) == 0);
+	if (lua_isboolean(L, narg))
+		return (lua_toboolean(L, narg) == 1);
 	else
 		throw new Roket3D::Exceptions::InvalidArgumentTypeException(narg);
+}
+
+inline bool Bindings<numeric>::IsArgumentBase(lua_State * L, int narg)
+{
+	return (lua_isnumber(L, narg) == 1);
+}
+
+inline bool Bindings<::string>::IsArgumentBase(lua_State * L, int narg)
+{
+	return (lua_isstring(L, narg) == 1);
+}
+
+inline bool Bindings<bool>::IsArgumentBase(lua_State * L, int narg)
+{
+	return (lua_isboolean(L, narg) == 1);
 }
