@@ -15,7 +15,8 @@ namespace LibAutoBind.Tokens
         {
             if (!(l.Char == ' ' || (l.Char >= '0' && l.Char <= '9') || (l.Char >= 'a' && l.Char <= 'z') ||
                 (l.Char >= 'A' && l.Char <= 'Z') || l.Char == '\n' || l.Char == '\t' || l.Char == '\r' ||
-                l.Char == ';' || l.Char == '_' || l.Char == ':' || l.Char == '*'))
+                l.Char == ';' || l.Char == '_' || l.Char == ':' || l.Char == '*' || l.Char == '<' ||
+                l.Char == '>' || l.Char == '=' || l.Char == '"' || l.Char == '.'))
             {
                 l.ForceExclude(); // contains characters we can't accept.
                 return;
@@ -36,15 +37,19 @@ namespace LibAutoBind.Tokens
                 string decl = l.Text.Substring(res.DeclIndex).Trim();
                 if (!decl.EndsWith(";") && !decl.EndsWith("{")) return; // Skip if we don't have a terminating character.
                 Regex r = new Regex(
-                    "(?<Type>[a-zA-Z][a-zA-z0-9_\\:]+[ \t\r\n\\*]+)?" +
-                    "(?<Name>[a-zA-Z][a-zA-z0-9_]*[ \t\r\n]*);"
+                    "(?<Type>[a-zA-Z][a-zA-z0-9_\\:\\<\\>]+[ \t\r\n\\*]+)?" +
+                    "(?<Name>[a-zA-Z][a-zA-z0-9_]*[ \t\r\n]*)" +
+                    "(?<Assign>\\=[ \t\r\n]*((\\\".*\\\")|([a-zA-Z][a-zA-z0-9_\\:\\<\\>]+)|([0-9_.]*)))?;"
                     );
                 Match m = r.Match(decl);
                 if (m.Success)
                 {
                     // It's a variable declaration.
                     l.TakeOwnership();
-                    l.AddNode(new ClassVariableDeclarationNode(res.Keywords, m.Groups["Type"].Value.Trim(), m.Groups["Name"].Value.Trim()));
+                    if (m.Groups["Assign"].Success)
+                        l.AddNode(new ClassVariableDeclarationNode(res.Keywords, m.Groups["Type"].Value.Trim(), m.Groups["Name"].Value.Trim(), m.Groups["Assign"].Value.TrimStart('=').TrimStart()));
+                    else
+                        l.AddNode(new ClassVariableDeclarationNode(res.Keywords, m.Groups["Type"].Value.Trim(), m.Groups["Name"].Value.Trim(), ""));
                     l.EndOwnership();
                 }
                 else

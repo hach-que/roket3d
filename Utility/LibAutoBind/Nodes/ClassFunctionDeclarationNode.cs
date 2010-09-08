@@ -26,6 +26,8 @@ namespace LibAutoBind.Nodes
             {
                 this.m_Arguments.Add(a.Trim());
             }
+            if (this.m_Arguments.Count == 1 && this.m_Arguments[0] == "")
+                this.m_Arguments.Clear();
 
             // Construct a representation for the Content property.
             string keys = "";

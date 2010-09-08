@@ -10,12 +10,14 @@ namespace LibAutoBind.Nodes
         private List<string> m_Keywords;
         private string m_Name;
         private string m_Type;
+        private string m_Assign;
 
-        internal ClassVariableDeclarationNode(List<string> keywords, string type, string name)
+        internal ClassVariableDeclarationNode(List<string> keywords, string type, string name, string assign)
         {
             this.m_Keywords = keywords;
             this.m_Name = name;
             this.m_Type = type;
+            this.m_Assign = assign;
 
             string keys = "";
             foreach (string s in keywords)
@@ -62,6 +64,11 @@ namespace LibAutoBind.Nodes
         internal string Type
         {
             get { return this.m_Type; }
+        }
+
+        internal string Assign
+        {
+            get { return this.m_Assign; }
         }
     }
 }
