@@ -10,11 +10,13 @@ namespace LibAutoBind
         // Keywords specific to C++, they are kept untouched.
         internal static string[] CPPVisibilityKeywords = { "private", "protected", "public", "friend" };
         internal static string[] CPPTypeKeywords = { "char", "bool", "short", "int", "long", "longlong", "float", "double", "void" };
+        internal static string[] CPPStripKeywords = { "static", "virtual" };
+        internal static string[] CPPMiscKeywords = { "const" };
 
         // Keywords specific to the automatic binding system.  These are read
         // by the tokens and removed in the final source code.
         internal static string[] LuaVisibilityKeywords = { "bound", "unbound" };
-        internal static string[] LuaTypeKeywords = { "string", "numeric", "table" };
+        internal static string[] LuaTypeKeywords = { "string", "::string", "numeric", "table" };
         internal static string[] LuaDeclKeywords = { "property" };
 
         /// <summary>
@@ -88,6 +90,10 @@ namespace LibAutoBind
                 if (s == text) return s;
             foreach (string s in Keywords.CPPTypeKeywords)
                 if (s == text) return s;
+            foreach (string s in Keywords.CPPStripKeywords)
+                if (s == text) return s;
+            foreach (string s in Keywords.CPPMiscKeywords)
+                if (s == text) return s;
             foreach (string s in Keywords.LuaVisibilityKeywords)
                 if (s == text) return s;
             foreach (string s in Keywords.LuaTypeKeywords)
@@ -109,6 +115,10 @@ namespace LibAutoBind
             foreach (string s in Keywords.CPPVisibilityKeywords)
                 if (s.TrimStart().StartsWith(text)) return true;
             foreach (string s in Keywords.CPPTypeKeywords)
+                if (s.TrimStart().StartsWith(text)) return true;
+            foreach (string s in Keywords.CPPStripKeywords)
+                if (s.TrimStart().StartsWith(text)) return true;
+            foreach (string s in Keywords.CPPMiscKeywords)
                 if (s.TrimStart().StartsWith(text)) return true;
             foreach (string s in Keywords.LuaVisibilityKeywords)
                 if (s.TrimStart().StartsWith(text)) return true;

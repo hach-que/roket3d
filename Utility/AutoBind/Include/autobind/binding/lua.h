@@ -4,11 +4,16 @@
  * for use within the LuaTranslator code.
  */
 
+#ifndef AUTOBIND_lua
+#define AUTOBIND_lua
+
 #include <string>
 #include <vector>
 #include <lua.hpp>
+#include "LowLevel.h"
 #include "roket3d.h" // TODO: Move lua_gettablevalue and luaL_testudata into this file from roket3d.h.
-#include "Exceptions.h"
+
+namespace Engine { class Exception; }
 
 template<class T>
 	class Bindings
@@ -568,41 +573,13 @@ template<class T>
 		}
 
 		// The function is called to handle calling the C++
-		// functions from within Lua.
-		static int FunctionDispatch(lua_State * L)
-		{
-			// Check to make sure that the function was called
-			// with the : operator and not the . operator.  The
-			// . operator does not provide us with an instance
-			// context.
-			if (lua_gettop(L) == 0 || !lua_istable(L, 1))
-			{
-				throw new Roket3D::Exceptions::NoContextProvidedException();
-				return 0;
-			}
+		// functions from within Lua (externally defined
+		// as it requires the ability to throw an exception).
+		static int FunctionDispatch(lua_State * L);
 
-			// Retrieve the index of the function from the
-			// closure that was created during setup.
-			int i = (int)lua_tonumber(L, lua_upvalueindex(1));
-
-			// The table is located at index 1, so we can pull
-			// the userdata associated with it just like we
-			// do in the property functions (except that we don't
-			// need to load the metatable onto the stack).
-			lua_pushnumber(L, 0);
-			lua_rawget(L, 1);
-
-			// Retrieve the userdata.
-			T** obj = static_cast<T**>(lua_touserdata(L, -1));
-
-			// Pop the original table off the stack so that
-			// argument 1 is at index 1 when the function is
-			// called.
-			lua_pop(L, 1);
-
-			// Call the function and return it's result.
-			return ((*obj)->*(T::Functions[i].Function))(L);
-		}
+		// This function wraps a specified exception and pushes
+		// it onto the Lua stack.
+		static int RaiseException(lua_State * L, Engine::Exception & err);
 
 		// This function is the callback issued by the Lua
 		// garbage collector when there are no more references
@@ -626,6 +603,137 @@ template<class T>
 
 	};
 
+// We can only include the exception classes after we define the bindings
+// template.  Any functions that require the ability to throw exceptions
+// are externally defined (inline) below.
+#include "ArgumentTypeNotValidException.h"
+#include "ContextNotProvidedException.h"
+
+template<class T>
+	int Bindings<T>::FunctionDispatch(lua_State * L)
+	{
+		// Check to make sure that the function was called
+		// with the : operator and not the . operator.  The
+		// . operator does not provide us with an instance
+		// context.
+		if (lua_gettop(L) == 0 || !lua_istable(L, 1))
+		{
+			throw new Engine::ContextNotProvidedException();
+			return 0;
+		}
+
+		// Retrieve the index of the function from the
+		// closure that was created during setup.
+		int i = (int)lua_tonumber(L, lua_upvalueindex(1));
+
+		// The table is located at index 1, so we can pull
+		// the userdata associated with it just like we
+		// do in the property functions (except that we don't
+		// need to load the metatable onto the stack).
+		lua_pushnumber(L, 0);
+		lua_rawget(L, 1);
+
+		// Retrieve the userdata.
+		T** obj = static_cast<T**>(lua_touserdata(L, -1));
+
+		// Pop the original table off the stack so that
+		// argument 1 is at index 1 when the function is
+		// called.
+		lua_pop(L, 1);
+
+		// Call the function and return it's result.
+		try
+		{
+			return __guarded<T>::__guard(*obj, T::Functions[i].Function, L);
+		}
+		catch (Engine::Exception & err)
+		{
+			return Bindings<T>::RaiseException(L, err);
+		}
+	}
+
+template<class T>
+	int Bindings<T>::RaiseException(lua_State * L, Engine::Exception & err)
+	{
+		// Create a new table with which to return
+		// our new Lua exception.
+		lua_newtable(L);
+
+		// Get the address of the new table on the
+		// stack.
+		int newtable = lua_gettop(L);
+
+		// Push the index of the userdata.
+		lua_pushnumber(L, 0);
+
+		// Essentially here we're setting the userdata in
+		// the metatable to the Bindings<Engine::Exception> object.
+		// This allows the function callbacks and property setter
+		// and getter functions to know what C++ object they
+		// are dealing with.
+		Engine::Exception** ud = (Engine::Exception**)lua_newuserdata(L, sizeof(Engine::Exception*));
+		Engine::Exception* obj = &err;
+		obj->IsExisting = true;
+		*ud = obj;
+
+		// Get the address of the userdata on the
+		// stack.
+		int userdata = lua_gettop(L);
+
+		// Instead of using SetupObject, we manually create the
+		// object because we need to base the class name off the
+		// value from the GetName() call as well as the fact it
+		// needs to be pushed via lua_error().
+
+		// Retrieve the metatable from the registry index (the
+		// one we set in the Register function) and set it as
+		// the metatable on the userdata.
+		luaL_getmetatable(L, err.GetName());
+		lua_setmetatable(L, userdata);
+
+		// Set the first index of the table to the userdata
+		// (we pushed the index above using lua_pushnumber).
+		lua_settable(L, newtable);
+
+		// Now we set the same metatable that we associated with
+		// the userdata as the metatable on the new object we
+		// are returning.
+		luaL_getmetatable(L, err.GetName());
+		lua_setmetatable(L, newtable);
+
+		// Now we're going to register the properties with our
+		// metatable, so that setting or getting the properties
+		// on the Lua object will result in the appropriate
+		// callbacks being issued.
+		luaL_getmetatable(L, err.GetName());
+		for (int i = 0; Engine::Exception::Properties[i].Name != NULL; i++)
+		{
+			lua_pushstring(L, Engine::Exception::Properties[i].Name);
+			lua_pushnumber(L, i);
+			lua_settable(L, -3);
+		}
+		lua_pop(L, 1);
+
+		// Now register the functions on the object with the
+		// Bindings<Engine::Exception>::FunctionDispatch, which then handles
+		// passing the correct context onto the class functions.
+		// Note that unlike the properties, the functions are
+		// associated with new object and not the metatable.
+		for (int i = 0; Engine::Exception::Functions[i].Name; i++)
+		{
+			lua_pushstring(L, Engine::Exception::Functions[i].Name);
+			lua_pushnumber(L, i);
+			lua_pushcclosure(L, &Bindings<Engine::Exception>::FunctionDispatch, 1);
+			lua_settable(L, newtable);
+		}
+
+		// Now we push the top of the stack via lua_error.
+		// lua_error never returns, but we call return just
+		// for looks.
+		lua_error(L);
+		return 1;
+	}
+
 // Type-specific ArgumentBase handlers.  The contents of the function must
 // change based on the type specified by T, therefore these are declared
 // outside the template.
@@ -634,7 +742,7 @@ inline numeric Bindings<numeric>::GetArgumentBase(lua_State * L, int narg)
 	if (lua_isnumber(L, narg))
 		return lua_tonumber(L, narg);
 	else
-		throw new Roket3D::Exceptions::InvalidArgumentTypeException(narg);
+		throw new Engine::ArgumentTypeNotValidException(narg);
 }
 
 inline ::string Bindings<::string>::GetArgumentBase(lua_State * L, int narg)
@@ -642,7 +750,7 @@ inline ::string Bindings<::string>::GetArgumentBase(lua_State * L, int narg)
 	if (lua_isstring(L, narg))
 		return lua_tostring(L, narg);
 	else
-		throw new Roket3D::Exceptions::InvalidArgumentTypeException(narg);
+		throw new Engine::ArgumentTypeNotValidException(narg);
 }
 
 inline bool Bindings<bool>::GetArgumentBase(lua_State * L, int narg)
@@ -650,7 +758,7 @@ inline bool Bindings<bool>::GetArgumentBase(lua_State * L, int narg)
 	if (lua_isboolean(L, narg))
 		return (lua_toboolean(L, narg) == 1);
 	else
-		throw new Roket3D::Exceptions::InvalidArgumentTypeException(narg);
+		throw new Engine::ArgumentTypeNotValidException(narg);
 }
 
 inline bool Bindings<numeric>::IsArgumentBase(lua_State * L, int narg)
@@ -667,3 +775,5 @@ inline bool Bindings<bool>::IsArgumentBase(lua_State * L, int narg)
 {
 	return (lua_isboolean(L, narg) == 1);
 }
+
+#endif
