@@ -1,18 +1,41 @@
 // The main entry point of the Roket3D engine.
+#include <lua.hpp>
+#include "autobind/types.h"
+#include "autobind/binding/lua.h"
+#include "AccessViolationException.h"
+#include "DivideByZeroException.h"
+#include "EntryPointNotFoundException.h"
+#include "OutOfMemoryException.h"
+#include "InvalidSyntaxException.h"
+#include "InterpreterStateNotValidException.h"
+
 #include "Program.h"
 #include "Utility.h"
 #include "Debugger.h"
-#include "Exceptions.h"
 #include "ClassRegistration.h"
+#include "LowLevel.h"
 #include <iostream>
 #include "irrXML.h"
+
+int testFunc(lua_State * L)
+{
+	int * test = NULL;
+	*test = 13;
+	return 0;
+}
+
+int testFunc2(lua_State * L)
+{
+	int a = 4;
+	int b = 0;
+	int c = a / b;
+	return 0;
+}
 
 namespace Roket3D
 {
 	int Program::Main(int argc, char *argv[])
 	{
-		// TODO: Find out why the argc and argv arguments are corrupted.
-		/*
 		for (int i = 0; i < argc; i += 1)
 		{
 			std::string arg = argv[i];
@@ -73,12 +96,31 @@ namespace Roket3D
 				exit(0);
 			}
 		}
-		*/
+
+		// Test to see whether or not we can catch segmentation faults.
+		try
+		{
+			__guard(&testFunc, NULL);
+		}
+		catch (Engine::AccessViolationException err)
+		{
+			std::cout << "Caught access violation!" << std::endl;
+		}
+
+		// Test to see whether or not we can catch division by zero faults.
+		try
+		{
+			__guard(&testFunc2, NULL);
+		}
+		catch (Engine::DivideByZeroException err)
+		{
+			std::cout << "Caught division by zero!" << std::endl;
+		}
 
 		// Search for GameInfo.xml in the current working directory.
 		if (!Utility::FileExists("./GameInfo.xml"))
 		{
-			Debugger::RaiseException(Exceptions::EntryPointNotFoundException());
+			Debugger::RaiseException(Engine::EntryPointNotFoundException());
 			return -1;
 		}
 
@@ -92,7 +134,7 @@ namespace Roket3D
 		// Check to make sure the entry point file exists.
 		if (!Utility::FileExists(info.EntryPointFile))
 		{
-			Debugger::RaiseException(Exceptions::EntryPointNotFoundException());
+			Debugger::RaiseException(Engine::EntryPointNotFoundException());
 			return -1;
 		}
 
@@ -101,7 +143,7 @@ namespace Roket3D
 		lua_State * L = lua_open();
 		if (L == NULL)
 		{
-			Debugger::RaiseException(Exceptions::LuaStateNotValidException());
+			Debugger::RaiseException(Engine::InterpreterStateNotValidException());
 			return -1;
 		}
 		luaL_openlibs(L);
@@ -109,7 +151,7 @@ namespace Roket3D
 		// Ensure there is enough stack space available for Lua.
 		if (lua_checkstack(L, 50) == false)
 		{
-			Debugger::RaiseException(Exceptions::LuaStateNotValidException());
+			Debugger::RaiseException(Engine::InterpreterStateNotValidException());
 			return -1;
 		}
 
@@ -126,12 +168,14 @@ namespace Roket3D
 		int ret = luaL_loadfile(L, info.EntryPointFile.c_str());
 		if (ret == LUA_ERRSYNTAX)
 		{
-			Debugger::RaiseException(Exceptions::InvalidSyntaxException());
+			std::string str = lua_tostring(L, -1);
+			lua_pop(L, 1);
+			Debugger::RaiseException(Engine::InvalidSyntaxException(str));
 			return -1;
 		}
 		else if (ret == LUA_ERRMEM)
 		{
-			Debugger::RaiseException(Exceptions::OutOfMemoryException());
+			Debugger::RaiseException(Engine::OutOfMemoryException());
 			return -1;
 		}
 
@@ -146,7 +190,7 @@ namespace Roket3D
 		}
 		else if (ret == LUA_ERRMEM)
 		{
-			Debugger::RaiseException(Exceptions::OutOfMemoryException());
+			Debugger::RaiseException(Engine::OutOfMemoryException());
 			return -1;
 		}
 
@@ -154,12 +198,14 @@ namespace Roket3D
 		ret = luaL_loadstring(L, info.EntryPointCall.c_str());
 		if (ret == LUA_ERRSYNTAX)
 		{
-			Debugger::RaiseException(Exceptions::InvalidSyntaxException());
+			std::string str = lua_tostring(L, -1);
+			lua_pop(L, 1);
+			Debugger::RaiseException(Engine::InvalidSyntaxException(str));
 			return -1;
 		}
 		else if (ret == LUA_ERRMEM)
 		{
-			Debugger::RaiseException(Exceptions::OutOfMemoryException());
+			Debugger::RaiseException(Engine::OutOfMemoryException());
 			return -1;
 		}
 
@@ -174,7 +220,7 @@ namespace Roket3D
 		}
 		else if (ret == LUA_ERRMEM)
 		{
-			Debugger::RaiseException(Exceptions::OutOfMemoryException());
+			Debugger::RaiseException(Engine::OutOfMemoryException());
 			return -1;
 		}
 
@@ -216,7 +262,7 @@ namespace Roket3D
 					else if (nodes.size() == 1 && nodes[0] == "game") { }
 					else
 					{			
-						Debugger::RaiseException(Exceptions::EntryPointNotFoundException());
+						Debugger::RaiseException(Engine::EntryPointNotFoundException());
 						return;
 					}
 					break;

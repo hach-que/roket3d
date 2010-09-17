@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace Roket3D.Menus.Definitions.Actions
 {
@@ -35,6 +36,9 @@ namespace Roket3D.Menus.Definitions.Actions
 
     class Save : Action
     {
+        private Roket3D.ContentEditors.EditorBase m_CurrentEditor = null;
+        private string m_Text = "Save";
+
         public override void OnSetSettings()
         {
             this.ItemIcon = Properties.Resources.actions_save;
@@ -43,36 +47,62 @@ namespace Roket3D.Menus.Definitions.Actions
 
         public override void OnActivate()
         {
-            // TODO: Add proper unsaved changes checking etc.. here
-            Program.MainWindow.Close();
+            m_CurrentEditor.OnSaveFile();
         }
 
         public override String GetText()
         {
-            return "Save document.lua";
+            return this.m_Text;
         }
 
-        public override void OnTabChanged(Roket3D.ContentEditors.EditorBase editorBase)
+        public override void OnTabChanged(Roket3D.ContentEditors.EditorBase editor)
         {
-            if (editorBase != null)
-                this.Enabled = editorBase.Properties.CanSave;
-            else
+            if (editor == null || editor.File == null)
+            {
                 this.Enabled = false;
+                return;
+            }
+            
+            this.Enabled = editor.Properties.CanSave;
+            this.m_CurrentEditor = editor;
+            this.m_Text = "Save " + editor.File.Name;
             this.Item.Enabled = this.Enabled;
         }
     }
 
     class SaveAs : Action
     {
+        private Roket3D.ContentEditors.EditorBase m_CurrentEditor = null;
+        private string m_Text = "Save as...";
+
         public override void OnSetSettings()
         {
             this.ItemIcon = null;
             this.Enabled = false;
         }
 
+        public override void OnActivate()
+        {
+            // TODO: Implement Save As...
+        }
+
         public override String GetText()
         {
-            return "Save document.lua as...";
+            return this.m_Text;
+        }
+
+        public override void OnTabChanged(Roket3D.ContentEditors.EditorBase editor)
+        {
+            if (editor == null || editor.File == null)
+            {
+                this.Enabled = false;
+                return;
+            }
+
+            this.Enabled = false; // The activate event isn't implement yet..
+            this.m_CurrentEditor = editor;
+            this.m_Text = "Save " + editor.File.Name + " as...";
+            this.Item.Enabled = this.Enabled;
         }
     }
 

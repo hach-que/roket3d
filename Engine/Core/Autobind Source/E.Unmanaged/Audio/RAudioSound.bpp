@@ -1,7 +1,8 @@
 #import Engine.Unmanaged.Core.RDevice
 #import Engine.Collections.RVector3D
+#import Engine.ObjectDisposedException
+#import Engine.InternalConstructorOnlyException
 #include "IAudio.h"
-#include "Exceptions.h"
 
 class Engine.Unmanaged.Audio.RAudioSound
 {
@@ -13,12 +14,12 @@ class Engine.Unmanaged.Audio.RAudioSound
 	/// A non-public constructor for initalizing an RAudioSound instance.
 	/// </summary>
 	/// <internal>true</internal>
-	/// <exception>Roket3D::Exceptions::InternalConstructorOnlyException</exception>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
 	bound RAudioSound()
 	{
 		if (byuser)
 		{
-			throw Roket3D::Exceptions::InternalConstructorOnlyException();
+			throw Engine::InternalConstructorOnlyException();
 		}
 		this->m_IsSoundSet = true;
 		this->m_CAudioSound = NULL;
@@ -28,7 +29,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 	/// <summary>
 	/// Plays the sound (2D).
 	/// </summary>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void Play()
 	{
 		if (this->m_IsSoundSet)
@@ -37,14 +38,14 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
 	/// Plays the sound (2D).
 	/// </summary>
 	/// <param name="loop">Whether the sound should loop or not.</param>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void Play2D(bool loop)
 	{
 		if (this->m_IsSoundSet)
@@ -53,7 +54,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -61,7 +62,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 	/// </summary>
 	/// <param name="vec">The position in 3D space where the sound should be played.</param>
 	/// <param name="loop">Whether the sound should loop or not.</param>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void Play3D(Engine::Collections::RVector3D vec, bool loop)
 	{
 		if (this->m_IsSoundSet)
@@ -70,13 +71,13 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
 	/// Pauses the currently playing sound.
 	/// </summary>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void Pause()
 	{
 		if (this->m_IsSoundSet)
@@ -86,7 +87,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 		} 
 		else
 		{
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 		}
 	}
 
@@ -94,7 +95,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 	/// Stops the currently playing sound.  The current position in the
 	/// sound file is reset to 0.
 	/// </summary>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void Stop()
 	{
 		if (this->m_IsSoundSet)
@@ -104,7 +105,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 		}
 		else
 		{
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 		}
 	}
 
@@ -112,7 +113,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 	/// Seeks the sound to a particular point in the file.
 	/// </summary>
 	/// <param name="seconds">Where the sound should continue playing from.</param>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void Seek(numeric seconds)
 	{
 		if (this->m_IsSoundSet)
@@ -121,7 +122,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -129,7 +130,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 	/// <see>RAudioSound::Play</see> function is called.
 	/// </summary>
 	/// <param name="vec">The position of the sound.</param>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void SetPosition(Engine::Collections::RVector3D vec)
 	{
 		if (this->m_IsSoundSet)
@@ -138,7 +139,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -146,7 +147,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 	/// vector indicates the speed on that axis.
 	/// </summary>
 	/// <param name="vec">The velocity of the sound.</param>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void SetVelocity(Engine::Collections::RVector3D vec)
 	{
 		if (this->m_IsSoundSet)
@@ -155,14 +156,14 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
 	/// Sets the direction of the sound in 3D space.
 	/// </summary>
 	/// <param name="vec">The direction of the sound.</param>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void SetDirection(Engine::Collections::RVector3D vec)
 	{
 		if (this->m_IsSoundSet)
@@ -171,14 +172,14 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
 	/// Sets the pitch that the sound should be played at.
 	/// </summary>
 	/// <param name="pitch">The pitch of the sound.</param>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void SetPitch(numeric pitch)
 	{
 		if (this->m_IsSoundSet)
@@ -187,14 +188,14 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
 	/// Sets the volume that the sound should be played at.
 	/// </summary>
 	/// <param name="volume">The volume of the sound.</param>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void SetVolume(numeric volume)
 	{
 		if (this->m_IsSoundSet)
@@ -203,14 +204,14 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
 	/// Sets the strength that the sound should be played at.
 	/// </summary>
 	/// <param name="strength">The strength of the sound.</param>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void SetStrength(numeric strength)
 	{
 		if (this->m_IsSoundSet)
@@ -219,7 +220,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -227,7 +228,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 	/// <see>RAudioSound::Play</see> function is called.
 	/// </summary>
 	/// <param name="looping">Whether the sound should loop.</param>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void SetLooping(bool looping)
 	{
 		if (this->m_IsSoundSet)
@@ -236,14 +237,14 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
 	/// Sets the strength of the sound for doppler effects.
 	/// </summary>
 	/// <param name="strength">The strength of the sound for doppler effects.</param>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void SetDopplerStrength(numeric strength)
 	{
 		if (this->m_IsSoundSet)
@@ -252,7 +253,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -260,7 +261,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 	/// doppler effects are turned off.
 	/// </summary>
 	/// <param name="strength">The velocity of the sound for doppler effects.</param>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void SetDopplerVelocity(Engine::Collections::RVector3D vec)
 	{
 		if (this->m_IsSoundSet)
@@ -269,27 +270,27 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
 	/// Returns whether or not the sound is currently playing.
 	/// </summary>
 	/// <returns>Whether the sound is currently playing.</returns>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound bool IsPlaying()
 	{
 		if (this->m_IsSoundSet)
 			return this->m_CAudioSound->playing();
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
 	/// Frees the sound in memory.  Once the sound is freed, it can no
 	/// longer be played or have any other functions called on it.
 	/// </summary>
-	/// <exception>Roket3D::Exceptions::ObjectNotValidException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void Destroy()
 	{
 		if (this->m_IsSoundSet)
@@ -300,6 +301,6 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Roket3D::Exceptions::ObjectNotValidException();
+			throw Engine::ObjectDisposedException();
 	}
 }

@@ -608,6 +608,7 @@ template<class T>
 // are externally defined (inline) below.
 #include "ArgumentTypeNotValidException.h"
 #include "ContextNotProvidedException.h"
+#include "DivideByZeroException.h"
 
 template<class T>
 	int Bindings<T>::FunctionDispatch(lua_State * L)
@@ -646,7 +647,7 @@ template<class T>
 		{
 			return __guarded<T>::__guard(*obj, T::Functions[i].Function, L);
 		}
-		catch (Engine::Exception & err)
+		catch (Engine::DivideByZeroException & err)
 		{
 			return Bindings<T>::RaiseException(L, err);
 		}
@@ -671,10 +672,9 @@ template<class T>
 		// This allows the function callbacks and property setter
 		// and getter functions to know what C++ object they
 		// are dealing with.
-		Engine::Exception** ud = (Engine::Exception**)lua_newuserdata(L, sizeof(Engine::Exception*));
-		Engine::Exception* obj = &err;
-		obj->IsExisting = true;
-		*ud = obj;
+		void** ud = (void**)lua_newuserdata(L, sizeof(void*));
+		err.IsExisting = true;
+		*ud = &err;
 
 		// Get the address of the userdata on the
 		// stack.
@@ -706,9 +706,9 @@ template<class T>
 		// on the Lua object will result in the appropriate
 		// callbacks being issued.
 		luaL_getmetatable(L, err.GetName());
-		for (int i = 0; Engine::Exception::Properties[i].Name != NULL; i++)
+		for (int i = 0; err.Properties[i].Name != NULL; i++)
 		{
-			lua_pushstring(L, Engine::Exception::Properties[i].Name);
+			lua_pushstring(L, err.Properties[i].Name);
 			lua_pushnumber(L, i);
 			lua_settable(L, -3);
 		}
@@ -719,11 +719,11 @@ template<class T>
 		// passing the correct context onto the class functions.
 		// Note that unlike the properties, the functions are
 		// associated with new object and not the metatable.
-		for (int i = 0; Engine::Exception::Functions[i].Name; i++)
+		for (int i = 0; err.Functions[i].Name; i++)
 		{
-			lua_pushstring(L, Engine::Exception::Functions[i].Name);
+			lua_pushstring(L, err.Functions[i].Name);
 			lua_pushnumber(L, i);
-			lua_pushcclosure(L, &Bindings<Engine::Exception>::FunctionDispatch, 1);
+			lua_pushcclosure(L, err.Dispatcher, 1);
 			lua_settable(L, newtable);
 		}
 

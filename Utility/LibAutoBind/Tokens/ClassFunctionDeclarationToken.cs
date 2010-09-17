@@ -16,7 +16,7 @@ namespace LibAutoBind.Tokens
             if (!(l.Char == ' ' || (l.Char >= '0' && l.Char <= '9') || (l.Char >= 'a' && l.Char <= 'z') ||
                 (l.Char >= 'A' && l.Char <= 'Z') || l.Char == '\n' || l.Char == '\t' || l.Char == '\r' ||
                 l.Char == '{' || l.Char == '_' || l.Char == ',' || l.Char == '(' || l.Char == ')' ||
-                l.Char == ':' || l.Char == ';' || l.Char == '*'))
+                l.Char == ':' || l.Char == ';' || l.Char == '*' || l.Char == '<' || l.Char == '>'))
             {
                 l.ForceExclude(); // contains characters we can't accept.
                 return;

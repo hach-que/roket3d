@@ -1360,7 +1360,7 @@ static int statement (LexState *ls) {
       return 0;
     }
     case TK_TRY: {
-      funcstat(ls, line);
+      trystat(ls, line);
       return 0;
     }
     case TK_LOCAL: {  /* stat -> localstat */

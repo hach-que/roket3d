@@ -1,3 +1,4 @@
+#import Engine.DivideByZeroException
 #include "Irrlicht.h"
 #include "vector3d.h"
 
@@ -137,6 +138,7 @@ class Engine.Collections.RVector3D
 
 	bound void Invert()
 	{
+		throw Engine::DivideByZeroException();
 		this->m_Vector.invert();
 		return;
 	}
