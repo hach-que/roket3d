@@ -1,4 +1,24 @@
 function Run()
+    ex = Engine.ContextNotProvidedException()
+    print("ex:")
+    InspectTable(ex, "  ");
+    print("ex (metatable):")
+    InspectTable(getmetatable(ex), "  ");
+    print("Created exception " .. tostring(ex.Message));
+
+    try
+        vec = Engine.Collections.RVector3D(0, 0, 0);
+        vec:Invert();
+    catch e do
+        print("e:")
+        InspectTable(e, "  ");
+        print("e (metatable):")
+        InspectTable(getmetatable(e), "  ");
+        print("Caught exception " .. tostring(e.Message));
+    end
+end
+
+function RunOld()
     print("Hello World!");
     print("Engine:")
     InspectTable(Engine, "  ");

@@ -5,7 +5,9 @@
 #define STATIC_Debugger
 
 #include <lua.hpp>
-#include "Exceptions.h"
+#include "autobind/types.h"
+#include "autobind/binding/lua.h"
+#include "Exception.h"
 
 namespace Roket3D
 {
@@ -15,7 +17,7 @@ namespace Roket3D
 			// We pass by reference to ensure that the subclassing information
 			// isn't discarded (because passing it as an argument no longer
 			// requires an implicit conversion / duplication).
-			static void RaiseException(Exceptions::Exception & err);
+			static void RaiseException(Engine::Exception & err);
 			static int  LuaExceptionHandle(lua_State * L);
 			static int  LuaPanicHandle(lua_State * L);
 

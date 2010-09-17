@@ -2,14 +2,17 @@
 // to report errors and warnings back to.
 
 #include "Debugger.h"
-#include "Exceptions.h"
+#include "LowLevel.h"
+#include "Exception.h"
+#include "DebuggerNotAttachedException.h"
+#include "InterpreterException.h"
 #include <iostream>
 
 namespace Roket3D
 {
 	bool Debugger::m_IsConnected = false;
 
-	void Debugger::RaiseException(Exceptions::Exception & err)
+	void Debugger::RaiseException(Engine::Exception & err)
 	{
 		if (Debugger::m_IsConnected)
 		{
@@ -22,13 +25,13 @@ namespace Roket3D
 			std::cout << "Information about the exception is outputted" << std::endl;
 			std::cout << "below:" << std::endl;
 			std::cout << std::endl;
-			std::cout << err.Name << ": " << err.GetParsedMessage() << std::endl;
+			std::cout << err.GetName() << ": " << Engine::Exception::GetParsedMessage(err.Message, err.Arguments) << std::endl;
 			std::cout << std::endl;
 			std::cout << "occurred on line " << err.LineNumber << " in file '" << err.FileName << "'." << std::endl;
 			std::cout << std::endl;
 			std::cout << "Contact the game author with a copy of this message for" << std::endl;
 			std::cout << "further assistance." << std::endl;
-			throw Exceptions::DebuggerNotAttachedException();
+			throw Engine::DebuggerNotAttachedException();
 		}
 	}
 
@@ -42,13 +45,13 @@ namespace Roket3D
 		if (lua_isstring(L, -1))
 		{
 			// It's a general Lua error.
-			Debugger::RaiseException(Exceptions::GeneralLuaException(lua_tostring(L, -1)));
+			Debugger::RaiseException(Engine::InterpreterException(lua_tostring(L, -1)));
 			return 0;
 		}
 		else
 		{
 			// TODO: Fetch the exception from the stack.
-			Debugger::RaiseException(Exceptions::Exception());
+			Debugger::RaiseException(Engine::Exception());
 			return 0;
 		}
 	}
@@ -65,13 +68,13 @@ namespace Roket3D
 		if (lua_isstring(L, -1))
 		{
 			// It's a general Lua error.
-			Debugger::RaiseException(Exceptions::GeneralLuaException(lua_tostring(L, -1)));
+			Debugger::RaiseException(Engine::InterpreterException(lua_tostring(L, -1)));
 			return 0;
 		}
 		else
 		{
 			// TODO: Fetch the exception from the stack.
-			Debugger::RaiseException(Exceptions::Exception());
+			Debugger::RaiseException(Engine::Exception());
 			return 0;
 		}
 	}

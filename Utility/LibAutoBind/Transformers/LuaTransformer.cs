@@ -263,6 +263,7 @@ namespace LibAutoBind.Transformers
             this.WriteHeaderLine("        public: static const char *ClassName;");
 			this.WriteHeaderLine("        public: static const Bindings<" + cls.ClassOnly + ">::FunctionType Functions[];");
             this.WriteHeaderLine("        public: static const Bindings<" + cls.ClassOnly + ">::PropertyType Properties[];");
+            this.WriteHeaderLine("        public: static int (__cdecl *Dispatcher)(lua_State * L);");
 
             // End the declaration of the class.
             this.WriteHeaderLine("    };");
@@ -292,7 +293,6 @@ namespace LibAutoBind.Transformers
             Console.WriteLine("(cpp) " + cls.ClassOnly);
             this.WriteCodeLine("#include \"autobind/types.h\"");
             this.WriteCodeLine("#include \"autobind/binding/lua.h\"");
-            this.WriteCodeLine("#include \"Exceptions.h\"");
             this.WriteCodeLine("#include \"RObject.h\"");
             if (cls.Alias == "")
                 this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(cls.Class) + "\"");
@@ -701,6 +701,7 @@ namespace LibAutoBind.Transformers
             }
             this.WriteCodeLine("        {0}");
             this.WriteCodeLine("    };");
+            this.WriteCodeLine("    int (__cdecl *" + cls.ClassOnly + "::Dispatcher)(lua_State * L) = &(Bindings<" + cls.ClassOnly + ">::FunctionDispatch);");
 
             // End the definition of the class.
             for (int i = 0; i < clscomponents.Length - 1; i++)

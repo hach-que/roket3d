@@ -53,6 +53,7 @@
 				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Static Headers&quot;;&quot;$(ProjectDir)\Generated Headers&quot;;&quot;$(SolutionDir)\Utility\AutoBind\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Lua\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Newton\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\SDL\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\XEffects\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Irrlicht\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\CAudio\Include&quot;"
 				PreprocessorDefinitions="WIN32"
 				MinimalRebuild="true"
+				ExceptionHandling="2"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				WarningLevel="3"
@@ -69,10 +70,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib SDL_net.lib Newton.lib"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
 				GenerateDebugInformation="true"
-				EntryPointSymbol="main"
+				EntryPointSymbol=" "
 				TargetMachine="1"
 			/>
 			<Tool
@@ -133,6 +133,7 @@
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Static Headers&quot;;&quot;$(ProjectDir)\Generated Headers&quot;;&quot;$(SolutionDir)\Utility\AutoBind\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Lua\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Newton\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\SDL\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\XEffects\Headers&quot;;&quot;$(SolutionDir)\Engine\Libraries\Irrlicht\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\CAudio\Include&quot;"
 				PreprocessorDefinitions="WIN32"
+				ExceptionHandling="2"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
@@ -149,11 +150,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib SDL_net.lib Newton.lib"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				EntryPointSymbol="main"
+				EntryPointSymbol=" "
 				TargetMachine="1"
 			/>
 			<Tool
@@ -197,6 +197,110 @@
 		<Filter
 			Name="Generated Source"
 			>
+			<File
+				RelativePath=".\Generated Source\AccessViolationException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\ArgumentTypeNotValidException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\ContextNotProvidedException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\DataMisalignedException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\DebuggerNotAttachedException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\DivideByZeroException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\EngineException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\EntryPointNotFoundException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\Exception.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\IllegalInstructionException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\InternalConstructorOnlyException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\InterpreterException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\InterpreterStateNotValidException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\InvalidOperationException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\InvalidSyntaxException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\KeyNotFoundException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\LowLevelException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\NilReferenceException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\ObjectDisposedException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\OutOfMemoryException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\OverflowException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\PathNotFoundException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\PermissionDeniedException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\PrivilegedInstructionException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\ReadOnlyPropertyException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\UnderflowException.cpp"
+				>
+			</File>
 			<Filter
 				Name="E.Collections"
 				>
@@ -493,6 +597,110 @@
 		<Filter
 			Name="Generated Headers"
 			>
+			<File
+				RelativePath=".\Generated Headers\AccessViolationException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\ArgumentTypeNotValidException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\ContextNotProvidedException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\DataMisalignedException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\DebuggerNotAttachedException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\DivideByZeroException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\EngineException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\EntryPointNotFoundException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\Exception.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\IllegalInstructionException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\InternalConstructorOnlyException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\InterpreterException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\InterpreterStateNotValidException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\InvalidOperationException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\InvalidSyntaxException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\KeyNotFoundException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\LowLevelException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\NilReferenceException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\ObjectDisposedException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\OutOfMemoryException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\OverflowException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\PathNotFoundException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\PermissionDeniedException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\PrivilegedInstructionException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\ReadOnlyPropertyException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\UnderflowException.h"
+				>
+			</File>
 			<Filter
 				Name="E.Collections"
 				>
@@ -806,6 +1014,110 @@
 		<Filter
 			Name="AutoBind Source"
 			>
+			<File
+				RelativePath=".\Autobind Source\AccessViolationException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\ArgumentTypeNotValidException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\ContextNotProvidedException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\DataMisalignedException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\DebuggerNotAttachedException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\DivideByZeroException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\EngineException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\EntryPointNotFoundException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\Exception.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\IllegalInstructionException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\InternalConstructorOnlyException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\InterpreterException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\InterpreterStateNotValidException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\InvalidOperationException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\InvalidSyntaxException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\KeyNotFoundException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\LowLevelException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\NilReferenceException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\ObjectDisposedException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\OutOfMemoryException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\OverflowException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\PathNotFoundException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\PermissionDeniedException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\PrivilegedInstructionException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\ReadOnlyPropertyException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\UnderflowException.bpp"
+				>
+			</File>
 			<Filter
 				Name="E.Unmanaged"
 				>
@@ -1929,7 +2241,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Static Headers\Exceptions.h"
+				RelativePath=".\Static Headers\LowLevel.h"
 				>
 			</File>
 			<File
@@ -2029,7 +2341,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Static Source\Exceptions.cpp"
+				RelativePath=".\Static Source\LowLevel.cpp"
 				>
 			</File>
 			<File

@@ -1,5 +1,11 @@
+#include <lua.hpp>
+#include "autobind/types.h"
+#include "autobind/binding/lua.h"
+#include "PermissionDeniedException.h"
+#include "PathNotFoundException.h"
+#include "Exception.h"
+
 #include "Utility.h"
-#include "Exceptions.h"
 #ifdef WIN32
 #include <direct.h>
 #else
@@ -36,18 +42,18 @@ namespace Roket3D
 			switch (errno)
 			{
 				case EACCES:
-					throw new Exceptions::PermissionDeniedException(path);
+					throw new Engine::PermissionDeniedException(path);
 #ifndef WIN32
 				case ELOOP:
 #endif
 				case ENAMETOOLONG:
 				case ENOENT:
 				case ENOTDIR:
-					throw new Exceptions::PathNotFoundException(path);
+					throw new Engine::PathNotFoundException(path);
 			}
 
 			// Unknown return value
-			throw new Exceptions::Exception();
+			throw new Engine::Exception();
 		}
 	}
 

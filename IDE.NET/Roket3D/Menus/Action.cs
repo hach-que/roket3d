@@ -21,6 +21,6 @@ namespace Roket3D.Menus
         public virtual String GetText() { return null; }
         public virtual void OnSolutionOpen() { this.Enabled = true; this.Item.Enabled = this.Enabled; }
         public virtual void OnSolutionClose() { this.Enabled = false; this.Item.Enabled = this.Enabled; }
-        public virtual void OnTabChanged(Roket3D.ContentEditors.EditorBase editorBase) { }
+        public virtual void OnTabChanged(Roket3D.ContentEditors.EditorBase editor) { }
     }
 }
