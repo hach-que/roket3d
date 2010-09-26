@@ -183,9 +183,6 @@ namespace Roket3D
 		if (ret == LUA_ERRRUN)
 		{
 			Debugger::LuaExceptionHandle(L);
-			// TODO: Implement a function to retrieve the exception from the Lua stack.
-			//Exception * e = Bindings<Exceptions::Exception>::GetArgument(-1);
-			//Debugger::RaiseException(e);
 			return -1;
 		}
 		else if (ret == LUA_ERRMEM)
@@ -213,9 +210,6 @@ namespace Roket3D
 		if (ret == LUA_ERRRUN)
 		{
 			Debugger::LuaExceptionHandle(L);
-			// TODO: Implement a function to retrieve the exception from the Lua stack.
-			//Exception * e = Bindings<Exceptions::Exception>::GetArgument(-1);
-			//Debugger::RaiseException(e);
 			return -1;
 		}
 		else if (ret == LUA_ERRMEM)

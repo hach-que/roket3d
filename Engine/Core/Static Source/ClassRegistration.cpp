@@ -19,6 +19,7 @@
 #include "EntryPointNotFoundException.h"
 #include "Exception.h"
 #include "IllegalInstructionException.h"
+#include "InheritedClassNotFoundException.h"
 #include "InternalConstructorOnlyException.h"
 #include "InterpreterException.h"
 #include "InterpreterStateNotValidException.h"
@@ -58,6 +59,7 @@ namespace Roket3D
 		Bindings<Engine::EntryPointNotFoundException>::Register(L);
 		Bindings<Engine::Exception>::Register(L);
 		Bindings<Engine::IllegalInstructionException>::Register(L);
+		Bindings<Engine::InheritedClassNotFoundException>::Register(L);
 		Bindings<Engine::InternalConstructorOnlyException>::Register(L);
 		Bindings<Engine::InterpreterException>::Register(L);
 		Bindings<Engine::InterpreterStateNotValidException>::Register(L);

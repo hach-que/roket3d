@@ -20,9 +20,10 @@ template<class T>
 	{
 		// Used to store the object within the userdata
 		// field in Lua.
-		typedef struct
+		typedef union
 		{
 			T *pT;
+			T &rT;
 		} UserDataType;
 
 	public:
@@ -129,6 +130,55 @@ template<class T>
 			}
 		}
 
+		// A static function for retrieving an object from
+		// the arguments provided to a function, but returns
+		// a references so that virtual members point correctly.
+		// This function can't return NULL, so it always returns
+		// a valid T object, even if it wasn't pulled from
+		// the argument.
+		// TODO: Update comments inside function.
+		static T& GetArgumentRef(lua_State * L, int narg)
+		{
+			// Convert to absolute reference.
+			if (narg < 0) narg = lua_gettop(L) + narg + 1;
+
+			// Check to make sure that it's a table at that
+			// position.  If it isn't, then it can't be a
+			// class.
+			if (lua_istable(L, narg))
+			{
+				// Get the value at the first index of the table, and
+				// push it onto the stack.
+				lua_pushnumber(L, 0);
+				lua_gettable(L, narg);
+
+				// Convert the value that was just pushed onto the
+				// stack into userdata if possible.  The luaL_testudata
+				// checks to make sure that the class is the correct
+				// type before converting it.
+				UserDataType* ud = static_cast<UserDataType*>(lua_touserdata(L, -1));
+				if (ud == NULL)
+				{
+					// Return NULL to indicate that the argument is not
+					// of the specified type.
+					return Engine::Exception();
+				}
+
+				// Pop the value from the stack as we no longer need it.
+				lua_pop(L, 1);
+
+				// Return a pointer to the object in the specified argument
+				// position.
+				return ud->rT;
+			}
+			else
+			{
+				// Return NULL to indicate that the argument could not
+				// be handled by the Bindings<> class.
+				return Engine::Exception();
+			}
+		}
+
 		// A static function for retrieving an base object (i.e.
 		// numeric or string value) from the arguments provided
 		// to a function.  It is also used during property setting,
@@ -212,14 +262,59 @@ template<class T>
 				{
 					if (i == 0)
 					{
-						// Set directly into the global namespace.
+						// Our constructors are actually functables
+						// in Lua; tables with __call.  This allows us
+						// to provide a __type metamethod so that the
+						// user can do 'var is NativeObject'.
+
+						// Create a table and a metatable.
+						lua_newtable(L);
+						lua_newtable(L);
+						int mt = lua_gettop(L);
+
+						// Push the __call (constructor) and __type
+						// metamethods onto the metatable.
+						lua_pushstring(L, "__call");
 						lua_pushcfunction(L, &Bindings<T>::Constructor);
+						lua_settable(L, mt);
+
+						lua_pushstring(L, "__type");
+						lua_pushcfunction(L, &Bindings<T>::Type);
+						lua_settable(L, mt);
+
+						// Set the table's metatable to mt.  The table
+						// is directly below the metatable.  lua_setmetatable
+						// pops the metatable off the stack, so the table
+						// is on top and ready for lua_setglobal.
+						lua_setmetatable(L, mt - 1);
+
+						// Set directly into the global namespace.
 						lua_setglobal(L, elms[i].c_str());
 					}
 					else
 					{
-						// Set into the namespace table.
+						// Our constructors are actually functables
+						// in Lua; tables with __call.  This allows us
+						// to provide a __type metamethod so that the
+						// user can do 'var is NativeObject'.
+
+						// See the main 'if' for explainations of what
+						// is happening here.
+						lua_newtable(L);
+						lua_newtable(L);
+						int mt = lua_gettop(L);
+
+						lua_pushstring(L, "__call");
 						lua_pushcfunction(L, &Bindings<T>::Constructor);
+						lua_settable(L, mt);
+
+						lua_pushstring(L, "__type");
+						lua_pushcfunction(L, &Bindings<T>::Type);
+						lua_settable(L, mt);
+
+						lua_setmetatable(L, mt - 1);
+
+						// Set into the namespace table.
 						lua_setfield(L, -2, elms[i].c_str());
 					}
 				}
@@ -231,16 +326,14 @@ template<class T>
 			luaL_newmetatable(L, T::ClassName);
 			int metatable = lua_gettop(L);
 
-			// Now set the index of T::ClassName in the registry table
-			// to be associated with the metatable.
-			lua_pushvalue(L, -1);
-			lua_pushstring(L, T::ClassName);
-			lua_rawset(L, LUA_REGISTRYINDEX);
-
-			// Add our metatable functions such as __gc, __index and
-			// __setindex.
+			// Add our metatable functions such as __gc, __index,
+			// __setindex and __type.
 			lua_pushstring(L, "__gc");
 			lua_pushcfunction(L, &Bindings<T>::GCObj);
+			lua_settable(L, metatable);
+
+			lua_pushstring(L, "__type");
+			lua_pushcfunction(L, &Bindings<T>::Type);
 			lua_settable(L, metatable);
 
 			lua_pushstring(L, "__index");
@@ -572,6 +665,17 @@ template<class T>
 			}
 		}
 
+		// The callback which provides type information back
+		// to Lua code (i.e. for catch or is operations).
+		// Externally defined as it requires the ability to
+		// throw an exception.
+		static int Type(lua_State * L);
+
+		// This function pushes the functable (class constructor
+		// onto the top of the stack so that it can be used
+		// with lua_is).
+		static int PushType(lua_State * L);
+
 		// The function is called to handle calling the C++
 		// functions from within Lua (externally defined
 		// as it requires the ability to throw an exception).
@@ -609,6 +713,175 @@ template<class T>
 #include "ArgumentTypeNotValidException.h"
 #include "ContextNotProvidedException.h"
 #include "DivideByZeroException.h"
+#include "InheritedClassNotFoundException.h"
+
+template<class T>
+	int Bindings<T>::Type(lua_State * L)
+	{
+		if (strcmp(T::Inherits, "") == 0 || strcmp(T::Inherits, "RObject") == 0)
+		{
+			// This object does not inherit any other
+			// object.  Simply push it's class name.
+			lua_pushstring(L, T::ClassName);
+			return 1;
+		}
+		else
+		{
+			// This object inherits another object.  First
+			// create a new table, set the class name as the
+			// first index, and then we need to parse the
+			// T::Inherits parameter to load the table for
+			// the second index.
+
+			// The table is now on top of the stack.
+			lua_newtable(L);
+
+			// Push the class name as the first index.  The
+			// index of the table is -3 as it's directly below
+			// the key-value pair.  Note that the key and the
+			// value are pushed off the stack by lua_settable,
+			// so after this process the table is on top of
+			// the stack.
+			lua_pushnumber(L, 1);
+			lua_pushstring(L, T::ClassName);
+			lua_settable(L, -3);
+
+			// We use the std::string class to parse the
+			// T::Inherits variable.  T::Inherits not only
+			// contains the class name of the parent class, but
+			// also the namespace context as well.
+			std::string cls = T::Inherits;
+			std::string buf = "";
+			std::vector<std::string> elms;
+			for (int i = 0; i < cls.length(); i++)
+			{
+				if (cls[i] == '.')
+				{
+					if (buf.length() > 0)
+					{
+						elms.insert(elms.end(), buf);
+						buf = "";
+					}
+				}
+				else
+					buf += cls[i];
+			}
+			if (buf.length() > 0)
+			{
+				elms.insert(elms.end(), buf);
+				buf = "";
+			}
+
+			// Make sure there is enough stack space to perform
+			// all of the namespace loading, etc..
+			lua_checkstack(L, elms.size() + 5);
+
+			// Now loop through elms, loading all but the last element
+			// as namespace tables.
+			int topop = 0;
+			bool failure = false;
+			for (int i = 0; i < elms.size(); i++)
+			{
+				if (i < elms.size() - 1)
+				{
+					if (i == 0)
+					{
+						// Fetch the first from the global area.
+						lua_getglobal(L, elms[i].c_str());
+						if (lua_isnil(L, -1))
+						{
+							// The namespace does not yet exist, set
+							// failure to true and break out of the
+							// for loop.
+							failure = true;
+							break;
+						}
+						topop++;
+					}
+					else
+					{
+						lua_getfield(L, -1, elms[i].c_str());
+						if (lua_isnil(L, -1))
+						{
+							// The namespace does not yet exist, set
+							// failure to true and break out of the
+							// for loop.
+							failure = true;
+							break;
+						}
+						topop++;
+					}
+				}
+				else
+				{
+					if (i == 0)
+					{
+						// Pop all of the values so that the
+						// table is back on top of the stack.
+						// Then get the inherited class directly
+						// from the global namespace and set it
+						// as the second value in the table.
+						lua_pop(L, topop);
+						topop = 0;
+						lua_pushnumber(L, 2);
+						lua_getglobal(L, elms[i].c_str());
+						lua_settable(L, -3);
+					}
+					else
+					{
+						// Bring the table back to the top of the
+						// stack.  The namespace we need to fetch
+						// the class from will be just below the
+						// table (-2), before we push the key, so
+						// the index argument will be -3 for
+						// lua_getfield.  Since lua_getfield pushes
+						// a value onto the stack, the index of the
+						// table will also be -3 (as the push shifted
+						// -3 up be one to be the table).
+						lua_pushvalue(L, -topop - 1);
+						lua_pushnumber(L, 2);
+						lua_getfield(L, -3, elms[i].c_str());
+						lua_settable(L, -3);
+
+						// Now clean up the stack by popping the table
+						// off the top of the stack (remember it's still
+						// below all of the namespace / class values).
+						lua_pop(L, 1);
+					}
+				}
+			}
+			lua_pop(L, topop);
+
+			if (failure)
+			{
+				// We couldn't locate the parent table in Lua, so
+				// it might not be available yet.  We'll throw an
+				// exception to indicate this unexpected situation.
+				return Bindings<T>::RaiseException(L, Engine::InheritedClassNotFoundException());
+			}
+
+			// Now we have a table that describes the type of the
+			// class, and it's on top of the stack.  Return 1.
+			return 1;
+		}
+	}
+
+template<class T>
+	int Bindings<T>::PushType(lua_State * L)
+	{
+		// We're going to push a table which only has a
+		// __type value that points to Bindings<T>::Type.
+		
+		lua_newtable(L);
+		int tbl = lua_gettop(L);
+		lua_newtable(L);
+		int metatable = lua_gettop(L);
+		lua_pushstring(L, "__type");
+		lua_pushcfunction(L, &Bindings<T>::Type);
+		lua_settable(L, metatable);
+		lua_setmetatable(L, tbl);
+		return 1;
+	}
 
 template<class T>
 	int Bindings<T>::FunctionDispatch(lua_State * L)
@@ -619,8 +892,7 @@ template<class T>
 		// context.
 		if (lua_gettop(L) == 0 || !lua_istable(L, 1))
 		{
-			throw new Engine::ContextNotProvidedException();
-			return 0;
+			return Bindings<T>::RaiseException(L, Engine::ContextNotProvidedException());
 		}
 
 		// Retrieve the index of the function from the
@@ -647,7 +919,7 @@ template<class T>
 		{
 			return __guarded<T>::__guard(*obj, T::Functions[i].Function, L);
 		}
-		catch (Engine::DivideByZeroException & err)
+		catch (Engine::Exception & err)
 		{
 			return Bindings<T>::RaiseException(L, err);
 		}
