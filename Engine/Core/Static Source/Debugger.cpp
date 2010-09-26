@@ -6,6 +6,7 @@
 #include "Exception.h"
 #include "DebuggerNotAttachedException.h"
 #include "InterpreterException.h"
+#include "InvalidObjectThrownException.h"
 #include <iostream>
 
 namespace Roket3D
@@ -25,7 +26,7 @@ namespace Roket3D
 			std::cout << "Information about the exception is outputted" << std::endl;
 			std::cout << "below:" << std::endl;
 			std::cout << std::endl;
-			std::cout << err.GetName() << ": " << Engine::Exception::GetParsedMessage(err.Message, err.Arguments) << std::endl;
+			std::cout << err.GetName() << ": " << Engine::Exception::GetParsedMessage(err.GetMessage(), err.Arguments) << std::endl;
 			std::cout << std::endl;
 			std::cout << "occurred on line " << err.LineNumber << " in file '" << err.FileName << "'." << std::endl;
 			std::cout << std::endl;
@@ -50,8 +51,35 @@ namespace Roket3D
 		}
 		else
 		{
-			// TODO: Fetch the exception from the stack.
-			Debugger::RaiseException(Engine::Exception());
+			// Fetch the exception from the stack.  Check
+			// to see whether the exception is of Engine::Exception
+			// (i.e. we can safely pass it to Debugger::RaiseException,
+			// or whether it is of another type, in which case
+			// we should throw Engine::InvalidObjectThrownException
+			// to indicate that we can't directly get the meaning
+			// of the exception.
+
+			// First push the type onto the stack.
+			Bindings<Engine::Exception>::PushType(L);
+
+			// Now repush the error object on top.
+			lua_pushvalue(L, -2);   // TODO: This value is not valid when errors are raised by OP_RAISE
+
+			// Check to see if it inherits from Engine::Exception.
+			if (lua_is(L))
+			{
+				// Push the exception directly to Debugger::RaiseException.
+				Engine::Exception & err = Bindings<Engine::Exception>::GetArgumentRef(L, -1);
+				Debugger::RaiseException(err);
+			}
+			else
+			{
+				// We can't read the exception meaning directly, so throw
+				// a Engine::InvalidObjectThrownException to inform the user
+				// that it's the case.
+				Debugger::RaiseException(Engine::InvalidObjectThrownException());
+			}
+			
 			return 0;
 		}
 	}
@@ -73,8 +101,35 @@ namespace Roket3D
 		}
 		else
 		{
-			// TODO: Fetch the exception from the stack.
-			Debugger::RaiseException(Engine::Exception());
+			// Fetch the exception from the stack.  Check
+			// to see whether the exception is of Engine::Exception
+			// (i.e. we can safely pass it to Debugger::RaiseException,
+			// or whether it is of another type, in which case
+			// we should throw Engine::InvalidObjectThrownException
+			// to indicate that we can't directly get the meaning
+			// of the exception.
+
+			// First push the type onto the stack.
+			Bindings<Engine::Exception>::PushType(L);
+
+			// Now repush the error object on top.
+			lua_pushvalue(L, -2);
+
+			// Check to see if it inherits from Engine::Exception.
+			if (lua_is(L))
+			{
+				// Push the exception directly to Debugger::RaiseException.
+				Engine::Exception & err = Bindings<Engine::Exception>::GetArgumentRef(L, -1);
+				Debugger::RaiseException(err);
+			}
+			else
+			{
+				// We can't read the exception meaning directly, so throw
+				// a Engine::InvalidObjectThrownException to inform the user
+				// that it's the case.
+				Debugger::RaiseException(Engine::InvalidObjectThrownException());
+			}
+			
 			return 0;
 		}
 	}
