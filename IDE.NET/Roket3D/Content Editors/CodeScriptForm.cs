@@ -145,10 +145,10 @@ namespace Roket3D.ContentEditors
 
             // Configure keywords.
             this.SetScintillaKeywords(LexerKeywordGroupConstants.LUA_KEYWORDS,
-                "and break do else elseif " +
+                "and break catch do else elseif " +
                 "end false for function if " +
-                "in local nil not or " +
-                "repeat return then true until while");
+                "in local nil not or repeat return " +
+                "then true try until when while");
             this.SetScintillaKeywords(LexerKeywordGroupConstants.LUA_BASIC_FUNCTIONS,
                 "_G _VERSION assert collectgarbage " +
                 "dofile error getfenv getmetatable " +
