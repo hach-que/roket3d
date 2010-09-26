@@ -39,9 +39,9 @@ namespace Roket3D
 		for (int i = 0; i < argc; i += 1)
 		{
 			std::string arg = argv[i];
-			if (argv[i] == "-v" || argv[i] == "--version" ||
-				argv[i] == "-h" || argv[i] == "--help" ||
-				argv[i] == "-l" || argv[i] == "--license")
+			if (arg == "-v" || arg == "--version" ||
+				arg == "-h" || arg == "--help" ||
+				arg == "-l" || arg == "--license")
 			{
 				// Print the licensing information
 				std::cout << std::endl;
@@ -95,26 +95,6 @@ namespace Roket3D
 				std::cout << std::endl;
 				exit(0);
 			}
-		}
-
-		// Test to see whether or not we can catch segmentation faults.
-		try
-		{
-			__guard(&testFunc, NULL);
-		}
-		catch (Engine::AccessViolationException err)
-		{
-			std::cout << "Caught access violation!" << std::endl;
-		}
-
-		// Test to see whether or not we can catch division by zero faults.
-		try
-		{
-			__guard(&testFunc2, NULL);
-		}
-		catch (Engine::DivideByZeroException err)
-		{
-			std::cout << "Caught division by zero!" << std::endl;
 		}
 
 		// Search for GameInfo.xml in the current working directory.
