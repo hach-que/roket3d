@@ -261,6 +261,7 @@ namespace LibAutoBind.Transformers
             // Write the declarations of the Binding variables.
             this.WriteHeaderLine("        /* Binding variables */");
             this.WriteHeaderLine("        public: static const char *ClassName;");
+            this.WriteHeaderLine("        public: static const char *Inherits;");
 			this.WriteHeaderLine("        public: static const Bindings<" + cls.ClassOnly + ">::FunctionType Functions[];");
             this.WriteHeaderLine("        public: static const Bindings<" + cls.ClassOnly + ">::PropertyType Properties[];");
             this.WriteHeaderLine("        public: static int (__cdecl *Dispatcher)(lua_State * L);");
@@ -294,10 +295,10 @@ namespace LibAutoBind.Transformers
             this.WriteCodeLine("#include \"autobind/types.h\"");
             this.WriteCodeLine("#include \"autobind/binding/lua.h\"");
             this.WriteCodeLine("#include \"RObject.h\"");
-            if (cls.Alias == "")
+            //if (cls.Alias == "")
                 this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(cls.Class) + "\"");
-            else
-                this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(cls.Alias) + "\"");
+            //else
+            //    this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(cls.Alias) + "\"");
             foreach (Node n in this.GetNodesOfType(nodes, typeof(IncludeNode)))
             {
                 this.WriteCodeLine("#include " + n.Content.Trim() + "");
@@ -497,7 +498,7 @@ namespace LibAutoBind.Transformers
                         Regex rr = new Regex("^([ \r\n\t]*)([^\\/][^\\/])([^/\n]*)([ \r\n\t]+)return[ \r\n\t]+(?<Val>[^\\;]+)\\;", RegexOptions.Multiline);
                         string res = rr.Replace(r.Content, "${1}${2}${3}${4}return Bindings<" + functype + ">::Result(L, ${Val});");
                         Regex brr = new Regex("([ \r\n\t]*)([^\\/][^\\/])([^/\n]*)([ \r\n\t]+)return[ \r\n\t]*\\;", RegexOptions.Multiline);
-                        res = brr.Replace(res, "${1}${2}${3}${4}return Bindings<" + functype + ">::EmptyResult;");
+                        res = brr.Replace(res, "${1}${2}${3}${4}return Bindings<void*>::EmptyResult;");
                         this.WriteCodeLine("        " + res.TrimStart().TrimEnd('\n'));
                         string cc = res.TrimStart().TrimEnd('\n');
                         if (cc.LastIndexOf("///") != -1 && !cc.Substring(cc.LastIndexOf("///"), 0).Contains('\n'))
@@ -671,6 +672,7 @@ namespace LibAutoBind.Transformers
                 this.WriteCodeLine("    const char* " + cls.ClassOnly + "::ClassName = \"" + cls.Alias + "\";");
             else
                 this.WriteCodeLine("    const char* " + cls.ClassOnly + "::ClassName = \"" + cls.Class + "\";");
+            this.WriteCodeLine("    const char* " + cls.ClassOnly + "::Inherits = \"" + cls.Inheritance + "\";");
             this.WriteCodeLine("    const Bindings<" + cls.ClassOnly + ">::FunctionType " + cls.ClassOnly + "::Functions[] =");
             this.WriteCodeLine("    {");
             foreach (ClassFunctionDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassFunctionDeclarationNode)))
