@@ -1,3 +1,116 @@
+#import Engine.Unmanaged.Core.REventReceiver
+#import Engine.Unmanaged.GUI.RGUIEnvironment
+#import Engine.Collections.RVector2D
+#import Engine.GraphicsEngineNotFoundException
+#import Engine.ObjectDisposedException
+#include "dimension2d.h"
+#include "IrrlichtDevice.h"
+#include "IAudioManager.h"
+
 class Engine.Unmanaged.Core.RDevice
+   as Engine.Unmanaged.Core.Device
 {
+	private irr::IrrlichtDevice * m_Device;
+	private cAudio::IAudioManager * m_Audio;
+	private int m_LastFPS;
+	private int m_CurrentStep;
+	private bool m_IsDeviceSet;
+	// TODO: Add the physics manager declaration here.
+
+
+	/// <summary>
+	/// The default constructor which takes a screen resolution argument
+	/// and other information about the construction of the Irrlicht
+	/// video device.
+	/// </summary>
+	/// <param name="size">The size of the window to create.</param>
+	/// <param name="bits">The color bits, either 16 or 32.</param>
+	/// <param name="fullscreen">Whether to make a fullscreen window.</param>
+	/// <param name="stencil">Whether to use a stencil buffer.</param>
+	/// <param name="vsync">Whether to ensure the refresh rate matches the vertical synchronization of the screen.</param>
+	/// <exception>Engine.GraphicsEngineNotFoundException</exception>
+	bound RDevice(Engine::Collections::RVector2D size, numeric bits, bool fullscreen, bool stencil, bool vsync)
+	{
+		irr::core::dimension2d<irr::s32> dimensions;
+		dimensions.Width = size->GetObject().X;
+		dimensions.Height = size->GetObject().Y;
+
+		this->m_IsDeviceSet = false;
+
+		// Attempt to initalize the device.
+		this->m_Device = irr::createDevice(
+			irr::video::EDT_DIRECT3D9,
+			dimensions,
+			bits,
+			fullscreen,
+			vsync
+			);
+
+		if (this->m_Device == NULL)
+		{
+			throw Engine::GraphicsEngineNotFoundException();
+		}
+
+		this->m_IsDeviceSet = true;
+
+		// Create the audio and physics devices.
+		this->m_Audio = cAudio::getAudioManager();
+	}
+
+	/// <summary>
+	/// The current GUI environment.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	/// <exception>Engine.ReadOnlyPropertyException</exception>
+	bound property Engine::Unmanaged::GUI::RGUIEnvironment GUIEnvironment
+	{
+		get: call GetGUIEnvironment;
+		set: call SetGUIEnvironment;
+	}
+
+	/// <summary>
+	/// Whether the device is currently running.  When this property is
+	/// accessed, the internal device->Run() function is called, progressing
+	/// engine execution.  Therefore, this property should be used in a
+	/// while loop like so:
+	/// <code>
+	/// device = Engine.Unmanaged.Core.Device(...)
+	/// while (device.Running) do
+	///     device.VideoDriver.BeginScene(...)
+	///     device.SceneManager.DrawAll()
+	///     device.VideoDriver.EndScene()
+	/// end
+	/// </code>
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	/// <exception>Engine.ReadOnlyPropertyException</exception>
+	bound property bool Running
+	{
+		get: call GetRunning;
+		set: call SetRunning;
+	}
+
+	// Property functions
+	unbound Engine::Unmanaged::GUI::RGUIEnvironment GetGUIEnvironment()
+	{
+		Engine::Unmanaged::GUI::RGUIEnvironment * env =
+			Bindings<Engine::Unmanaged::GUI::RGUIEnvironment>::CreateNew(L);
+		env->SetObject(this->m_Device->getGUIEnvironment());
+		return env;
+	}
+
+	unbound void SetGUIEnvironment(Engine::Unmanaged::GUI::RGUIEnvironment value)
+	{
+		throw Engine::ReadOnlyPropertyException();
+	}
+
+	unbound bool GetRunning()
+	{
+		return (this->m_IsDeviceSet && this->m_Device->run());
+	}
+
+	unbound void SetRunning(bool value)
+	{
+		throw Engine::ReadOnlyPropertyException();
+	}
 }

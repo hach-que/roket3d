@@ -303,6 +303,29 @@ namespace LibAutoBind.Transformers
             {
                 this.WriteCodeLine("#include " + n.Content.Trim() + "");
             }
+
+            // Search for all methods with multiple definitions.
+            Dictionary<string, int> tempDefDict = new Dictionary<string, int>();
+            foreach (ClassFunctionDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassFunctionDeclarationNode)))
+            {
+                if (n.AllKeywords.Contains("bound"))
+                {
+                    if (tempDefDict.Keys.Contains(n.Name))
+                        tempDefDict[n.Name] += 1;
+                    else
+                        tempDefDict.Add(n.Name, 1);
+                }
+            }
+            List<string> duplicates = new List<string>();
+            foreach (string k in tempDefDict.Keys)
+            {
+                if (tempDefDict[k] > 1)
+                    duplicates.Add(k);
+            }
+
+            // If there are any duplicates, we need to include ArgumentCountMismatchException.
+            if (duplicates.Count > 0)
+                this.WriteCodeLine("#include \"ArgumentCountMismatchException.h\"");
             this.WriteCodeLine();
 
             // All of the import declarations will have been made in the header file,
@@ -332,25 +355,6 @@ namespace LibAutoBind.Transformers
             {
                 if (n.GetIsFunc) propertyMethods.Add(n.GetVal);
                 if (n.SetIsFunc) propertyMethods.Add(n.SetVal);
-            }
-
-            // Search for all methods with multiple definitions.
-            Dictionary<string, int> tempDefDict = new Dictionary<string, int>();
-            foreach (ClassFunctionDeclarationNode n in this.GetNodesOfType(nodes, typeof(ClassFunctionDeclarationNode)))
-            {
-                if (n.AllKeywords.Contains("bound"))
-                {
-                    if (tempDefDict.Keys.Contains(n.Name))
-                        tempDefDict[n.Name] += 1;
-                    else
-                        tempDefDict.Add(n.Name, 1);
-                }
-            }
-            List<string> duplicates = new List<string>();
-            foreach (string k in tempDefDict.Keys)
-            {
-                if (tempDefDict[k] > 1)
-                    duplicates.Add(k);
             }
 
             // Declare all of the static variables which are assigned within the class.
@@ -557,14 +561,14 @@ namespace LibAutoBind.Transformers
 
                         if (n.Arguments.Count == 0 || n.Arguments[0] == "")
                         {
-                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) == 0 || !byuser)");
+                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) - 1 == 0 || !byuser)");
                             this.WriteCodeLine("        {");
                             this.WriteCodeLine("            this->" + functname + "(L, byuser);");
                             this.WriteCodeLine("        }");
                         }
                         else
                         {
-                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) == " + n.Arguments.Count + " &&");
+                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) - 1 == " + n.Arguments.Count + " &&");
                             int ai = 1;
                             foreach (string a in n.Arguments)
                             {
@@ -583,6 +587,8 @@ namespace LibAutoBind.Transformers
                         }
                         if (elsestmt == "") elsestmt = "else ";
                     }
+                    this.WriteCodeLine("        else");
+                    this.WriteCodeLine("            throw Engine::ArgumentCountMismatchException();");
                     this.WriteCodeLine("    }");
                     this.WriteCodeLine();
                 }
@@ -611,14 +617,14 @@ namespace LibAutoBind.Transformers
 
                         if (n.Arguments.Count == 0 || n.Arguments[0] == "")
                         {
-                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) == 0)");
+                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) - 1 == 0)");
                             this.WriteCodeLine("        {");
                             this.WriteCodeLine("            return this->" + functname + "(L);");
                             this.WriteCodeLine("        }");
                         }
                         else
                         {
-                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) == " + n.Arguments.Count + " &&");
+                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) - 1 == " + n.Arguments.Count + " &&");
                             int ai = 1;
                             foreach (string a in n.Arguments)
                             {
@@ -637,6 +643,8 @@ namespace LibAutoBind.Transformers
                         }
                         if (elsestmt == "") elsestmt = "else ";
                     }
+                    this.WriteCodeLine("        else");
+                    this.WriteCodeLine("            throw Engine::ArgumentCountMismatchException();");
                     this.WriteCodeLine("    }");
                     this.WriteCodeLine();
                 }

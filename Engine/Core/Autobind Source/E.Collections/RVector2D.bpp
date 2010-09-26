@@ -1,3 +1,184 @@
+#import Engine.DivideByZeroException
+#include "Irrlicht.h"
+#include "vector2d.h"
+
 class Engine.Collections.RVector2D
+   as Engine.Collections.Vector2D
 {
+	private double p_X;
+	private double p_Y;
+	private irr::core::vector2df m_Vector;
+
+	/// <summary>
+	/// The default constructor for an RVector2D object, initalizing
+	/// the vector information to have a value of (0, 0).
+	/// </summary>
+	bound RVector2D()
+	{
+		this->p_X = 0;
+		this->p_Y = 0;
+		this->m_Vector = irr::core::vector2df(0, 0);
+	}
+
+	/// <summary>
+	/// The recommended constructor for an RVector2D object, initalizing
+	/// the vector information to have a value of (x, y).
+	/// </summary>
+	/// <param name="x">The X component.</param>
+	/// <param name="y">The Y component.</param>
+	bound RVector2D(numeric x, numeric y)
+	{
+		this->p_X = x;
+		this->p_Y = y;
+		this->m_Vector = irr::core::vector2df(x, y);
+	}
+
+	/// <summary>
+	/// The X value of the vector.
+	/// </summary>	
+	bound property numeric X
+	{
+		get: call GetX;
+		set: call SetX;
+	}
+
+	/// <summary>
+	/// The Y value of the vector.
+	/// </summary>
+	bound property numeric Y
+	{
+		get: call GetY;
+		set: call SetY;
+	}
+
+	bound numeric DotProduct(RVector2D vec)
+	{
+		return this->m_Vector.dotProduct(vec->GetObject());
+	}
+
+	bound bool Equals(RVector2D vec)
+	{
+		return this->m_Vector.equals(vec->GetObject());
+	}
+
+	bound table GetAs4Values()
+	{
+		// TODO: Waiting on implementation of a Table class in the Lua Bindings class.
+		return;
+	}
+
+	bound numeric GetDistanceFrom(RVector2D vec)
+	{
+		return this->m_Vector.getDistanceFrom(vec->GetObject());
+	}
+
+	bound numeric GetDistanceFromSQ(RVector2D vec)
+	{
+		return this->m_Vector.getDistanceFromSQ(vec->GetObject());
+	}
+
+	bound RVector2D GetInterpolated(RVector2D vec, numeric d)
+	{
+		RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
+		irr::core::vector2df irrvec = this->m_Vector.getInterpolated(vec->GetObject(), d);
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	bound RVector2D GetInterpolatedQuadratic(RVector2D vec1, RVector2D vec2, numeric d)
+	{
+		RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
+		irr::core::vector2df irrvec = this->m_Vector.getInterpolated_quadratic(vec1->GetObject(), vec2->GetObject(), d);
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	bound numeric GetLength()
+	{
+		return this->m_Vector.getLength();
+	}
+
+	bound numeric GetLengthSQ()
+	{
+		return this->m_Vector.getLengthSQ();
+	}
+
+	bound bool IsBetweenPoints(RVector2D start, RVector2D end)
+	{
+		return this->m_Vector.isBetweenPoints(start->GetObject(), end->GetObject());
+	}
+
+	bound RVector2D Normalize()
+	{
+		RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
+		irr::core::vector2df irrvec = this->m_Vector.normalize();
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	bound void CopyFrom(RVector2D other)
+	{
+		this->m_Vector.set(other->GetObject());
+		return;
+	}
+
+	bound void Set(numeric x, numeric y)
+	{
+		this->m_Vector.set(x, y);
+		return;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Irrlicht object to associate with this RVector2D instance.</param>
+	unbound public void SetObject(irr::core::vector2df obj)
+	{
+		this->m_Vector = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::core::vector2df GetObject()
+	{
+		return this->m_Vector;
+	}
+
+	// Property handlers
+	unbound void SetX(numeric value)
+	{
+		this->p_X = value;
+		this->m_Vector.X = value;
+
+		return;
+	}
+
+	unbound numeric GetX()
+	{
+		if ((float)this->p_X == this->m_Vector.X)
+			return this->p_X;
+
+		return this->m_Vector.X;
+	}
+
+	unbound void SetY(numeric value)
+	{
+		this->p_Y = value;
+		this->m_Vector.Y = value;
+
+		return;
+	}
+
+	unbound numeric GetY()
+	{
+		if ((float)this->p_Y == this->m_Vector.Y)
+			return this->p_Y;
+
+		return this->m_Vector.Y;
+	}
 }

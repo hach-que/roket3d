@@ -55,6 +55,10 @@ template<class T>
 		// -1 to get the value that was assigned.
 		static T* GetArgument(lua_State * L, int narg)
 		{
+			// Convert to absolute reference.
+			if (narg < 0) narg = lua_gettop(L) + narg + 1;
+			else narg += 1;
+
 			// Check to make sure that it's a table at that
 			// position.  If it isn't, then it can't be a
 			// class.
@@ -95,6 +99,10 @@ template<class T>
 		// argument provided to a function is a specific object.
 		static T* IsArgument(lua_State * L, int narg)
 		{
+			// Convert to absolute reference.
+			if (narg < 0) narg = lua_gettop(L) + narg + 1;
+			else narg += 1;
+
 			// Check to make sure that it's a table at that
 			// position.  If it isn't, then it can't be a
 			// class.
@@ -141,6 +149,7 @@ template<class T>
 		{
 			// Convert to absolute reference.
 			if (narg < 0) narg = lua_gettop(L) + narg + 1;
+			else narg += 1;
 
 			// Check to make sure that it's a table at that
 			// position.  If it isn't, then it can't be a
@@ -1011,40 +1020,64 @@ template<class T>
 // outside the template.
 inline numeric Bindings<numeric>::GetArgumentBase(lua_State * L, int narg)
 {
+	// Convert to absolute reference.
+	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+	else narg += 1;
+
 	if (lua_isnumber(L, narg))
 		return lua_tonumber(L, narg);
 	else
-		throw new Engine::ArgumentTypeNotValidException(narg);
+		throw Engine::ArgumentTypeNotValidException(narg);
 }
 
 inline ::string Bindings<::string>::GetArgumentBase(lua_State * L, int narg)
 {
+	// Convert to absolute reference.
+	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+	else narg += 1;
+
 	if (lua_isstring(L, narg))
 		return lua_tostring(L, narg);
 	else
-		throw new Engine::ArgumentTypeNotValidException(narg);
+		throw Engine::ArgumentTypeNotValidException(narg);
 }
 
 inline bool Bindings<bool>::GetArgumentBase(lua_State * L, int narg)
 {
+	// Convert to absolute reference.
+	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+	else narg += 1;
+
 	if (lua_isboolean(L, narg))
 		return (lua_toboolean(L, narg) == 1);
 	else
-		throw new Engine::ArgumentTypeNotValidException(narg);
+		throw Engine::ArgumentTypeNotValidException(narg);
 }
 
 inline bool Bindings<numeric>::IsArgumentBase(lua_State * L, int narg)
 {
+	// Convert to absolute reference.
+	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+	else narg += 1;
+
 	return (lua_isnumber(L, narg) == 1);
 }
 
 inline bool Bindings<::string>::IsArgumentBase(lua_State * L, int narg)
 {
+	// Convert to absolute reference.
+	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+	else narg += 1;
+
 	return (lua_isstring(L, narg) == 1);
 }
 
 inline bool Bindings<bool>::IsArgumentBase(lua_State * L, int narg)
 {
+	// Convert to absolute reference.
+	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+	else narg += 1;
+
 	return (lua_isboolean(L, narg) == 1);
 }
 
