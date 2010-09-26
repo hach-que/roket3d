@@ -238,6 +238,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Generated Source\InheritedClassNotFoundException.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Generated Source\InternalConstructorOnlyException.cpp"
 				>
 			</File>
@@ -247,6 +251,10 @@
 			</File>
 			<File
 				RelativePath=".\Generated Source\InterpreterStateNotValidException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\InvalidObjectThrownException.cpp"
 				>
 			</File>
 			<File
@@ -396,15 +404,15 @@
 					Name="Core"
 					>
 					<File
-						RelativePath=".\Generated Source\E.Unmanaged\Core\eventreciever.cpp"
-						>
-					</File>
-					<File
 						RelativePath=".\Generated Source\E.Unmanaged\Core\rcursorcontrol.cpp"
 						>
 					</File>
 					<File
 						RelativePath=".\Generated Source\E.Unmanaged\Core\rdevice.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Source\E.Unmanaged\Core\reventreciever.cpp"
 						>
 					</File>
 				</Filter>
@@ -638,6 +646,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Generated Headers\InheritedClassNotFoundException.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Generated Headers\InternalConstructorOnlyException.h"
 				>
 			</File>
@@ -647,6 +659,10 @@
 			</File>
 			<File
 				RelativePath=".\Generated Headers\InterpreterStateNotValidException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\InvalidObjectThrownException.h"
 				>
 			</File>
 			<File
@@ -796,15 +812,15 @@
 					Name="Core"
 					>
 					<File
-						RelativePath=".\Generated Headers\E.Unmanaged\Core\eventreciever.h"
-						>
-					</File>
-					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\Core\rcursorcontrol.h"
 						>
 					</File>
 					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\Core\rdevice.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\Core\reventreciever.h"
 						>
 					</File>
 					<File
@@ -1055,6 +1071,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Autobind Source\InheritedClassNotFoundException.bpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Autobind Source\InternalConstructorOnlyException.bpp"
 				>
 			</File>
@@ -1064,6 +1084,10 @@
 			</File>
 			<File
 				RelativePath=".\Autobind Source\InterpreterStateNotValidException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\InvalidObjectThrownException.bpp"
 				>
 			</File>
 			<File
@@ -1193,26 +1217,6 @@
 					Name="Core"
 					>
 					<File
-						RelativePath=".\Autobind Source\E.Unmanaged\Core\EventReciever.bpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="AutoBind"
-								ClassPath="E.Unmanaged\Core"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="AutoBind"
-								ClassPath="E.Unmanaged\Core"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
 						RelativePath=".\Autobind Source\E.Unmanaged\Core\RCursorControl.bpp"
 						>
 						<FileConfiguration
@@ -1234,6 +1238,26 @@
 					</File>
 					<File
 						RelativePath=".\Autobind Source\E.Unmanaged\Core\RDevice.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Core"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Core"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Core\REventReciever.bpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
