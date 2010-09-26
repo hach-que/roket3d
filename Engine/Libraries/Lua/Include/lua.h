@@ -229,6 +229,11 @@ LUA_API int  (lua_status) (lua_State *L);
 
 LUA_API int (lua_gc) (lua_State *L, int what, int data);
 
+/*
+** type checking
+*/
+
+LUA_API int   (lua_is) (lua_State *L);
 
 /*
 ** miscellaneous functions
