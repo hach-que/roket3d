@@ -3,7 +3,7 @@
 #include "SColor.h"
 
 class Engine.Collections.RColor
-//   as Engine.Collections.Color
+   as Engine.Collections.Color
 {
 	private irr::video::SColor m_Color;
 
