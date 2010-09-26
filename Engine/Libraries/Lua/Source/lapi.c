@@ -954,7 +954,22 @@ LUA_API int lua_gc (lua_State *L, int what, int data) {
   return res;
 }
 
+/*
+** type checking
+*/
 
+// checks whether the object on top of the stack
+// is of the same type as the object just below
+// the top of the stack.
+LUA_API int lua_is(lua_State *L)
+{
+	StkId t1;
+	StkId t2;
+	api_checknelems(L, 2);
+	t1 = index2adr(L, -1);
+	t2 = index2adr(L, -2);
+	return (luaV_istypeval(L, t1, t2));
+}
 
 /*
 ** miscellaneous functions

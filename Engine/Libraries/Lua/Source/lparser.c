@@ -796,6 +796,7 @@ static BinOpr getbinopr (int op) {
     case TK_CONCAT: return OPR_CONCAT;
     case TK_NE: return OPR_NE;
     case TK_EQ: return OPR_EQ;
+    case TK_IS: return OPR_IS;
     case '<': return OPR_LT;
     case TK_LE: return OPR_LE;
     case '>': return OPR_GT;
@@ -1164,12 +1165,13 @@ static void ifstat (LexState *ls, int line) {
 
 
 static void trystat (LexState *ls, int line) {
-  /* trystat -> TRY block CATCH err DO block END */
+  /* trystat -> TRY block CATCH type err DO block ... CATCH type2 err DO block ... END */
   FuncState *fs = ls->fs;
   BlockCnt bl;
   int escapelist = NO_JUMP;
   int jpc = fs->jpc;  /* save list of jumps to here */
   int pc;
+  int notlooped = 0;
 
   fs->jpc = NO_JUMP;
   luaX_next(ls);
@@ -1180,37 +1182,48 @@ static void trystat (LexState *ls, int line) {
   block(ls);
   leaveblock(fs);
 
-  if (ls->t.token == TK_CATCH) {
-    TString *varname;
+  while (ls->t.token == TK_CATCH) {
     int base;
 
+	notlooped = 1;
+
+	// emit ENDTRY opcode.
     luaK_codeABC(fs, OP_ENDTRY, 0, 0, 0);
     luaK_concat(fs, &escapelist, luaK_jump(fs));
     luaK_patchtohere(fs, pc);
 
-    // local err
-    enterblock(fs, &bl, 0);
-    luaX_next(ls);  /* skip `catch' */
-    varname = str_checkname(ls);  /* first variable name */
-
-    // do
-    checknext(ls, TK_DO);
+	// reserve a register for the error object to be
+	// automatically placed in.
     base = fs->freereg;
-    new_localvar(ls, varname, 0);
-    adjustlocalvars(ls, 1);  /* control variables */
-    luaK_reserveregs(fs, 1);
 
     luaK_codeABC(fs, OP_CATCH, base, 0, 0);  /* OP_CATCH sets error object to local 'varname'*/
 
+	// skip catch and evaluate condition
+    luaX_next(ls);  /* skip `catch' */
+	pc = cond(ls);
+
+	// enter the block (skip do)
+    enterblock(fs, &bl, 0);
+    checknext(ls, TK_DO);
     block(ls);
     leaveblock(fs);  /* loop scope (`break' jumps to this point) */
   }
-  else {
+  if (notlooped == 0)
+  {
     luaK_codeABC(fs, OP_ENDTRY, 0, 0, 0);
     luaK_concat(fs, &escapelist, pc);
   }
 
   luaK_patchtohere(fs, escapelist);
+  
+  /* output a OP_JMP to skip the OP_RAISE
+     if the error was handled */
+  luaK_codeAsBx(fs, OP_JMP, 0, 1);
+
+  luaK_patchtohere(fs, pc);
+
+  /* OP_RAISE will raise the error */
+  luaK_codeAsBx(fs, OP_RAISE, fs->freereg, NO_JUMP);
 
   check_match(ls, TK_END, TK_TRY, line);
 }
