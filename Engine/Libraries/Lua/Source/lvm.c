@@ -556,21 +556,6 @@ void luaV_execute (lua_State *L, int nexeccalls) {
     lua_assert(base == L->base && L->base == L->ci->base);
     lua_assert(base <= L->top && L->top <= L->stack + L->stacksize);
     lua_assert(L->top == L->ci->top || luaG_checkopenop(i));
-	switch (getOpMode(GET_OPCODE(i)))
-	{
-		case iABC: {
-			printf("LVM == PC: %4i, OP: %10s, A: %3i,  B : %3i, C: %3i ==\n", (int)pc / 4, luaP_opnames[GET_OPCODE(i)], GETARG_A(i), GETARG_B(i), GETARG_C(i));
-			break;
-		}
-		case iABx: {
-			printf("LVM == PC: %4i, OP: %10s, A: %3i,  Bx: %3i         ==\n", (int)pc / 4, luaP_opnames[GET_OPCODE(i)], GETARG_A(i), GETARG_Bx(i));
-			break;
-		}
-		case iAsBx: {
-			printf("LVM == PC: %4i, OP: %10s, A: %3i, sBx: %3i,        ==\n", (int)pc / 4, luaP_opnames[GET_OPCODE(i)], GETARG_A(i), GETARG_sBx(i));
-			break;
-		}
-	}
     switch (GET_OPCODE(i)) {
       case OP_MOVE: {
         setobjs2s(L, ra, RB(i));
