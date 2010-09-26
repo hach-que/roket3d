@@ -36,6 +36,14 @@ template<class T>
 				return __guard_default();
 			}
 		}
+
+		static T * __guard(bool byuser, lua_State * L)
+		{
+			// Caution!  Memory access errors and other low-level
+			// hardware exceptions can not be handled in object
+			// constructors.
+			return new T(L, byuser);
+		}
 	};
 #else
 #ifndef EXCEPTIONS_IGNORE_LOWLEVEL

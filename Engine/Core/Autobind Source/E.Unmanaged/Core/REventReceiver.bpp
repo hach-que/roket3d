@@ -1,0 +1,4 @@
+class Engine.Unmanaged.Core.REventReceiver
+   as Engine.Unmanaged.Core.EventReceiver
+{
+}

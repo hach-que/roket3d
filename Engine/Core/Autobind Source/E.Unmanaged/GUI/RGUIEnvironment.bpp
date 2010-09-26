@@ -1,3 +1,43 @@
+#import Engine.InternalConstructorOnlyException
+#include "IGUIEnvironment.h"
+
 class Engine.Unmanaged.GUI.RGUIEnvironment
+   as Engine.Unmanaged.GUI.GUIEnvironment
 {
+	private irr::gui::IGUIEnvironment * m_Environment;
+	private bool m_IsEnvironmentSet;
+
+	/// <summary>
+	/// A non-public constructor for initalizing an RGUIEnvironment instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RGUIEnvironment()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		this->m_IsEnvironmentSet = false;
+		this->m_Environment = NULL;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Irrlicht object to associate with this RVector2D instance.</param>
+	unbound public void SetObject(irr::gui::IGUIEnvironment * obj)
+	{
+		this->m_IsEnvironmentSet = (obj != NULL);
+		this->m_Environment = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::gui::IGUIEnvironment * GetObject()
+	{
+		return this->m_Environment;
+	}
 }

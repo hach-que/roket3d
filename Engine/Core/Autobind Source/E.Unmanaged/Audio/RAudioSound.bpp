@@ -21,7 +21,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 		{
 			throw Engine::InternalConstructorOnlyException();
 		}
-		this->m_IsSoundSet = true;
+		this->m_IsSoundSet = false;
 		this->m_CAudioSound = NULL;
 		this->IsPrecious = true;
 	}
@@ -284,6 +284,25 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return this->m_CAudioSound->playing();
 		else
 			throw Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Sets the Audio object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Audio object to associate with this RAudioSound instance.</param>
+	unbound public void SetObject(cAudio::IAudio * obj)
+	{
+		this->m_IsSoundSet = (obj != NULL);
+		this->m_CAudioSound = obj;
+	}
+
+	/// <summary>
+	/// Gets the Audio object that this instance represents.
+	/// </summary>
+	/// <returns>The Audio object that this instance holds.</returns>
+	unbound public cAudio::IAudio * GetObject()
+	{
+		return this->m_CAudioSound;
 	}
 
 	/// <summary>

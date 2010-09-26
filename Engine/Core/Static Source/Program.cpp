@@ -34,6 +34,8 @@ int testFunc2(lua_State * L)
 
 namespace Roket3D
 {
+	lua_State * Program::GlobalState = NULL;
+
 	int Program::Main(int argc, char *argv[])
 	{
 		for (int i = 0; i < argc; i += 1)
@@ -121,6 +123,12 @@ namespace Roket3D
 		// Now create a Lua instance, and set up the Lua environment for
 		// use within a game.
 		lua_State * L = lua_open();
+
+		// Maintain a reference to the main lua_State in the Program class.
+		// This allows Exceptions to grab line number and filename information
+		// without requiring lua_State to be passed as an argument.
+		Program::GlobalState = L;
+
 		if (L == NULL)
 		{
 			Debugger::RaiseException(Engine::InterpreterStateNotValidException());

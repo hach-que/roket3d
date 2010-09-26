@@ -6,8 +6,10 @@
 
 // Include all of the classes to be registered.
 #include "E.Collections/RColor.h"
+#include "E.Collections/RVector2D.h"
 #include "E.Collections/RVector3D.h"
 #include "E.Unmanaged/Audio/RAudioSound.h"
+#include "E.Unmanaged/Core/RDevice.h"
 
 #include "AccessViolationException.h"
 #include "ArgumentTypeNotValidException.h"
@@ -42,8 +44,10 @@ namespace Roket3D
 	void RegisterAllClasses(lua_State * L)
 	{
 		Bindings<Engine::Collections::RColor>::Register(L);
+		Bindings<Engine::Collections::RVector2D>::Register(L);
 		Bindings<Engine::Collections::RVector3D>::Register(L);
 		Bindings<Engine::Unmanaged::Audio::RAudioSound>::Register(L);
+		Bindings<Engine::Unmanaged::Core::RDevice>::Register(L);
 
 		// Register the exception classes.  Please note that if they
 		// aren't registered when they are fired, they won't be properly

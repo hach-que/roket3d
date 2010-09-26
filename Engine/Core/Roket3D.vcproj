@@ -202,6 +202,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Generated Source\ArgumentCountMismatchException.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Generated Source\ArgumentTypeNotValidException.cpp"
 				>
 			</File>
@@ -231,6 +235,10 @@
 			</File>
 			<File
 				RelativePath=".\Generated Source\Exception.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Source\GraphicsEngineNotFoundException.cpp"
 				>
 			</File>
 			<File
@@ -412,7 +420,7 @@
 						>
 					</File>
 					<File
-						RelativePath=".\Generated Source\E.Unmanaged\Core\reventreciever.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Core\reventreceiver.cpp"
 						>
 					</File>
 				</Filter>
@@ -610,6 +618,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Generated Headers\ArgumentCountMismatchException.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Generated Headers\ArgumentTypeNotValidException.h"
 				>
 			</File>
@@ -639,6 +651,10 @@
 			</File>
 			<File
 				RelativePath=".\Generated Headers\Exception.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Generated Headers\GraphicsEngineNotFoundException.h"
 				>
 			</File>
 			<File
@@ -820,7 +836,7 @@
 						>
 					</File>
 					<File
-						RelativePath=".\Generated Headers\E.Unmanaged\Core\reventreciever.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Core\reventreceiver.h"
 						>
 					</File>
 					<File
@@ -1035,6 +1051,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Autobind Source\ArgumentCountMismatchException.bpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Autobind Source\ArgumentTypeNotValidException.bpp"
 				>
 			</File>
@@ -1064,6 +1084,10 @@
 			</File>
 			<File
 				RelativePath=".\Autobind Source\Exception.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\GraphicsEngineNotFoundException.bpp"
 				>
 			</File>
 			<File
@@ -1257,7 +1281,7 @@
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath=".\Autobind Source\E.Unmanaged\Core\REventReciever.bpp"
+						RelativePath=".\Autobind Source\E.Unmanaged\Core\REventReceiver.bpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"

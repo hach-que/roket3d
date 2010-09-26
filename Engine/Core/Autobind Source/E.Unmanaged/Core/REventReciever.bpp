@@ -1,4 +1,0 @@
-class Engine.Unmanaged.Core.REventReciever
-   as Engine.Unmanaged.Core.EventReciever
-{
-}
