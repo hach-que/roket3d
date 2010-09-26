@@ -3,7 +3,7 @@
 #include "vector3d.h"
 
 class Engine.Collections.RVector3D
-//   as Engine.Collections.Vector3D
+   as Engine.Collections.Vector3D
 {
 	private double p_X;
 	private double p_Y;
