@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.Scene.RSceneBillboardNode
+   as Engine.Unmanaged.Scene.BillboardNode
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RSceneBillboardNode instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RSceneBillboardNode()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }

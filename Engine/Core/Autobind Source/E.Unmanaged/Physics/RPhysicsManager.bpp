@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.Physics.RPhysicsManager
+   as Engine.Unmanaged.Physics.Manager
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RPhysicsManager instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RPhysicsManager()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }

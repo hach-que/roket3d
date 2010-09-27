@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.Scene.RSceneLazyCamera
+   as Engine.Unmanaged.Scene.LazyCamera
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RSceneLazyCamera instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RSceneLazyCamera()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }

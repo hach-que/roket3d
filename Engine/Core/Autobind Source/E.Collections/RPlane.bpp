@@ -1,3 +1,6 @@
 class Engine.Collections.RPlane
 {
+	bound RPlane()
+	{
+	}
 }

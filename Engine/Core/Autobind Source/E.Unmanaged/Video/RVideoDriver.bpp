@@ -1,3 +1,79 @@
+#import Engine.InternalConstructorOnlyException
+#import Engine.ObjectDisposedException
+#import Engine.Collections.RColor
+#include "IVideoDriver.h"
+
 class Engine.Unmanaged.Video.RVideoDriver
+   as Engine.Unmanaged.Video.Driver
 {
+	private irr::video::IVideoDriver * m_Driver;
+	private bool m_IsDriverSet;
+
+	/// <summary>
+	/// A non-public constructor for initalizing an RVideoDriver instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RVideoDriver()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		this->m_IsDriverSet = false;
+		this->m_Driver = NULL;
+	}
+
+	/// <summary>
+	/// Clears the screen with the specified background color, ready for
+	/// rendering of GUI and Scene objects.
+	/// </summary>
+	/// <param name="backcolor">The background color.</param>
+	/// <param name="backbuffer">Whether the back-buffer should be used.</param>
+	/// <param name="zbuffer">Whether a z-buffer should be used in rendering.</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void BeginScene(Engine::Collections::RColor backcolor, bool backbuffer, bool zbuffer)
+	{
+		if (this->m_IsDriverSet)
+		{
+			this->m_Driver->beginScene(backbuffer, zbuffer, backcolor->GetObject());
+			return;
+		}
+		else
+			throw Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Places the contents of the screen buffer onto the actual screen.
+	/// </summary>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void EndScene()
+	{
+		if (this->m_IsDriverSet)
+		{
+			this->m_Driver->endScene();
+			return;
+		}
+		else
+			throw Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param name="obj">The new Irrlicht object to associate with this RVideoDriver instance.</param>
+	unbound public void SetObject(irr::video::IVideoDriver * obj)
+	{
+		this->m_IsDriverSet = (obj != NULL);
+		this->m_Driver = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::video::IVideoDriver * GetObject()
+	{
+		return this->m_Driver;
+	}
 }

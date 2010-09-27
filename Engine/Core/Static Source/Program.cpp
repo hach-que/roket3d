@@ -235,7 +235,10 @@ namespace Roket3D
 					if (nodes.size() > 1 && nodes[nodes.size() - 1] == "cwd")
 						out.CurrentWorkingDirectory = xml->getNodeData();
 					else if (nodes.size() > 1 && nodes[nodes.size() - 1] == "debuggable")
-						out.Debuggable = xml->getNodeData();
+					{
+						std::string d = xml->getNodeData();
+						out.Debuggable = (d == "true"); // TODO: Make this case-insensitive.
+					}
 					else if (nodes.size() > 2 && nodes[nodes.size() - 2] == "entrypoint" && nodes[nodes.size() - 1] == "call")
 						out.EntryPointCall = xml->getNodeData();
 					else if (nodes.size() > 2 && nodes[nodes.size() - 2] == "entrypoint" && nodes[nodes.size() - 1] == "file")

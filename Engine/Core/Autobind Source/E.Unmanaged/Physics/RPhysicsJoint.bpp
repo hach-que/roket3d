@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.Physics.RPhysicsJoint
+   as Engine.Unmanaged.Physics.Joint
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RPhysicsJoint instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RPhysicsJoint()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }

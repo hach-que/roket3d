@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.Physics.RPhysicsMaterialHandler
+   as Engine.Unmanaged.Physics.MaterialHandler
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RPhysicsMaterialHandler instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RPhysicsMaterialHandler()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }
