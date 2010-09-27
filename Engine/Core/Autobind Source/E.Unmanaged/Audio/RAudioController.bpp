@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.Audio.RAudioController
+   as Engine.Unmanaged.Audio.Controller
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RAudioController instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RAudioController()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }

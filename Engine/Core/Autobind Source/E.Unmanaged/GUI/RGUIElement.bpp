@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.GUI.RGUIElement
+   as Engine.Unmanaged.GUI.Element
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RGUIElement instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RGUIElement()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }

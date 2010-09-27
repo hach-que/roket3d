@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.Net.RNetSocket
+   as Engine.Unmanaged.Net.Socket
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RNetSocket instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RNetSocket()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }

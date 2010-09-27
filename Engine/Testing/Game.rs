@@ -1,14 +1,16 @@
 function Run()
-    vec = Engine.Collections.Vector2D(640, 480);
-    print(vec.X, vec.Y)
-    device = Engine.Unmanaged.Core.Device(vec, 16, false, true, false);
+    device = Engine.Unmanaged.Core.Device(
+        Engine.Collections.Vector2D(640, 480),
+        16, false, true, false);
+        
+    backcolor = Engine.Collections.Color(255, 255, 0, 0)
     
-    i = 0
     while (device.Running) do
-        print("Device is running.  " .. i)
-        i = i + 1
+        device.VideoDriver.BeginScene(backcolor, true, true);
+        device.VideoDriver.EndScene();
     end
-    print("Device is closed.")
+    
+    device.Close()
 end
 
 function InspectTable(tbl, indent)

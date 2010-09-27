@@ -1,5 +1,6 @@
 #import Engine.Unmanaged.Core.REventReceiver
 #import Engine.Unmanaged.GUI.RGUIEnvironment
+#import Engine.Unmanaged.Video.RVideoDriver
 #import Engine.Collections.RVector2D
 #import Engine.GraphicsEngineNotFoundException
 #import Engine.ObjectDisposedException
@@ -39,7 +40,7 @@ class Engine.Unmanaged.Core.RDevice
 
 		// Attempt to initalize the device.
 		this->m_Device = irr::createDevice(
-			irr::video::EDT_DIRECT3D9,
+			irr::video::EDT_SOFTWARE,
 			dimensions,
 			bits,
 			fullscreen,
@@ -66,6 +67,17 @@ class Engine.Unmanaged.Core.RDevice
 	{
 		get: call GetGUIEnvironment;
 		set: call SetGUIEnvironment;
+	}
+
+	/// <summary>
+	/// The current video driver.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	/// <exception>Engine.ReadOnlyPropertyException</exception>
+	bound property Engine::Unmanaged::Video::RVideoDriver VideoDriver
+	{
+		get: call GetVideoDriver;
+		set: call SetVideoDriver;
 	}
 
 	/// <summary>
@@ -104,9 +116,27 @@ class Engine.Unmanaged.Core.RDevice
 		throw Engine::ReadOnlyPropertyException();
 	}
 
+	unbound Engine::Unmanaged::Video::RVideoDriver GetVideoDriver()
+	{
+		Engine::Unmanaged::Video::RVideoDriver * drv =
+			Bindings<Engine::Unmanaged::Video::RVideoDriver>::CreateNew(L);
+		drv->SetObject(this->m_Device->getVideoDriver());
+		return drv;
+	}
+
+	unbound void SetVideoDriver(Engine::Unmanaged::Video::RVideoDriver value)
+	{
+		throw Engine::ReadOnlyPropertyException();
+	}
+
 	unbound bool GetRunning()
 	{
-		return (this->m_IsDeviceSet && this->m_Device->run());
+		bool r = this->m_Device->run();
+		if (r)
+			printf("Device is running.\n");
+		else
+			printf("Device is stopped.\n");
+		return (this->m_IsDeviceSet && r);
 	}
 
 	unbound void SetRunning(bool value)

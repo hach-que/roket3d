@@ -5,6 +5,7 @@
 #include "IAudio.h"
 
 class Engine.Unmanaged.Audio.RAudioSound
+   as Engine.Unmanaged.Audio.Sound
 {
 	private bool m_IsSoundSet; 
 	private Engine::Unmanaged::Core::RDevice * m_RoketDevice;

@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.Scene.RSceneManager
+   as Engine.Unmanaged.Scene.Manager
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RSceneManager instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RSceneManager()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }

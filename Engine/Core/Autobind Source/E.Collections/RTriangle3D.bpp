@@ -1,3 +1,6 @@
 class Engine.Collections.RTriangle3D
 {
+	bound RTriangle3D()
+	{
+	}
 }

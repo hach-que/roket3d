@@ -1,3 +1,6 @@
 class Engine.Collections.RRay3D
 {
+	bound RRay3D()
+	{
+	}
 }

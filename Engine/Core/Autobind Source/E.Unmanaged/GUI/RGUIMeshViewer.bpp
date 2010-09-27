@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.GUI.RGUIMeshViewer
+   as Engine.Unmanaged.GUI.MeshViewer
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RGUIMeshViewer instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RGUIMeshViewer()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }

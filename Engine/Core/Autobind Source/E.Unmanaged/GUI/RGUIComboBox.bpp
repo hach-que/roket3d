@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.GUI.RGUIComboBox
+   as Engine.Unmanaged.GUI.ComboBox
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RGUIComboBox instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RGUIComboBox()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }

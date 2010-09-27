@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.GUI.RGUIStaticText
+   as Engine.Unmanaged.GUI.StaticText
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RGUIStaticText instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RGUIStaticText()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }

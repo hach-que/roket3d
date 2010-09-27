@@ -209,7 +209,7 @@ template<class T>
 			std::string cls = T::ClassName;
 			std::string buf = "";
 			std::vector<std::string> elms;
-			for (int i = 0; i < cls.length(); i++)
+			for (unsigned int i = 0; i < cls.length(); i++)
 			{
 				if (cls[i] == '.')
 				{
@@ -235,7 +235,7 @@ template<class T>
 			// Now loop through elms, loading all but the last element
 			// as namespace tables.
 			int topop = 0;
-			for (int i = 0; i < elms.size(); i++)
+			for (unsigned int i = 0; i < elms.size(); i++)
 			{
 				if (i < elms.size() - 1)
 				{
@@ -762,7 +762,7 @@ template<class T>
 			std::string cls = T::Inherits;
 			std::string buf = "";
 			std::vector<std::string> elms;
-			for (int i = 0; i < cls.length(); i++)
+			for (unsigned int i = 0; i < cls.length(); i++)
 			{
 				if (cls[i] == '.')
 				{
@@ -789,7 +789,7 @@ template<class T>
 			// as namespace tables.
 			int topop = 0;
 			bool failure = false;
-			for (int i = 0; i < elms.size(); i++)
+			for (unsigned int i = 0; i < elms.size(); i++)
 			{
 				if (i < elms.size() - 1)
 				{

@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.Scene.RSceneTerrainNode
+   as Engine.Unmanaged.Scene.TerrainNode
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RSceneTerrainNode instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RSceneTerrainNode()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }

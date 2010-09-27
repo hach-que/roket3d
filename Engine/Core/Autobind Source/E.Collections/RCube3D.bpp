@@ -1,4 +1,6 @@
 class Engine.Collections.RCube3D
 {
-
+	bound RCube3D()
+	{
+	}
 }

@@ -1,3 +1,19 @@
+#import Engine.InternalConstructorOnlyException
+
 class Engine.Unmanaged.GUI.RGUIEditBox
+   as Engine.Unmanaged.GUI.EditBox
 {
+	/// <summary>
+	/// A non-public constructor for initalizing an RGUIEditBox instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RGUIEditBox()
+	{
+		if (byuser)
+		{
+			throw Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
 }
