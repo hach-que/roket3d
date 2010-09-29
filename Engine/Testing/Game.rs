@@ -4,10 +4,23 @@ function Run()
         16, false, true, false);
         
     backcolor = Engine.Collections.Color(255, 255, 0, 0)
+    up = true
     
     while (device.Running) do
-        device.VideoDriver.BeginScene(backcolor, true, true);
-        device.VideoDriver.EndScene();
+        if (up) then
+            backcolor.Green = backcolor.Green + 1
+            if (backcolor.Green == 255) then
+                up = false
+            end
+        else
+            backcolor.Green = backcolor.Green - 1
+            if (backcolor.Green == 0) then
+                up = true
+            end
+        end
+        backcolor.Red = 255 - backcolor.Green
+        device.VideoDriver:BeginScene(backcolor, true, true);
+        device.VideoDriver:EndScene();
     end
     
     device.Close()

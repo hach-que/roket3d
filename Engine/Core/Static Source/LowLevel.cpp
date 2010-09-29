@@ -20,37 +20,37 @@ int __filter(unsigned int code)
 {
 	if (code == EXCEPTION_ACCESS_VIOLATION)
 	{
-		throw Engine::AccessViolationException();
+		throw new Engine::AccessViolationException();
 		return EXCEPTION_EXECUTE_HANDLER;
 	}
 	else if (code == STATUS_FLOAT_DIVIDE_BY_ZERO || code == STATUS_INTEGER_DIVIDE_BY_ZERO)
 	{
-		throw Engine::DivideByZeroException();
+		throw new Engine::DivideByZeroException();
 		return EXCEPTION_EXECUTE_HANDLER;
 	}
 	else if (code == STATUS_FLOAT_OVERFLOW || code == STATUS_INTEGER_OVERFLOW)
 	{
-		throw Engine::OverflowException();
+		throw new Engine::OverflowException();
 		return EXCEPTION_EXECUTE_HANDLER;
 	}
 	else if (code == STATUS_FLOAT_UNDERFLOW)
 	{
-		throw Engine::UnderflowException();
+		throw new Engine::UnderflowException();
 		return EXCEPTION_EXECUTE_HANDLER;
 	}
 	else if (code == STATUS_ILLEGAL_INSTRUCTION)
 	{
-		throw Engine::IllegalInstructionException();
+		throw new Engine::IllegalInstructionException();
 		return EXCEPTION_EXECUTE_HANDLER;
 	}
 	else if (code == STATUS_PRIVILEGED_INSTRUCTION)
 	{
-		throw Engine::PrivilegedInstructionException();
+		throw new Engine::PrivilegedInstructionException();
 		return EXCEPTION_EXECUTE_HANDLER;
 	}
 	else if (code == STATUS_DATATYPE_MISALIGNMENT)
 	{
-		throw Engine::DataMisalignedException();
+		throw new Engine::DataMisalignedException();
 		return EXCEPTION_EXECUTE_HANDLER;
 	}
 	else
@@ -61,14 +61,14 @@ int __filter(unsigned int code)
 
 int __guard(__guardable function, lua_State * L)
 {
-	__try
-	{
+	//__try
+	//{
 		return function(L);
-	}
-	__except (__filter(GetExceptionCode()))
-	{
-		return __guard_default();
-	}
+	//}
+	//__except (__filter(GetExceptionCode()))
+	//{
+	//	return __guard_default();
+	//}
 }
 
 int __guard_default()

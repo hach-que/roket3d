@@ -2305,6 +2305,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Static Headers\StackPoint.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Static Headers\Utility.h"
 				>
 			</File>

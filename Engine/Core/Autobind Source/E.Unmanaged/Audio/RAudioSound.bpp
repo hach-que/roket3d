@@ -20,7 +20,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 	{
 		if (byuser)
 		{
-			throw Engine::InternalConstructorOnlyException();
+			throw new Engine::InternalConstructorOnlyException();
 		}
 		this->m_IsSoundSet = false;
 		this->m_CAudioSound = NULL;
@@ -39,7 +39,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -55,7 +55,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -72,7 +72,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -88,7 +88,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 		} 
 		else
 		{
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 		}
 	}
 
@@ -106,7 +106,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 		}
 		else
 		{
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 		}
 	}
 
@@ -123,7 +123,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -140,7 +140,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -157,7 +157,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -173,7 +173,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -189,7 +189,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -205,7 +205,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -221,7 +221,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -238,7 +238,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -254,7 +254,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -271,7 +271,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -284,7 +284,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 		if (this->m_IsSoundSet)
 			return this->m_CAudioSound->playing();
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -321,6 +321,6 @@ class Engine.Unmanaged.Audio.RAudioSound
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 }

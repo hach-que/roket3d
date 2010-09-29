@@ -21,7 +21,7 @@
 #include "E.Unmanaged/Core/RCursorControl.h"
 #include "E.Unmanaged/Core/RDevice.h"
 #include "E.Unmanaged/Core/REventReceiver.h"
-#include "E.Unmanaged/Ext/RThread.h"
+//#include "E.Unmanaged/Ext/RThread.h"
 #include "E.Unmanaged/GUI/RGUIButton.h"
 #include "E.Unmanaged/GUI/RGUICheckBox.h"
 #include "E.Unmanaged/GUI/RGUIComboBox.h"
@@ -109,7 +109,7 @@ namespace Roket3D
 		Bindings<Engine::Unmanaged::Core::RCursorControl>::Register(L);
 		Bindings<Engine::Unmanaged::Core::RDevice>::Register(L);
 		Bindings<Engine::Unmanaged::Core::REventReceiver>::Register(L);
-		Bindings<Engine::Unmanaged::Ext::RThread>::Register(L);
+//		Bindings<Engine::Unmanaged::Ext::RThread>::Register(L);
 		Bindings<Engine::Unmanaged::GUI::RGUIButton>::Register(L);
 		Bindings<Engine::Unmanaged::GUI::RGUICheckBox>::Register(L);
 		Bindings<Engine::Unmanaged::GUI::RGUIComboBox>::Register(L);

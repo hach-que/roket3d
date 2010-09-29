@@ -251,6 +251,12 @@ LUA_API const char *lua_typename (lua_State *L, int t) {
 }
 
 
+LUA_API const char *lua_advtypename (lua_State *L, int idx) {
+  StkId o = index2adr(L, idx);
+  return luaV_gettypeval(L, o);
+}
+
+
 LUA_API int lua_iscfunction (lua_State *L, int idx) {
   StkId o = index2adr(L, idx);
   return iscfunction(o);

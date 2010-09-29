@@ -49,7 +49,7 @@ class Engine.Unmanaged.Core.RDevice
 
 		if (this->m_Device == NULL)
 		{
-			throw Engine::GraphicsEngineNotFoundException();
+			throw new Engine::GraphicsEngineNotFoundException();
 		}
 
 		this->m_IsDeviceSet = true;
@@ -113,7 +113,7 @@ class Engine.Unmanaged.Core.RDevice
 
 	unbound void SetGUIEnvironment(Engine::Unmanaged::GUI::RGUIEnvironment value)
 	{
-		throw Engine::ReadOnlyPropertyException();
+		throw new Engine::ReadOnlyPropertyException();
 	}
 
 	unbound Engine::Unmanaged::Video::RVideoDriver GetVideoDriver()
@@ -126,21 +126,16 @@ class Engine.Unmanaged.Core.RDevice
 
 	unbound void SetVideoDriver(Engine::Unmanaged::Video::RVideoDriver value)
 	{
-		throw Engine::ReadOnlyPropertyException();
+		throw new Engine::ReadOnlyPropertyException();
 	}
 
 	unbound bool GetRunning()
 	{
-		bool r = this->m_Device->run();
-		if (r)
-			printf("Device is running.\n");
-		else
-			printf("Device is stopped.\n");
-		return (this->m_IsDeviceSet && r);
+		return (this->m_IsDeviceSet && this->m_Device->run());
 	}
 
 	unbound void SetRunning(bool value)
 	{
-		throw Engine::ReadOnlyPropertyException();
+		throw new Engine::ReadOnlyPropertyException();
 	}
 }
