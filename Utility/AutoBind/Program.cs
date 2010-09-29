@@ -29,7 +29,7 @@ namespace AutoBind
                 Directory.CreateDirectory(hbase);
             if (!Directory.Exists(cppbase))
                 Directory.CreateDirectory(cppbase);
-            Machine m = new Machine(input, hbase + '/' + basename + ".h", cppbase + '/' + basename + ".cpp");
+            Machine m = new Machine(input, hbase + '/' + basename + ".h.tmp", cppbase + '/' + basename + ".cpp");
             try
             {
                 m.Run();
@@ -38,19 +38,54 @@ namespace AutoBind
             {
                 Console.WriteLine("Unable to automatically bind " + input + ".  Make sure there");
                 Console.WriteLine("is only one class defined in the file.");
+                Program.Cleanup(hbase, cppbase, basename);
                 return 1;
             }
             catch (LibAutoBind.InvalidCharacterException e)
             {
+                Program.Cleanup(hbase, cppbase, basename);
                 return 1;
             }
             catch (LibAutoBind.LexingAbortedException e)
             {
+                Program.Cleanup(hbase, cppbase, basename);
                 return 1;
             }
             m.Close();
 
+            // Check to see if the generated files are different from those currently
+            // on disk.  We don't want to update the current files on disk because
+            // the Visual C compiler only looks at the date on the file, which causes
+            // lots of code compilation if headers are regenerated (even if they aren't
+            // changed).
+            bool copyh = false;
+            if (!File.Exists(hbase + '/' + basename + ".h"))
+                copyh = true;
+            else
+            {
+                StreamReader ch = new StreamReader(hbase + '/' + basename + ".h");
+                StreamReader gh = new StreamReader(hbase + '/' + basename + ".h.tmp");
+                copyh = (ch.ReadToEnd() != gh.ReadToEnd());
+                ch.Close();
+                gh.Close();
+            }
+            Console.Write(" [cpp] ");
+            if (copyh)
+            {
+                File.Delete(cppbase + '/' + basename + ".h");
+                File.Move(hbase + '/' + basename + ".h.tmp", hbase + '/' + basename + ".h");
+                Console.Write("[h  ] ");
+            }
+            Console.WriteLine();
+            Program.Cleanup(hbase, cppbase, basename);
+
             return 0;
+        }
+
+        static void Cleanup(string hbase, string cppbase, string basename)
+        {
+            if (File.Exists(hbase + '/' + basename + ".h.tmp"))
+                File.Delete(hbase + '/' + basename + ".h.tmp");
         }
     }
 }

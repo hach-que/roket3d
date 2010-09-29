@@ -16,7 +16,7 @@ class Engine.Unmanaged.GUI.RGUIEnvironment
 	{
 		if (byuser)
 		{
-			throw Engine::InternalConstructorOnlyException();
+			throw new Engine::InternalConstructorOnlyException();
 		}
 		this->m_IsEnvironmentSet = false;
 		this->m_Environment = NULL;

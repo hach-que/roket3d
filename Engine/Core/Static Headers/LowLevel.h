@@ -27,14 +27,14 @@ template<class T>
 	public:
 		static int __guard(T * obj, int (T::*function)(lua_State * L), lua_State * L)
 		{
-			__try
-			{
+			//__try
+			//{
 				return (obj->*function)(L);
-			}
-			__except (__filter(_exception_code()))
-			{
-				return __guard_default();
-			}
+			//}
+			//__except (__filter(_exception_code()))
+			//{
+			//	return __guard_default();
+			//}
 		}
 
 		static T * __guard(bool byuser, lua_State * L)

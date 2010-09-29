@@ -1,6 +1,9 @@
 #include <string>
+#include <sstream>
 #include <vector>
 #include "Utility.h"
+#include "Program.h"
+#include "StackPoint.h"
 
 class Engine.Exception
 {
@@ -8,12 +11,15 @@ class Engine.Exception
 	public int LineNumber;
 	public std::string FileName;
 	public std::vector<std::string> Arguments;
+	public std::vector<Roket3D::CallStackPoint> CallStackTrace;
+	public std::vector<Roket3D::DataStackPoint> DataStackTrace;
 
 	/// <summary>
 	/// Exception constructor for C++ code.
 	/// </summay>
 	unbound public Exception()
 	{
+		this->GatherEnvironmentData(Roket3D::Program::GlobalState);
 	}
 
 	/// <summary>
@@ -21,6 +27,121 @@ class Engine.Exception
 	/// </summary>
 	bound Exception()
 	{
+		this->GatherEnvironmentData(L);
+	}
+
+	/// <summary>
+	/// A function to gather information about the current environment
+	/// in which the exception was thrown.
+	/// </summary>
+	unbound private void GatherEnvironmentData(lua_State * L)
+	{
+		// Get information about the data on the Lua stack.
+		for (int i = 1; i <= lua_gettop(L); i += 1)
+		{
+			Roket3D::DataStackPoint p;
+			std::stringstream a;
+			
+			a << i;
+			p.Level = a.str().c_str();
+			p.BaseType = lua_typename(L, lua_type(L, i));
+			if (lua_type(L, i) == LUA_TTABLE)
+			{
+				std::stringstream s;
+				s << lua_advtypename(L, i) << ": " << (int)lua_topointer(L, i);
+				p.StringRepr = s.str().c_str();
+			}
+			else if (lua_type(L, i) == LUA_TSTRING)
+				p.StringRepr = lua_tostring(L, i);
+			else if (lua_type(L, i) == LUA_TNUMBER)
+				p.StringRepr = lua_tostring(L, i);
+			else if (lua_type(L, i) == LUA_TBOOLEAN)
+				p.StringRepr = lua_toboolean(L, i) ? "true" : "false";
+			else if (lua_type(L, i) == LUA_TNIL)
+				p.StringRepr = "";
+			else
+			{
+				std::stringstream s;
+				s << p.BaseType << ": " << (int)lua_topointer(L, i);
+				p.StringRepr = s.str().c_str();
+			}
+
+			this->DataStackTrace.insert(this->DataStackTrace.end(), p);
+		}
+		
+		// Get information about the call stack.
+		lua_Debug ar;
+		int ret;
+		int i = 0;
+		bool hasdefinedline = false;
+		while ((ret = lua_getstack(L, i, &ar)) == 1)
+		{
+			lua_getinfo(L, "S", &ar);
+			Roket3D::CallStackPoint p;
+			std::stringstream a;
+			std::stringstream b;
+
+			if (strcmp(ar.what, "Lua") == 0)
+			{
+				lua_getinfo(L, "ln", &ar);
+
+				a << (i + 1);
+				b << ar.currentline;
+				p.Level = a.str().c_str();
+				p.Source = ar.short_src;
+				p.Function = ar.name;
+				p.FuncType = ar.namewhat;
+				p.LineNumber = b.str().c_str();
+
+				if (!hasdefinedline)
+				{
+					this->LineNumber = ar.linedefined;
+					this->FileName = ar.short_src;
+					hasdefinedline = true;
+				}
+			}
+			else if (strcmp(ar.what, "C") == 0)
+			{
+				lua_getinfo(L, "n", &ar);
+
+				a << (i + 1);
+				p.Level = a.str().c_str();
+				p.Source = "<native>";
+				p.Function = ar.name;
+				p.FuncType = ar.namewhat;
+				p.LineNumber = "???";
+			}
+			else if (strcmp(ar.what, "main") == 0)
+			{
+				lua_getinfo(L, "l", &ar);
+
+				a << (i + 1);
+				b << ar.currentline;
+				p.Level = a.str().c_str();
+				p.Source = "<main>";
+				p.Function = ar.short_src;
+				p.FuncType = "";
+				p.LineNumber = b.str().c_str();
+			}
+			else if (strcmp(ar.what, "tail") == 0)
+			{
+				a << (i + 1);
+				p.Level = a.str().c_str();
+				p.Source = "<tail call>";
+				p.Function = "";
+				p.FuncType = "";
+				p.LineNumber = "";
+			}
+			else
+			{
+				i++;
+				continue;
+			}
+
+			this->CallStackTrace.insert(this->CallStackTrace.end(), p);
+
+			i++;
+		}
 	}
 
 	/// <summary>
@@ -71,6 +192,6 @@ class Engine.Exception
 
 	unbound void SetMessageL(::string value)
 	{
-		throw Engine::ReadOnlyPropertyException();
+		throw new Engine::ReadOnlyPropertyException();
 	}
 }

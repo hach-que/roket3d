@@ -12,7 +12,7 @@ class Engine.Unmanaged.Ext.RThread
 	{
 		if (byuser)
 		{
-			throw Engine::InternalConstructorOnlyException();
+			throw new Engine::InternalConstructorOnlyException();
 		}
 		// TODO: Implement.
 	}

@@ -18,7 +18,7 @@ class Engine.Unmanaged.Video.RVideoDriver
 	{
 		if (byuser)
 		{
-			throw Engine::InternalConstructorOnlyException();
+			throw new Engine::InternalConstructorOnlyException();
 		}
 		this->m_IsDriverSet = false;
 		this->m_Driver = NULL;
@@ -40,7 +40,7 @@ class Engine.Unmanaged.Video.RVideoDriver
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>
@@ -55,7 +55,7 @@ class Engine.Unmanaged.Video.RVideoDriver
 			return;
 		}
 		else
-			throw Engine::ObjectDisposedException();
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>

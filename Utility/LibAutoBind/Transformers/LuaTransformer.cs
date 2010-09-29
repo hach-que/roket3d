@@ -27,7 +27,10 @@ namespace LibAutoBind.Transformers
             
             // Get the class node.
             ClassDefinitionNode cls = (ClassDefinitionNode)(this.GetNodesOfType(nodes, typeof(ClassDefinitionNode))[0]);
-            Console.WriteLine("(h  ) " + cls.ClassOnly);
+            if (cls.Alias == "")
+                Console.Write(cls.Class);
+            else
+                Console.Write(cls.Alias);
             this.WriteHeaderLine("#ifndef CLASS_" + cls.Class.Replace('.', '_'));
             this.WriteHeaderLine("#define CLASS_" + cls.Class.Replace('.', '_'));
             this.WriteHeaderLine();
@@ -291,7 +294,6 @@ namespace LibAutoBind.Transformers
 
             // Get the class node.
             ClassDefinitionNode cls = (ClassDefinitionNode)(this.GetNodesOfType(nodes, typeof(ClassDefinitionNode))[0]);
-            Console.WriteLine("(cpp) " + cls.ClassOnly);
             this.WriteCodeLine("#include \"autobind/types.h\"");
             this.WriteCodeLine("#include \"autobind/binding/lua.h\"");
             this.WriteCodeLine("#include \"RObject.h\"");
@@ -561,14 +563,14 @@ namespace LibAutoBind.Transformers
 
                         if (n.Arguments.Count == 0 || n.Arguments[0] == "")
                         {
-                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) - 1 == 0 || !byuser)");
+                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) == 0 || !byuser)");
                             this.WriteCodeLine("        {");
                             this.WriteCodeLine("            this->" + functname + "(L, byuser);");
                             this.WriteCodeLine("        }");
                         }
                         else
                         {
-                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) - 1 == " + n.Arguments.Count + " &&");
+                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) == " + n.Arguments.Count + " &&");
                             int ai = 1;
                             foreach (string a in n.Arguments)
                             {
@@ -617,14 +619,14 @@ namespace LibAutoBind.Transformers
 
                         if (n.Arguments.Count == 0 || n.Arguments[0] == "")
                         {
-                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) - 1 == 0)");
+                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) == 0)");
                             this.WriteCodeLine("        {");
                             this.WriteCodeLine("            return this->" + functname + "(L);");
                             this.WriteCodeLine("        }");
                         }
                         else
                         {
-                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) - 1 == " + n.Arguments.Count + " &&");
+                            this.WriteCodeLine("        " + elsestmt + "if (lua_gettop(L) == " + n.Arguments.Count + " &&");
                             int ai = 1;
                             foreach (string a in n.Arguments)
                             {

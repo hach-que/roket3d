@@ -5,16 +5,18 @@
 
 class Engine.ArgumentTypeNotValidException : Engine.InterpreterException
 {
-	public static const char* Message = "The specified argument at position ${1} is not of the correct type.";
+	public static const char* Message = "The specified argument at position ${1} is not of the correct type (got '${2}', expected '${3}').";
 
 	/// <summary>
 	/// Exception constructor for C++ code.
 	/// </summay>
-	unbound public ArgumentTypeNotValidException(int narg)
+	unbound public ArgumentTypeNotValidException(int narg, std::string got, std::string expect)
 	{
 		std::stringstream sstr;
 		sstr << narg;
 		this->Arguments.insert(this->Arguments.end(), sstr.str());
+		this->Arguments.insert(this->Arguments.end(), got);
+		this->Arguments.insert(this->Arguments.end(), expect);
 	}
 
 	/// <summary>
@@ -56,6 +58,6 @@ class Engine.ArgumentTypeNotValidException : Engine.InterpreterException
 
 	unbound void SetMessageL(::string value)
 	{
-		throw Engine::ReadOnlyPropertyException();
+		throw new Engine::ReadOnlyPropertyException();
 	}
 }

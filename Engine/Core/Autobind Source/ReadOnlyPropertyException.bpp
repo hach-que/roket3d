@@ -50,6 +50,6 @@ class Engine.ReadOnlyPropertyException : Engine.EngineException
 
 	unbound void SetMessageL(::string value)
 	{
-		throw Engine::ReadOnlyPropertyException();
+		throw new Engine::ReadOnlyPropertyException();
 	}
 }

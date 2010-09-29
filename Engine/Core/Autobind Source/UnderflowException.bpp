@@ -50,6 +50,6 @@ class Engine.UnderflowException : Engine.LowLevelException
 
 	unbound void SetMessageL(::string value)
 	{
-		throw Engine::ReadOnlyPropertyException();
+		throw new Engine::ReadOnlyPropertyException();
 	}
 }

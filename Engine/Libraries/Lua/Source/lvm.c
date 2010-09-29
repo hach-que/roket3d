@@ -400,6 +400,50 @@ int luaV_istypeval (lua_State *L, const TValue *t1, const TValue *t2) {
   return ttype(t1) == ttype(t2);
 }
 
+const char* luaV_gettypeval (lua_State *L, const TValue *t) {
+  const TValue *tm;
+  const TValue tv;
+  TValue *base;
+  switch (ttype(t))
+  {
+    case LUA_TNIL: 
+	case LUA_TNUMBER:
+	case LUA_TBOOLEAN:
+	case LUA_TLIGHTUSERDATA:
+	case LUA_TUSERDATA:
+	case LUA_TFUNCTION:
+	case LUA_TSTRING:
+	case LUA_TTHREAD: return luaT_typenames[ttype(t)];
+	case LUA_TTABLE: {
+      tm = fasttm(L, hvalue(t)->metatable, TM_TYPE);
+	  if (tm == NULL)
+		  return luaT_typenames[LUA_TTABLE]; /* just a standard table */
+
+      /* call the tm to get the type */
+      callTMresSingle(L, &tv, tm, t);  /* call TM */
+
+	  /* check to see whether it's a string or table value that was returned */
+	  if (tv.tt == LUA_TSTRING)
+	  {
+		  return svalue(&tv);
+	  }
+	  else if (tv.tt == LUA_TTABLE)
+	  {
+	    base = luaH_getnum(hvalue(&tv), 1);
+
+		if (base->tt != LUA_TSTRING)
+		  return luaT_typenames[LUA_TTABLE];
+		else
+		  return svalue(base);
+	  }
+	  else /* invalid value returned from one of the __type metamethods */
+	  {
+        return luaT_typenames[LUA_TTABLE];
+	  }
+	}
+  }
+}
+
 void luaV_concat (lua_State *L, int total, int last) {
   do {
     StkId top = L->base + last + 1;

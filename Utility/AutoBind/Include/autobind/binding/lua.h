@@ -23,7 +23,6 @@ template<class T>
 		typedef union
 		{
 			T *pT;
-			T &rT;
 		} UserDataType;
 
 	public:
@@ -57,27 +56,57 @@ template<class T>
 		{
 			// Convert to absolute reference.
 			if (narg < 0) narg = lua_gettop(L) + narg + 1;
-			else narg += 1;
 
 			// Check to make sure that it's a table at that
 			// position.  If it isn't, then it can't be a
 			// class.
 			if (lua_istable(L, narg))
 			{
-				// Get the value at the first index of the table, and
-				// push it onto the stack.
+				// Call lua_is to check to see whether the class is
+				// of the correct type (or of a derived type).  We
+				// push the type to compare against and then we have
+				// to repush the argument so that it's on top of the
+				// stack for lua_is.
+				Bindings<T>::PushType(L);
+				lua_pushvalue(L, narg);
+
+				// Check to make sure that it is of the correct type.
+				if (!lua_is(L))
+				{
+					// Throw an exception indicating that it is not of the
+					// correct type.
+					throw new Engine::ArgumentTypeNotValidException(narg,
+						lua_advtypename(L, narg), T::ClassName);
+				}
+
+				// Cleanup the stack after the type check (pop the copy of
+				// the userdata and the type to compare against).
+				lua_pop(L, 2);
+
+				// Now we get the value at the first index of the table,
+				// which is the userdata associated with the Lua object.
 				lua_gettablevalue(L, narg, 0);
 
-				// Convert the value that was just pushed onto the
-				// stack into userdata if possible.  The luaL_testudata
-				// checks to make sure that the class is the correct
-				// type before converting it.
-				UserDataType* ud = static_cast<UserDataType*>(luaL_testudata(L, -1, T::ClassName));
+				// Make sure it is a userdata type.
+				if (!lua_isuserdata(L, -1))
+				{
+					// Throw an exception indicating that it is not of the
+					// correct type.
+					throw new Engine::ArgumentTypeNotValidException(narg,
+						lua_advtypename(L, narg), T::ClassName);
+				}
+
+				// At this point we know that the userdata is of the correct
+				// type because we've previously checked with lua_is. Convert
+				// the value that was just pushed onto the stack into userdata
+				// if possible.
+				UserDataType* ud = static_cast<UserDataType*>(lua_touserdata(L, -1));
 				if (ud == NULL)
 				{
-					// Return NULL to indicate that the argument is not
-					// of the specified type.
-					return NULL;
+					// Throw an exception indicating that it is not of the
+					// correct type.
+					throw new Engine::ArgumentTypeNotValidException(narg,
+						lua_advtypename(L, narg), T::ClassName);
 				}
 
 				// Pop the value from the stack as we no longer need it.
@@ -89,9 +118,10 @@ template<class T>
 			}
 			else
 			{
-				// Return NULL to indicate that the argument could not
-				// be handled by the Bindings<> class.
-				return NULL;
+				// Throw an exception indicating that it is not of the
+				// correct type.
+				throw new Engine::ArgumentTypeNotValidException(narg,
+					lua_advtypename(L, narg), T::ClassName);
 			}
 		}
 
@@ -101,7 +131,6 @@ template<class T>
 		{
 			// Convert to absolute reference.
 			if (narg < 0) narg = lua_gettop(L) + narg + 1;
-			else narg += 1;
 
 			// Check to make sure that it's a table at that
 			// position.  If it isn't, then it can't be a
@@ -135,56 +164,6 @@ template<class T>
 				// Return false to indicate that the argument could not
 				// be handled by the Bindings<> class.
 				return false;
-			}
-		}
-
-		// A static function for retrieving an object from
-		// the arguments provided to a function, but returns
-		// a references so that virtual members point correctly.
-		// This function can't return NULL, so it always returns
-		// a valid T object, even if it wasn't pulled from
-		// the argument.
-		// TODO: Update comments inside function.
-		static T& GetArgumentRef(lua_State * L, int narg)
-		{
-			// Convert to absolute reference.
-			if (narg < 0) narg = lua_gettop(L) + narg + 1;
-			else narg += 1;
-
-			// Check to make sure that it's a table at that
-			// position.  If it isn't, then it can't be a
-			// class.
-			if (lua_istable(L, narg))
-			{
-				// Get the value at the first index of the table, and
-				// push it onto the stack.
-				lua_pushnumber(L, 0);
-				lua_gettable(L, narg);
-
-				// Convert the value that was just pushed onto the
-				// stack into userdata if possible.  The luaL_testudata
-				// checks to make sure that the class is the correct
-				// type before converting it.
-				UserDataType* ud = static_cast<UserDataType*>(lua_touserdata(L, -1));
-				if (ud == NULL)
-				{
-					// Return NULL to indicate that the argument is not
-					// of the specified type.
-					return Engine::Exception();
-				}
-
-				// Pop the value from the stack as we no longer need it.
-				lua_pop(L, 1);
-
-				// Return a pointer to the object in the specified argument
-				// position.
-				return ud->rT;
-			}
-			else
-			{
-				// Return NULL to indicate that the argument could not
-				// be handled by the Bindings<> class.
-				return Engine::Exception();
 			}
 		}
 
@@ -379,6 +358,12 @@ template<class T>
 			lua_setfield(L, LUA_REGISTRYINDEX, "Roket3D_Class_Construction_Temporary_Userdata");
 			lua_pop(L, 1);
 			lua_setfield(L, LUA_REGISTRYINDEX, "Roket3D_Class_Construction_Temporary_Table");
+
+			// There's a table at the start of the stack (unsure
+			// at this time what it holds).  Remove it so that
+			// the arguments are the only things on the stack
+			// when the constructor is called.
+			lua_remove(L, 1);
 
 			// Now call the class constructor.
 			T* obj = new T(L, true);
@@ -692,7 +677,7 @@ template<class T>
 
 		// This function wraps a specified exception and pushes
 		// it onto the Lua stack.
-		static int RaiseException(lua_State * L, Engine::Exception & err);
+		static int RaiseException(lua_State * L, Engine::Exception * err);
 
 		// This function is the callback issued by the Lua
 		// garbage collector when there are no more references
@@ -866,7 +851,7 @@ template<class T>
 				// We couldn't locate the parent table in Lua, so
 				// it might not be available yet.  We'll throw an
 				// exception to indicate this unexpected situation.
-				return Bindings<T>::RaiseException(L, Engine::InheritedClassNotFoundException());
+				return Bindings<T>::RaiseException(L, new Engine::InheritedClassNotFoundException());
 			}
 
 			// Now we have a table that describes the type of the
@@ -899,9 +884,11 @@ template<class T>
 		// with the : operator and not the . operator.  The
 		// . operator does not provide us with an instance
 		// context.
+		// TODO: Check that the first argument is of the
+		// correct type.
 		if (lua_gettop(L) == 0 || !lua_istable(L, 1))
 		{
-			return Bindings<T>::RaiseException(L, Engine::ContextNotProvidedException());
+			return Bindings<T>::RaiseException(L, new Engine::ContextNotProvidedException());
 		}
 
 		// Retrieve the index of the function from the
@@ -918,9 +905,10 @@ template<class T>
 		// Retrieve the userdata.
 		T** obj = static_cast<T**>(lua_touserdata(L, -1));
 
-		// Pop the original table off the stack so that
-		// argument 1 is at index 1 when the function is
-		// called.
+		// Remove the original table off the stack as well
+		// as the userdata so that argument 1 is at index 1
+		// when the function is called.
+		lua_remove(L, 1);
 		lua_pop(L, 1);
 
 		// Call the function and return it's result.
@@ -928,14 +916,14 @@ template<class T>
 		{
 			return __guarded<T>::__guard(*obj, T::Functions[i].Function, L);
 		}
-		catch (Engine::Exception & err)
+		catch (Engine::Exception * err)
 		{
 			return Bindings<T>::RaiseException(L, err);
 		}
 	}
 
 template<class T>
-	int Bindings<T>::RaiseException(lua_State * L, Engine::Exception & err)
+	int Bindings<T>::RaiseException(lua_State * L, Engine::Exception * err)
 	{
 		// Create a new table with which to return
 		// our new Lua exception.
@@ -954,8 +942,8 @@ template<class T>
 		// and getter functions to know what C++ object they
 		// are dealing with.
 		void** ud = (void**)lua_newuserdata(L, sizeof(void*));
-		err.IsExisting = true;
-		*ud = &err;
+		err->IsExisting = true;
+		*ud = err;
 
 		// Get the address of the userdata on the
 		// stack.
@@ -969,7 +957,7 @@ template<class T>
 		// Retrieve the metatable from the registry index (the
 		// one we set in the Register function) and set it as
 		// the metatable on the userdata.
-		luaL_getmetatable(L, err.GetName());
+		luaL_getmetatable(L, err->GetName());
 		lua_setmetatable(L, userdata);
 
 		// Set the first index of the table to the userdata
@@ -979,17 +967,17 @@ template<class T>
 		// Now we set the same metatable that we associated with
 		// the userdata as the metatable on the new object we
 		// are returning.
-		luaL_getmetatable(L, err.GetName());
+		luaL_getmetatable(L, err->GetName());
 		lua_setmetatable(L, newtable);
 
 		// Now we're going to register the properties with our
 		// metatable, so that setting or getting the properties
 		// on the Lua object will result in the appropriate
 		// callbacks being issued.
-		luaL_getmetatable(L, err.GetName());
-		for (int i = 0; err.Properties[i].Name != NULL; i++)
+		luaL_getmetatable(L, err->GetName());
+		for (int i = 0; err->Properties[i].Name != NULL; i++)
 		{
-			lua_pushstring(L, err.Properties[i].Name);
+			lua_pushstring(L, err->Properties[i].Name);
 			lua_pushnumber(L, i);
 			lua_settable(L, -3);
 		}
@@ -1000,11 +988,11 @@ template<class T>
 		// passing the correct context onto the class functions.
 		// Note that unlike the properties, the functions are
 		// associated with new object and not the metatable.
-		for (int i = 0; err.Functions[i].Name; i++)
+		for (int i = 0; err->Functions[i].Name; i++)
 		{
-			lua_pushstring(L, err.Functions[i].Name);
+			lua_pushstring(L, err->Functions[i].Name);
 			lua_pushnumber(L, i);
-			lua_pushcclosure(L, err.Dispatcher, 1);
+			lua_pushcclosure(L, err->Dispatcher, 1);
 			lua_settable(L, newtable);
 		}
 
@@ -1022,43 +1010,42 @@ inline numeric Bindings<numeric>::GetArgumentBase(lua_State * L, int narg)
 {
 	// Convert to absolute reference.
 	if (narg < 0) narg = lua_gettop(L) + narg + 1;
-	else narg += 1;
 
 	if (lua_isnumber(L, narg))
 		return lua_tonumber(L, narg);
 	else
-		throw Engine::ArgumentTypeNotValidException(narg);
+		throw new Engine::ArgumentTypeNotValidException(narg,
+			lua_advtypename(L, narg), lua_typename(L, LUA_TNUMBER));
 }
 
 inline ::string Bindings<::string>::GetArgumentBase(lua_State * L, int narg)
 {
 	// Convert to absolute reference.
 	if (narg < 0) narg = lua_gettop(L) + narg + 1;
-	else narg += 1;
 
 	if (lua_isstring(L, narg))
 		return lua_tostring(L, narg);
 	else
-		throw Engine::ArgumentTypeNotValidException(narg);
+		throw new Engine::ArgumentTypeNotValidException(narg,
+			lua_advtypename(L, narg), lua_typename(L, LUA_TSTRING));
 }
 
 inline bool Bindings<bool>::GetArgumentBase(lua_State * L, int narg)
 {
 	// Convert to absolute reference.
 	if (narg < 0) narg = lua_gettop(L) + narg + 1;
-	else narg += 1;
 
 	if (lua_isboolean(L, narg))
 		return (lua_toboolean(L, narg) == 1);
 	else
-		throw Engine::ArgumentTypeNotValidException(narg);
+		throw new Engine::ArgumentTypeNotValidException(narg,
+			lua_advtypename(L, narg), lua_typename(L, LUA_TBOOLEAN));
 }
 
 inline bool Bindings<numeric>::IsArgumentBase(lua_State * L, int narg)
 {
 	// Convert to absolute reference.
 	if (narg < 0) narg = lua_gettop(L) + narg + 1;
-	else narg += 1;
 
 	return (lua_isnumber(L, narg) == 1);
 }
@@ -1067,7 +1054,6 @@ inline bool Bindings<::string>::IsArgumentBase(lua_State * L, int narg)
 {
 	// Convert to absolute reference.
 	if (narg < 0) narg = lua_gettop(L) + narg + 1;
-	else narg += 1;
 
 	return (lua_isstring(L, narg) == 1);
 }
@@ -1076,7 +1062,6 @@ inline bool Bindings<bool>::IsArgumentBase(lua_State * L, int narg)
 {
 	// Convert to absolute reference.
 	if (narg < 0) narg = lua_gettop(L) + narg + 1;
-	else narg += 1;
 
 	return (lua_isboolean(L, narg) == 1);
 }
