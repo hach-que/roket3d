@@ -1,2 +1,0 @@
-Newton Physics is not open source and does not fall under the LGPL licensing.  It
-is not written or owned in any way by Roket Enterprises.
