@@ -6,3 +6,11 @@ C:\Users\James Rhodes\Documents\Projects\Roket3D\Utility\AutoBind\bin\Debug\LibA
 C:\Users\James Rhodes\Documents\Projects\Roket3D\Utility\AutoBind\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\James Rhodes\Documents\Projects\Roket3D\Utility\AutoBind\obj\Debug\AutoBind.exe
 C:\Users\James Rhodes\Documents\Projects\Roket3D\Utility\AutoBind\obj\Debug\AutoBind.pdb
+Y:\Projects\Roket3D\Utility\AutoBind\bin\Debug\AutoBind.exe.config
+Y:\Projects\Roket3D\Utility\AutoBind\bin\Debug\AutoBind.exe
+Y:\Projects\Roket3D\Utility\AutoBind\bin\Debug\AutoBind.pdb
+Y:\Projects\Roket3D\Utility\AutoBind\bin\Debug\LibAutoBind.dll
+Y:\Projects\Roket3D\Utility\AutoBind\bin\Debug\LibAutoBind.pdb
+Y:\Projects\Roket3D\Utility\AutoBind\obj\Debug\ResolveAssemblyReference.cache
+Y:\Projects\Roket3D\Utility\AutoBind\obj\Debug\AutoBind.exe
+Y:\Projects\Roket3D\Utility\AutoBind\obj\Debug\AutoBind.pdb
