@@ -40,4 +40,17 @@ class Engine.Unmanaged.GUI.RGUIEnvironment
 	{
 		return this->m_Environment;
 	}
+
+	/// <summary>
+	/// Adds a button to the current GUI environment.
+	/// <summary>
+	/// <returns>A reference to the created button.</returns>
+	bound Engine::Unmanaged::GUI::RGUIButton AddButton(Engine::Collections::RRectangle rect,
+														Engine::Unmanaged::GUI::RGUIElement parent [NULL],
+														numeric id [-1],
+														::string text [NULL],
+														::string tooltiptext [NULL])
+	{
+
+	}
 }

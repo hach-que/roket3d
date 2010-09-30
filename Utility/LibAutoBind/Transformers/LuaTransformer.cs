@@ -203,6 +203,8 @@ namespace LibAutoBind.Transformers
                         args += a + ", ";
                     if (args != "")
                         args = args.Substring(0, args.Length - 2);
+                    Regex r = new Regex("\\[[^\\]\\]",RegexOptions.Multiline);
+                    args = r.Replace(args, "= $1");
                     if (funcname == cls.ClassOnly)
                     {
                         if (keys.Trim().Length > 0) keys = keys.Trim() + " ";
@@ -452,6 +454,8 @@ namespace LibAutoBind.Transformers
                             args += a + ", ";
                         if (args != "")
                             args = args.Substring(0, args.Length - 2);
+                        Regex r = new Regex("\\[[^\\]\\]", RegexOptions.Multiline);
+                        args = r.Replace(args, "");
                         if (funcname == cls.ClassOnly)
                         {
                             if (keys.Trim().Length > 0) keys = keys.Trim() + " ";

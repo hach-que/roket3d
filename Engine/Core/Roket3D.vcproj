@@ -2565,6 +2565,18 @@
 				</Filter>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="Test Data"
+			>
+			<File
+				RelativePath="..\Testing\Game.rs"
+				>
+			</File>
+			<File
+				RelativePath="..\Testing\GameInfo.xml"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\AutoBind.xml"
 			>
