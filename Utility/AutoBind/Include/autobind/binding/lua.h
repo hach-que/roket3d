@@ -135,7 +135,7 @@ template<class T>
 		{
 			if (narg < 0) narg = lua_gettop(L) + narg + 1;
 
-			if (narg > lua_gettop(L)) return def;
+			if (narg > lua_gettop(L) || lua_isnil(L, narg)) return def;
 
 			if (lua_istable(L, narg))
 			{
@@ -1103,7 +1103,7 @@ inline numeric Bindings<numeric>::GetArgumentBase(lua_State * L, int narg, numer
 	// Convert to absolute reference.
 	if (narg < 0) narg = lua_gettop(L) + narg + 1;
 
-	if (narg > lua_gettop(L)) return def;
+	if (narg > lua_gettop(L) || lua_isnil(L, narg)) return def;
 
 	if (lua_isnumber(L, narg))
 		return lua_tonumber(L, narg);
@@ -1117,7 +1117,7 @@ inline ::string Bindings<::string>::GetArgumentBase(lua_State * L, int narg, ::s
 	// Convert to absolute reference.
 	if (narg < 0) narg = lua_gettop(L) + narg + 1;
 
-	if (narg > lua_gettop(L)) return def;
+	if (narg > lua_gettop(L) || lua_isnil(L, narg)) return def;
 
 	if (lua_isstring(L, narg))
 		return lua_tostring(L, narg);
@@ -1131,7 +1131,7 @@ inline bool Bindings<bool>::GetArgumentBase(lua_State * L, int narg, bool def)
 	// Convert to absolute reference.
 	if (narg < 0) narg = lua_gettop(L) + narg + 1;
 
-	if (narg > lua_gettop(L)) return def;
+	if (narg > lua_gettop(L) || lua_isnil(L, narg)) return def;
 
 	if (lua_isboolean(L, narg))
 		return (lua_toboolean(L, narg) == 1);
