@@ -72,7 +72,7 @@ namespace AutoBind
             Console.Write(" [cpp] ");
             if (copyh)
             {
-                File.Delete(cppbase + '/' + basename + ".h");
+                File.Delete(hbase + '/' + basename + ".h");
                 File.Move(hbase + '/' + basename + ".h.tmp", hbase + '/' + basename + ".h");
                 Console.Write("[h  ] ");
             }

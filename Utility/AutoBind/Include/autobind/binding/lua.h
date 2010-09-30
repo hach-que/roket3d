@@ -124,6 +124,55 @@ template<class T>
 					lua_advtypename(L, narg), T::ClassName);
 			}
 		}
+		
+		// Same as the previous function but accepts a default
+		// parameter in case the number of arguments passed
+		// is less than narg.  Still triggers type errors
+		// if the wrong type is in narg.  Comments are
+		// omitted because they are the same as the GetArgument
+		// function above.
+		static T* GetArgument(lua_State * L, int narg, T * def)
+		{
+			if (narg < 0) narg = lua_gettop(L) + narg + 1;
+
+			if (narg > lua_gettop(L)) return def;
+
+			if (lua_istable(L, narg))
+			{
+				Bindings<T>::PushType(L);
+				lua_pushvalue(L, narg);
+
+				if (!lua_is(L))
+				{
+					throw new Engine::ArgumentTypeNotValidException(narg,
+						lua_advtypename(L, narg), T::ClassName);
+				}
+
+				lua_pop(L, 2);
+				lua_gettablevalue(L, narg, 0);
+
+				if (!lua_isuserdata(L, -1))
+				{
+					throw new Engine::ArgumentTypeNotValidException(narg,
+						lua_advtypename(L, narg), T::ClassName);
+				}
+
+				UserDataType* ud = static_cast<UserDataType*>(lua_touserdata(L, -1));
+				if (ud == NULL)
+				{
+					throw new Engine::ArgumentTypeNotValidException(narg,
+						lua_advtypename(L, narg), T::ClassName);
+				}
+
+				lua_pop(L, 1);
+				return ud->pT;
+			}
+			else
+			{
+				throw new Engine::ArgumentTypeNotValidException(narg,
+					lua_advtypename(L, narg), T::ClassName);
+			}
+		}
 
 		// A static function for for detecting whether or not an
 		// argument provided to a function is a specific object.
@@ -172,6 +221,12 @@ template<class T>
 		// to a function.  It is also used during property setting,
 		// where arg should be -1 to get the value that was assigned.
 		static T GetArgumentBase(lua_State * L, int narg);
+
+		// Same as the previous function, but also accepts a default
+		// argument in case the number of arguments is less than
+		// narg (still triggers type errors if an invalid argument
+		// is passed in that slot though).
+		static T GetArgumentBase(lua_State * L, int narg, T def);
 
 		// A static function for detecting whether or not an
 		// argument provided to a function is a specific base object
@@ -1034,6 +1089,49 @@ inline bool Bindings<bool>::GetArgumentBase(lua_State * L, int narg)
 {
 	// Convert to absolute reference.
 	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+
+	if (lua_isboolean(L, narg))
+		return (lua_toboolean(L, narg) == 1);
+	else
+		throw new Engine::ArgumentTypeNotValidException(narg,
+			lua_advtypename(L, narg), lua_typename(L, LUA_TBOOLEAN));
+}
+
+// Default versions.
+inline numeric Bindings<numeric>::GetArgumentBase(lua_State * L, int narg, numeric def)
+{
+	// Convert to absolute reference.
+	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+
+	if (narg > lua_gettop(L)) return def;
+
+	if (lua_isnumber(L, narg))
+		return lua_tonumber(L, narg);
+	else
+		throw new Engine::ArgumentTypeNotValidException(narg,
+			lua_advtypename(L, narg), lua_typename(L, LUA_TNUMBER));
+}
+
+inline ::string Bindings<::string>::GetArgumentBase(lua_State * L, int narg, ::string def)
+{
+	// Convert to absolute reference.
+	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+
+	if (narg > lua_gettop(L)) return def;
+
+	if (lua_isstring(L, narg))
+		return lua_tostring(L, narg);
+	else
+		throw new Engine::ArgumentTypeNotValidException(narg,
+			lua_advtypename(L, narg), lua_typename(L, LUA_TSTRING));
+}
+
+inline bool Bindings<bool>::GetArgumentBase(lua_State * L, int narg, bool def)
+{
+	// Convert to absolute reference.
+	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+
+	if (narg > lua_gettop(L)) return def;
 
 	if (lua_isboolean(L, narg))
 		return (lua_toboolean(L, narg) == 1);

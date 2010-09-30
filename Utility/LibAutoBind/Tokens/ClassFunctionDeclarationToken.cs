@@ -17,7 +17,7 @@ namespace LibAutoBind.Tokens
                 (l.Char >= 'A' && l.Char <= 'Z') || l.Char == '\n' || l.Char == '\t' || l.Char == '\r' ||
                 l.Char == '{' || l.Char == '_' || l.Char == ',' || l.Char == '(' || l.Char == ')' ||
                 l.Char == ':' || l.Char == ';' || l.Char == '*' || l.Char == '<' || l.Char == '>' ||
-                l.Char == '[' || l.Char == ']'))
+                l.Char == '[' || l.Char == ']' || l.Char == '-' || l.Char == '.'))
             {
                 l.ForceExclude(); // contains characters we can't accept.
                 return;
@@ -52,7 +52,7 @@ namespace LibAutoBind.Tokens
                     return; // Skip if we don't have a terminating character.
                 Regex r = new Regex(
                     "(?<Type>[a-zA-Z][a-zA-z0-9_\\:]+[ \t\r\n\\*]+)?" +
-                    "(?<Name>[a-zA-Z][a-zA-z0-9_]*[ \t\r\n]*\\([ \t\r\na-zA-z0-9_,\\:\\*\\<\\>\\[\\]]*\\))[ \t\r\n]*\\{"
+                    "(?<Name>[a-zA-Z][a-zA-z0-9_]*[ \t\r\n]*\\([ \t\r\na-zA-z0-9_,-\\.\\:\\*\\<\\>\\[\\]]*\\))[ \t\r\n]*\\{"
                     );
                 Match m = r.Match(decl);
                 if (m.Success)

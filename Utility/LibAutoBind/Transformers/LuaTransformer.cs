@@ -203,7 +203,7 @@ namespace LibAutoBind.Transformers
                         args += a + ", ";
                     if (args != "")
                         args = args.Substring(0, args.Length - 2);
-                    Regex r = new Regex("\\[[^\\]\\]",RegexOptions.Multiline);
+                    Regex r = new Regex("\\[[^\\]]",RegexOptions.Multiline);
                     args = r.Replace(args, "= $1");
                     if (funcname == cls.ClassOnly)
                     {
@@ -454,8 +454,8 @@ namespace LibAutoBind.Transformers
                             args += a + ", ";
                         if (args != "")
                             args = args.Substring(0, args.Length - 2);
-                        Regex r = new Regex("\\[[^\\]\\]", RegexOptions.Multiline);
-                        args = r.Replace(args, "");
+                        Regex re = new Regex("\\[[^\\]]", RegexOptions.Multiline);
+                        args = re.Replace(args, "");
                         if (funcname == cls.ClassOnly)
                         {
                             if (keys.Trim().Length > 0) keys = keys.Trim() + " ";
@@ -477,17 +477,20 @@ namespace LibAutoBind.Transformers
 
                             foreach (string a in n.Arguments)
                             {
-                                Regex ar = new Regex("(?<Type>[a-zA-Z0-9_\\.\\:]+)[ \r\n\t]+(?<Name>[a-zA-Z0-9_\\.]+)");
+                                Regex ar = new Regex("(?<Type>[a-zA-Z0-9_\\.\\:]+)[ \r\n\t]+(?<Name>[a-zA-Z0-9_\\.]+)([ \r\n\t]+\\[(?<Default>[^\\]]+)\\])?");
                                 Match m = ar.Match(a);
                                 if (m.Success)
                                 {
                                     string type = m.Groups["Type"].Value;
                                     string name = m.Groups["Name"].Value;
+                                    string defv = "";
+                                    if (m.Groups["Default"].Success)
+                                        defv = ", " + m.Groups["Default"].Value;
 
                                     if (Keywords.LuaTypeKeywords.Contains(type) || type == "bool")
-                                        this.WriteCodeLine("        " + type + " " + name + " = Bindings<" + type + ">::GetArgumentBase(L, " + ai + ");");
+                                        this.WriteCodeLine("        " + type + " " + name + " = Bindings<" + type + ">::GetArgumentBase(L, " + ai + "" + defv + ");");
                                     else
-                                        this.WriteCodeLine("        " + type + " * " + name + " = Bindings<" + type + ">::GetArgument(L, " + ai + ");");
+                                        this.WriteCodeLine("        " + type + " * " + name + " = Bindings<" + type + ">::GetArgument(L, " + ai + "" + defv + ");");
                                     if (!propertyMethods.Contains(n.Name))
                                         ai += 1;
                                 }
