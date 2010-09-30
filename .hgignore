@@ -1,0 +1,16 @@
+glob:Engine/Build/Objects/*
+glob:*.pdb
+glob:*.ncb
+glob:Engine/Core/Generated Headers/*
+glob:Engine/Core/Generated Source/*
+glob:Utility/AutoBind/obj/*
+glob:Utility/LibAutoBind/obj/*
+glob:IDE.NET/Dependencies/DockPanelSuite/obj/*
+glob:IDE.NET/Roket3D/obj/*
+glob:*.csproj.*user
+glob:IDE.NET/Roket3D/bin/*
+glob:IDE.NET/Dependencies/DockPanelSuite/bin/*
+glob:Utility/LibAutoBind/bin/*
+glob:Utility/AutoBind/bin/*
+glob:Engine/Build/Output/*
+glob:*.vcproj.*user

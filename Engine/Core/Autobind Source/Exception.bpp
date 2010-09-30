@@ -19,7 +19,13 @@ class Engine.Exception
 	/// </summay>
 	unbound public Exception()
 	{
-		this->GatherEnvironmentData(Roket3D::Program::GlobalState);
+		if (Roket3D::Program::GlobalState != NULL)
+			this->GatherEnvironmentData(Roket3D::Program::GlobalState);
+		else
+		{
+			this->LineNumber = 0;
+			this->FileName = "<outside lua>";
+		}
 	}
 
 	/// <summary>
