@@ -1,4 +1,6 @@
 #import Engine.InternalConstructorOnlyException
+#import Engine.Collections.RRectangle
+#import Engine.Unmanaged.GUI.RGUIElement
 #include "IGUIEnvironment.h"
 
 class Engine.Unmanaged.GUI.RGUIEnvironment
