@@ -50,9 +50,9 @@ class Engine.Unmanaged.GUI.RGUIEnvironment
 	bound Engine::Unmanaged::GUI::RGUIButton AddButton(Engine::Collections::RRectangle rect,
 														Engine::Unmanaged::GUI::RGUIElement parent [NULL],
 														numeric id [-1],
-														::string text [NULL],
-														::string tooltiptext [NULL])
+														::string text [""],
+														::string tooltiptext [""])
 	{
-
+		
 	}
 }
