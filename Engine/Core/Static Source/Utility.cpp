@@ -79,4 +79,26 @@ namespace Roket3D
 	{
 		return Utility::Replace(input, from, to, 1);
 	}
+
+	// The next 2 functions are copied (and modified) from:
+	// http://www.daniweb.com/forums/post422997.html#post422997
+	std::wstring Utility::ToUnicode(::string text)
+	{
+		wostringstream wstm ;
+		const ctype<wchar_t>& ctfacet = 
+							use_facet< ctype<wchar_t> >( wstm.getloc() ) ;
+		for( size_t i=0 ; i<strlen(text) ; ++i ) 
+				  wstm << ctfacet.widen( text[i] ) ;
+		return wstm.str();
+	}
+	
+	std::string Utility::ToASCII(::wstring text)
+	{
+		ostringstream stm;
+		const ctype<char>& ctfacet = 
+							 use_facet< ctype<char> >( stm.getloc() ) ;
+		for( size_t i=0 ; i<wcslen(text) ; ++i ) 
+					  stm << ctfacet.narrow( text[i], 0 ) ;
+		return stm.str();
+	}
 }

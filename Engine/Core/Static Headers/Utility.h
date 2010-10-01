@@ -5,6 +5,7 @@
 #define STATIC_Utility
 
 #include <string>
+#include "autobind/types.h"
 
 namespace Roket3D
 {
@@ -16,6 +17,8 @@ namespace Roket3D
 			static std::string Replace(std::string input, std::string from, std::string to, int count);
 			static std::string ReplaceAll(std::string input, std::string from, std::string to);
 			static std::string ReplaceOnce(std::string input, std::string from, std::string to);
+			static std::wstring ToUnicode(::string text);
+			static std::string ToASCII(::wstring text);
 	};
 }
 
