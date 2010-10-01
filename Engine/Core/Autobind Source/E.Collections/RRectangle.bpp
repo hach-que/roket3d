@@ -1,6 +1,179 @@
+#include "Irrlicht.h"
+#include "rect.h"
+
 class Engine.Collections.RRectangle
+   as Engine.Collections.Rectangle
 {
+	private double p_X1;
+	private double p_Y1;
+	private double p_X2;
+	private double p_Y2;
+	private irr::core::rect<numeric> m_Rectangle;
+
+	/// <summary>
+	/// The default constructor for an Rectangle object, initalizing
+	/// the rectangle information to have a value of (0, 0, 0, 0).
+	/// </summary>
 	bound RRectangle()
 	{
+		this->p_X1 = 0;
+		this->p_Y1 = 0;
+		this->p_X2 = 0;
+		this->p_Y2 = 0;
+		this->m_Rectangle = irr::core::rect<numeric>(0, 0, 0, 0);
+	}
+
+	/// <summary>
+	/// The recommended constructor for an Rectangle object, initalizing
+	/// the rectangle information to have a value of (x1, y1, x2, y2).
+	/// </summary>
+	/// <param name="x1">The upper-left X component.</param>
+	/// <param name="y1">The upper-left Y component.</param>
+	/// <param name="x2">The lower-right X component.</param>
+	/// <param name="y2">The lower-right Y component.</param>
+	bound RRectangle(numeric x1, numeric y1, numeric x2, numeric y2)
+	{
+		this->p_X1 = x1;
+		this->p_Y1 = y1;
+		this->p_X2 = x2;
+		this->p_Y2 = y2;
+		this->m_Rectangle = irr::core::rect<numeric>(x1, y1, x2, y2);
+	}
+
+	/// <summary>
+	/// The upper-left X component of the rectangle.
+	/// </summary>	
+	bound property numeric X1
+	{
+		get: call GetX1;
+		set: call SetX1;
+	}
+
+	/// <summary>
+	/// The upper-left Y component of the rectangle.
+	/// </summary>	
+	bound property numeric Y1
+	{
+		get: call GetY1;
+		set: call SetY1;
+	}
+
+	/// <summary>
+	/// The lower-right X component of the rectangle.
+	/// </summary>	
+	bound property numeric X2
+	{
+		get: call GetX2;
+		set: call SetX2;
+	}
+
+	/// <summary>
+	/// The lower-right Y component of the rectangle.
+	/// </summary>	
+	bound property numeric Y2
+	{
+		get: call GetY2;
+		set: call SetY2;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Irrlicht object to associate with this Rectangle instance.</param>
+	unbound public void SetObject(irr::core::rect<numeric> obj)
+	{
+		this->m_Rectangle = obj;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Irrlicht object to associate with this Rectangle instance.</param>
+	unbound public void SetObject(irr::core::rect<int> obj)
+	{
+		this->m_Rectangle = irr::core::rect<numeric>(obj.UpperLeftCorner.X, obj.UpperLeftCorner.Y, obj.LowerRightCorner.X, obj.LowerRightCorner.Y);
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::core::rect<numeric> GetObject()
+	{
+		return this->m_Rectangle;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::core::rect<int> GetObjectAsIntRect()
+	{
+		return irr::core::rect<int>(this->m_Rectangle.UpperLeftCorner.X, this->m_Rectangle.UpperLeftCorner.Y, this->m_Rectangle.LowerRightCorner.X, this->m_Rectangle.LowerRightCorner.Y);
+	}
+
+	// Property handlers
+	unbound void SetX1(numeric value)
+	{
+		this->p_X1 = value;
+		this->m_Rectangle.UpperLeftCorner.X = value;
+
+		return;
+	}
+
+	unbound numeric GetX1()
+	{
+		if ((float)this->p_X1 == this->m_Rectangle.UpperLeftCorner.X)
+			return this->p_X1;
+
+		return this->m_Rectangle.UpperLeftCorner.X;
+	}
+
+	unbound void SetY1(numeric value)
+	{
+		this->p_Y1 = value;
+		this->m_Rectangle.UpperLeftCorner.Y = value;
+
+		return;
+	}
+
+	unbound numeric GetY1()
+	{
+		if ((float)this->p_Y1 == this->m_Rectangle.UpperLeftCorner.Y)
+			return this->p_Y1;
+
+		return this->m_Rectangle.UpperLeftCorner.Y;
+	}
+
+	unbound void SetX2(numeric value)
+	{
+		this->p_X2 = value;
+		this->m_Rectangle.LowerRightCorner.X = value;
+
+		return;
+	}
+
+	unbound numeric GetX2()
+	{
+		if ((float)this->p_X2 == this->m_Rectangle.LowerRightCorner.X)
+			return this->p_X2;
+
+		return this->m_Rectangle.LowerRightCorner.X;
+	}
+
+	unbound void SetY2(numeric value)
+	{
+		this->p_Y2 = value;
+		this->m_Rectangle.LowerRightCorner.Y = value;
+
+		return;
+	}
+
+	unbound numeric GetY2()
+	{
+		if ((float)this->p_Y2 == this->m_Rectangle.LowerRightCorner.Y)
+			return this->p_Y2;
+
+		return this->m_Rectangle.LowerRightCorner.Y;
 	}
 }

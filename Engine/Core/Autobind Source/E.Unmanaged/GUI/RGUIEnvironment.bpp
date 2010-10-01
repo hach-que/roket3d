@@ -1,7 +1,12 @@
 #import Engine.InternalConstructorOnlyException
+#import Engine.ObjectDisposedException
 #import Engine.Collections.RRectangle
 #import Engine.Unmanaged.GUI.RGUIElement
+#import Engine.Unmanaged.GUI.RGUIButton
 #include "IGUIEnvironment.h"
+#include "IGUIElement.h"
+#include "IGUIButton.h"
+#include "Utility.h"
 
 class Engine.Unmanaged.GUI.RGUIEnvironment
    as Engine.Unmanaged.GUI.Environment
@@ -44,15 +49,49 @@ class Engine.Unmanaged.GUI.RGUIEnvironment
 	}
 
 	/// <summary>
+	/// Draws all of the elements owned by this GUI environment.
+	/// </summary>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void Draw()
+	{
+		if (this->m_IsEnvironmentSet)
+		{
+			this->m_Environment->drawAll();
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
 	/// Adds a button to the current GUI environment.
 	/// <summary>
 	/// <returns>A reference to the created button.</returns>
+	/// <exception>Engine::ObjectDisposedException</exception>
 	bound Engine::Unmanaged::GUI::RGUIButton AddButton(Engine::Collections::RRectangle rect,
 														Engine::Unmanaged::GUI::RGUIElement parent [NULL],
 														numeric id [-1],
 														::string text [""],
 														::string tooltiptext [""])
 	{
-		
+		if (this->m_IsEnvironmentSet)
+		{
+			::wstring textw = Roket3D::Utility::ToUnicode(text).c_str();
+			::wstring tooltiptextw = Roket3D::Utility::ToUnicode(tooltiptext).c_str();
+			Engine::Unmanaged::GUI::RGUIButton * ret = Bindings<Engine::Unmanaged::GUI::RGUIButton>::CreateNew(L);
+			irr::gui::IGUIElement * par = (parent == NULL) ? NULL : parent->GetObject();
+			irr::gui::IGUIButton * irr = this->m_Environment->addButton(
+				rect->GetObjectAsIntRect(),
+				par,
+				id,
+				textw,
+				tooltiptextw
+				);
+			ret->SetObject(irr);
+	
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
 	}
 }

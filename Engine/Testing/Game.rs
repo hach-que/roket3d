@@ -6,6 +6,11 @@ function Run()
     backcolor = Engine.Collections.Color(255, 255, 0, 0)
     up = true
     
+    -- Add a GUI button
+    button = device.GUIEnvironment:AddButton(
+		Engine.Collections.Rectangle(20, 20, 100, 40),
+		nil, nil, "My Button!")
+    
     while (device.Running) do
         if (up) then
             backcolor.Green = backcolor.Green + 1
@@ -20,6 +25,7 @@ function Run()
         end
         backcolor.Red = 255 - backcolor.Green
         device.VideoDriver:BeginScene(backcolor, true, true);
+        device.GUIEnvironment:Draw();
         device.VideoDriver:EndScene();
     end
     

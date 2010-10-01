@@ -13,6 +13,7 @@
 
 typedef lua_Number numeric;
 typedef const char* string;
+typedef const wchar_t* wstring;
 typedef void table;
 
 // TODO: Replace the typedefs with actual classes
