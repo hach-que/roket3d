@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\ALUT\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\OGG\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\Vorbis\Include&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\ALUT\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\OGG\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\Vorbis\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\OpenAL\Include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -65,7 +65,7 @@
 				Name="VCLibrarianTool"
 				AdditionalDependencies=" openal32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="&quot;C:\Program Files\OpenAL 1.1 SDK\libs\Win32&quot;"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\Engine\Libraries\Audio\OpenAL\Binaries&quot;"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -108,7 +108,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\ALUT\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\OGG\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\Vorbis\Include&quot;;&quot;C:\Program Files\OpenAL 1.1 SDK\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\ALUT\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\OGG\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\Vorbis\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\OpenAL\Include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -129,7 +129,7 @@
 				Name="VCLibrarianTool"
 				AdditionalDependencies=" openal32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories="&quot;C:\Program Files\OpenAL 1.1 SDK\libs\Win32&quot;"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\Engine\Libraries\Audio\OpenAL\Binaries&quot;"
 				IgnoreAllDefaultLibraries="true"
 				IgnoreDefaultLibraryNames="msvcprt;MSVCRT"
 			/>
