@@ -3,9 +3,49 @@
 #import Engine.Collections.RRectangle
 #import Engine.Unmanaged.GUI.RGUIElement
 #import Engine.Unmanaged.GUI.RGUIButton
+#import Engine.Unmanaged.GUI.RGUICheckBox
+#import Engine.Unmanaged.GUI.RGUIColorSelectDialog
+#import Engine.Unmanaged.GUI.RGUIComboBox
+#import Engine.Unmanaged.GUI.RGUIContextMenu
+#import Engine.Unmanaged.GUI.RGUIEditBox
+#import Engine.Unmanaged.GUI.RGUIFileOpenDialog
+#import Engine.Unmanaged.GUI.RGUIFont
+#import Engine.Unmanaged.GUI.RGUIImage
+#import Engine.Unmanaged.GUI.RGUIInOutFader
+#import Engine.Unmanaged.GUI.RGUIListBox
+#import Engine.Unmanaged.GUI.RGUIMeshViewer
+#import Engine.Unmanaged.GUI.RGUIScrollBar
+#import Engine.Unmanaged.GUI.RGUISkin
+#import Engine.Unmanaged.GUI.RGUISpinBox
+#import Engine.Unmanaged.GUI.RGUISpriteBank
+#import Engine.Unmanaged.GUI.RGUIStaticText
+#import Engine.Unmanaged.GUI.RGUITabControl
+#import Engine.Unmanaged.GUI.RGUITable
+#import Engine.Unmanaged.GUI.RGUIToolBar
+#import Engine.Unmanaged.GUI.RGUIWindow
 #include "IGUIEnvironment.h"
 #include "IGUIElement.h"
 #include "IGUIButton.h"
+#include "IGUICheckBox.h"
+#include "IGUIColorSelectDialog.h"
+#include "IGUIComboBox.h"
+#include "IGUIContextMenu.h"
+#include "IGUIEditBox.h"
+#include "IGUIFileOpenDialog.h"
+#include "IGUIFont.h"
+#include "IGUIImage.h"
+#include "IGUIInOutFader.h"
+#include "IGUIListBox.h"
+#include "IGUIMeshViewer.h"
+#include "IGUIScrollBar.h"
+#include "IGUISkin.h"
+#include "IGUISpinBox.h"
+#include "IGUISpriteBank.h"
+#include "IGUIStaticText.h"
+#include "IGUITabControl.h"
+#include "IGUITable.h"
+#include "IGUIToolBar.h"
+#include "IGUIWindow.h"
 #include "Utility.h"
 
 class Engine.Unmanaged.GUI.RGUIEnvironment
@@ -76,16 +116,154 @@ class Engine.Unmanaged.GUI.RGUIEnvironment
 	{
 		if (this->m_IsEnvironmentSet)
 		{
-			::wstring textw = Roket3D::Utility::ToUnicode(text).c_str();
-			::wstring tooltiptextw = Roket3D::Utility::ToUnicode(tooltiptext).c_str();
 			Engine::Unmanaged::GUI::RGUIButton * ret = Bindings<Engine::Unmanaged::GUI::RGUIButton>::CreateNew(L);
 			irr::gui::IGUIElement * par = (parent == NULL) ? NULL : parent->GetObject();
 			irr::gui::IGUIButton * irr = this->m_Environment->addButton(
 				rect->GetObjectAsIntRect(),
 				par,
 				id,
-				textw,
-				tooltiptextw
+				text,
+				tooltiptext
+				);
+			ret->SetObject(irr);
+	
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Adds a checkbox to the current GUI environment.
+	/// <summary>
+	/// <returns>A reference to the created checkbox.</returns>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound Engine::Unmanaged::GUI::RGUICheckBox AddCheckBox(bool checked,
+														Engine::Collections::RRectangle rect,
+														Engine::Unmanaged::GUI::RGUIElement parent [NULL],
+														numeric id [-1],
+														::string text [""])
+	{
+		if (this->m_IsEnvironmentSet)
+		{
+			Engine::Unmanaged::GUI::RGUICheckBox * ret = Bindings<Engine::Unmanaged::GUI::RGUICheckBox>::CreateNew(L);
+			irr::gui::IGUIElement * par = (parent == NULL) ? NULL : parent->GetObject();
+			irr::gui::IGUICheckBox * irr = this->m_Environment->addCheckBox(
+				checked,
+				rect->GetObjectAsIntRect(),
+				par,
+				id,
+				text
+				);
+			ret->SetObject(irr);
+	
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Adds a color select dialog to the current GUI environment.
+	/// <summary>
+	/// <returns>A reference to the created checkbox.</returns>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound Engine::Unmanaged::GUI::RGUIColorSelectDialog AddColorSelectDialog(::string title [""],
+														bool modal [true],
+														Engine::Unmanaged::GUI::RGUIElement parent [NULL],
+														numeric id [-1])
+	{
+		if (this->m_IsEnvironmentSet)
+		{
+			Engine::Unmanaged::GUI::RGUIColorSelectDialog * ret = Bindings<Engine::Unmanaged::GUI::RGUIColorSelectDialog>::CreateNew(L);
+			irr::gui::IGUIElement * par = (parent == NULL) ? NULL : parent->GetObject();
+			irr::gui::IGUIColorSelectDialog * irr = this->m_Environment->addColorSelectDialog(
+				title,
+				modal,
+				par,
+				id
+				);
+			ret->SetObject(irr);
+	
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Adds a combobox to the current GUI environment.
+	/// <summary>
+	/// <returns>A reference to the created combobox.</returns>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound Engine::Unmanaged::GUI::RGUIComboBox AddComboBox(Engine::Collections::RRectangle rect,
+														Engine::Unmanaged::GUI::RGUIElement parent [NULL],
+														numeric id [-1])
+	{
+		if (this->m_IsEnvironmentSet)
+		{
+			Engine::Unmanaged::GUI::RGUIComboBox * ret = Bindings<Engine::Unmanaged::GUI::RGUIComboBox>::CreateNew(L);
+			irr::gui::IGUIElement * par = (parent == NULL) ? NULL : parent->GetObject();
+			irr::gui::IGUIComboBox * irr = this->m_Environment->addComboBox(
+				rect->GetObjectAsIntRect(),
+				par,
+				id
+				);
+			ret->SetObject(irr);
+	
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Adds a context menu to the current GUI environment.
+	/// <summary>
+	/// <returns>A reference to the created context menu.</returns>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound Engine::Unmanaged::GUI::RGUIContextMenu AddContextMenu(Engine::Collections::RRectangle rect,
+														Engine::Unmanaged::GUI::RGUIElement parent [NULL],
+														numeric id [-1])
+	{
+		if (this->m_IsEnvironmentSet)
+		{
+			Engine::Unmanaged::GUI::RGUIContextMenu * ret = Bindings<Engine::Unmanaged::GUI::RGUIContextMenu>::CreateNew(L);
+			irr::gui::IGUIElement * par = (parent == NULL) ? NULL : parent->GetObject();
+			irr::gui::IGUIContextMenu * irr = this->m_Environment->addContextMenu(
+				rect->GetObjectAsIntRect(),
+				par,
+				id
+				);
+			ret->SetObject(irr);
+	
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Adds a editbox to the current GUI environment.
+	/// <summary>
+	/// <returns>A reference to the created editbox.</returns>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound Engine::Unmanaged::GUI::RGUIEditBox AddEditBox(::string text,
+														Engine::Collections::RRectangle rect,
+														bool border [true],
+														Engine::Unmanaged::GUI::RGUIElement parent [NULL],
+														numeric id [-1])
+	{
+		if (this->m_IsEnvironmentSet)
+		{
+			Engine::Unmanaged::GUI::RGUIEditBox * ret = Bindings<Engine::Unmanaged::GUI::RGUIEditBox>::CreateNew(L);
+			irr::gui::IGUIElement * par = (parent == NULL) ? NULL : parent->GetObject();
+			irr::gui::IGUIEditBox * irr = this->m_Environment->addEditBox(
+				text,
+				rect->GetObjectAsIntRect(),
+				border,
+				par,
+				id
 				);
 			ret->SetObject(irr);
 	

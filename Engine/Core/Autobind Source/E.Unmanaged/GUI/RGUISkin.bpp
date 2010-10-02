@@ -1,8 +1,12 @@
 #import Engine.InternalConstructorOnlyException
+#include "IGUISkin.h"
 
 class Engine.Unmanaged.GUI.RGUISkin
    as Engine.Unmanaged.GUI.Skin
 {
+	private irr::gui::IGUISkin * m_Skin;
+	private bool m_IsSkinSet;
+
 	/// <summary>
 	/// A non-public constructor for initalizing an RGUISkin instance.
 	/// </summary>
@@ -11,9 +15,25 @@ class Engine.Unmanaged.GUI.RGUISkin
 	bound RGUISkin()
 	{
 		if (byuser)
-		{
 			throw new Engine::InternalConstructorOnlyException();
-		}
-		// TODO: Implement.
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param name="obj">The new Irrlicht object to associate with this RGUISkin instance.</param>
+	unbound public void SetObject(irr::gui::IGUISkin * obj)
+	{
+		this->m_IsSkinSet = (obj != NULL);
+		this->m_Skin = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::gui::IGUISkin * GetObject()
+	{
+		return this->m_Skin;
 	}
 }

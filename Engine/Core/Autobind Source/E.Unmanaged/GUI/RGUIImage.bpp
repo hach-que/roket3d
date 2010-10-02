@@ -1,8 +1,14 @@
 #import Engine.InternalConstructorOnlyException
+#import Engine.Unmanaged.GUI.RGUIElement
+#include "IGUIElement.h"
+#include "IGUIImage.h"
 
-class Engine.Unmanaged.GUI.RGUIImage
+class Engine.Unmanaged.GUI.RGUIImage : Engine.Unmanaged.GUI.RGUIElement
    as Engine.Unmanaged.GUI.Image
 {
+	private irr::gui::IGUIImage * m_Image;
+	private bool m_IsImageSet;
+
 	/// <summary>
 	/// A non-public constructor for initalizing an RGUIImage instance.
 	/// </summary>
@@ -11,9 +17,40 @@ class Engine.Unmanaged.GUI.RGUIImage
 	bound RGUIImage()
 	{
 		if (byuser)
-		{
 			throw new Engine::InternalConstructorOnlyException();
-		}
-		// TODO: Implement.
+	}
+	
+	/// <summary>
+	/// Clears the current Irrlicht object.  Virtual so that derived classes
+	/// can set the pre-casted values to NULL (in case SetObject isn't of the
+	/// same type).
+	/// </summary>
+	unbound public virtual void ClearObject()
+	{
+		this->m_IsElementSet = false;
+		this->m_IsImageSet = false;
+		this->m_Element = NULL;
+		this->m_Image = NULL;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param name="obj">The new Irrlicht object to associate with this RGUIElement instance.</param>
+	unbound public void SetObject(irr::gui::IGUIImage * obj)
+	{
+		this->m_IsElementSet = (obj != NULL);
+		this->m_IsImageSet = (obj != NULL);
+		this->m_Element = obj;
+		this->m_Image = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::gui::IGUIImage * GetObject()
+	{
+		return this->m_Image;
 	}
 }

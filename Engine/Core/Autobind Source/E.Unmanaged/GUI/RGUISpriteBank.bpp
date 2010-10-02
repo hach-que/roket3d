@@ -1,0 +1,39 @@
+#import Engine.InternalConstructorOnlyException
+#include "IGUISpriteBank.h"
+
+class Engine.Unmanaged.GUI.RGUISpriteBank
+   as Engine.Unmanaged.GUI.SpriteBank
+{
+	private irr::gui::IGUISpriteBank * m_SpriteBank;
+	private bool m_IsSpriteBankSet;
+
+	/// <summary>
+	/// A non-public constructor for initalizing an RGUISpriteBank instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RGUISpriteBank()
+	{
+		if (byuser)
+			throw new Engine::InternalConstructorOnlyException();
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param name="obj">The new Irrlicht object to associate with this RGUIElement instance.</param>
+	unbound public void SetObject(irr::gui::IGUISpriteBank * obj)
+	{
+		this->m_IsSpriteBankSet = (obj != NULL);
+		this->m_SpriteBank = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::gui::IGUISpriteBank * GetObject()
+	{
+		return this->m_SpriteBank;
+	}
+}

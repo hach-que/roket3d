@@ -1,20 +1,20 @@
 #import Engine.InternalConstructorOnlyException
 #import Engine.Unmanaged.GUI.RGUIElement
 #include "IGUIElement.h"
-#include "IGUIListBox.h"
+#include "IGUITabControl.h"
 
-class Engine.Unmanaged.GUI.RGUIListBox : Engine.Unmanaged.GUI.RGUIElement
-   as Engine.Unmanaged.GUI.ListBox
+class Engine.Unmanaged.GUI.RGUITabControl : Engine.Unmanaged.GUI.RGUIElement
+   as Engine.Unmanaged.GUI.TabControl
 {
-	private irr::gui::IGUIListBox * m_ListBox;
-	private bool m_IsListBoxSet;
+	private irr::gui::IGUITabControl * m_TabControl;
+	private bool m_IsTabControlSet;
 
 	/// <summary>
-	/// A non-public constructor for initalizing an RGUIListBox instance.
+	/// A non-public constructor for initalizing an RGUITabControl instance.
 	/// </summary>
 	/// <internal>true</internal>
 	/// <exception>Engine::InternalConstructorOnlyException</exception>
-	bound RGUIListBox()
+	bound RGUITabControl()
 	{
 		if (byuser)
 			throw new Engine::InternalConstructorOnlyException();
@@ -28,29 +28,29 @@ class Engine.Unmanaged.GUI.RGUIListBox : Engine.Unmanaged.GUI.RGUIElement
 	unbound public virtual void ClearObject()
 	{
 		this->m_IsElementSet = false;
-		this->m_IsListBoxSet = false;
+		this->m_IsTabControlSet = false;
 		this->m_Element = NULL;
-		this->m_ListBox = NULL;
+		this->m_TabControl = NULL;
 	}
 
 	/// <summary>
 	/// Sets the Irrlicht object to the parameter 'obj'.
 	/// </summary>
 	/// <param name="obj">The new Irrlicht object to associate with this RGUIElement instance.</param>
-	unbound public void SetObject(irr::gui::IGUIListBox * obj)
+	unbound public void SetObject(irr::gui::IGUITabControl * obj)
 	{
 		this->m_IsElementSet = (obj != NULL);
-		this->m_IsListBoxSet = (obj != NULL);
+		this->m_IsTabControlSet = (obj != NULL);
 		this->m_Element = obj;
-		this->m_ListBox = obj;
+		this->m_TabControl = obj;
 	}
 
 	/// <summary>
 	/// Gets the Irrlicht object that this instance represents.
 	/// </summary>
 	/// <returns>The Irrlicht object that this instance holds.</returns>
-	unbound public irr::gui::IGUIListBox * GetObject()
+	unbound public irr::gui::IGUITabControl * GetObject()
 	{
-		return this->m_ListBox;
+		return this->m_TabControl;
 	}
 }
