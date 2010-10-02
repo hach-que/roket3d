@@ -436,7 +436,15 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\RGUIColorSelectDialog.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguicombobox.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\RGUIContextMenu.cpp"
 						>
 					</File>
 					<File
@@ -464,6 +472,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\RGUIInOutFader.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguilistbox.cpp"
 						>
 					</File>
@@ -480,8 +492,52 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\RGUISpinBox.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\RGUISpriteBank.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguistatictext.cpp"
 						>
+					</File>
+					<File
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\RGUITab.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\RGUITabControl.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\RGUITable.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\RGUIToolBar.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Source\E.Unmanaged\GUI\RGUITreeView.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\Generated Source\E.Unmanaged\GUI\rguiwindow.cpp"
@@ -856,7 +912,15 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\RGUIColorSelectDialog.h"
+						>
+					</File>
+					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguicombobox.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\RGUIContextMenu.h"
 						>
 					</File>
 					<File
@@ -884,6 +948,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\RGUIInOutFader.h"
+						>
+					</File>
+					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguilistbox.h"
 						>
 					</File>
@@ -900,8 +968,52 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\RGUISpinBox.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\RGUISpriteBank.h"
+						>
+					</File>
+					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguistatictext.h"
 						>
+					</File>
+					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\RGUITab.h"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCustomBuildTool"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\RGUITabControl.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\RGUITable.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\RGUIToolBar.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\GUI\RGUITreeView.h"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCustomBuildTool"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\GUI\rguiwindow.h"
@@ -1369,6 +1481,18 @@
 						</FileConfiguration>
 					</File>
 					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIColorSelectDialog.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
 						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIComboBox.bpp"
 						>
 						<FileConfiguration
@@ -1381,6 +1505,18 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIContextMenu.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
 							>
 							<Tool
 								Name="AutoBind"
@@ -1509,6 +1645,18 @@
 						</FileConfiguration>
 					</File>
 					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIInOutFader.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
 						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIListBox.bpp"
 						>
 						<FileConfiguration
@@ -1589,6 +1737,30 @@
 						</FileConfiguration>
 					</File>
 					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUISpinBox.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUISpriteBank.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
 						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIStaticText.bpp"
 						>
 						<FileConfiguration
@@ -1601,6 +1773,68 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUITab.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUITabControl.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUITable.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIToolBar.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUITreeView.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							ExcludedFromBuild="true"
 							>
 							<Tool
 								Name="AutoBind"

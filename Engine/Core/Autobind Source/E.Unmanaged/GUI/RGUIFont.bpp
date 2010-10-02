@@ -1,8 +1,12 @@
 #import Engine.InternalConstructorOnlyException
+#include "IGUIFont.h"
 
 class Engine.Unmanaged.GUI.RGUIFont
    as Engine.Unmanaged.GUI.Font
 {
+	private irr::gui::IGUIFont * m_Font;
+	private bool m_IsFontSet;
+
 	/// <summary>
 	/// A non-public constructor for initalizing an RGUIFont instance.
 	/// </summary>
@@ -11,9 +15,25 @@ class Engine.Unmanaged.GUI.RGUIFont
 	bound RGUIFont()
 	{
 		if (byuser)
-		{
 			throw new Engine::InternalConstructorOnlyException();
-		}
-		// TODO: Implement.
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param name="obj">The new Irrlicht object to associate with this RGUIFont instance.</param>
+	unbound public void SetObject(irr::gui::IGUIFont * obj)
+	{
+		this->m_IsFontSet = (obj != NULL);
+		this->m_Font = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::gui::IGUIFont * GetObject()
+	{
+		return this->m_Font;
 	}
 }
