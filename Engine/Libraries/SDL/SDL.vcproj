@@ -34,13 +34,13 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying prebuilt binaries..."
-				CommandLine="xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL.lib&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL_net.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL_net.lib&quot; &quot;$(OutDir)\&quot;"
+				CommandLine="xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL.lib&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL_net.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL_net.lib&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)\Engine\Build\Output\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)\Engine\Build\Objects\$(ConfigurationName)"
 			ConfigurationType="10"
 			CharacterSet="2"
 			>
@@ -56,7 +56,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying prebuilt binaries..."
-				CommandLine="xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL.lib&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL_net.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL_net.lib&quot; &quot;$(OutDir)\&quot;"
+				CommandLine="xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL.lib&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL_net.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\SDL_net.lib&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="Newton"
-	ProjectGUID="{89F5E05C-7868-47CC-912B-250C0BF8170E}"
-	RootNamespace="Newton"
+	Name="OpenAL"
+	ProjectGUID="{2F3F97E3-13C0-4AA0-B465-EDD9CCFDE29D}"
+	RootNamespace="OpenAL"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -34,7 +34,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying prebuilt binaries..."
-				CommandLine="xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\Newton.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\Newton.lib&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\OpenAL32.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\OpenAL32.lib&quot; &quot;$(OutDir)\&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -43,6 +43,7 @@
 			IntermediateDirectory="$(SolutionDir)\Engine\Build\Objects\$(ConfigurationName)"
 			ConfigurationType="10"
 			CharacterSet="2"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -56,7 +57,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying prebuilt binaries..."
-				CommandLine="xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\Newton.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\Newton.lib&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\OpenAL32.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;xcopy /Y /V /I &quot;$(ProjectDir)\Binaries\OpenAL32.lib&quot; &quot;$(OutDir)\&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -67,11 +68,27 @@
 			Name="Include"
 			>
 			<File
-				RelativePath=".\Include\JointLibrary.h"
+				RelativePath=".\Include\al.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Include\Newton.h"
+				RelativePath=".\Include\alc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\efx-creative.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\EFX-Util.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\efx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\xram.h"
 				>
 			</File>
 		</Filter>
@@ -79,12 +96,11 @@
 			Name="Binaries"
 			>
 			<File
-				RelativePath=".\Binaries\newton.dll"
-				DeploymentContent="true"
+				RelativePath=".\Binaries\OpenAL32.dll"
 				>
 			</File>
 			<File
-				RelativePath=".\Binaries\newton.lib"
+				RelativePath=".\Binaries\OpenAL32.lib"
 				>
 			</File>
 		</Filter>
