@@ -37,19 +37,14 @@ class Engine.OutOfMemoryException : Engine.LowLevelException
 	/// <summary>
 	/// A property to access the exception message.
 	/// </summary>
+	/// <readonly>true</readonly>
 	bound property string Message
 	{
 		get: call GetMessageL;
-		set: call SetMessageL;
 	}
 
 	unbound ::string GetMessageL()
 	{
 		return Engine::Exception::GetParsedMessage(this->Message, this->Arguments).c_str();
-	}
-
-	unbound void SetMessageL(::string value)
-	{
-		throw new Engine::ReadOnlyPropertyException();
 	}
 }

@@ -1,4 +1,3 @@
-#import Engine.ReadOnlyPropertyException
 #include "Irrlicht.h"
 #include "SColor.h"
 
@@ -72,7 +71,6 @@ class Engine.Collections.RColor
 	bound property numeric Average
 	{
 		get: call GetAverage;
-		set: call SetAverage;
 	}
 
 	/// <summary>
@@ -82,7 +80,6 @@ class Engine.Collections.RColor
 	bound property numeric Luminance
 	{
 		get: call GetLuminance;
-		set: call SetLuminance;
 	}
 
 	/// <summary>
@@ -170,19 +167,9 @@ class Engine.Collections.RColor
 		return this->m_Color.getBlue();
 	}
 
-	unbound void SetAverage(numeric value)
-	{
-		throw new Engine::ReadOnlyPropertyException();
-	}
-
 	unbound numeric GetAverage()
 	{
 		return this->m_Color.getAverage();
-	}
-
-	unbound void SetLuminance(numeric value)
-	{
-		throw new Engine::ReadOnlyPropertyException();
 	}
 
 	unbound numeric GetLuminance()

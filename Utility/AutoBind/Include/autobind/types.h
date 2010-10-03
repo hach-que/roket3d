@@ -13,14 +13,21 @@
 #include <malloc.h>
 #include <string.h>
 #include <string>
-#include <map>
+#include <vector>
 
 typedef lua_Number numeric;
 
 class string
 {
 public:
-	inline string(const char* text)
+	string()
+	{
+		this->len = 0;
+		this->data = (wchar_t*)malloc(sizeof(wchar_t));
+		this->data[0] = 0;
+	}
+
+	string(const char* text)
 	{
 		// Allocate memory to be used by the string.
 		this->len = strlen(text);
@@ -30,7 +37,7 @@ public:
 		this->data[this->len] = 0; // NULL terminator.
 	}
 
-	inline string(const wchar_t* text)
+	string(const wchar_t* text)
 	{
 		// Allocate memory to be used by the string.
 		this->len = wcslen(text);
@@ -40,7 +47,7 @@ public:
 		this->data[this->len] = 0; // NULL terminator.
 	}
 
-	inline ~string()
+	~string()
 	{
 		// Free the memory used by the string.
 		free(this->data);
@@ -79,311 +86,216 @@ public:
 		return ret;
 	}
 
+	bool operator ==(const string& b) const
+	{
+		// String comparison.
+		return (wcscmp(this->data, b.data) == 0);
+	}
+
 private:
 	wchar_t* data;
 	size_t len;
 };
 
-template<class T>
-	class table
+// Predeclare class references for storage structs.
+class table;
+class RObject;
+
+namespace tableutil
+{
+	// Enum for returning the type of object.
+	enum ValueType
 	{
-	public:
-		// Enum for returning the type of object.
-		typedef enum
-		{
-			t_nil,
-			t_bool,
-			t_numeric,
-			t_string,
-			t_table,
-			t_object,
-			t_other
-		} ValueType;
+		t_nil,
+		t_bool,
+		t_numeric,
+		t_string,
+		t_table,
+		t_object,
+		t_other
+	};
 
+	// Structure for storing keys and values within m_Data.
+	struct ValueStorage
+	{
+		ValueType type;
+		struct
+		{
+			bool b;
+			numeric n;
+			::string s;
+			table * t;
+			RObject * o;
+		} store;
+
+		ValueStorage() { type = t_nil; }
+		ValueStorage(bool v) { type = t_bool; store.b = v; }
+		ValueStorage(numeric v) { type = t_numeric; store.n = v; }
+		ValueStorage(::string v) { type = t_string; store.s = v; }
+		ValueStorage(table * v) { type = t_table; store.t = v; }
+		ValueStorage(RObject * v) { type = t_object; store.o = v; }
+
+		bool operator ==(const ValueStorage& b) const
+		{
+			if (type != b.type) return false;
+			switch (type)
+			{
+			case t_nil:
+				return (b.type == t_nil);
+			case t_bool:
+				return (store.b == b.store.b);
+			case t_numeric:
+				return (store.n == b.store.n);
+			case t_string:
+				return (store.s == b.store.s);
+			case t_table:
+				return (store.t == b.store.t);
+			case t_object:
+				return (store.o == b.store.o);
+			case t_other:
+				return false;
+			default:
+				return false;
+			}
+		}
+	};
+
+	// Structure that's returned when accessing via index.  Overloads
+	// the assignment operator so that C++ users can assign to the
+	// variable.
+	struct value
+	{
 	private:
-		// Structure for storing keys and values within m_Data.
-		typedef struct
-		{
-			m_TypeStorage type;
-			union
-			{
-				bool b;
-				numeric n;
-				string s;
-				table * t;
-				T * o;
-			} store;
-
-			struct(bool v)
-			{
-				type = t_bool;
-				store.b = v;
-			}
-
-			struct(numeric v)
-			{
-				type = t_numeric;
-				store.n = v;
-			}
-
-			struct(string v)
-			{
-				type = t_string;
-				store.s = v;
-			}
-
-			struct(table * v)
-			{
-				type = t_table;
-				store.t = v;
-			}
-
-			struct(T * v)
-			{
-				type = t_object;
-				store.o = v;
-			}
-		} m_ValueStorage;
+		table * container;
+		ValueStorage key;
+		ValueStorage val;
 
 	public:
-		// Structure that's returned when accessing via index.  Overloads
-		// the assignment operator so that C++ users can assign to the
-		// variable.
-		typedef struct
+		ValueType type;
+
+		value(ValueStorage key, ValueStorage value)
 		{
-		private:
-			table * container;
-			m_ValueStorage key;
-			m_ValueStorage value;
+			type = value.type;
+		}
 
-		public:
-			ValueType type;
+		value& operator =(const bool& v);
+		value& operator =(const numeric& v);
+		value& operator =(const ::string& v);
+		value& operator =(const table*& v);
+		value& operator =(const RObject*& v);
 
-			struct(m_ValueStorage key, m_ValueStorage value)
+		operator bool() { if (this->val.type == t_bool) return this->val.store.b; else return false; }
+		operator numeric() { if (this->val.type == t_numeric) return this->val.store.n; else return 0; }
+		operator ::string() { if (this->val.type == t_string) return this->val.store.s; else return ""; }
+		operator table *() { if (this->val.type == t_table) return this->val.store.t; else return NULL; }
+		operator RObject *() { if (this->val.type == t_object) return this->val.store.o; else return NULL; }
+	};
+}
+
+class table
+{
+public:
+	//inline table()
+	//{
+	//}
+
+	//inline table(table & copy)
+	//{
+	//	// Copy contents of the other tables m_Data.
+	//}
+
+	void Set(bool key, bool value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(numeric key, bool value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(::string key, bool value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(table * key, bool value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(RObject * key, bool value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(tableutil::ValueStorage key, bool value) { this->SetKeyValue(key, tableutil::ValueStorage(value)); }
+	void Set(bool key, numeric value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(numeric key, numeric value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(::string key, numeric value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(table * key, numeric value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(RObject * key, numeric value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(tableutil::ValueStorage key, numeric value) { this->SetKeyValue(key, tableutil::ValueStorage(value)); }
+	void Set(bool key, ::string value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(numeric key, ::string value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(::string key, ::string value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(table * key, ::string value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(RObject * key, ::string value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(tableutil::ValueStorage key, ::string value) { this->SetKeyValue(key, tableutil::ValueStorage(value)); }
+	void Set(bool key, table * value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(numeric key, table * value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(::string key, table * value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(table * key, table * value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(RObject * key, table * value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(tableutil::ValueStorage key, table * value) { this->SetKeyValue(key, tableutil::ValueStorage(value)); }
+	void Set(bool key, RObject * value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(numeric key, RObject * value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(::string key, RObject * value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(table * key, RObject * value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(RObject * key, RObject * value) { this->SetKeyValue(tableutil::ValueStorage(key), tableutil::ValueStorage(value)); }
+	void Set(tableutil::ValueStorage key, RObject * value) { this->SetKeyValue(key, tableutil::ValueStorage(value)); }
+
+	tableutil::value operator [](bool key) { return tableutil::value(tableutil::ValueStorage(key), this->GetValueByKey(tableutil::ValueStorage(key))); }
+	tableutil::value operator [](numeric key) { return tableutil::value(tableutil::ValueStorage(key), this->GetValueByKey(tableutil::ValueStorage(key))); }
+	tableutil::value operator [](::string key) { return tableutil::value(tableutil::ValueStorage(key), this->GetValueByKey(tableutil::ValueStorage(key))); }
+	tableutil::value operator [](table * key) { return tableutil::value(tableutil::ValueStorage(key), this->GetValueByKey(tableutil::ValueStorage(key))); }
+	tableutil::value operator [](RObject * key) { return tableutil::value(tableutil::ValueStorage(key), this->GetValueByKey(tableutil::ValueStorage(key))); }
+
+	void SetKeyValue(tableutil::ValueStorage key, tableutil::ValueStorage value)
+	{
+		for (m_DataIterator i = this->m_Data.begin();
+			i != this->m_Data.end(); i++)
+		{
+			if (i->first == key)
 			{
-				type = value.type;
+				i->second = value;
+				return;
 			}
-
-			value& operator =(const bool& v)
-			{
-				container->Set(key, v);
-				value.store.b = v;
-				type = t_bool;
-			}
-
-			value& operator =(const numeric& v)
-			{
-				container->Set(key, v);
-				value.store.n = v;
-				type = t_numeric;
-			}
-
-			value& operator =(const string& v)
-			{
-				container->Set(key, v);
-				value.store.s = v;
-				type = t_string;
-			}
-
-			value& operator =(const table& v)
-			{
-				container->Set(key, v);
-				value.store.t = v;
-				type = t_table;
-			}
-
-			value& operator =(const T*& v)
-			{
-				container->Set(key, v);
-				value.store.o = v;
-				type = t_object;
-			}
-
-			operator bool()
-			{
-				if (value.type == t_bool)
-					return value.b;
-			}
-
-			operator numeric()
-			{
-				if (value.type == t_numeric)
-					return value.n;
-			}
-
-			operator string()
-			{
-				if (value.type == t_string)
-					return value.s;
-			}
-
-			operator table *()
-			{
-				if (value.type == t_table)
-					return value.t;
-			}
-
-			operator T *()
-			{
-				if (value.type == t_object)
-					return value.o;
-			}
-		} value;
-
-		inline table()
-		{
 		}
-
-		inline table(table & copy)
-		{
-			// Copy contents of the other tables m_Data.
-		}
-
-		value operator [](bool key)
-		{
-			return value(m_ValueStorage(key), this->GetValueByKey(m_ValueStorage(key)));
-		}
-
-		value operator [](numeric key)
-		{
-			return value(m_ValueStorage(key), this->GetValueByKey(m_ValueStorage(key)));
-		}
-
-		value operator [](string key)
-		{
-			return value(m_ValueStorage(key), this->GetValueByKey(m_ValueStorage(key)));
-		}
-
-		value operator [](table key)
-		{
-			return value(m_ValueStorage(key), this->GetValueByKey(m_ValueStorage(key)));
-		}
-
-		value operator [](T * key)
-		{
-			return value(m_ValueStorage(key), this->GetValueByKey(m_ValueStorage(key)));
-		}
-
-		inline void Set(bool key, bool value)
-		{
-		}
-
-		inline void Set(numeric key, bool value)
-		{
-		}
-
-		inline void Set(string key, bool value)
-		{
-		}
-
-		inline void Set(table key, bool value)
-		{
-		}
-
-		inline void Set(T * key, bool value)
-		{
-		}
-
-		inline void Set(bool key, numeric value)
-		{
-		}
-
-		inline void Set(numeric key, numeric value)
-		{
-		}
-
-		inline void Set(string key, numeric value)
-		{
-		}
-
-		inline void Set(table key, numeric value)
-		{
-		}
-
-		inline void Set(T * key, numeric value)
-		{
-		}
-
-		inline void Set(bool key, string value)
-		{
-		}
-
-		inline void Set(numeric key, string value)
-		{
-		}
-
-		inline void Set(string key, string value)
-		{
-		}
-
-		inline void Set(table key, string value)
-		{
-		}
-
-		inline void Set(T * key, string value)
-		{
-		}
-
-		inline void Set(bool key, table value)
-		{
-		}
-
-		inline void Set(numeric key, table value)
-		{
-		}
-
-		inline void Set(string key, table value)
-		{
-		}
-
-		inline void Set(table key, table value)
-		{
-		}
-
-		inline void Set(T * key, table value)
-		{
-		}
-
-		inline void Set(bool key, T * value)
-		{
-		}
-
-		inline void Set(numeric key, T * value)
-		{
-		}
-
-		inline void Set(string key, T * value)
-		{
-		}
-
-		inline void Set(table key, T * value)
-		{
-		}
-
-		inline void Set(T * key, T * value)
-		{
-		}
-
-		inline int GetTableIndex()
-		{
-			return this->m_TableIndex;
-		}
-
-		inline void PushAsResult()
-		{
-		}
-
-	private:
-		m_ValueStorage GetValueByKey(m_ValueStorage key)
-		{
-		}
-
-		std::map<m_ValueStorage, m_ValueStorage> m_Data;
+		
+		// Not found, add.
+		this->m_Data.insert(this->m_Data.end(), m_Pair(key, value));
+		return;
 	}
 
-// TODO: Replace the typedefs with actual classes
-//       which properly handle the conversion and
-//       can be handled properly by the Bindings<>
-//       template.
+	inline void PushAsResult()
+	{
+	}
+
+private:
+	tableutil::ValueStorage GetValueByKey(tableutil::ValueStorage key)
+	{
+		for (m_DataIterator i = this->m_Data.begin();
+			i != this->m_Data.end(); i++)
+		{
+			if (i->first == key)
+				return i->second;
+		}
+
+		return tableutil::ValueStorage(); // Return nil.
+	}
+
+	std::vector<std::pair<tableutil::ValueStorage, tableutil::ValueStorage>> m_Data;
+	typedef std::vector<std::pair<tableutil::ValueStorage, tableutil::ValueStorage>>::iterator m_DataIterator;
+	typedef std::pair<tableutil::ValueStorage, tableutil::ValueStorage> m_Pair;
+};
+
+tableutil::value& tableutil::value::operator =(const bool& v) { container->Set(this->key, v); this->val.store.b = v; this->type = this->val.type = t_bool; return *this; }
+tableutil::value& tableutil::value::operator =(const numeric& v) { container->Set(this->key, v); this->val.store.n = v; this->type = this->val.type = t_numeric; return *this; }
+tableutil::value& tableutil::value::operator =(const ::string& v) { container->Set(this->key, v); this->val.store.s = v; this->type = this->val.type = t_string; return *this; }
+tableutil::value& tableutil::value::operator =(const table*& v)
+{
+	container->Set(this->key, const_cast<table*>(v));
+	this->val.store.t = const_cast<table*>(v);
+	this->type = this->val.type = t_table;
+	return *this;
+}
+tableutil::value& tableutil::value::operator =(const RObject*& v)
+{
+	container->Set(this->key, const_cast<RObject*>(v));
+	this->val.store.o = const_cast<RObject*>(v);
+	this->type = this->val.type = t_object;
+	return *this;
+}
 
 #endif

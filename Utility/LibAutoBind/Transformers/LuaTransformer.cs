@@ -715,7 +715,10 @@ namespace LibAutoBind.Transformers
                         getfunc = n.GetVal;
                     else
                         getfunc = "__autobind_property_get_" + n.Name;
-                    this.WriteCodeLine("        {\"" + n.Name + "\", &" + cls.ClassOnly + "::" + getfunc + ", &" + cls.ClassOnly + "::" + setfunc + "},");
+                    if (setfunc == null) // Check for read-only properties.
+                        this.WriteCodeLine("        {\"" + n.Name + "\", &" + cls.ClassOnly + "::" + getfunc + ", NULL},");
+                    else
+                        this.WriteCodeLine("        {\"" + n.Name + "\", &" + cls.ClassOnly + "::" + getfunc + ", &" + cls.ClassOnly + "::" + setfunc + "},");
                 }
             }
             this.WriteCodeLine("        {0}");

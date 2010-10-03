@@ -61,23 +61,21 @@ class Engine.Unmanaged.Core.RDevice
 	/// <summary>
 	/// The current GUI environment.
 	/// </summary>
+	/// <readonly>true</readonly>
 	/// <exception>Engine.ObjectDisposedException</exception>
-	/// <exception>Engine.ReadOnlyPropertyException</exception>
 	bound property Engine::Unmanaged::GUI::RGUIEnvironment GUIEnvironment
 	{
 		get: call GetGUIEnvironment;
-		set: call SetGUIEnvironment;
 	}
 
 	/// <summary>
 	/// The current video driver.
 	/// </summary>
+	/// <readonly>true</readonly>
 	/// <exception>Engine.ObjectDisposedException</exception>
-	/// <exception>Engine.ReadOnlyPropertyException</exception>
 	bound property Engine::Unmanaged::Video::RVideoDriver VideoDriver
 	{
 		get: call GetVideoDriver;
-		set: call SetVideoDriver;
 	}
 
 	/// <summary>
@@ -94,12 +92,11 @@ class Engine.Unmanaged.Core.RDevice
 	/// end
 	/// </code>
 	/// </summary>
+	/// <readonly>true</readonly>
 	/// <exception>Engine.ObjectDisposedException</exception>
-	/// <exception>Engine.ReadOnlyPropertyException</exception>
 	bound property bool Running
 	{
 		get: call GetRunning;
-		set: call SetRunning;
 	}
 
 	// Property functions
@@ -111,11 +108,6 @@ class Engine.Unmanaged.Core.RDevice
 		return env;
 	}
 
-	unbound void SetGUIEnvironment(Engine::Unmanaged::GUI::RGUIEnvironment value)
-	{
-		throw new Engine::ReadOnlyPropertyException();
-	}
-
 	unbound Engine::Unmanaged::Video::RVideoDriver GetVideoDriver()
 	{
 		Engine::Unmanaged::Video::RVideoDriver * drv =
@@ -124,18 +116,8 @@ class Engine.Unmanaged.Core.RDevice
 		return drv;
 	}
 
-	unbound void SetVideoDriver(Engine::Unmanaged::Video::RVideoDriver value)
-	{
-		throw new Engine::ReadOnlyPropertyException();
-	}
-
 	unbound bool GetRunning()
 	{
 		return (this->m_IsDeviceSet && this->m_Device->run());
-	}
-
-	unbound void SetRunning(bool value)
-	{
-		throw new Engine::ReadOnlyPropertyException();
 	}
 }
