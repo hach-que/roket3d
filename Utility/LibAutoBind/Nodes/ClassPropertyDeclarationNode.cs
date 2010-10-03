@@ -43,6 +43,8 @@ namespace LibAutoBind.Nodes
                 else
                     this.m_IsSetFunc = false;
             }
+            else
+                this.m_IsSetFunc = true; // This is a read-only property.
             if (this.m_Get != null)
             {
                 Match gf = fc.Match(this.m_Get);

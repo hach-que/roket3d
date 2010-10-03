@@ -558,6 +558,13 @@ template<class T>
 			return 1;
 		}
 
+		// Push table value onto stack.
+		static int Result(lua_State * L, table * ret)
+		{
+			ret->PushAsResult();
+			return 1;
+		}
+
 	private:
 		// Sets up the object at the specified 'newtable' index and the
 		// userdata associated with it at the specified 'userdata' index.
@@ -609,110 +616,14 @@ template<class T>
 
 	public:
 		// The callback which handles when properties are asked
-		// to be retrieved from the object.
-		static int PropertyGetter(lua_State * L)
-		{
-			// When this function is called, the object
-			// is at index 1 and the name of the property
-			// is at index 2.
-
-			const char * func = lua_tostring(L, 1);
-			const char * prop = lua_tostring(L, 2);
-			int top = lua_gettop(L);
-
-			// Retrieve the metatable for the object.
-			lua_getmetatable(L, 1);
-
-			// Push the name of the property onto the stack
-			// and then fetch the index of that property.
-			lua_pushvalue(L, 2);
-			lua_rawget(L, -2);
-
-			// Check to make sure that the value on the stack
-			// is a number (i.e. the index of the property).
-			// If it isn't a number, then the property doesn't
-			// exist.
-			if (lua_isnumber(L, -1))
-			{
-				// Store the index.
-				int index = lua_tonumber(L, -1);
-
-				// Get the first entry in the table (not meta),
-				// which is the userdata associated with the
-				// object.
-				lua_pushnumber(L, 0);
-				lua_rawget(L, 1);
-
-				// Retrieve the userdata.
-				T** obj = static_cast<T**>(lua_touserdata(L, -1));
-
-				// Push the metatable to the top of the stack
-				// for the retrieval function to access if needed.
-				lua_pushvalue(L, 3);
-
-				// Call the property retrieval function.
-				return ((*obj)->*(T::Properties[index].Getter))(L);
-			}
-			else
-			{
-				// The property doesn't exist.
-				lua_pushnil(L);
-				return 1;
-			}
-		}
+		// to be retrieved from the object.  Externally defined as
+		// it requires the ability to throw an exception.
+		static int PropertyGetter(lua_State * L);
 
 		// The callback which handles when properties are asked
-		// to be created or modified on the object.
-		static int PropertySetter(lua_State * L)
-		{
-			// When this function is called, the object
-			// is at index 1 and the name of the property
-			// is at index 2.  The value to associate the
-			// property with is at index 3.
-			
-			// Retrieve the metatable for the object.
-			lua_getmetatable(L, 1);
-
-			// Push the name of the property onto the stack
-			// and then fetch the index of that property.
-			lua_pushvalue(L, 2);
-			lua_rawget(L, -2);
-
-			// Check to see if the result is nil.  If it is,
-			// then the property we are setting doesn't exist
-			// so we're just going to do a normal set.
-			if (lua_isnil(L, -1))
-			{
-				// Pop the key and the metatable off the stack.
-				lua_pop(L, 2);
-
-				// And do a normal set.
-				lua_rawset(L, 1);
-
-				return 0;
-			}
-			else
-			{
-				// Store the index.
-				int index = lua_tonumber(L, -1);
-
-				// Get the first entry in the metatable, which
-				// is the userdata associated with the object.
-				lua_pushnumber(L, 0);
-				lua_rawget(L, 1);
-
-				// Retrieve the userdata.
-				T** obj = static_cast<T**>(lua_touserdata(L, -1));
-
-				// Push the value to the top of the stack.
-				// This makes the value available at position -1
-				// ready for the setter function to use it.
-				lua_pushvalue(L, 3);
-
-				// Call the property modification function.
-				return ((*obj)->*(T::Properties[index].Setter))(L);
-			}
-		}
+		// to be created or modified on the object.  Externally defined as
+		// it requires the ability to throw an exception.
+		static int PropertySetter(lua_State * L);
 
 		// The callback which provides type information back
 		// to Lua code (i.e. for catch or is operations).
@@ -752,8 +663,6 @@ template<class T>
 
 			return 0;
 		}
-
-
 	};
 
 // We can only include the exception classes after we define the bindings
@@ -763,6 +672,7 @@ template<class T>
 #include "ContextNotProvidedException.h"
 #include "DivideByZeroException.h"
 #include "InheritedClassNotFoundException.h"
+#include "ReadOnlyPropertyException.h"
 
 template<class T>
 	int Bindings<T>::Type(lua_State * L)
@@ -974,6 +884,130 @@ template<class T>
 		catch (Engine::Exception * err)
 		{
 			return Bindings<T>::RaiseException(L, err);
+		}
+	}
+
+template<class T>
+	int Bindings<T>::PropertyGetter(lua_State * L)
+	{
+		// When this function is called, the object
+		// is at index 1 and the name of the property
+		// is at index 2.
+
+		const char * func = lua_tostring(L, 1);
+		const char * prop = lua_tostring(L, 2);
+		int top = lua_gettop(L);
+
+		// Retrieve the metatable for the object.
+		lua_getmetatable(L, 1);
+
+		// Push the name of the property onto the stack
+		// and then fetch the index of that property.
+		lua_pushvalue(L, 2);
+		lua_rawget(L, -2);
+
+		// Check to make sure that the value on the stack
+		// is a number (i.e. the index of the property).
+		// If it isn't a number, then the property doesn't
+		// exist.
+		if (lua_isnumber(L, -1))
+		{
+			// Store the index.
+			int index = lua_tonumber(L, -1);
+
+			// Get the first entry in the table (not meta),
+			// which is the userdata associated with the
+			// object.
+			lua_pushnumber(L, 0);
+			lua_rawget(L, 1);
+
+			// Retrieve the userdata.
+			T** obj = static_cast<T**>(lua_touserdata(L, -1));
+
+			// Push the metatable to the top of the stack
+			// for the retrieval function to access if needed.
+			lua_pushvalue(L, 3);
+
+			// Call the property retrieval function.
+			try
+			{
+				return __guarded<T>::__guard(*obj, T::Properties[index].Getter, L);
+			}
+			catch (Engine::Exception * err)
+			{
+				return Bindings<T>::RaiseException(L, err);
+			}
+		}
+		else
+		{
+			// The property doesn't exist.
+			lua_pushnil(L);
+			return 1;
+		}
+	}
+
+template<class T>
+	int Bindings<T>::PropertySetter(lua_State * L)
+	{
+		// When this function is called, the object
+		// is at index 1 and the name of the property
+		// is at index 2.  The value to associate the
+		// property with is at index 3.
+		
+		// Retrieve the metatable for the object.
+		lua_getmetatable(L, 1);
+
+		// Push the name of the property onto the stack
+		// and then fetch the index of that property.
+		lua_pushvalue(L, 2);
+		lua_rawget(L, -2);
+
+		// Check to see if the result is nil.  If it is,
+		// then the property we are setting doesn't exist
+		// so we're just going to do a normal set.
+		if (lua_isnil(L, -1))
+		{
+			// Pop the key and the metatable off the stack.
+			lua_pop(L, 2);
+
+			// And do a normal set.
+			lua_rawset(L, 1);
+
+			return 0;
+		}
+		else
+		{
+			// Store the index.
+			int index = lua_tonumber(L, -1);
+
+			// Get the first entry in the metatable, which
+			// is the userdata associated with the object.
+			lua_pushnumber(L, 0);
+			lua_rawget(L, 1);
+
+			// Retrieve the userdata.
+			T** obj = static_cast<T**>(lua_touserdata(L, -1));
+
+			// Push the value to the top of the stack.
+			// This makes the value available at position -1
+			// ready for the setter function to use it.
+			lua_pushvalue(L, 3);
+
+			// Check to see whether we have a read-only property.
+			if (T::Properties[index].Setter == NULL)
+			{
+				return Bindings<T>::RaiseException(L, new Engine::ReadOnlyPropertyException());
+			}
+
+			// Call the property modification function.
+			try
+			{
+				return __guarded<T>::__guard(*obj, T::Properties[index].Setter, L);
+			}
+			catch (Engine::Exception * err)
+			{
+				return Bindings<T>::RaiseException(L, err);
+			}
 		}
 	}
 
