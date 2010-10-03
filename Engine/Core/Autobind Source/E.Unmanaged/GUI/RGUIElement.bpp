@@ -54,4 +54,37 @@ class Engine.Unmanaged.GUI.RGUIElement
 	{
 		return this->m_Element;
 	}
+
+	/// <summary>
+	/// The absolute clipping rectangle applied to the GUI element.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	/// <exception>Engine.ReadOnlyPropertyException</exception>
+	bound property Engine::Unmanaged::GUI::RGUIEnvironment AbsoluteClippingRect
+	{
+		get: call GetAbsoluteClippingRect;
+		set: call SetAbsoluteClippingRect;
+	}
+
+	/// <summary>
+	/// The absolute rectangle of the GUI element.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	/// <exception>Engine.ReadOnlyPropertyException</exception>
+	bound property Engine::Unmanaged::GUI::RGUIEnvironment AbsoluteRect
+	{
+		get: call GetAbsoluteRect;
+		set: call SetAbsoluteRect;
+	}
+
+	/// <summary>
+	/// A list of children contained by this object.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	/// <exception>Engine.ReadOnlyPropertyException</exception>
+	bound property Engine::Unmanaged::GUI::RGUIEnvironment Children
+	{
+		get: call GetAbsoluteRect;
+		set: call SetAbsoluteRect;
+	}
 }
