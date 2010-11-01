@@ -11,7 +11,9 @@
 #include <vector>
 #include <lua.hpp>
 #include "LowLevel.h"
-#include "roket3d.h" // TODO: Move lua_gettablevalue and luaL_testudata into this file from roket3d.h.
+
+void *luaL_testudata (lua_State *L, int ud, const char *tname);
+void lua_gettablevalue (lua_State * luaVM, int tableindex, int valueindex);
 
 namespace Engine { class Exception; }
 
@@ -559,9 +561,9 @@ template<class T>
 		}
 
 		// Push table value onto stack.
-		static int Result(lua_State * L, table * ret)
+		static int Result(lua_State * L, table & ret)
 		{
-			ret->PushAsResult();
+			ret.PushAsResult();
 			return 1;
 		}
 

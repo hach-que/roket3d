@@ -48,7 +48,7 @@ namespace LibAutoBind
         /// </summary>
         internal void Run()
         {
-            this.p_LineNumber = 1;
+            this.p_LineNumber = 0;
             while (!this.m_Machine.InputFile.EndOfStream || this.m_SeekCache.Length > 0)
             {
                 // Retrieve a character from the seek cache (used because
@@ -67,6 +67,10 @@ namespace LibAutoBind
                     c = (char)this.m_Machine.InputFile.Read();
                     c = this.ConvertNewline(c);
                 }
+
+                if (c == '\n')
+                    this.p_LineNumber += 1;
+
                 this.p_Char = c;
 
                 this.p_TextCache += c;
@@ -113,9 +117,6 @@ namespace LibAutoBind
 
                 if (this.m_IsComment || this.m_IsLongComment)
                     continue;
-
-                if (c == '\n')
-                    this.p_LineNumber += 1;
 
                 // The length of the string is 0, which causes problems with
                 // tokens that rely on StartsWith.  Since there's no characters,
@@ -350,6 +351,8 @@ namespace LibAutoBind
         /// </summary>
         internal void AddNode(Node node)
         {
+            node.LineNumber = this.LineNumber;
+            node.FileName = this.FileName;
             node.ParentCount = this.m_ParentStack.Count;
             this.p_LexerList.Add(node);
             this.CompactDirectNodes();

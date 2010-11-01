@@ -2647,6 +2647,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Utility\AutoBind\Source\types.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Static Source\Utility.cpp"
 				>
 			</File>

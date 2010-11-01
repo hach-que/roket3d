@@ -9,6 +9,9 @@ namespace LibAutoBind.Transformers
 {
     class LuaTransformer : Transformer
     {
+        private int m_HeaderLineNumber = 1;
+        private int m_CodeLineNumber = 1;
+
         public LuaTransformer(Machine m)
         {
             this.m_M = m;
@@ -41,6 +44,7 @@ namespace LibAutoBind.Transformers
             // what classes reference what other classes.
             List<Node> imports = this.GetNodesOfType(nodes, typeof(ImportNode));
             this.WriteHeaderLine("/* Imports */");
+            this.WriteHeaderLine("class RObject;");
             foreach (Node n in imports)
             {
                 string[] components = n.Content.Split('.');
@@ -60,7 +64,8 @@ namespace LibAutoBind.Transformers
             this.WriteHeaderLine("#include \"RObject.h\"");
             foreach (Node n in imports)
             {
-                this.WriteHeaderLine("#include \"" + ClassName.ResolveToHeaderFilename(n.Content.Trim()) + "\"");
+                if (n.Content == cls.Inheritance)
+                    this.WriteHeaderLine("#include \"" + ClassName.ResolveToHeaderFilename(n.Content.Trim()) + "\"");
             }
             foreach (Node n in this.GetNodesOfType(nodes, typeof(IncludeNode)))
             {
@@ -279,6 +284,9 @@ namespace LibAutoBind.Transformers
             }
             this.WriteHeaderLine();
 
+            this.WriteHeaderLine("#pragma message(\"DEFINED " + cls.Class + "...\")");
+            this.WriteHeaderLine();
+
             // Add the #endif.
             this.WriteHeaderLine("#endif");
         }
@@ -299,10 +307,13 @@ namespace LibAutoBind.Transformers
             this.WriteCodeLine("#include \"autobind/types.h\"");
             this.WriteCodeLine("#include \"autobind/binding/lua.h\"");
             this.WriteCodeLine("#include \"RObject.h\"");
-            //if (cls.Alias == "")
-                this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(cls.Class) + "\"");
-            //else
-            //    this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(cls.Alias) + "\"");
+            this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(cls.Class) + "\"");
+            List<Node> imports = this.GetNodesOfType(nodes, typeof(ImportNode));
+            foreach (Node n in imports)
+            {
+                if (n.Content != cls.Inheritance)
+                    this.WriteCodeLine("#include \"" + ClassName.ResolveToHeaderFilename(n.Content.Trim()) + "\"");
+            }
             foreach (Node n in this.GetNodesOfType(nodes, typeof(IncludeNode)))
             {
                 this.WriteCodeLine("#include " + n.Content.Trim() + "");
@@ -394,6 +405,7 @@ namespace LibAutoBind.Transformers
             {
                 if (r is ClassFunctionDeclarationNode)
                 {
+                    this.WriteCodeLine("#line " + r.LineNumber + " \"" + r.FileName + "\"");
                     ClassFunctionDeclarationNode n = (ClassFunctionDeclarationNode)r;
                     string keys = "";
                     functype = n.Type;
@@ -735,31 +747,41 @@ namespace LibAutoBind.Transformers
 
         private void WriteHeader(string str)
         {
-            this.m_M.OutputHFile.Write(str.Replace("\r\n", "\n"));
+            str = str.Replace("\r\n", "\n");
+            this.m_HeaderLineNumber += Regex.Matches(str, "\n").Count;
+            this.m_M.OutputHFile.Write(str);
         }
 
         private void WriteHeaderLine(string str)
         {
-            this.m_M.OutputHFile.WriteLine(str.Replace("\r\n", "\n"));
+            str = str.Replace("\r\n", "\n");
+            this.m_HeaderLineNumber += Regex.Matches(str, "\n").Count + 1;
+            this.m_M.OutputHFile.WriteLine(str);
         }
 
         private void WriteHeaderLine()
         {
+            this.m_HeaderLineNumber += 1;
             this.m_M.OutputHFile.WriteLine();
         }
 
         private void WriteCode(string str)
         {
-            this.m_M.OutputCFile.Write(str.Replace("\r\n", "\n"));
+            str = str.Replace("\r\n", "\n");
+            this.m_CodeLineNumber += Regex.Matches(str, "\n").Count;
+            this.m_M.OutputCFile.Write(str);
         }
 
         private void WriteCodeLine(string str)
         {
-            this.m_M.OutputCFile.WriteLine(str.Replace("\r\n", "\n"));
+            str = str.Replace("\r\n", "\n");
+            this.m_CodeLineNumber += Regex.Matches(str, "\n").Count + 1;
+            this.m_M.OutputCFile.WriteLine(str);
         }
 
         private void WriteCodeLine()
         {
+            this.m_CodeLineNumber += 1;
             this.m_M.OutputCFile.WriteLine();
         }
 

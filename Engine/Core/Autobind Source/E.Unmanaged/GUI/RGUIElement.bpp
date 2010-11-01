@@ -1,4 +1,7 @@
 #import Engine.InternalConstructorOnlyException
+#import Engine.ObjectDisposedException
+#import Engine.Collections.RRectangle
+#import Engine.Unmanaged.GUI.RGUIEnvironment
 #include "IGUIElement.h"
 
 class Engine.Unmanaged.GUI.RGUIElement
@@ -58,33 +61,464 @@ class Engine.Unmanaged.GUI.RGUIElement
 	/// <summary>
 	/// The absolute clipping rectangle applied to the GUI element.
 	/// </summary>
+	/// <readonly>true</readonly>
 	/// <exception>Engine.ObjectDisposedException</exception>
-	/// <exception>Engine.ReadOnlyPropertyException</exception>
-	bound property Engine::Unmanaged::GUI::RGUIEnvironment AbsoluteClippingRect
+	bound property Engine::Collections::RRectangle AbsoluteClippingRect
 	{
 		get: call GetAbsoluteClippingRect;
-		set: call SetAbsoluteClippingRect;
 	}
 
 	/// <summary>
-	/// The absolute rectangle of the GUI element.
+	/// The absolute position of the GUI element on the screen.
 	/// </summary>
+	/// <readonly>true</readonly>
 	/// <exception>Engine.ObjectDisposedException</exception>
-	/// <exception>Engine.ReadOnlyPropertyException</exception>
-	bound property Engine::Unmanaged::GUI::RGUIEnvironment AbsoluteRect
+	bound property Engine::Collections::RRectangle AbsolutePosition
 	{
-		get: call GetAbsoluteRect;
-		set: call SetAbsoluteRect;
+		get: call GetAbsolutePosition;
 	}
 
 	/// <summary>
 	/// A list of children contained by this object.
 	/// </summary>
+	/// <readonly>true</readonly>
 	/// <exception>Engine.ObjectDisposedException</exception>
-	/// <exception>Engine.ReadOnlyPropertyException</exception>
-	bound property Engine::Unmanaged::GUI::RGUIEnvironment Children
+	bound property table Children
 	{
-		get: call GetAbsoluteRect;
-		set: call SetAbsoluteRect;
+		get: call GetChildren;
+	}
+
+	/// <summary>
+	/// The environment that owns this GUI element.
+	/// </summary>
+	/// <readonly>true</readonly>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	//bound property Engine::Unmanaged::GUI::RGUIEnvironment Environment
+	//{
+	//	get: call GetEnvironment;
+	//}
+
+	/// <summary>
+	/// The ID of the GUI element.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	bound property numeric ID
+	{
+		get: call GetID;
+		set: call SetID;
+	}
+
+	/// <summary>
+	/// Whether the GUI element is currently enabled.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	//bound property bool Enabled
+	//{
+	//	get: call GetEnabled;
+	//	set: call SetEnabled;
+	//}
+
+	/// <summary>
+	/// Whether this GUI element was created as part of it's parent control.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	//bound property bool SubElement
+	//{
+	//	get: call GetSubElement;
+	//	set: call SetSubElement;
+	//}
+
+	/// <summary>
+	/// Whether this GUI element is a tab group.
+	/// </summary>
+	/// <readonly>true</readonly>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	bound property bool TabGroup
+	{
+		get: call GetTabGroup;
+	}
+
+	/// <summary>
+	/// The tab stop / order (like in Windows) of this GUI element. If the tab stop is 0, then it will not be 
+	/// tabbed to.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	bound property numeric TabOrder
+	{
+		get: call GetTabOrder;
+		set: call SetTabOrder;
+	}
+
+	/// <summary>
+	/// The minimum valid size of the GUI element.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	//bound property Engine::Collections::RRectangle MinSize
+	//{
+	//	get: call GetMinSize;
+	//	set: call SetMinSize;
+	//}
+
+	/// <summary>
+	/// The maximum valid size of the GUI element.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	//bound property Engine::Collections::RRectangle MaxSize
+	//{
+	//	get: call GetMaxSize;
+	//	set: call SetMaxSize;
+	//}
+
+	/// <summary>
+	/// Whether the element ignores it's parent clipping rectangle.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	//bound property bool NotClipped
+	//{
+	//	get: call GetNotClipped;
+	//	set: call SetNotClipped;
+	//}
+
+	/// <summary>
+	/// The parent element of this GUI element.
+	/// </summary>
+	/// <readonly>true</readonly>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	bound property Engine::Unmanaged::GUI::RGUIElement Parent
+	{
+		get: call GetParent;
+	}
+
+	/// <summary>
+	/// The position of the GUI element relative to it's parent.
+	/// </summary>
+	/// <readonly>true</readonly>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	bound property Engine::Collections::RRectangle Position
+	{
+		get: call GetPosition;
+		set: call SetPosition;
+	}
+
+	/// <summary>
+	/// The text shown on the GUI element.  Some GUI elements ignore this property.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	bound property string Text
+	{
+		get: call GetText;
+		set: call SetText;
+	}
+
+	/// <summary>
+	/// The tooltip text shown on the GUI element.  If the text is empty or blank, the
+	/// tooltip will not be shown.  Some GUI elements ignore this property.
+	/// </summary>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	bound property string ToolTipText
+	{
+		get: call GetToolTipText;
+		set: call SetToolTipText;
+	}
+
+	// Property functions
+	unbound Engine::Collections::RRectangle GetAbsoluteClippingRect()
+	{
+		if (this->m_IsElementSet)
+		{
+			Engine::Collections::RRectangle * ret = Bindings<Engine::Collections::RRectangle>::CreateNew(L);
+			ret->SetObject(this->m_Element->getAbsoluteClippingRect());
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	unbound Engine::Collections::RRectangle GetAbsolutePosition()
+	{
+		if (this->m_IsElementSet)
+		{
+			Engine::Collections::RRectangle * ret = Bindings<Engine::Collections::RRectangle>::CreateNew(L);
+			ret->SetObject(this->m_Element->getAbsolutePosition());
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	unbound table GetChildren()
+	{
+		if (this->m_IsElementSet)
+		{
+			table tbl;
+
+			irr::core::list<irr::gui::IGUIElement*> children = this->m_Element->getChildren();
+			int k = 1;
+			for (irr::core::list<irr::gui::IGUIElement*>::Iterator i = children.begin(); i != children.end(); i++)
+			{
+				Engine::Unmanaged::GUI::RGUIElement * elem = new Engine::Unmanaged::GUI::RGUIElement();
+				elem->SetObject(*i);
+				tbl.Set((numeric)k, elem);
+				k += 1;
+			}
+
+			return tbl;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	//unbound Engine::Unmanaged::GUI::RGUIEnvironment GetEnvironment()
+	//{
+	//	if (this->m_IsElementSet)
+	//	{
+	//		Engine::Unmanaged::GUI::RGUIEnvironment * ret = Bindings<Engine::Unmanaged::GUI::RGUIEnvironment>::CreateNew(L);
+	//		ret->SetObject(this->m_Element->getEnvironment());
+	//		return ret;
+	//	}
+	//	else
+	//		throw new Engine::ObjectDisposedException();
+	//}
+
+	unbound numeric GetID()
+	{
+		if (this->m_IsElementSet)
+			return this->m_Element->getID();
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	unbound void SetID(numeric value)
+	{
+		if (this->m_IsElementSet)
+		{
+			this->m_Element->setID(value);
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	//unbound bool GetEnabled()
+	//{
+	//	if (this->m_IsElementSet)
+	//		return this->m_Element->getEnabled();
+	//	else
+	//		throw new Engine::ObjectDisposedException();
+	//}
+
+	//unbound void SetEnabled(bool value)
+	//{
+	//	if (this->m_IsElementSet)
+	//	{
+	//		this->m_Element->setEnabled(value);
+	//		return;
+	//	}
+	//	else
+	//		throw new Engine::ObjectDisposedException();
+	//}
+
+	//unbound bool GetSubElement()
+	//{
+	//	if (this->m_IsElementSet)
+	//		return this->m_Element->getSubElement();
+	//	else
+	//		throw new Engine::ObjectDisposedException();
+	//}
+
+	//unbound void SetSubElement(bool value)
+	//{
+	//	if (this->m_IsElementSet)
+	//	{
+	//		this->m_Element->setSubElement(value);
+	//		return;
+	//	}
+	//	else
+	//		throw new Engine::ObjectDisposedException();
+	//}
+
+	unbound Engine::Unmanaged::GUI::RGUIElement GetTabGroup()
+	{
+		if (this->m_IsElementSet)
+		{
+			Engine::Unmanaged::GUI::RGUIElement * ret = Bindings<Engine::Unmanaged::GUI::RGUIElement>::CreateNew(L);
+			ret->SetObject(this->m_Element->getTabGroup());
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	//unbound void SetTabGroup(Engine::Unmanaged::GUI::RGUIElement value)
+	//{
+	//	if (this->m_IsElementSet)
+	//	{
+	//		this->m_Element->setTabGroup(value->GetObject());
+	//		return;
+	//	}
+	//	else
+	//		throw new Engine::ObjectDisposedException();
+	//}
+
+	unbound numeric GetTabOrder()
+	{
+		if (this->m_IsElementSet)
+		{
+			if (!this->m_Element->isTabStop())
+				return (numeric)0;
+			return this->m_Element->getTabOrder();
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	unbound void SetTabOrder(numeric value)
+	{
+		if (this->m_IsElementSet)
+		{
+			this->m_Element->setTabStop(value == 0);
+			this->m_Element->setTabOrder(value);
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	//unbound Engine::Collections::RRectangle GetMinSize()
+	//{
+	//	if (this->m_IsElementSet)
+	//	{
+	//		Engine::Collections::RRectangle * ret = Bindings<Engine::Collections::RRectangle>::CreateNew(L);
+	//		ret->SetObject(this->m_Element->getMinSize());
+	//		return ret;
+	//	}
+	//	else
+	//		throw new Engine::ObjectDisposedException();
+	//}
+
+	//unbound void SetMinSize(Engine::Collections::RRectangle value)
+	//{
+	//	if (this->m_IsElementSet)
+	//	{
+	//		this->m_Element->setMinSize(value->GetObject());
+	//		return;
+	//	}
+	//	else
+	//		throw new Engine::ObjectDisposedException();
+	//}
+
+	//unbound Engine::Collections::RRectangle GetMaxSize()
+	//{
+	//	if (this->m_IsElementSet)
+	//	{
+	//		Engine::Collections::RRectangle * ret = Bindings<Engine::Collections::RRectangle>::CreateNew(L);
+	//		ret->SetObject(this->m_Element->getMaxSize());
+	//		return ret;
+	//	}
+	//	else
+	//		throw new Engine::ObjectDisposedException();
+	//}
+
+	//unbound void SetMaxSize(Engine::Collections::RRectangle value)
+	//{
+	//	if (this->m_IsElementSet)
+	//	{
+	//		this->m_Element->setMaxSize(value->GetObject());
+	//		return;
+	//	}
+	//	else
+	//		throw new Engine::ObjectDisposedException();
+	//}
+
+	//unbound bool GetNotClipped()
+	//{
+	//	if (this->m_IsElementSet)
+	//		return this->m_Element->getNotClipped();
+	//	else
+	//		throw new Engine::ObjectDisposedException();
+	//}
+
+	//unbound void SetNotClipped(bool value)
+	//{
+	//	if (this->m_IsElementSet)
+	//	{
+	//		this->m_Element->setNotClipped(value);
+	//		return;
+	//	}
+	//	else
+	//		throw new Engine::ObjectDisposedException();
+	//}
+
+	unbound Engine::Unmanaged::GUI::RGUIElement GetParent()
+	{
+		if (this->m_IsElementSet)
+		{
+			Engine::Unmanaged::GUI::RGUIElement * ret = Bindings<Engine::Unmanaged::GUI::RGUIElement>::CreateNew(L);
+			ret->SetObject(this->m_Element->getParent());
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	unbound Engine::Collections::RRectangle GetPosition()
+	{
+		if (this->m_IsElementSet)
+		{
+			Engine::Collections::RRectangle * ret = Bindings<Engine::Collections::RRectangle>::CreateNew(L);
+			ret->SetObject(this->m_Element->getRelativePosition());
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	unbound void SetPosition(Engine::Collections::RRectangle value)
+	{
+		if (this->m_IsElementSet)
+		{
+			this->m_Element->setRelativePosition(value->GetObjectAsIntRect());
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	unbound string GetText()
+	{
+		if (this->m_IsElementSet)
+			return this->m_Element->getText();
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	unbound void SetText(string value)
+	{
+		if (this->m_IsElementSet)
+		{
+			this->m_Element->setText(value);
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	unbound string GetToolTipText()
+	{
+		if (this->m_IsElementSet)
+			return string(this->m_Element->getToolTipText().c_str());
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	unbound void SetToolTipText(string value)
+	{
+		if (this->m_IsElementSet)
+		{
+			this->m_Element->setToolTipText(value);
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
 	}
 }

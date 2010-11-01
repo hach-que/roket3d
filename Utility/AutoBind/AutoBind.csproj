@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{76F2CFAC-B767-4A89-9BD2-96B099C5B909}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -64,6 +64,7 @@
   <ItemGroup>
     <Content Include="Include\autobind\binding\lua.h" />
     <Content Include="Include\autobind\types.h" />
+    <Content Include="Source\types.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
