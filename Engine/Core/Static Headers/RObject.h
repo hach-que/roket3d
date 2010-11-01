@@ -3,6 +3,8 @@
 #ifndef CLASS_RObject
 #define CLASS_RObject
 
+#pragma message("INCLUDE RObject...")
+
 class RObject
 {
 	public:
