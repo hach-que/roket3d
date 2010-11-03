@@ -190,6 +190,17 @@ class Engine.Collections.RVector2D
 	}
 
 	/// <summary>
+	/// Sets the high-precision X and Y values.
+	/// </summary>
+	unbound public void SetHighPrecisionXY(double x, double y)
+	{
+		this->m_Vector.X = x;
+		this->m_Vector.Y = y;
+		this->p_X = x;
+		this->p_Y = y;
+	}
+
+	/// <summary>
 	/// Gets the Irrlicht object that this instance represents.
 	/// </summary>
 	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>

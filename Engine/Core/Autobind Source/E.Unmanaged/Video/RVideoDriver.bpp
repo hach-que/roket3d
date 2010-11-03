@@ -2,7 +2,7 @@
 #import Engine.ObjectDisposedException
 #import Engine.Collections.RColor
 #import Engine.Collections.RVector2D
-#import Engine.Collections.RRay2D
+#import Engine.Collections.RLine2D
 #import Engine.Collections.RRectangle
 #include "IVideoDriver.h"
 
@@ -67,7 +67,7 @@ class Engine.Unmanaged.Video.RVideoDriver
 	/// <param name="line">The line defined as a 2D ray.</param>
 	/// <param name="color">The color of the line.</param>
 	/// <exception>Engine::ObjectDisposedException</exception>
-	bound void Draw2DLine(Engine::Collections::RRay2D line, Engine::Collections::RColor color)
+	bound void Draw2DLine(Engine::Collections::RLine2D line, Engine::Collections::RColor color)
 	{
 		if (this->m_IsDriverSet)
 		{

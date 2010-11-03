@@ -16,6 +16,7 @@
 #include <vector>
 
 typedef lua_Number numeric;
+typedef void* variant;
 
 class string
 {
@@ -23,83 +24,80 @@ public:
 	string()
 	{
 		this->len = 0;
-		this->data = (wchar_t*)malloc(sizeof(wchar_t));
-		this->data[0] = 0;
+		this->wdata = (wchar_t*)malloc(sizeof(wchar_t));
+		this->wdata[0] = 0;
+
+		// Initalize the ASCII version.
+		this->InitalizeASCII();
 	}
 
 	string(const string & copy)
 	{
 		// Copy the string's data.
 		this->len = copy.len;
-		this->data = (wchar_t*)malloc((this->len + 1) * sizeof(wchar_t));
+		this->wdata = (wchar_t*)malloc((this->len + 1) * sizeof(wchar_t));
 		for (size_t i = 0; i < this->len; i += 1)
-			this->data[i] = copy.data[i];
-		this->data[this->len] = 0; // NULL terminator.
+			this->wdata[i] = copy.wdata[i];
+		this->wdata[this->len] = 0; // NULL terminator.
+
+		// Initalize the ASCII version.
+		this->InitalizeASCII();
 	}
 
 	string(const char* text)
 	{
 		// Allocate memory to be used by the string.
 		this->len = strlen(text);
-		this->data = (wchar_t*)malloc((this->len + 1) * sizeof(wchar_t));
+		this->wdata = (wchar_t*)malloc((this->len + 1) * sizeof(wchar_t));
 		for (size_t i = 0; i < this->len; i += 1)
-			this->data[i] = text[i];
-		this->data[this->len] = 0; // NULL terminator.
+			this->wdata[i] = text[i];
+		this->wdata[this->len] = 0; // NULL terminator.
+
+		// Initalize the ASCII version.
+		this->InitalizeASCII();
 	}
 
 	string(const wchar_t* text)
 	{
 		// Allocate memory to be used by the string.
 		this->len = wcslen(text);
-		this->data = (wchar_t*)malloc((this->len + 1) * sizeof(wchar_t));
+		this->wdata = (wchar_t*)malloc((this->len + 1) * sizeof(wchar_t));
 		for (size_t i = 0; i < this->len; i += 1)
-			this->data[i] = text[i];
-		this->data[this->len] = 0; // NULL terminator.
+			this->wdata[i] = text[i];
+		this->wdata[this->len] = 0; // NULL terminator.
+
+		// Initalize the ASCII version.
+		this->InitalizeASCII();
 	}
 
 	~string()
 	{
 		// Free the memory used by the string.
-		free(this->data);
+		free(this->wdata);
+		free(this->cdata);
 	}
 
 	operator const char*()
 	{
-		// Implicit conversion to const char*.  We have to
-		// malloc a new string and return it as a reference
-		// so that it's still valid when this object goes out
-		// of scope.
-		char* ret = (char*)malloc((len + 1) * sizeof(char));
-		for (size_t i = 0; i < len; i += 1)
-			ret[i] = this->data[i];
-		ret[len] = 0; // NULL terminator.
-		return const_cast<const char*>(ret);
+		return const_cast<const char*>(this->cdata);
 	}
 
 	operator const wchar_t*()
 	{
-		// Implicit conversion to const wchar_t*.  We have to
-		// malloc a new string and return it as a reference
-		// so that it's still valid when this object goes out
-		// of scope.
-		wchar_t* ret = (wchar_t*)malloc((len + 1) * sizeof(wchar_t));
-		for (size_t i = 0; i < len; i += 1)
-			ret[i] = this->data[i];
-		ret[len] = 0; // NULL terminator.
-		return const_cast<const wchar_t*>(ret);
+		return const_cast<const wchar_t*>(this->wdata);
 	}
 
 	operator const std::string()
 	{
 		// Implicit conversion to const std::string.
-		const std::string ret = (const char*)this->data;
+		const std::string ret = (const char*)this->wdata;
 		return ret;
 	}
 
 	bool operator ==(const string& b) const
 	{
 		// String comparison.
-		return (wcscmp(this->data, b.data) == 0);
+		return (wcscmp(this->wdata, b.wdata) == 0);
 	}
 
 	string & operator =(const string& rhs)
@@ -109,20 +107,42 @@ public:
 			return *this;
 
 		// Deallocate existing data.
-		free(this->data);
+		free(this->wdata);
 
 		// Allocate new memory.
 		this->len = rhs.len;
-		this->data = (wchar_t*)malloc((this->len + 1) * sizeof(wchar_t));
+		this->wdata = (wchar_t*)malloc((this->len + 1) * sizeof(wchar_t));
 		for (size_t i = 0; i < this->len; i += 1)
-			this->data[i] = rhs.data[i];
-		this->data[this->len] = 0; // NULL terminator.
+			this->wdata[i] = rhs.wdata[i];
+		this->wdata[this->len] = 0; // NULL terminator.
+
+		// Update the ASCII version.
+		this->MaintainASCII();
 
 		return *this;
 	}
 
 private:
-	wchar_t* data;
+	void MaintainASCII()
+	{
+		// Deallocate existing data.
+		free(this->cdata);
+
+		// Allocate new memory.
+		this->InitalizeASCII();
+	}
+
+	void InitalizeASCII()
+	{
+		// Allocate new memory.
+		this->cdata = (char*)malloc((this->len + 1) * sizeof(char));
+		for (size_t i = 0; i < this->len; i += 1)
+			this->cdata[i] = this->wdata[i];
+		this->cdata[this->len] = 0; // NULL terminator.
+	}
+
+	wchar_t* wdata;
+	char* cdata;
 	size_t len;
 };
 

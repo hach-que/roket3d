@@ -10,8 +10,8 @@
 #include "E.Collections/RMatrix.h"
 #include "E.Collections/RPlane.h"
 #include "E.Collections/RQuaternion.h"
-#include "E.Collections/RRay2D.h"
-#include "E.Collections/RRay3D.h"
+#include "E.Collections/RLine2D.h"
+#include "E.Collections/RLine3D.h"
 #include "E.Collections/RRectangle.h"
 #include "E.Collections/RTriangle3D.h"
 #include "E.Collections/RVector2D.h"
@@ -98,8 +98,8 @@ namespace Roket3D
 		Bindings<Engine::Collections::RMatrix>::Register(L);
 		Bindings<Engine::Collections::RPlane>::Register(L);
 		Bindings<Engine::Collections::RQuaternion>::Register(L);
-		Bindings<Engine::Collections::RRay2D>::Register(L);
-		Bindings<Engine::Collections::RRay3D>::Register(L);
+		Bindings<Engine::Collections::RLine2D>::Register(L);
+		Bindings<Engine::Collections::RLine3D>::Register(L);
 		Bindings<Engine::Collections::RRectangle>::Register(L);
 		Bindings<Engine::Collections::RTriangle3D>::Register(L);
 		Bindings<Engine::Collections::RVector2D>::Register(L);
