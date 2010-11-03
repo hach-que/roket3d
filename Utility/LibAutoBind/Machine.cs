@@ -86,6 +86,15 @@ namespace LibAutoBind
                 return f.Name;
             }
         }
+
+        public string InputPath
+        {
+            get
+            {
+                FileInfo f = new FileInfo(this.p_FilePath);
+                return f.FullName;
+            }
+        }
     }
 
     public class InvalidClassDefinitionException : Exception

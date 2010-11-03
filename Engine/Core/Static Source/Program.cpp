@@ -16,21 +16,7 @@
 #include "LowLevel.h"
 #include <iostream>
 #include "irrXML.h"
-
-int testFunc(lua_State * L)
-{
-	int * test = NULL;
-	*test = 13;
-	return 0;
-}
-
-int testFunc2(lua_State * L)
-{
-	int a = 4;
-	int b = 0;
-	int c = a / b;
-	return 0;
-}
+#include <vld.h>
 
 namespace Roket3D
 {
@@ -144,15 +130,19 @@ namespace Roket3D
 		}
 
 		// Register the panic function.
-		lua_atpanic(L, &Debugger::LuaPanicHandle);
+		lua_atpanic(L, &Debugger::LuaExceptionHandle);
 
 		// Register the debugger hooks.
 		Debugger::LuaHookInitalize(L);
+
+		// Initalize the function bindings table.
+		function::Setup(L);
 
 		// Initalize all of the classes.
 		Roket3D::RegisterAllClasses(L);
 
 		// Load the entry point file up and run it.
+		lua_pushcfunction(L, &Debugger::LuaPCALLHandle);
 		int ret = luaL_loadfile(L, info.EntryPointFile.c_str());
 		if (ret == LUA_ERRSYNTAX)
 		{
@@ -167,10 +157,11 @@ namespace Roket3D
 			return -1;
 		}
 
-		ret = lua_pcall(L, 0, 0, 0);
+		ret = lua_pcall(L, 0, 0, -2);
 		if (ret == LUA_ERRRUN)
 		{
-			Debugger::LuaExceptionHandle(L);
+			// Already handled by the PCALL error handler callback
+			// at this point.
 			return -1;
 		}
 		else if (ret == LUA_ERRMEM)
@@ -178,8 +169,10 @@ namespace Roket3D
 			Debugger::RaiseException(new Engine::OutOfMemoryException());
 			return -1;
 		}
+		lua_pop(L, 1);
 
 		// Load the entry point call string into Lua, and then run it.
+		lua_pushcfunction(L, &Debugger::LuaPCALLHandle);
 		ret = luaL_loadstring(L, info.EntryPointCall.c_str());
 		if (ret == LUA_ERRSYNTAX)
 		{
@@ -194,10 +187,11 @@ namespace Roket3D
 			return -1;
 		}
 
-		ret = lua_pcall(L, 0, 1, 0);
+		ret = lua_pcall(L, 0, 1, -2);
 		if (ret == LUA_ERRRUN)
 		{
-			Debugger::LuaExceptionHandle(L);
+			// Already handled by the PCALL error handler callback
+			// at this point.
 			return -1;
 		}
 		else if (ret == LUA_ERRMEM)

@@ -175,8 +175,8 @@ public:
 	/// To initialize the effectHandler, pass it the current Irrlicht device, the shadow map size and the folder where the
 	/// shaders are contained. You may also pass an alternate size for the post-processing RTT (Using the default initializes
 	/// it to the same size as the screen.)
-	effectHandler(irr::IrrlichtDevice* dev, irr::core::dimension2d<irr::s32> mapSize, irr::core::stringc shaderFolder = "", 
-		irr::core::dimension2d<irr::s32> screenRTTSize = irr::core::dimension2d<irr::s32>(0,0));
+	effectHandler(irr::IrrlichtDevice* dev, irr::core::dimension2d<irr::u32> mapSize, irr::core::stringc shaderFolder = "", 
+		irr::core::dimension2d<irr::u32> screenRTTSize = irr::core::dimension2d<irr::u32>(0,0));
 	
 	/// Adds an effect to a scene node by applying a shader material. Look at the E_EFFECT_TYPE enums for the various effect
 	/// types available.
@@ -375,7 +375,7 @@ private:
 	irr::core::array<SShadowNode> ShadowNodeArray;
 	irr::core::array<irr::scene::ISceneNode*> DepthPassArray;
 
-	irr::core::dimension2d<irr::s32> ScreenRTTSize;
+	irr::core::dimension2d<irr::u32> ScreenRTTSize;
 	irr::video::SColor ClearColour;
 	irr::video::SColor AmbientColour;
 	CScreenQuad ScreenQuad;

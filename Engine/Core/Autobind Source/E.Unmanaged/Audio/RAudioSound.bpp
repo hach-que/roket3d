@@ -24,7 +24,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 		}
 		this->m_IsSoundSet = false;
 		this->m_CAudioSound = NULL;
-		this->IsPrecious = true;
+		this->Grab();
 	}
 
 	/// <summary>
@@ -318,6 +318,7 @@ class Engine.Unmanaged.Audio.RAudioSound
 			this->m_CAudioSound->release();
 			this->m_CAudioSound = NULL;
 			this->m_IsSoundSet = false;
+			this->Drop();
 			return;
 		}
 		else

@@ -108,13 +108,16 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\ALUT\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\OGG\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\Vorbis\Include&quot;;&quot;$(SolutionDir)\Engine\Libraries\Audio\OpenAL\Include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
-				RuntimeLibrary="0"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -130,8 +133,6 @@
 				AdditionalDependencies=" openal32.lib"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories="&quot;$(SolutionDir)\Engine\Libraries\Audio\OpenAL\Binaries&quot;"
-				IgnoreAllDefaultLibraries="true"
-				IgnoreDefaultLibraryNames="msvcprt;MSVCRT"
 			/>
 			<Tool
 				Name="VCALinkTool"

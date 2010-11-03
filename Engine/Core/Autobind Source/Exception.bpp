@@ -95,8 +95,16 @@ class Engine.Exception
 				b << ar.currentline;
 				p.Level = a.str().c_str();
 				p.Source = ar.short_src;
-				p.Function = ar.name;
-				p.FuncType = ar.namewhat;
+				if (ar.name != NULL)
+				{
+					p.Function = ar.name;
+					p.FuncType = ar.namewhat;
+				}
+				else
+				{
+					p.Function = "???";
+					p.FuncType = "Lua";
+				}
 				p.LineNumber = b.str().c_str();
 
 				if (!hasdefinedline)
@@ -113,8 +121,16 @@ class Engine.Exception
 				a << (i + 1);
 				p.Level = a.str().c_str();
 				p.Source = "<native>";
-				p.Function = ar.name;
-				p.FuncType = ar.namewhat;
+				if (ar.name != NULL)
+				{
+					p.Function = ar.name;
+					p.FuncType = ar.namewhat;
+				}
+				else
+				{
+					p.Function = "???";
+					p.FuncType = "C";
+				}
 				p.LineNumber = "???";
 			}
 			else if (strcmp(ar.what, "main") == 0)
@@ -133,7 +149,7 @@ class Engine.Exception
 			{
 				a << (i + 1);
 				p.Level = a.str().c_str();
-				p.Source = "<tail call>";
+				p.Source = "<tail>";
 				p.Function = "";
 				p.FuncType = "";
 				p.LineNumber = "";

@@ -1,6 +1,86 @@
+#import Engine.DivideByZeroException
+#import Engine.Collections.RVector2D
+#include "Irrlicht.h"
+#include "line2d.h"
+
 class Engine.Collections.RRay2D
+   as Engine.Collections.Ray2D
 {
+	private double p_X1;
+	private double p_Y1;
+	private double p_X2;
+	private double p_Y2;
+	private irr::core::line2df m_Ray;
+
+	/// <summary>
+	/// The default constructor for an RRay2D object, initalizing
+	/// the ray information to have a value of (0, 0) -> (1, 1).
+	/// </summary>
 	bound RRay2D()
 	{
+		this->p_X1 = 0;
+		this->p_Y1 = 0;
+		this->p_X2 = 1;
+		this->p_Y2 = 1;
+		this->m_Ray = irr::core::line2df(0, 0, 1, 1);
+	}
+
+	/// <summary>
+	/// One of the recommended constructors for an RRay2D object, initalizing
+	/// the ray information to have a value of (x1, y1) -> (x2, y2).
+	/// </summary>
+	/// <param name="x1">The first X component.</param>
+	/// <param name="y1">The first Y component.</param>
+	/// <param name="x2">The second X component.</param>
+	/// <param name="y2">The second Y component.</param>
+	bound RRay2D(numeric x1, numeric y1, numeric x2, numeric y2)
+	{
+		this->p_X1 = x1;
+		this->p_Y1 = y1;
+		this->p_X2 = x2;
+		this->p_Y2 = y2;
+		this->m_Ray = irr::core::line2df(x1, y1, x2, y2);
+	}
+
+	/// <summary>
+	/// One of the recommended constructors for an RRay2D object, initalizing
+	/// the ray information to have a value of 'vec1' -> 'vec2'.
+	/// </summary>
+	/// <param name="start">The vector describing the first (start) position.</param>
+	/// <param name="end">The vector describing the second (end) position.</param>
+	bound RRay2D(Engine::Collections::RVector2D start, Engine::Collections::RVector2D end)
+	{
+		this->p_X1 = start->GetObject().X;
+		this->p_Y1 = start->GetObject().Y;
+		this->p_X2 = end->GetObject().X;
+		this->p_Y2 = end->GetObject().Y;
+		this->m_Ray = irr::core::line2df(start->GetObject(), end->GetObject());
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Irrlicht object to associate with this RRay2D instance.</param>
+	unbound public void SetObject(irr::core::line2df obj)
+	{
+		this->m_Ray = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::core::line2df GetObject()
+	{
+		return this->m_Ray;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::core::line2d<int> GetObjectAsIntLine()
+	{
+		return irr::core::line2d<int>(this->p_X1, this->p_Y1, this->p_X2, this->p_Y2);
 	}
 }

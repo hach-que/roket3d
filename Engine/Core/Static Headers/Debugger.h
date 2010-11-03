@@ -20,7 +20,7 @@ namespace Roket3D
 			// requires an implicit conversion / duplication).
 			static void RaiseException(Engine::Exception * err);
 			static int  LuaExceptionHandle(lua_State * L);
-			static int  LuaPanicHandle(lua_State * L);
+			static int  LuaPCALLHandle(lua_State * L);
 
 			// These functions are the debugging hooks that are associated
 			// with Lua.  They are used so that the debugger can pause execution
@@ -30,6 +30,9 @@ namespace Roket3D
 
 		private:
 			static bool m_IsConnected;
+			static const char* m_PCALLFileName;
+			static int m_PCALLLineNumber;
+			static bool m_UsePCALLEnvironment;
 	};
 }
 

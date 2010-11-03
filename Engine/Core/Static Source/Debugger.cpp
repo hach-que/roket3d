@@ -158,7 +158,7 @@ namespace Roket3D
 		}
 	}
 
-	int Debugger::LuaPanicHandle(lua_State * L)
+	int Debugger::LuaPCALLHandle(lua_State * L)
 	{
 		// The error message is on top of the stack, so we
 		// check to see whether it's a string (Lua error)
@@ -170,7 +170,15 @@ namespace Roket3D
 		if (lua_isstring(L, -1))
 		{
 			// It's a general Lua error.
-			Debugger::RaiseException(new Engine::InterpreterException(lua_tostring(L, -1)));
+			try
+			{
+				Debugger::RaiseException(new Engine::InterpreterException(lua_tostring(L, -1)));
+			}
+			catch (Engine::DebuggerNotAttachedException * err)
+			{
+				// We don't want to propagate the DebuggerNotAttachedException otherwise
+				// we'll get Debugger::RaiseException called twice.
+			}
 			return 0;
 		}
 		else
@@ -190,18 +198,26 @@ namespace Roket3D
 			lua_pushvalue(L, -2);
 
 			// Check to see if it inherits from Engine::Exception.
-			if (lua_is(L))
+			try
 			{
-				// Push the exception directly to Debugger::RaiseException.
-				Engine::Exception * err = Bindings<Engine::Exception>::GetArgument(L, -1);
-				Debugger::RaiseException(err);
+				if (lua_is(L))
+				{
+					// Push the exception directly to Debugger::RaiseException.
+					Engine::Exception * err = Bindings<Engine::Exception>::GetArgument(L, -1);
+					Debugger::RaiseException(err);
+				}
+				else
+				{
+					// We can't read the exception meaning directly, so throw
+					// a Engine::InvalidObjectThrownException to inform the user
+					// that it's the case.
+					Debugger::RaiseException(new Engine::InvalidObjectThrownException());
+				}
 			}
-			else
+			catch (Engine::DebuggerNotAttachedException * err)
 			{
-				// We can't read the exception meaning directly, so throw
-				// a Engine::InvalidObjectThrownException to inform the user
-				// that it's the case.
-				Debugger::RaiseException(new Engine::InvalidObjectThrownException());
+				// We don't want to propagate the DebuggerNotAttachedException otherwise
+				// we'll get Debugger::RaiseException called twice.
 			}
 			
 			return 0;
