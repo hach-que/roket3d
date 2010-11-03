@@ -50,32 +50,50 @@ class Engine.Collections.RVector2D
 		set: call SetY;
 	}
 
+	/// <summary>
+	/// The dot product between this and the specified vector.
+	/// </summary>
+	/// <param name="vec">The other vector to perform the dot product with.</param>
 	bound numeric DotProduct(RVector2D vec)
 	{
 		return this->m_Vector.dotProduct(vec->GetObject());
 	}
 
+	/// <summary>
+	/// Check whether this vector is equal to the specified vector.
+	/// </summary>
+	/// <param name="vec">The other vector to perform the comparison with.</param>
 	bound bool Equals(RVector2D vec)
 	{
 		return this->m_Vector.equals(vec->GetObject());
 	}
 
-	bound table GetAs4Values()
-	{
-		// TODO: Waiting on implementation of a Table class in the Lua Bindings class.
-		return;
-	}
-
+	/// <summary>
+	/// Retrieves the distance from this vector to the target vector.
+	/// </summary>
+	/// <param name="vec">The target vector.</param>
 	bound numeric GetDistanceFrom(RVector2D vec)
 	{
 		return this->m_Vector.getDistanceFrom(vec->GetObject());
 	}
 
+	/// <summary>
+	/// Retrieves the squared distance from this vector to the target vector.  This
+	/// function is faster than GetDistanceFrom() as it does not have to perform the
+	/// square root operation.
+	/// </summary>
+	/// <param name="vec">The target vector.</param>
 	bound numeric GetDistanceFromSQ(RVector2D vec)
 	{
 		return this->m_Vector.getDistanceFromSQ(vec->GetObject());
 	}
 
+	/// <summary>
+	/// Returns a vector interpolated between this vector and the target vector by
+	/// the specified amount.
+	/// </summary>
+	/// <param name="vec">The target vector.</param>
+	/// <param name="d">The amount to interpolate by.  This value should lie between 0 and 1.</param>
 	bound RVector2D GetInterpolated(RVector2D vec, numeric d)
 	{
 		RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
@@ -85,6 +103,13 @@ class Engine.Collections.RVector2D
 		return ret;
 	}
 
+	/// <summary>
+	/// Returns a vector quadratically interpolated between this vector and two other
+	/// vectors by the specified amount.
+	/// </summary>
+	/// <param name="vec1">The first other vector.</param>
+	/// <param name="vec2">The second other vector.</param>
+	/// <param name="d">The amount to interpolate by.  This value should lie between 0 and 1.</param>
 	bound RVector2D GetInterpolatedQuadratic(RVector2D vec1, RVector2D vec2, numeric d)
 	{
 		RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
@@ -94,21 +119,37 @@ class Engine.Collections.RVector2D
 		return ret;
 	}
 
+	/// <summary>
+	/// The length of this vector.
+	/// </summary>
 	bound numeric GetLength()
 	{
 		return this->m_Vector.getLength();
 	}
 
+	/// <summary>
+	/// The squared length of this vector.  This function is faster than GetLength()
+	/// as it does not have to perform the square root operation.
+	/// </summary>
 	bound numeric GetLengthSQ()
 	{
 		return this->m_Vector.getLengthSQ();
 	}
 
+	/// <summary>
+	/// Returns whether this vector lies between two other vectors.
+	/// </summary>
+	/// <param name="start">The start vector.</param>
+	/// <param name="end">The end vector.</param>
 	bound bool IsBetweenPoints(RVector2D start, RVector2D end)
 	{
 		return this->m_Vector.isBetweenPoints(start->GetObject(), end->GetObject());
 	}
 
+	/// <summary>
+	/// Returns a normalized vector so that either X or Y will be 1 with
+	/// the other components a lower value (while maintaining the original ratio).
+	/// </summary>
 	bound RVector2D Normalize()
 	{
 		RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
@@ -118,12 +159,21 @@ class Engine.Collections.RVector2D
 		return ret;
 	}
 
+	/// <summary>
+	/// Copies the values from the target vector into this one.
+	/// </summary>
+	/// <param name="other">The target vector.</param>
 	bound void CopyFrom(RVector2D other)
 	{
 		this->m_Vector.set(other->GetObject());
 		return;
 	}
 
+	/// <summary>
+	/// Sets both the X and Y values.
+	/// </summary>
+	/// <param name="x">The X value.</param>
+	/// <param name="y">The Y value.</param>
 	bound void Set(numeric x, numeric y)
 	{
 		this->m_Vector.set(x, y);
