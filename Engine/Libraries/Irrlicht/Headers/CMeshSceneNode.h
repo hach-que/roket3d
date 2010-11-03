@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -60,13 +60,6 @@ namespace scene
 		//! Returns the current mesh
 		virtual IMesh* getMesh(void) { return Mesh; }
 
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-		//! Creates shadow volume scene node as child of this node
-		//! and returns a pointer to it.
-		virtual IShadowVolumeSceneNode* addShadowVolumeSceneNode(const IMesh* shadowMesh,
-			s32 id, bool zfailmethod=true, f32 infinity=10000.0f);
-#endif
-
 		//! Sets if the scene node should not copy the materials of the mesh but use them in a read only style.
 		/* In this way it is possible to change the materials a mesh causing all mesh scene nodes 
 		referencing this mesh to change too. */
@@ -90,12 +83,6 @@ namespace scene
 
 		s32 PassCount;
 		bool ReadOnlyMaterials;
-
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-	private:
-		IShadowVolumeSceneNode* Shadow;
-#endif
-
 	};
 
 } // end namespace scene

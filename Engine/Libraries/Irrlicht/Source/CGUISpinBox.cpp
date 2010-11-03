@@ -1,4 +1,4 @@
-// Copyright (C) 2006-2008 Michael Zeilfelder
+// Copyright (C) 2006-2009 Michael Zeilfelder
 // This file uses the licence of the Irrlicht Engine.
 
 #include "CGUISpinBox.h"
@@ -9,7 +9,6 @@
 #include "IGUIEnvironment.h"
 #include "IEventReceiver.h"
 #include "fast_atof.h"
-#include <float.h>
 #include <wchar.h>
 
 
@@ -19,13 +18,17 @@ namespace gui
 {
 
 //! constructor
-CGUISpinBox::CGUISpinBox(const wchar_t* text, IGUIEnvironment* environment,
+CGUISpinBox::CGUISpinBox(const wchar_t* text, bool border,IGUIEnvironment* environment,
 			IGUIElement* parent, s32 id, const core::rect<s32>& rectangle)
 : IGUISpinBox(environment, parent, id, rectangle),
 	EditBox(0), ButtonSpinUp(0), ButtonSpinDown(0), StepSize(1.f),
 	RangeMin(-FLT_MAX), RangeMax(FLT_MAX), FormatString(L"%f"),
 	DecimalPlaces(-1)
 {
+	#ifdef _DEBUG
+	setDebugName("CGUISpinBox");
+	#endif
+
 	s32 ButtonWidth = 16;
 	IGUISpriteBank *sb = 0;
 	if (environment && environment->getSkin())
@@ -66,7 +69,7 @@ CGUISpinBox::CGUISpinBox(const wchar_t* text, IGUIEnvironment* environment,
 	}
 
 	const core::rect<s32> rectEdit(0, 0, rectangle.getWidth() - ButtonWidth - 1, rectangle.getHeight());
-	EditBox = Environment->addEditBox(text, rectEdit, true, this, -1);
+	EditBox = Environment->addEditBox(text, rectEdit, border, this, -1);
 	EditBox->grab();
 	EditBox->setSubElement(true);
 	EditBox->setAlignment(EGUIA_UPPERLEFT, EGUIA_LOWERRIGHT, EGUIA_UPPERLEFT, EGUIA_LOWERRIGHT);
@@ -166,6 +169,21 @@ bool CGUISpinBox::OnEvent(const SEvent& event)
 		bool changeEvent = false;
 		switch(event.EventType)
 		{
+		case EET_MOUSE_INPUT_EVENT:
+			switch(event.MouseInput.Event)
+			{
+			case EMIE_MOUSE_WHEEL:
+				{
+					f32 val = getValue() + (StepSize * event.MouseInput.Wheel);
+					setValue(val);
+					changeEvent = true;
+				}
+				break;
+			default:
+				break;
+			}
+			break;
+
 		case EET_GUI_EVENT:
 			if (event.GUIEvent.EventType == EGET_BUTTON_CLICKED)
 			{
@@ -184,7 +202,7 @@ bool CGUISpinBox::OnEvent(const SEvent& event)
 					changeEvent = true;
 				}
 			}
-			if ( event.GUIEvent.EventType == EGET_EDITBOX_ENTER )
+			if ( event.GUIEvent.EventType == EGET_EDITBOX_CHANGED )
 			{
 				if (event.GUIEvent.Caller == EditBox)
 				{
@@ -218,9 +236,9 @@ bool CGUISpinBox::OnEvent(const SEvent& event)
 void CGUISpinBox::verifyValueRange()
 {
 	f32 val = getValue();
-	if ( val < RangeMin )
+	if ( val+core::ROUNDING_ERROR_f32 < RangeMin )
 		val = RangeMin;
-	else if ( val > RangeMax )
+	else if ( val-core::ROUNDING_ERROR_f32 > RangeMax )
 		val = RangeMax;
 	else
 		return;
@@ -254,6 +272,7 @@ void CGUISpinBox::serializeAttributes(io::IAttributes* out, io::SAttributeReadWr
 	out->addFloat("Step", getStepSize());
 	out->addInt("DecimalPlaces", DecimalPlaces);
 }
+
 
 //! Reads attributes of the element
 void CGUISpinBox::deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options)

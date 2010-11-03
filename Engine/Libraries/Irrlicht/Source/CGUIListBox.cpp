@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -23,11 +23,11 @@ namespace gui
 CGUIListBox::CGUIListBox(IGUIEnvironment* environment, IGUIElement* parent,
 			s32 id, core::rect<s32> rectangle, bool clip,
 			bool drawBack, bool moveOverSelect)
-: IGUIListBox(environment, parent, id, rectangle), Selected(-1), ItemHeight(0),
+: IGUIListBox(environment, parent, id, rectangle), Selected(-1),
+	ItemHeight(0),ItemHeightOverride(0),
 	TotalItemHeight(0), ItemsIconWidth(0), Font(0), IconBank(0),
-	ScrollBar(0), Selecting(false), DrawBack(drawBack),
-	MoveOverSelect(moveOverSelect), selectTime(0), AutoScroll(true),
-	KeyBuffer(), LastKeyTime(0), HighlightWhenNotFocused(true)
+	ScrollBar(0), selectTime(0), LastKeyTime(0), Selecting(false), DrawBack(drawBack),
+	MoveOverSelect(moveOverSelect), AutoScroll(true), HighlightWhenNotFocused(true)
 {
 	#ifdef _DEBUG
 	setDebugName("CGUIListBox");
@@ -43,10 +43,7 @@ CGUIListBox::CGUIListBox(IGUIEnvironment* environment, IGUIElement* parent,
 	ScrollBar->setTabStop(false);
 	ScrollBar->setAlignment(EGUIA_LOWERRIGHT, EGUIA_LOWERRIGHT, EGUIA_UPPERLEFT, EGUIA_LOWERRIGHT);
 	ScrollBar->setVisible(false);
-	ScrollBar->drop();
-
 	ScrollBar->setPos(0);
-	ScrollBar->grab();
 
 	setNotClipped(!clip);
 
@@ -152,17 +149,23 @@ void CGUIListBox::recalculateItemHeight()
 			Font->drop();
 
 		Font = skin->getFont();
-		ItemHeight = 0;
+		if ( 0 == ItemHeightOverride )
+			ItemHeight = 0;
 
 		if (Font)
 		{
-			ItemHeight = Font->getDimension(L"A").Height + 4;
+			if ( 0 == ItemHeightOverride )
+				ItemHeight = Font->getDimension(L"A").Height + 4;
+
 			Font->grab();
 		}
 	}
 
 	TotalItemHeight = ItemHeight * Items.size();
 	ScrollBar->setMax(TotalItemHeight - AbsoluteRect.getHeight());
+	s32 minItemHeight = ItemHeight > 0 ? ItemHeight : 1;
+	ScrollBar->setSmallStep ( minItemHeight );
+	ScrollBar->setLargeStep ( 2*minItemHeight );
 
 	if ( TotalItemHeight <= AbsoluteRect.getHeight() )
 		ScrollBar->setVisible(false);
@@ -191,6 +194,21 @@ void CGUIListBox::setSelected(s32 id)
 	recalculateScrollPos();
 }
 
+//! sets the selected item. Set this to -1 if no item should be selected
+void CGUIListBox::setSelected(const wchar_t *item)
+{
+	s32 index = -1;
+
+	if ( item )
+	{
+		for ( index = 0; index < (s32) Items.size(); ++index )
+		{
+			if ( Items[index].text == item )
+				break;
+		}
+	}
+	setSelected ( index );
+}
 
 //! called if an event happened.
 bool CGUIListBox::OnEvent(const SEvent& event)
@@ -370,7 +388,7 @@ bool CGUIListBox::OnEvent(const SEvent& event)
 				switch(event.MouseInput.Event)
 				{
 				case EMIE_MOUSE_WHEEL:
-					ScrollBar->setPos(ScrollBar->getPos() + (s32)event.MouseInput.Wheel*-10);
+					ScrollBar->setPos(ScrollBar->getPos() + (s32)event.MouseInput.Wheel*-ItemHeight/2);
 					return true;
 
 				case EMIE_LMOUSE_PRESSED_DOWN:
@@ -577,6 +595,8 @@ u32 CGUIListBox::addItem(const wchar_t* text, s32 icon)
 
 void CGUIListBox::setSpriteBank(IGUISpriteBank* bank)
 {
+    if ( bank == IconBank )
+        return;
 	if (IconBank)
 		IconBank->drop();
 
@@ -854,6 +874,20 @@ video::SColor CGUIListBox::getItemDefaultColor(EGUI_LISTBOX_COLOR colorType) con
 		default:
 			return video::SColor();
 	}
+}
+
+//! set global itemHeight
+void CGUIListBox::setItemHeight( s32 height )
+{
+	ItemHeight = height;
+	ItemHeightOverride = 1;
+}
+
+
+//! Sets whether to draw the background
+void CGUIListBox::setDrawBackground(bool draw)
+{
+    DrawBack = draw;
 }
 
 

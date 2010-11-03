@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -8,7 +8,6 @@
 #include "S3DVertex.h"
 #include "ICameraSceneNode.h"
 #include "IMeshCache.h"
-#include "CShadowVolumeSceneNode.h"
 #include "IAnimatedMesh.h"
 #include "IMaterialRenderer.h"
 
@@ -49,8 +48,8 @@ void CMeshSceneNode::OnRegisterSceneNode()
 {
 	if (IsVisible)
 	{
-		// because this node supports rendering of mixed mode meshes consisting of 
-		// transparent and solid material at the same time, we need to go through all 
+		// because this node supports rendering of mixed mode meshes consisting of
+		// transparent and solid material at the same time, we need to go through all
 		// materials, check of what type they are and register this node for the right
 		// render pass according to that.
 
@@ -63,16 +62,16 @@ void CMeshSceneNode::OnRegisterSceneNode()
 		// count transparent and solid materials in this scene node
 		if (ReadOnlyMaterials && Mesh)
 		{
-			// count mesh materials 
+			// count mesh materials
 
 			for (u32 i=0; i<Mesh->getMeshBufferCount(); ++i)
 			{
 				scene::IMeshBuffer* mb = Mesh->getMeshBuffer(i);
 				video::IMaterialRenderer* rnd = mb ? driver->getMaterialRenderer(mb->getMaterial().MaterialType) : 0;
 
-				if (rnd && rnd->isTransparent()) 
+				if (rnd && rnd->isTransparent())
 					++transparentCount;
-				else 
+				else
 					++solidCount;
 
 				if (solidCount && transparentCount)
@@ -81,21 +80,21 @@ void CMeshSceneNode::OnRegisterSceneNode()
 		}
 		else
 		{
-			// count copied materials 
+			// count copied materials
 
 			for (u32 i=0; i<Materials.size(); ++i)
 			{
-				video::IMaterialRenderer* rnd = 
+				video::IMaterialRenderer* rnd =
 					driver->getMaterialRenderer(Materials[i].MaterialType);
 
-				if (rnd && rnd->isTransparent()) 
+				if (rnd && rnd->isTransparent())
 					++transparentCount;
-				else 
+				else
 					++solidCount;
 
 				if (solidCount && transparentCount)
 					break;
-			}	
+			}
 		}
 
 		// register according to material types counted
@@ -120,7 +119,7 @@ void CMeshSceneNode::render()
 	if (!Mesh || !driver)
 		return;
 
-	bool isTransparentPass = 
+	bool isTransparentPass =
 		SceneManager->getSceneNodeRenderPass() == scene::ESNRP_TRANSPARENT;
 
 	++PassCount;
@@ -135,7 +134,7 @@ void CMeshSceneNode::render()
 	if (DebugDataVisible && PassCount==1)
 	{
 		// overwrite half transparency
-		if ( DebugDataVisible & scene::EDS_HALF_TRANSPARENCY )
+		if (DebugDataVisible & scene::EDS_HALF_TRANSPARENCY)
 		{
 			for (u32 g=0; g<Mesh->getMeshBufferCount(); ++g)
 			{
@@ -149,7 +148,7 @@ void CMeshSceneNode::render()
 	}
 
 	// render original meshes
-	if ( renderMeshes )
+	if (renderMeshes)
 	{
 		for (u32 i=0; i<Mesh->getMeshBufferCount(); ++i)
 		{
@@ -163,7 +162,7 @@ void CMeshSceneNode::render()
 
 				// only render transparent buffer if this is the transparent render pass
 				// and solid only in solid pass
-				if (transparent == isTransparentPass) 
+				if (transparent == isTransparentPass)
 				{
 					driver->setMaterial(material);
 					driver->drawMeshBuffer(mb);
@@ -175,17 +174,18 @@ void CMeshSceneNode::render()
 	driver->setTransform(video::ETS_WORLD, AbsoluteTransformation);
 
 	// for debug purposes only:
-	if ( DebugDataVisible && PassCount==1)
+	if (DebugDataVisible && PassCount==1)
 	{
 		video::SMaterial m;
 		m.Lighting = false;
+		m.AntiAliasing=0;
 		driver->setMaterial(m);
 
-		if ( DebugDataVisible & scene::EDS_BBOX )
+		if (DebugDataVisible & scene::EDS_BBOX)
 		{
 			driver->draw3DBox(Box, video::SColor(255,255,255,255));
 		}
-		if ( DebugDataVisible & scene::EDS_BBOX_BUFFERS )
+		if (DebugDataVisible & scene::EDS_BBOX_BUFFERS)
 		{
 			for (u32 g=0; g<Mesh->getMeshBufferCount(); ++g)
 			{
@@ -195,50 +195,37 @@ void CMeshSceneNode::render()
 			}
 		}
 
-		if ( DebugDataVisible & scene::EDS_NORMALS )
+		if (DebugDataVisible & scene::EDS_NORMALS)
 		{
-			IAnimatedMesh * arrow = SceneManager->addArrowMesh (
-					"__debugnormal", 0xFFECEC00,
-					0xFF999900, 4, 8, 1.f, 0.6f, 0.05f,
-					0.3f);
-			if ( 0 == arrow )
-			{
-				arrow = SceneManager->getMesh ( "__debugnormal" );
-			}
-			IMesh *mesh = arrow->getMesh(0);
-
-			// find a good scaling factor
-
-			core::matrix4 m2;
 
 			// draw normals
+			core::vector3df normalizedNormal;
+			const f32 DebugNormalLength = SceneManager->getParameters()->getAttributeAsFloat(DEBUG_NORMAL_LENGTH);
+			const video::SColor DebugNormalColor = SceneManager->getParameters()->getAttributeAsColor(DEBUG_NORMAL_COLOR);
+
 			for (u32 g=0; g<Mesh->getMeshBufferCount(); ++g)
 			{
 				const scene::IMeshBuffer* mb = Mesh->getMeshBuffer(g);
 				const u32 vSize = video::getVertexPitchFromType(mb->getVertexType());
 				const video::S3DVertex* v = ( const video::S3DVertex*)mb->getVertices();
-				for ( u32 i=0; i != mb->getVertexCount(); ++i )
+				const bool normalize = mb->getMaterial().NormalizeNormals;
+
+				for (u32 i=0; i != mb->getVertexCount(); ++i)
 				{
-					// align to v->Normal
-					core::quaternion quatRot(v->Normal.X, 0.f, -v->Normal.X, 1+v->Normal.Y);
-					quatRot.normalize();
-					quatRot.getMatrix(m2);
+					normalizedNormal = v->Normal;
+					if (normalize)
+						normalizedNormal.normalize();
 
-					m2.setTranslation(v->Pos);
-					m2*=AbsoluteTransformation;
+					driver->draw3DLine(v->Pos, v->Pos + (normalizedNormal * DebugNormalLength), DebugNormalColor);
 
-					driver->setTransform(video::ETS_WORLD, m2);
-					for (u32 a = 0; a != mesh->getMeshBufferCount(); ++a)
-						driver->drawMeshBuffer(mesh->getMeshBuffer(a));
-
-					v = (const video::S3DVertex*) ( (u8*) v + vSize );
+					v = (const video::S3DVertex*) ( (u8*) v+vSize );
 				}
 			}
 			driver->setTransform(video::ETS_WORLD, AbsoluteTransformation);
 		}
 
 		// show mesh
-		if ( DebugDataVisible & scene::EDS_MESH_WIRE_OVERLAY )
+		if (DebugDataVisible & scene::EDS_MESH_WIRE_OVERLAY)
 		{
 			m.Wireframe = true;
 			driver->setMaterial(m);
@@ -258,28 +245,6 @@ const core::aabbox3d<f32>& CMeshSceneNode::getBoundingBox() const
 	return Mesh ? Mesh->getBoundingBox() : Box;
 }
 
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-//! Creates shadow volume scene node as child of this node
-//! and returns a pointer to it.
-IShadowVolumeSceneNode* CMeshSceneNode::addShadowVolumeSceneNode(const IMesh* shadowMesh,
-						 s32 id, bool zfailmethod, f32 infinity)
-{
-	if (!SceneManager->getVideoDriver()->queryFeature(video::EVDF_STENCIL_BUFFER))
-		return 0;
-
-	if (Shadow)
-	{
-//		os::Printer::log("This node already has a shadow.", ELL_WARNING);
-		return 0;
-	}
-
-	if (!shadowMesh)
-		shadowMesh = Mesh; // if null is given, use the mesh of node
-
-	Shadow = new CShadowVolumeSceneNode(shadowMesh, this, SceneManager, id,  zfailmethod, infinity);
-	return Shadow;
-}
-#endif
 
 //! returns the material based on the zero based index i. To get the amount
 //! of materials used by this scene node, use getMaterialCount().
@@ -294,7 +259,7 @@ video::SMaterial& CMeshSceneNode::getMaterial(u32 i)
 		return tmpReadOnlyMaterial;
 	}
 
-	if ( i >= Materials.size())
+	if (i >= Materials.size())
 		return ISceneNode::getMaterial(i);
 
 	return Materials[i];
@@ -319,14 +284,12 @@ void CMeshSceneNode::setMesh(IMesh* mesh)
 	if (!mesh)
 		return; // won't set null mesh
 
+    mesh->grab();
 	if (Mesh)
 		Mesh->drop();
 
 	Mesh = mesh;
 	copyMaterials();
-
-	if (Mesh)
-		Mesh->grab();
 }
 
 
@@ -355,15 +318,15 @@ void CMeshSceneNode::serializeAttributes(io::IAttributes* out, io::SAttributeRea
 {
 	IMeshSceneNode::serializeAttributes(out, options);
 
-	out->addString("Mesh", SceneManager->getMeshCache()->getMeshFilename(Mesh));
+	out->addString("Mesh", SceneManager->getMeshCache()->getMeshName(Mesh).getPath().c_str());
 	out->addBool("ReadOnlyMaterials", ReadOnlyMaterials);
 }
 
 //! Reads attributes of the scene node.
 void CMeshSceneNode::deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options)
 {
-	core::stringc oldMeshStr = SceneManager->getMeshCache()->getMeshFilename(Mesh);
-	core::stringc newMeshStr = in->getAttributeAsString("Mesh");
+	io::path oldMeshStr = SceneManager->getMeshCache()->getMeshName(Mesh);
+	io::path newMeshStr = in->getAttributeAsString("Mesh");
 	ReadOnlyMaterials = in->getAttributeAsBool("ReadOnlyMaterials");
 
 	if (newMeshStr != "" && oldMeshStr != newMeshStr)
@@ -382,7 +345,7 @@ void CMeshSceneNode::deserializeAttributes(io::IAttributes* in, io::SAttributeRe
 }
 
 //! Sets if the scene node should not copy the materials of the mesh but use them in a read only style.
-/* In this way it is possible to change the materials a mesh causing all mesh scene nodes 
+/* In this way it is possible to change the materials a mesh causing all mesh scene nodes
 referencing this mesh to change too. */
 void CMeshSceneNode::setReadOnlyMaterials(bool readonly)
 {
@@ -402,7 +365,7 @@ ISceneNode* CMeshSceneNode::clone(ISceneNode* newParent, ISceneManager* newManag
 	if (!newParent) newParent = Parent;
 	if (!newManager) newManager = SceneManager;
 
-	CMeshSceneNode* nb = new CMeshSceneNode(Mesh, newParent, 
+	CMeshSceneNode* nb = new CMeshSceneNode(Mesh, newParent,
 		newManager, ID, RelativeTranslation, RelativeRotation, RelativeScale);
 
 	nb->cloneMembers(this, newManager);

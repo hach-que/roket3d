@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -56,7 +56,6 @@ s32 CParticleBoxEmitter::emitt(u32 now, u32 timeSinceLastCall, SParticle*& outAr
 
 		for (u32 i=0; i<amount; ++i)
 		{
-			//printf("Box minedge is %f,%f,%f.",Box.MinEdge.X,Box.MinEdge.Y,Box.MinEdge.Z);
 			p.pos.X = Box.MinEdge.X + fmodf((f32)os::Randomizer::rand(), extent.X);
 			p.pos.Y = Box.MinEdge.Y + fmodf((f32)os::Randomizer::rand(), extent.Y);
 			p.pos.Z = Box.MinEdge.Z + fmodf((f32)os::Randomizer::rand(), extent.Z);
@@ -121,7 +120,7 @@ void CParticleBoxEmitter::serializeAttributes(io::IAttributes* out, io::SAttribu
 
 
 //! Reads attributes of the object.
-s32 CParticleBoxEmitter::deserializeAttributes(s32 startIndex, io::IAttributes* in, io::SAttributeReadWriteOptions* options)
+void CParticleBoxEmitter::deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options)
 {
 	// read data and correct input values here
 
@@ -163,7 +162,6 @@ s32 CParticleBoxEmitter::deserializeAttributes(s32 startIndex, io::IAttributes* 
 	MaxLifeTime = core::max_(MaxLifeTime, MinLifeTime);
 	MinLifeTime = core::min_(MinLifeTime, MaxLifeTime);
 
-	return in->findAttribute("MaxAngleDegrees");
 }
 
 

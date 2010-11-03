@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -24,9 +24,6 @@ namespace io
 namespace scene
 {
 	class IMesh;
-#ifdef _IRR_MOD_PERPIXEL_TERRAIN
-	class IShadowVolumeSceneNode;
-#endif
 
 	//! A scene node for displaying terrain using the geo mip map algorithm.
 	/** The code for the TerrainSceneNode is based on the Terrain renderer by Soconne and
@@ -78,26 +75,6 @@ namespace scene
 		//! Get pointer to the buffer used by the terrain (most users will not need this)
 		virtual IMeshBuffer* getRenderBuffer() =0;
 
-#ifdef _IRR_MOD_PERPIXEL_TERRAIN
-		//! Creates shadow volume scene node as child of this node.
-		/** The shadow can be rendered using the ZPass or the zfail
-		method. ZPass is a little bit faster because the shadow volume
-		creation is easier, but with this method there occur ugly
-		looking artifacs when the camera is inside the shadow volume.
-		These error do not occur with the ZFail method.
-		\param shadowMesh: Optional custom mesh for shadow volume.
-		\param id: Id of the shadow scene node. This id can be used to
-		identify the node later.
-		\param zfailmethod: If set to true, the shadow will use the
-		zfail method, if not, zpass is used.
-		\param infinity: Value used by the shadow volume algorithm to
-		scale the shadow volume.
-		\return Pointer to the created shadow scene node. This pointer
-		should not be dropped. See IReferenceCounted::drop() for more
-		information. */
-		virtual IShadowVolumeSceneNode* addShadowVolumeSceneNode(const IMesh* shadowMesh=0,
-			s32 id=-1, bool zfailmethod=true, f32 infinity=10000.0f) = 0;
-#endif
 
 		//! Gets the meshbuffer data based on a specified level of detail.
 		/** \param mb A reference to an IDynamicMeshBuffer object
