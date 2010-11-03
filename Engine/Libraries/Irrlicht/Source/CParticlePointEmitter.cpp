@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -99,7 +99,7 @@ void CParticlePointEmitter::serializeAttributes(io::IAttributes* out, io::SAttri
 
 
 //! Reads attributes of the object.
-s32 CParticlePointEmitter::deserializeAttributes(s32 startIndex, io::IAttributes* in, io::SAttributeReadWriteOptions* options)
+void CParticlePointEmitter::deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options)
 {
 	Direction = in->getAttributeAsVector3d("Direction");
 	if (Direction.getLength() == 0)
@@ -122,8 +122,6 @@ s32 CParticlePointEmitter::deserializeAttributes(s32 startIndex, io::IAttributes
 	MinLifeTime = core::max_(0u, MinLifeTime);
 	MaxLifeTime = core::max_(MaxLifeTime, MinLifeTime);
 	MinLifeTime = core::min_(MinLifeTime, MaxLifeTime);
-
-	return in->findAttribute("MaxAngleDegrees");
 }
 
 

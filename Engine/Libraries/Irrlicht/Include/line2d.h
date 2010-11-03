@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -65,7 +65,7 @@ class line2d
 
 		//! Get the vector of the line.
 		/** \return The vector of the line. */
-		vector2d<T> getVector() const { return vector2d<T>(start.X - end.X, start.Y - end.Y); }
+		vector2d<T> getVector() const { return vector2d<T>(end.X - start.X, end.Y - start.Y); }
 
 		//! Tests if this line intersects with another line.
 		/** \param l: Other line to test intersection with.

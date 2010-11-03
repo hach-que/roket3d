@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/wd4996"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Headers&quot;;&quot;$(ProjectDir)\Headers\jpeglib&quot;;&quot;$(ProjectDir)\Headers\libpng&quot;;&quot;$(ProjectDir)\Headers\zlib&quot;;&quot;$(ProjectDir)\Include&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Headers&quot;;&quot;$(ProjectDir)\Headers\jpeglib&quot;;&quot;$(ProjectDir)\Headers\libpng&quot;;&quot;$(ProjectDir)\Headers\zlib&quot;;&quot;$(ProjectDir)\Headers\lzma&quot;;&quot;$(ProjectDir)\Headers\aesGladman&quot;;&quot;$(ProjectDir)\Headers\bzip2&quot;;&quot;$(ProjectDir)\Include&quot;"
 				PreprocessorDefinitions="IRRLICHT_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -114,7 +114,7 @@
 				AdditionalOptions="/wd4996"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Headers&quot;;&quot;$(ProjectDir)\Headers\jpeglib&quot;;&quot;$(ProjectDir)\Headers\libpng&quot;;&quot;$(ProjectDir)\Headers\zlib&quot;;&quot;$(ProjectDir)\Include&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\Headers&quot;;&quot;$(ProjectDir)\Headers\jpeglib&quot;;&quot;$(ProjectDir)\Headers\libpng&quot;;&quot;$(ProjectDir)\Headers\zlib&quot;;&quot;$(ProjectDir)\Headers\lzma&quot;;&quot;$(ProjectDir)\Headers\aesGladman&quot;;&quot;$(ProjectDir)\Headers\bzip2&quot;;&quot;$(ProjectDir)\Include&quot;"
 				PreprocessorDefinitions="IRRLICHT_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -201,6 +201,10 @@
 			</File>
 			<File
 				RelativePath=".\Headers\CBillboardSceneNode.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Headers\CBlit.h"
 				>
 			</File>
 			<File
@@ -372,6 +376,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Headers\CGUIImageList.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Headers\CGUIInOutFader.h"
 				>
 			</File>
@@ -428,6 +436,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Headers\CGUITreeView.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Headers\CGUIWindow.h"
 				>
 			</File>
@@ -457,6 +469,10 @@
 			</File>
 			<File
 				RelativePath=".\Headers\CImageLoaderPSD.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Headers\CImageLoaderRGB.h"
 				>
 			</File>
 			<File
@@ -493,6 +509,14 @@
 			</File>
 			<File
 				RelativePath=".\Headers\CImageWriterTGA.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Headers\CIrrDeviceConsole.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Headers\CIrrDeviceFB.h"
 				>
 			</File>
 			<File
@@ -552,6 +576,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Headers\CMemoryFile.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Headers\CMemoryReadFile.h"
 				>
 			</File>
@@ -572,6 +600,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Headers\CMountPointReader.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Headers\CMS3DMeshFileLoader.h"
 				>
 			</File>
@@ -581,6 +613,10 @@
 			</File>
 			<File
 				RelativePath=".\Headers\CMY3DMeshFileLoader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Headers\CNPKReader.h"
 				>
 			</File>
 			<File
@@ -597,6 +633,14 @@
 			</File>
 			<File
 				RelativePath=".\Headers\COCTLoader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Headers\COctreeSceneNode.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Headers\COctreeTriangleSelector.h"
 				>
 			</File>
 			<File
@@ -704,6 +748,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Headers\CPLYMeshFileLoader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Headers\CPLYMeshWriter.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Headers\CQ3LevelMesh.h"
 				>
 			</File>
@@ -808,6 +860,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Headers\CTarReader.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Headers\CTerrainSceneNode.h"
 				>
 			</File>
@@ -888,6 +944,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Headers\IAttribute.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Headers\IBurningShader.h"
 				>
 			</File>
@@ -900,11 +960,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Headers\ISceneNodeAnimatorFinishing.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Headers\ITriangleRenderer.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Headers\IZBuffer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Headers\Octree.h"
 				>
 			</File>
 			<File
@@ -947,19 +1015,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Headers\jpeglib\jchuff.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Headers\jpeglib\jconfig.h"
 					>
 				</File>
 				<File
 					RelativePath=".\Headers\jpeglib\jdct.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Headers\jpeglib\jdhuff.h"
 					>
 				</File>
 				<File
@@ -1051,6 +1111,66 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="lzma"
+				>
+				<File
+					RelativePath=".\Headers\lzma\LzmaDec.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\lzma\Types.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="aes"
+				>
+				<File
+					RelativePath=".\Headers\aesGladman\aes.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\aesGladman\aesopt.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\aesGladman\fileenc.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\aesGladman\hmac.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\aesGladman\prng.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\aesGladman\pwd2key.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\aesGladman\sha1.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\aesGladman\sha2.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="bzip2"
+				>
+				<File
+					RelativePath=".\Headers\bzip2\bzlib.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\bzip2\bzlib_private.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Include"
@@ -1084,11 +1204,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Include\driverChoice.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\EAttributes.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Include\ECullingTypes.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Include\EDebugSceneTypes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\EDeviceTypes.h"
 				>
 			</File>
 			<File
@@ -1128,11 +1260,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Include\EPrimitiveTypes.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Include\ESceneNodeAnimatorTypes.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Include\ESceneNodeTypes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\EShaderTypes.h"
 				>
 			</File>
 			<File
@@ -1204,11 +1344,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Include\IFileArchive.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Include\IFileList.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Include\IFileSystem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\IGeometryCreator.h"
 				>
 			</File>
 			<File
@@ -1268,6 +1416,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Include\IGUIImageList.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Include\IGUIInOutFader.h"
 				>
 			</File>
@@ -1312,6 +1464,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Include\IGUITreeView.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Include\IGUIWindow.h"
 				>
 			</File>
@@ -1329,6 +1485,10 @@
 			</File>
 			<File
 				RelativePath=".\Include\IIndexBuffer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\ILightManager.h"
 				>
 			</File>
 			<File
@@ -1612,6 +1772,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Include\path.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Include\plane3d.h"
 				>
 			</File>
@@ -1697,6 +1861,10 @@
 			</File>
 			<File
 				RelativePath=".\Include\SVertexIndex.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\SVertexManipulator.h"
 				>
 			</File>
 			<File
@@ -1920,6 +2088,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Source\CGUIImageList.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\CGUIInOutFader.cpp"
 				>
 			</File>
@@ -1976,6 +2148,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Source\CGUITreeView.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\CGUIWindow.cpp"
 				>
 			</File>
@@ -2005,6 +2181,10 @@
 			</File>
 			<File
 				RelativePath=".\Source\CImageLoaderPSD.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\CImageLoaderRGB.cpp"
 				>
 			</File>
 			<File
@@ -2041,6 +2221,14 @@
 			</File>
 			<File
 				RelativePath=".\Source\CImageWriterTGA.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\CIrrDeviceConsole.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\CIrrDeviceFB.cpp"
 				>
 			</File>
 			<File
@@ -2100,7 +2288,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Source\CMemoryReadFile.cpp"
+				RelativePath=".\Source\CMemoryFile.cpp"
 				>
 			</File>
 			<File
@@ -2120,11 +2308,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Source\CMountPointReader.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\CMS3DMeshFileLoader.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Source\CMY3DMeshFileLoader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\CNPKReader.cpp"
 				>
 			</File>
 			<File
@@ -2144,11 +2340,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Source\COctTreeSceneNode.cpp"
+				RelativePath=".\Source\COctreeSceneNode.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Source\COctTreeTriangleSelector.cpp"
+				RelativePath=".\Source\COctreeTriangleSelector.cpp"
 				>
 			</File>
 			<File
@@ -2241,6 +2437,14 @@
 			</File>
 			<File
 				RelativePath=".\Source\CParticleSystemSceneNode.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\CPLYMeshFileLoader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\CPLYMeshWriter.cpp"
 				>
 			</File>
 			<File
@@ -2341,6 +2545,10 @@
 			</File>
 			<File
 				RelativePath=".\Source\CSTLMeshWriter.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\CTarReader.cpp"
 				>
 			</File>
 			<File
@@ -2651,11 +2859,19 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\Source\jpeglib\jaricom.c"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\jpeglib\jcapimin.c"
 					>
 				</File>
 				<File
 					RelativePath=".\Source\jpeglib\jcapistd.c"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\jpeglib\jcarith.c"
 					>
 				</File>
 				<File
@@ -2699,10 +2915,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Source\jpeglib\jcphuff.c"
-					>
-				</File>
-				<File
 					RelativePath=".\Source\jpeglib\jcprepct.c"
 					>
 				</File>
@@ -2720,6 +2932,10 @@
 				</File>
 				<File
 					RelativePath=".\Source\jpeglib\jdapistd.c"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\jpeglib\jdarith.c"
 					>
 				</File>
 				<File
@@ -2767,10 +2983,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Source\jpeglib\jdphuff.c"
-					>
-				</File>
-				<File
 					RelativePath=".\Source\jpeglib\jdpostct.c"
 					>
 				</File>
@@ -2808,10 +3020,6 @@
 				</File>
 				<File
 					RelativePath=".\Source\jpeglib\jidctint.c"
-					>
-				</File>
-				<File
-					RelativePath=".\Source\jpeglib\jidctred.c"
 					>
 				</File>
 				<File
@@ -3261,6 +3469,22 @@
 				<File
 					RelativePath=".\Source\libpng\example.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\Source\libpng\png.c"
@@ -3309,6 +3533,22 @@
 				<File
 					RelativePath=".\Source\libpng\pngtest.c"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\Source\libpng\pngtrans.c"
@@ -3384,6 +3624,206 @@
 				</File>
 				<File
 					RelativePath=".\Source\zlib\zutil.c"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="aes"
+				>
+				<File
+					RelativePath=".\Source\aesGladman\aescrypt.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\aesGladman\aeskey.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\aesGladman\aestab.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\aesGladman\fileenc.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\aesGladman\hmac.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\aesGladman\prng.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\aesGladman\pwd2key.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\aesGladman\sha1.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\aesGladman\sha2.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="bzip2"
+				>
+				<File
+					RelativePath=".\Source\bzip2\blocksort.c"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\bzip2\bzcompress.c"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\bzip2\bzip2.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Source\bzip2\bzip2recover.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Source\bzip2\bzlib.c"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\bzip2\crctable.c"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\bzip2\decompress.c"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\bzip2\dlltest.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Source\bzip2\huffman.c"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\bzip2\mk251.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Source\bzip2\randtable.c"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\bzip2\spewG.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Source\bzip2\unzcrash.c"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+				</File>
+			</Filter>
+			<Filter
+				Name="lzma"
+				>
+				<File
+					RelativePath=".\Source\lzma\LzmaDec.c"
 					>
 				</File>
 			</Filter>

@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -6,9 +6,6 @@
 #define __C_SHPERE_SCENE_NODE_H_INCLUDED__
 
 #include "IMeshSceneNode.h"
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-#include "CShadowVolumeSceneNode.h"
-#endif
 #include "IMesh.h"
 
 namespace irr
@@ -35,13 +32,6 @@ namespace scene
 
 		//! returns the axis aligned bounding box of this node
 		virtual const core::aabbox3d<f32>& getBoundingBox() const;
-		
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-		//! Creates shadow volume scene node as child of this node
-		//! and returns a pointer to it.
-		virtual IShadowVolumeSceneNode* addShadowVolumeSceneNode(const IMesh* shadowMesh,
-			s32 id, bool zfailmethod=true, f32 infinity=10000.0f);
-#endif
 
 		//! returns the material based on the zero based index i. To get the amount
 		//! of materials used by this scene node, use getMaterialCount().
@@ -81,13 +71,7 @@ namespace scene
 
 	private:
 
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-		IShadowVolumeSceneNode* Shadow;
-		int PassCount;
-#endif
-
 		IMesh* Mesh;
-		IMesh* ShadowMesh;
 		core::aabbox3d<f32> Box;
 		f32 Radius;
 		u32 PolyCountX;

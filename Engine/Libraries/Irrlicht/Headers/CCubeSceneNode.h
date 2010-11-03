@@ -1,12 +1,11 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
-#ifndef __C_TEST_SCENE_NODE_H_INCLUDED__
-#define __C_TEST_SCENE_NODE_H_INCLUDED__
+#ifndef __C_CUBE_SCENE_NODE_H_INCLUDED__
+#define __C_CUBE_SCENE_NODE_H_INCLUDED__
 
 #include "IMeshSceneNode.h"
-#include "CShadowVolumeSceneNode.h"
 #include "SMesh.h"
 
 namespace irr
@@ -23,6 +22,8 @@ namespace scene
 			const core::vector3df& rotation = core::vector3df(0,0,0),
 			const core::vector3df& scale = core::vector3df(1.0f, 1.0f, 1.0f));
 
+		virtual ~CCubeSceneNode();
+
 		virtual void OnRegisterSceneNode();
 
 		//! renders the node.
@@ -37,13 +38,6 @@ namespace scene
 		//! optimal position for minimizing renderstate changes, but can also be used
 		//! to directly modify the material of a scene node.
 		virtual video::SMaterial& getMaterial(u32 i);
-
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-		//! Creates shadow volume scene node as child of this node
-		//! and returns a pointer to it.
-		virtual IShadowVolumeSceneNode* addShadowVolumeSceneNode(const IMesh* shadowMesh,
-			s32 id, bool zfailmethod=true, f32 infinity=10000.0f);
-#endif
 
 		//! returns amount of materials used by this scene node.
 		virtual u32 getMaterialCount() const;
@@ -64,7 +58,7 @@ namespace scene
 		virtual void setMesh(IMesh* mesh) {}
 
 		//! Returns the current mesh
-		virtual IMesh* getMesh(void) { return &Mesh; }
+		virtual IMesh* getMesh(void) { return Mesh; }
 
 		//! Sets if the scene node should not copy the materials of the mesh but use them in a read only style.
 		/* In this way it is possible to change the materials a mesh causing all mesh scene nodes 
@@ -77,12 +71,7 @@ namespace scene
 	private:
 		void setSize();
 
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-		IShadowVolumeSceneNode* Shadow;
-		int PassCount;
-#endif
-
-		SMesh Mesh;
+		IMesh* Mesh;
 		f32 Size;
 	};
 

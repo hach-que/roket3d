@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -47,7 +47,7 @@ namespace gui
 
 		//! sets the color of the background, if it should be drawn.
 		virtual void setBackgroundColor(video::SColor c);
-	
+
 		//! sets the color of the text
 		virtual void setTextColor(video::SColor c);
 
@@ -69,12 +69,10 @@ namespace gui
 	private:
 
 		s32 Number;
-		bool DrawBackground;
 		video::SColor BackColor;
 		video::SColor TextColor;
-
+		bool DrawBackground;
 	};
-
 
 
 	//! A standard tab control
@@ -127,9 +125,16 @@ namespace gui
 
 		//! Reads attributes of the element
 		virtual void deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options);
+		
 		//! Get the height of the tabs
 		virtual s32 getTabHeight() const;
 
+		//! set the maximal width of a tab. Per default width is 0 which means "no width restriction".
+		virtual void setTabMaxWidth(s32 width );
+			
+		//! get the maximal width of a tab
+		virtual s32 getTabMaxWidth() const;
+		
 		//! Set the alignment of the tabs
 		//! note: EGUIA_CENTER is not an option
 		virtual void setTabVerticalAlignment( gui::EGUI_ALIGNMENT alignment );
@@ -152,7 +157,9 @@ namespace gui
 		void scrollLeft();
 		void scrollRight();
 		bool needScrollControl( s32 startIndex=0, bool withScrollControl=false );
+		s32 calcTabWidth(s32 pos, IGUIFont* font, const wchar_t* text, bool withScrollControl );
 
+		void recalculateScrollButtonPlacement();
 		void recalculateScrollBar();
 
 		core::array<CGUITab*> Tabs;

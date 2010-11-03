@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -13,9 +13,6 @@ namespace scene
 {
 
 class IMesh;
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-class IShadowVolumeSceneNode;
-#endif
 
 
 //! A scene node displaying a static mesh
@@ -27,9 +24,9 @@ public:
 	/** Use setMesh() to set the mesh to display.
 	*/
 	IMeshSceneNode(ISceneNode* parent, ISceneManager* mgr, s32 id,
-			const core::vector3df& position,
-			const core::vector3df& rotation,
-			const core::vector3df& scale)
+			const core::vector3df& position = core::vector3df(0,0,0),
+			const core::vector3df& rotation = core::vector3df(0,0,0),
+			const core::vector3df& scale = core::vector3df(1,1,1))
 		: ISceneNode(parent, mgr, id, position, rotation, scale) {}
 
 	//! Sets a new mesh to display
@@ -39,27 +36,6 @@ public:
 	//! Get the currently defined mesh for display.
 	/** \return Pointer to mesh which is displayed by this node. */
 	virtual IMesh* getMesh(void) = 0;
-
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-	//! Creates shadow volume scene node as child of this node.
-	/** The shadow can be rendered using the ZPass or the zfail
-	method. ZPass is a little bit faster because the shadow volume
-	creation is easier, but with this method there occur ugly
-	looking artifacs when the camera is inside the shadow volume.
-	These error do not occur with the ZFail method.
-	\param shadowMesh: Optional custom mesh for shadow volume.
-	\param id: Id of the shadow scene node. This id can be used to
-	identify the node later.
-	\param zfailmethod: If set to true, the shadow will use the
-	zfail method, if not, zpass is used.
-	\param infinity: Value used by the shadow volume algorithm to
-	scale the shadow volume.
-	\return Pointer to the created shadow scene node. This pointer
-	should not be dropped. See IReferenceCounted::drop() for more
-	information. */
-	virtual IShadowVolumeSceneNode* addShadowVolumeSceneNode(const IMesh* shadowMesh=0,
-		s32 id=-1, bool zfailmethod=true, f32 infinity=10000.0f) = 0;
-#endif
 
 	//! Sets if the scene node should not copy the materials of the mesh but use them in a read only style.
 	/** In this way it is possible to change the materials of a mesh

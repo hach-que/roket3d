@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -152,6 +152,7 @@ namespace video
 	This class is used by most parts of the Irrlicht Engine
 	to specify a color. Another way is using the class SColorf, which
 	stores the color values in 4 floats.
+	This class must consist of only one u32 and must not use virtual functions.
 	*/
 	class SColor
 	{
@@ -190,13 +191,19 @@ namespace video
 		0 means no blue, 255 means full blue. */
 		u32 getBlue() const { return color & 0xff; }
 
-		//! Returns the luminance of the color.
+		//! Get lightness of the color in the range [0,255]
+		f32 getLightness() const
+		{
+			return 0.5f*(core::max_(core::max_(getRed(),getGreen()),getBlue())+core::min_(core::min_(getRed(),getGreen()),getBlue()));
+		}
+
+		//! Get luminance of the color in the range [0,255].
 		f32 getLuminance() const
 		{
 			return 0.3f*getRed() + 0.59f*getGreen() + 0.11f*getBlue();
 		}
 
-		//! Returns the average intensity of the color.
+		//! Get average intensity of the color in the range [0,255].
 		u32 getAverage() const
 		{
 			return ( getRed() + getGreen() + getBlue() ) / 3;
@@ -335,6 +342,10 @@ namespace video
 	class SColorf
 	{
 	public:
+		//! Default constructor for SColorf.
+		/** Sets red, green and blue to 0.0f and alpha to 1.0f. */
+		SColorf() : r(0.0f), g(0.0f), b(0.0f), a(1.0f) {}
+
 		//! Constructs a color from up to four color values: red, green, blue, and alpha.
 		/** \param r: Red color component. Should be a value between
 		0.0f meaning no red and 1.0f, meaning full red.
@@ -346,7 +357,7 @@ namespace video
 		component defines how transparent a color should be. Has to be
 		a value between 0.0f and 1.0f, 1.0f means not transparent
 		(opaque), 0.0f means fully transparent. */
-		SColorf(f32 r=0.f, f32 g=0.f, f32 b=0.f, f32 a=1.f) : r(r), g(g), b(b), a(a) {}
+		SColorf(f32 r, f32 g, f32 b, f32 a = 1.0f) : r(r), g(g), b(b), a(a) {}
 
 		//! Constructs a color from 32 bit Color.
 		/** \param c: 32 bit color from which this SColorf class is
@@ -484,7 +495,7 @@ namespace video
 		const f32 maxVal = (f32)core::max_(color.getRed(), color.getGreen(), color.getBlue());
 		const f32 minVal = (f32)core::min_(color.getRed(), color.getGreen(), color.getBlue());
 		Luminance = (maxVal/minVal)*0.5f;
-		if (maxVal==minVal)
+		if (core::equals(maxVal, minVal))
 		{
 			Hue=0.f;
 			Saturation=0.f;
@@ -502,7 +513,7 @@ namespace video
 		}
 
 		if (maxVal==color.getRed())
-			Hue = (color.getRed()-color.getBlue())/delta;
+			Hue = (color.getGreen()-color.getBlue())/delta;
 		else if (maxVal==color.getGreen())
 			Hue = 2+(color.getBlue()-color.getRed())/delta;
 		else if (maxVal==color.getBlue())
@@ -516,12 +527,12 @@ namespace video
 
 	inline void SColorHSL::toRGB(SColor &color) const
 	{
-		if ( Saturation == 0.0f) // grey
+		if (core::iszero(Saturation)) // grey
 		{
 			u8 c = (u8) ( Luminance * 255.0 );
-			color.setRed ( c );
-			color.setGreen ( c );
-			color.setBlue ( c );
+			color.setRed(c);
+			color.setGreen(c);
+			color.setBlue(c);
 			return;
 		}
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2006-2008 Michael Zeilfelder
+// Copyright (C) 2006-2009 Michael Zeilfelder
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -22,7 +22,7 @@ namespace gui
 	public:
 
 		//! constructor
-		CGUISpinBox(const wchar_t* text, IGUIEnvironment* environment,
+		CGUISpinBox(const wchar_t* text, bool border, IGUIEnvironment* environment,
 			IGUIElement* parent, s32 id, const core::rect<s32>& rectangle);
 
 		//! destructor

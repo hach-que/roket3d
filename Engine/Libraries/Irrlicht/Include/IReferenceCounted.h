@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -6,7 +6,6 @@
 #define __I_IREFERENCE_COUNTED_H_INCLUDED__
 
 #include "irrTypes.h"
-#include "irrString.h"
 
 namespace irr
 {
@@ -29,7 +28,7 @@ namespace irr
 
 	If you want to create a texture, you may want to call an imaginable method
 	IDriver::createTexture. You call
-	ITexture* texture = driver->createTexture(dimension2d<s32>(128, 128));
+	ITexture* texture = driver->createTexture(dimension2d<u32>(128, 128));
 	If you no longer need the texture, call texture->drop().
 
 	If you want to load a texture, you may want to call imaginable method
@@ -41,45 +40,18 @@ namespace irr
 	*/
 	class IReferenceCounted
 	{
-		core::stringc RoketName;
-		void* RoketUserData;
-
 	public:
 
 		//! Constructor.
 		IReferenceCounted()
-			: ReferenceCounter(1), DebugName(0)
+			: DebugName(0), ReferenceCounter(1)
 		{
-			RoketName = "";
-			RoketUserData = NULL;
 		}
 
 		//! Destructor.
 		virtual ~IReferenceCounted()
 		{
 		}
-
-#ifdef _IRR_MOD_USERDATA
-		core::stringc RoketGetName()
-		{
-			return RoketName;
-		}
-		
-		void RoketSetName(core::stringc newname)
-		{
-			RoketName = newname;
-		}
-		
-		void* RoketGetUserData()
-		{
-			return RoketUserData;
-		}
-		
-		void RoketSetUserData(void* ud)
-		{
-			RoketUserData = ud;
-		}
-#endif
 
 		//! Grabs the object. Increments the reference counter by one.
 		/** Someone who calls grab() to an object, should later also
@@ -103,7 +75,7 @@ namespace irr
 
 		If you want to create a texture, you may want to call an
 		imaginable method IDriver::createTexture. You call
-		ITexture* texture = driver->createTexture(dimension2d<s32>(128, 128));
+		ITexture* texture = driver->createTexture(dimension2d<u32>(128, 128));
 		If you no longer need the texture, call texture->drop().
 		If you want to load a texture, you may want to call imaginable
 		method IDriver::loadTexture. You do this like
@@ -132,7 +104,7 @@ namespace irr
 
 		If you want to create a texture, you may want to call an
 		imaginable method IDriver::createTexture. You call
-		ITexture* texture = driver->createTexture(dimension2d<s32>(128, 128));
+		ITexture* texture = driver->createTexture(dimension2d<u32>(128, 128));
 		If you no longer need the texture, call texture->drop().
 		If you want to load a texture, you may want to call imaginable
 		method IDriver::loadTexture. You do this like
@@ -184,10 +156,12 @@ namespace irr
 		}
 
 	private:
-		//! The reference counter. Mutable to do reference counting on const objects.
-		mutable s32 ReferenceCounter;
+
 		//! The debug name.
 		const c8* DebugName;
+
+		//! The reference counter. Mutable to do reference counting on const objects.
+		mutable s32 ReferenceCounter;
 	};
 
 } // end namespace irr

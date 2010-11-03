@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -85,7 +85,7 @@ struct SLight
 	E_LIGHT_TYPE Type;
 
 	//! Read-ONLY! Does the light cast shadows?
-	bool CastShadows;
+	bool CastShadows:1;
 };
 
 } // end namespace video

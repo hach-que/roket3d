@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -6,6 +6,7 @@
 #include "ICursorControl.h"
 #include "ICameraSceneNode.h"
 #include "SViewFrustum.h"
+#include "ISceneManager.h"
 
 namespace irr
 {
@@ -41,7 +42,7 @@ CSceneNodeAnimatorCameraMaya::~CSceneNodeAnimatorCameraMaya()
 
 
 //! It is possible to send mouse and key events to the camera. Most cameras
-//! may ignore this input, but camera scene nodes which are created for 
+//! may ignore this input, but camera scene nodes which are created for
 //! example with scene::ISceneManager::addMayaCameraSceneNode or
 //! scene::ISceneManager::addMeshViewerCameraSceneNode, may want to get this input
 //! for changing their position, look at target or whatever.
@@ -74,6 +75,12 @@ bool CSceneNodeAnimatorCameraMaya::OnEvent(const SEvent& event)
 		MousePos = CursorControl->getRelativePosition();
 		break;
 	case EMIE_MOUSE_WHEEL:
+	case EMIE_LMOUSE_DOUBLE_CLICK:
+	case EMIE_RMOUSE_DOUBLE_CLICK:
+	case EMIE_MMOUSE_DOUBLE_CLICK:
+	case EMIE_LMOUSE_TRIPLE_CLICK:
+	case EMIE_RMOUSE_TRIPLE_CLICK:
+	case EMIE_MMOUSE_TRIPLE_CLICK:
 	case EMIE_COUNT:
 		return false;
 	}
@@ -90,15 +97,28 @@ void CSceneNodeAnimatorCameraMaya::animateNode(ISceneNode *node, u32 timeMs)
 	//Alt + LM + MM = Dolly forth/back in view direction (speed % distance camera pivot - max distance to pivot)
 	//Alt + MM = Move on camera plane (Screen center is about the mouse pointer, depending on move speed)
 
-	if (node->getType() != ESNT_CAMERA)
+	if (!node || node->getType() != ESNT_CAMERA)
 		return;
 
 	ICameraSceneNode* camera = static_cast<ICameraSceneNode*>(node);
+
+	// If the camera isn't the active camera, and receiving input, then don't process it.
+	if(!camera->isInputReceiverEnabled())
+		return;
+
+	scene::ISceneManager * smgr = camera->getSceneManager();
+	if(smgr && smgr->getActiveCamera() != camera)
+		return;
 
 	if (OldCamera != camera)
 	{
 		OldTarget = camera->getTarget();
 		OldCamera = camera;
+		LastCameraTarget = OldTarget;
+	}
+	else
+	{
+		OldTarget += camera->getTarget() - LastCameraTarget;
 	}
 
 	core::vector3df target = camera->getTarget();
@@ -157,13 +177,13 @@ void CSceneNodeAnimatorCameraMaya::animateNode(ISceneNode *node, u32 timeMs)
 		}
 		else
 		{
-			translate +=  tvectX * (TranslateStart.X - MousePos.X)*TranslateSpeed + 
+			translate +=  tvectX * (TranslateStart.X - MousePos.X)*TranslateSpeed +
 			              tvectY * (TranslateStart.Y - MousePos.Y)*TranslateSpeed;
 		}
 	}
 	else if (Translating)
 	{
-		translate += tvectX * (TranslateStart.X - MousePos.X)*TranslateSpeed + 
+		translate += tvectX * (TranslateStart.X - MousePos.X)*TranslateSpeed +
 		             tvectY * (TranslateStart.Y - MousePos.Y)*TranslateSpeed;
 		OldTarget = translate;
 		Translating = false;
@@ -216,6 +236,7 @@ void CSceneNodeAnimatorCameraMaya::animateNode(ISceneNode *node, u32 timeMs)
 	camera->setPosition(Pos);
 	camera->setTarget(target);
 	camera->setUpVector(upVector);
+	LastCameraTarget = camera->getTarget();
 }
 
 
@@ -235,7 +256,7 @@ void CSceneNodeAnimatorCameraMaya::allKeysUp()
 //! Sets the rotation speed
 void CSceneNodeAnimatorCameraMaya::setRotateSpeed(f32 speed)
 {
-	RotateSpeed = speed;	
+	RotateSpeed = speed;
 }
 
 
@@ -275,7 +296,7 @@ f32 CSceneNodeAnimatorCameraMaya::getZoomSpeed() const
 
 ISceneNodeAnimator* CSceneNodeAnimatorCameraMaya::createClone(ISceneNode* node, ISceneManager* newManager)
 {
-	CSceneNodeAnimatorCameraMaya * newAnimator = 
+	CSceneNodeAnimatorCameraMaya * newAnimator =
 		new CSceneNodeAnimatorCameraMaya(CursorControl, RotateSpeed, ZoomSpeed, TranslateSpeed);
 	return newAnimator;
 }

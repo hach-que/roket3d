@@ -1,11 +1,10 @@
-// Copyright (C) 2002-2008 Nikolaus Gebhardt
+// Copyright (C) 2002-2009 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "CSphereSceneNode.h"
 #include "IVideoDriver.h"
 #include "ISceneManager.h"
-#include "CGeometryCreator.h"
 #include "S3DVertex.h"
 #include "os.h"
 
@@ -24,12 +23,7 @@ CSphereSceneNode::CSphereSceneNode(f32 radius, u32 polyCountX, u32 polyCountY, I
 	setDebugName("CSphereSceneNode");
 	#endif
 
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-	Shadow = 0;
-	ShadowMesh = CGeometryCreator::createSphereMesh(radius, 10, 4);
-#endif
-
-	Mesh = CGeometryCreator::createSphereMesh(radius, polyCountX, polyCountY);
+	Mesh = SceneManager->getGeometryCreator()->createSphereMesh(radius, polyCountX, polyCountY);
 }
 
 
@@ -39,39 +33,18 @@ CSphereSceneNode::~CSphereSceneNode()
 {
 	if (Mesh)
 		Mesh->drop();
-
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-	if (ShadowMesh)
-		ShadowMesh->drop();
-
-	if (Shadow)
-		Shadow->drop();
-#endif
 }
 
 
 //! renders the node.
 void CSphereSceneNode::render()
 {
-	if (!Mesh)
-		return;
-
 	video::IVideoDriver* driver = SceneManager->getVideoDriver();
-
-	driver->setTransform(video::ETS_WORLD, AbsoluteTransformation);
-
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-	++PassCount;
-
-	if (Shadow && PassCount==1)
-	{
-		Shadow->updateShadowVolumes();
-	}
-#endif
 
 	if (Mesh && driver)
 	{
 		driver->setMaterial(Mesh->getMeshBuffer(0)->getMaterial());
+		driver->setTransform(video::ETS_WORLD, AbsoluteTransformation);
 		driver->drawMeshBuffer(Mesh->getMeshBuffer(0));
 		if ( DebugDataVisible & scene::EDS_BBOX )
 		{
@@ -95,10 +68,7 @@ const core::aabbox3d<f32>& CSphereSceneNode::getBoundingBox() const
 void CSphereSceneNode::OnRegisterSceneNode()
 {
 	if (IsVisible)
-	{
 		SceneManager->registerNodeForRendering(this);
-		PassCount = 0;
-	}
 
 	ISceneNode::OnRegisterSceneNode();
 }
@@ -157,34 +127,11 @@ void CSphereSceneNode::deserializeAttributes(io::IAttributes* in, io::SAttribute
 	{
 		if (Mesh)
 			Mesh->drop();
-		Mesh = CGeometryCreator::createSphereMesh(Radius, PolyCountX, PolyCountY);
+		Mesh = SceneManager->getGeometryCreator()->createSphereMesh(Radius, PolyCountX, PolyCountY);
 	}
 
 	ISceneNode::deserializeAttributes(in, options);
 }
-
-#ifdef _IRR_MOD_PERPIXEL_BASIC
-//! Creates shadow volume scene node as child of this node
-//! and returns a pointer to it.
-IShadowVolumeSceneNode* CSphereSceneNode::addShadowVolumeSceneNode(const IMesh* shadowMesh,
-						s32 id, bool zfailmethod, f32 infinity)
-{
-	if (!SceneManager->getVideoDriver()->queryFeature(video::EVDF_STENCIL_BUFFER))
-		return 0;
-
-	if (Shadow)
-	{
-		os::Printer::log("This node already has a shadow.", ELL_WARNING);
-		return 0;
-	}
-
-	if (!shadowMesh)
-		shadowMesh = ShadowMesh; // if null is given, use the mesh of node
-
-	Shadow = new CShadowVolumeSceneNode(shadowMesh, this, SceneManager, id,  zfailmethod, infinity);
-	return Shadow;
-}
-#endif
 
 //! Creates a clone of this scene node and its children.
 ISceneNode* CSphereSceneNode::clone(ISceneNode* newParent, ISceneManager* newManager)
