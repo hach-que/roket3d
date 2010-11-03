@@ -289,6 +289,11 @@ namespace LibAutoBind
             get { return this.m_Machine.InputName; }
         }
 
+        internal string FilePath
+        {
+            get { return this.m_Machine.InputPath; }
+        }
+
         internal int LineNumber
         {
             get { return this.p_LineNumber; }
@@ -352,7 +357,7 @@ namespace LibAutoBind
         internal void AddNode(Node node)
         {
             node.LineNumber = this.LineNumber;
-            node.FileName = this.FileName;
+            node.FileName = this.FilePath;
             node.ParentCount = this.m_ParentStack.Count;
             this.p_LexerList.Add(node);
             this.CompactDirectNodes();

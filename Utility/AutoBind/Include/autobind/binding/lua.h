@@ -178,7 +178,7 @@ template<class T>
 
 		// A static function for for detecting whether or not an
 		// argument provided to a function is a specific object.
-		static T* IsArgument(lua_State * L, int narg)
+		static bool IsArgument(lua_State * L, int narg)
 		{
 			// Convert to absolute reference.
 			if (narg < 0) narg = lua_gettop(L) + narg + 1;
@@ -424,6 +424,7 @@ template<class T>
 
 			// Now call the class constructor.
 			T* obj = new T(L, true);
+			obj->Grab();
 			*ud = obj;
 
 			// Clear the entire stack, and place the userdata,
@@ -475,6 +476,7 @@ template<class T>
 			// are dealing with.
 			T** ud = (T**)lua_newuserdata(L, sizeof(T*));
 			T* obj = new T(L, false);
+			obj->Grab();
 			*ud = obj;
 
 			// Get the address of the userdata on the
@@ -517,7 +519,7 @@ template<class T>
 			// are dealing with.
 			T** ud = (T**)lua_newuserdata(L, sizeof(T*));
 			T* obj = existing;
-			obj->IsExisting = true;
+			obj->Grab();
 			*ud = obj;
 
 			// Get the address of the userdata on the
@@ -563,7 +565,7 @@ template<class T>
 		// Push table value onto stack.
 		static int Result(lua_State * L, table & ret)
 		{
-			ret.PushAsResult();
+			ret.PushAsResult(L);
 			return 1;
 		}
 
@@ -657,11 +659,8 @@ template<class T>
 			// Get the userdata from the object.
 			T** obj = static_cast<T**>(luaL_checkudata(L, -1, T::ClassName));
 
-			// IsPrecious won't be required when objects are reference counted.
-			if (!(*obj)->IsExisting && !(*obj)->IsPrecious)
-			{
-				delete *obj;
-			}
+			// Either destroy the object or decrease the reference count.
+			(*obj)->Drop();
 
 			return 0;
 		}
@@ -1033,7 +1032,7 @@ template<class T>
 		// and getter functions to know what C++ object they
 		// are dealing with.
 		void** ud = (void**)lua_newuserdata(L, sizeof(void*));
-		err->IsExisting = true;
+		err->Grab();
 		*ud = err;
 
 		// Get the address of the userdata on the
@@ -1133,6 +1132,30 @@ inline bool Bindings<bool>::GetArgumentBase(lua_State * L, int narg)
 			lua_advtypename(L, narg), lua_typename(L, LUA_TBOOLEAN));
 }
 
+inline table Bindings<table>::GetArgumentBase(lua_State * L, int narg)
+{
+	// Convert to absolute reference.
+	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+
+	if (lua_istable(L, narg))
+		return table::GetFromStack(L, narg);
+	else
+		throw new Engine::ArgumentTypeNotValidException(narg,
+			lua_advtypename(L, narg), lua_typename(L, LUA_TTABLE));
+}
+
+inline function Bindings<function>::GetArgumentBase(lua_State * L, int narg)
+{
+	// Convert to absolute reference.
+	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+
+	if (lua_isfunction(L, narg))
+		return function(L, narg);
+	else
+		throw new Engine::ArgumentTypeNotValidException(narg,
+			lua_advtypename(L, narg), lua_typename(L, LUA_TFUNCTION));
+}
+
 // Default versions.
 inline numeric Bindings<numeric>::GetArgumentBase(lua_State * L, int narg, numeric def)
 {
@@ -1198,6 +1221,22 @@ inline bool Bindings<bool>::IsArgumentBase(lua_State * L, int narg)
 	if (narg < 0) narg = lua_gettop(L) + narg + 1;
 
 	return (lua_isboolean(L, narg) == 1);
+}
+
+inline bool Bindings<table>::IsArgumentBase(lua_State * L, int narg)
+{
+	// Convert to absolute reference.
+	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+
+	return (lua_istable(L, narg) == 1);
+}
+
+inline bool Bindings<function>::IsArgumentBase(lua_State * L, int narg)
+{
+	// Convert to absolute reference.
+	if (narg < 0) narg = lua_gettop(L) + narg + 1;
+
+	return (lua_isfunction(L, narg) == 1);
 }
 
 #endif

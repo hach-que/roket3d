@@ -1,4 +1,4 @@
-#import Engine.Unmanaged.Core.REventReceiver
+#import Engine.Unmanaged.Core.EventReceiver
 #import Engine.Unmanaged.GUI.RGUIEnvironment
 #import Engine.Unmanaged.Video.RVideoDriver
 #import Engine.Collections.RVector2D
@@ -13,6 +13,7 @@ class Engine.Unmanaged.Core.RDevice
 {
 	private irr::IrrlichtDevice * m_Device;
 	private cAudio::IAudioManager * m_Audio;
+	private Engine::Unmanaged::Core::EventReceiver * m_Receiver;
 	private int m_LastFPS;
 	private int m_CurrentStep;
 	private bool m_IsDeviceSet;
@@ -32,11 +33,14 @@ class Engine.Unmanaged.Core.RDevice
 	/// <exception>Engine.GraphicsEngineNotFoundException</exception>
 	bound RDevice(Engine::Collections::RVector2D size, numeric bits, bool fullscreen, bool stencil, bool vsync)
 	{
-		irr::core::dimension2d<irr::s32> dimensions;
+		irr::core::dimension2d<irr::u32> dimensions;
 		dimensions.Width = size->GetObject().X;
 		dimensions.Height = size->GetObject().Y;
 
 		this->m_IsDeviceSet = false;
+
+		// Create the event receiver.
+		this->m_Receiver = new Engine::Unmanaged::Core::EventReceiver(L);
 
 		// Attempt to initalize the device.
 		this->m_Device = irr::createDevice(
@@ -44,11 +48,14 @@ class Engine.Unmanaged.Core.RDevice
 			dimensions,
 			bits,
 			fullscreen,
-			vsync
+			stencil,
+			vsync,
+			this->m_Receiver
 			);
 
 		if (this->m_Device == NULL)
 		{
+			delete this->m_Receiver;
 			throw new Engine::GraphicsEngineNotFoundException();
 		}
 
@@ -56,6 +63,36 @@ class Engine.Unmanaged.Core.RDevice
 
 		// Create the audio and physics devices.
 		this->m_Audio = cAudio::getAudioManager();
+	}
+
+	bound void Close()
+	{
+		if (this->m_IsDeviceSet)
+		{
+			this->m_IsDeviceSet = false;
+			this->m_Device->closeDevice();
+			this->m_Device = NULL;
+
+			// Cleanup the event receiver.
+			delete this->m_Receiver;
+			this->m_Receiver = NULL;
+
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	bound void Bind(Engine::Unmanaged::Core::REvent event, function handler)
+	{
+		if (this->m_IsDeviceSet)
+		{
+			this->m_Receiver->AddHandler(event, handler);
+
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
 	}
 
 	/// <summary>

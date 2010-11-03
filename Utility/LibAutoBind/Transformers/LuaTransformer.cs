@@ -405,7 +405,7 @@ namespace LibAutoBind.Transformers
             {
                 if (r is ClassFunctionDeclarationNode)
                 {
-                    this.WriteCodeLine("#line " + r.LineNumber + " \"" + r.FileName + "\"");
+                    this.WriteCodeLine("#line " + r.LineNumber + " \"" + r.FileName.Replace("\\", "\\\\") + "\"");
                     ClassFunctionDeclarationNode n = (ClassFunctionDeclarationNode)r;
                     string keys = "";
                     functype = n.Type;

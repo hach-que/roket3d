@@ -7,9 +7,22 @@
 
 class RObject
 {
+	private:
+		long m_ReferenceCount;
+
 	public:
-		bool IsExisting;
-		bool IsPrecious;
+		inline void Grab()
+		{
+			this->m_ReferenceCount += 1;
+		}
+
+		inline void Drop()
+		{
+			this->m_ReferenceCount -= 1;
+
+			if (this->m_ReferenceCount <= 0)
+				delete this;
+		}
 };
 
 #endif

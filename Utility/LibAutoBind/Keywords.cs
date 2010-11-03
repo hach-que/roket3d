@@ -16,7 +16,7 @@ namespace LibAutoBind
         // Keywords specific to the automatic binding system.  These are read
         // by the tokens and removed in the final source code.
         internal static string[] LuaVisibilityKeywords = { "bound", "unbound" };
-        internal static string[] LuaTypeKeywords = { "string", "::string", "numeric", "table" };
+        internal static string[] LuaTypeKeywords = { "string", "::string", "numeric", "table", "function" };
         internal static string[] LuaDeclKeywords = { "property" };
 
         /// <summary>

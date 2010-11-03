@@ -154,7 +154,7 @@
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
-				ModuleDefinitionFile="..\..\ogg.def"
+				ModuleDefinitionFile="Source\ogg.def"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)\$(ProjectName).pdb"
 				SubSystem="2"

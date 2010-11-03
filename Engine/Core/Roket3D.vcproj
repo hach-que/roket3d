@@ -150,6 +150,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -420,7 +421,7 @@
 						>
 					</File>
 					<File
-						RelativePath=".\Generated Source\E.Unmanaged\Core\reventreceiver.cpp"
+						RelativePath=".\Generated Source\E.Unmanaged\Core\REvent.cpp"
 						>
 					</File>
 				</Filter>
@@ -514,6 +515,14 @@
 								Name="VCCLCompilerTool"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\Generated Source\E.Unmanaged\GUI\RGUITabControl.cpp"
@@ -532,6 +541,14 @@
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
 							ExcludedFromBuild="true"
 							>
 							<Tool
@@ -892,7 +909,7 @@
 						>
 					</File>
 					<File
-						RelativePath=".\Generated Headers\E.Unmanaged\Core\reventreceiver.h"
+						RelativePath=".\Generated Headers\E.Unmanaged\Core\REvent.h"
 						>
 					</File>
 					<File
@@ -1393,18 +1410,10 @@
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath=".\Autobind Source\E.Unmanaged\Core\REventReceiver.bpp"
+						RelativePath=".\Autobind Source\E.Unmanaged\Core\REvent.bpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
-							>
-							<Tool
-								Name="AutoBind"
-								ClassPath="E.Unmanaged\Core"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
 							>
 							<Tool
 								Name="AutoBind"
@@ -2613,6 +2622,14 @@
 						</FileConfiguration>
 					</File>
 				</Filter>
+				<Filter
+					Name="Core"
+					>
+					<File
+						RelativePath=".\Static Headers\E.Unmanaged\Core\EventReceiver.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -2674,12 +2691,28 @@
 									Name="VCCLCompilerTool"
 								/>
 							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicscallbacks.cpp"
 							>
 							<FileConfiguration
 								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
 								ExcludedFromBuild="true"
 								>
 								<Tool
@@ -2698,12 +2731,28 @@
 									Name="VCCLCompilerTool"
 								/>
 							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointcorkscrew.cpp"
 							>
 							<FileConfiguration
 								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
 								ExcludedFromBuild="true"
 								>
 								<Tool
@@ -2722,12 +2771,28 @@
 									Name="VCCLCompilerTool"
 								/>
 							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointhinge.cpp"
 							>
 							<FileConfiguration
 								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
 								ExcludedFromBuild="true"
 								>
 								<Tool
@@ -2746,12 +2811,28 @@
 									Name="VCCLCompilerTool"
 								/>
 							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsjointuniversal.cpp"
 							>
 							<FileConfiguration
 								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
 								ExcludedFromBuild="true"
 								>
 								<Tool
@@ -2770,12 +2851,28 @@
 									Name="VCCLCompilerTool"
 								/>
 							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath=".\Static Source\E.Unmanaged\Physics\Internal\roket_physicsmaterialhandler.cpp"
 							>
 							<FileConfiguration
 								Name="Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Release|Win32"
 								ExcludedFromBuild="true"
 								>
 								<Tool
@@ -2799,6 +2896,22 @@
 								Name="VCCLCompilerTool"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+					</File>
+				</Filter>
+				<Filter
+					Name="Core"
+					>
+					<File
+						RelativePath=".\Static Source\E.Unmanaged\Core\EventReceiver.cpp"
+						>
 					</File>
 				</Filter>
 			</Filter>

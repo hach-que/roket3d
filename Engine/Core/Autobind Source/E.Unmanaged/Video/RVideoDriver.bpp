@@ -1,6 +1,9 @@
 #import Engine.InternalConstructorOnlyException
 #import Engine.ObjectDisposedException
 #import Engine.Collections.RColor
+#import Engine.Collections.RVector2D
+#import Engine.Collections.RRay2D
+#import Engine.Collections.RRectangle
 #include "IVideoDriver.h"
 
 class Engine.Unmanaged.Video.RVideoDriver
@@ -52,6 +55,45 @@ class Engine.Unmanaged.Video.RVideoDriver
 		if (this->m_IsDriverSet)
 		{
 			this->m_Driver->endScene();
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Draws a 2D line on the screen.
+	/// </summary>
+	/// <param name="line">The line defined as a 2D ray.</param>
+	/// <param name="color">The color of the line.</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void Draw2DLine(Engine::Collections::RRay2D line, Engine::Collections::RColor color)
+	{
+		if (this->m_IsDriverSet)
+		{
+			irr::core::line2d<int> irrline = line->GetObjectAsIntLine();
+			this->m_Driver->draw2DLine(
+				irr::core::position2d<int>(irrline.start.X, irrline.start.Y),
+				irr::core::position2d<int>(irrline.end.X, irrline.end.Y),
+				color->GetObject()
+				);
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Draws a 2D rectangle on the screen.
+	/// </summary>
+	/// <param name="rect">The 2D rectangle.</param>
+	/// <param name="color">The color of the rectangle.</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void Draw2DRectangle(Engine::Collections::RRectangle rect, Engine::Collections::RColor color)
+	{
+		if (this->m_IsDriverSet)
+		{
+			this->m_Driver->draw2DRectangle(color->GetObject(), rect->GetObjectAsIntRect());
 			return;
 		}
 		else

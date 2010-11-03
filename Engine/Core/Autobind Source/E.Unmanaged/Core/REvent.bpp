@@ -1,0 +1,44 @@
+#include "IEventReceiver.h"
+
+class Engine.Unmanaged.Core.REvent
+   as Engine.Unmanaged.Core.Event
+{
+	private function m_CheckHandler;
+	private function m_GetArgsHandler;
+
+	bound REvent(function check, function getargs)
+	{
+		this->m_CheckHandler = check;
+		this->m_GetArgsHandler = getargs;
+	}
+
+	public unbound bool AcceptEvent(const irr::SEvent & event)
+	{
+		table t = this->GetSEventAsTable(event);
+		table args = table();
+		args.Set((numeric)1, t);
+		return this->m_CheckHandler.CallBool(args);
+	}
+
+	public unbound table GetArguments(const irr::SEvent & event)
+	{
+		table t = this->GetSEventAsTable(event);
+		table args = table();
+		args.Set((numeric)1, t);
+		return this->m_GetArgsHandler.CallTable(args);
+	}
+
+	private unbound table GetSEventAsTable(const irr::SEvent & event)
+	{
+		table t = table();
+		t.Set(::string("type"), (numeric)event.EventType);
+		switch (event.EventType)
+		{
+			case irr::EET_KEY_INPUT_EVENT:
+				t.Set(::string("keyboard_code"), (numeric)event.KeyInput.Key);
+				t.Set(::string("keyboard_pressed"), (bool)event.KeyInput.PressedDown);
+				break;
+		}
+		return t;
+	}
+}

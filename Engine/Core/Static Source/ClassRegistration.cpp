@@ -20,7 +20,7 @@
 #include "E.Unmanaged/Audio/RAudioSound.h"
 #include "E.Unmanaged/Core/RCursorControl.h"
 #include "E.Unmanaged/Core/RDevice.h"
-#include "E.Unmanaged/Core/REventReceiver.h"
+#include "E.Unmanaged/Core/REvent.h"
 //#include "E.Unmanaged/Ext/RThread.h"
 #include "E.Unmanaged/GUI/RGUIButton.h"
 #include "E.Unmanaged/GUI/RGUICheckBox.h"
@@ -108,7 +108,7 @@ namespace Roket3D
 		Bindings<Engine::Unmanaged::Audio::RAudioSound>::Register(L);
 		Bindings<Engine::Unmanaged::Core::RCursorControl>::Register(L);
 		Bindings<Engine::Unmanaged::Core::RDevice>::Register(L);
-		Bindings<Engine::Unmanaged::Core::REventReceiver>::Register(L);
+		Bindings<Engine::Unmanaged::Core::REvent>::Register(L);
 //		Bindings<Engine::Unmanaged::Ext::RThread>::Register(L);
 		Bindings<Engine::Unmanaged::GUI::RGUIButton>::Register(L);
 		Bindings<Engine::Unmanaged::GUI::RGUICheckBox>::Register(L);
