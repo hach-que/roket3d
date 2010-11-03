@@ -1,0 +1,290 @@
+#import Engine.DivideByZeroException
+#import Engine.Collections.RVector2D
+#include "Irrlicht.h"
+#include "line2d.h"
+
+class Engine.Collections.RLine2D
+   as Engine.Collections.Line2D
+{
+	private double p_X1;
+	private double p_Y1;
+	private double p_X2;
+	private double p_Y2;
+	private irr::core::line2df m_Line;
+
+	/// <summary>
+	/// The default constructor for an RLine2D object, initalizing
+	/// the line information to have a value of (0, 0) -> (1, 1).
+	/// </summary>
+	bound RLine2D()
+	{
+		this->p_X1 = 0;
+		this->p_Y1 = 0;
+		this->p_X2 = 1;
+		this->p_Y2 = 1;
+		this->m_Line = irr::core::line2df(0, 0, 1, 1);
+	}
+
+	/// <summary>
+	/// One of the recommended constructors for an RLine2D object, initalizing
+	/// the line information to have a value of (x1, y1) -> (x2, y2).
+	/// </summary>
+	/// <param name="x1">The first X component.</param>
+	/// <param name="y1">The first Y component.</param>
+	/// <param name="x2">The second X component.</param>
+	/// <param name="y2">The second Y component.</param>
+	bound RLine2D(numeric x1, numeric y1, numeric x2, numeric y2)
+	{
+		this->p_X1 = x1;
+		this->p_Y1 = y1;
+		this->p_X2 = x2;
+		this->p_Y2 = y2;
+		this->m_Line = irr::core::line2df(x1, y1, x2, y2);
+	}
+
+	/// <summary>
+	/// One of the recommended constructors for an RLine2D object, initalizing
+	/// the line information to have a value of 'vec1' -> 'vec2'.
+	/// </summary>
+	/// <param name="start">The vector describing the first (start) position.</param>
+	/// <param name="end">The vector describing the second (end) position.</param>
+	bound RLine2D(Engine::Collections::RVector2D start, Engine::Collections::RVector2D end)
+	{
+		this->p_X1 = start->GetObject().X;
+		this->p_Y1 = start->GetObject().Y;
+		this->p_X2 = end->GetObject().X;
+		this->p_Y2 = end->GetObject().Y;
+		this->m_Line = irr::core::line2df(start->GetObject(), end->GetObject());
+	}
+
+	/// <summary>
+	/// Get angle between this line and the given line. 
+	/// </summary>
+	/// <param name="line">The specified line.</param>
+	bound public numeric GetAngleWith(Engine::Collections::RLine2D line)
+	{
+		return this->m_Line.getAngleWith(line->GetObject());
+	}
+
+	/// <summary>
+	/// Get the closest point on this line to a point. 
+	/// </summary>
+	/// <param name="point">The specified point.</param>
+	bound public Engine::Collections::RVector2D GetClosestPoint(Engine::Collections::RVector2D point)
+	{
+		RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
+		irr::core::vector2df irrvec = this->m_Line.getClosestPoint(point->GetObject());
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	/// <summary>
+	/// The length of this line.
+	/// </summary>
+	bound numeric GetLength()
+	{
+		return this->m_Line.getLength();
+	}
+
+	/// <summary>
+	/// The squared length of this line.  This function is faster than GetLength()
+	/// as it does not have to perform the square root operation.
+	/// </summary>
+	bound numeric GetLengthSQ()
+	{
+		return this->m_Line.getLengthSQ();
+	}
+
+	/// <summary>
+	/// Get middle of the line.
+	/// </summary>
+	bound public Engine::Collections::RVector2D GetMiddle()
+	{
+		RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
+		irr::core::vector2df irrvec = this->m_Line.getMiddle();
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	/// <summary>
+	/// Returns if the given point lies to the left, right, or on the line.
+	/// </summary>
+	/// <param name="point">The specified point.</param>
+	bound public numeric GetPointOrientation(Engine::Collections::RVector2D point)
+	{
+		return this->m_Line.getPointOrientation(point->GetObject());
+	}
+
+	/// <summary>
+	/// Get a unit vector representing this line.
+	/// </summary>
+	bound public Engine::Collections::RVector2D GetUnitVector()
+	{
+		RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
+		irr::core::vector2df irrvec = this->m_Line.getUnitVector();
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	/// <summary>
+	/// Get a vector representing this line.
+	/// </summary>
+	bound public Engine::Collections::RVector2D GetVector()
+	{
+		RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
+		irr::core::vector2df irrvec = this->m_Line.getVector();
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	/// <summary>
+	/// Tests whether this line intersects with the specified line.  Returns
+	/// the Vector2D of the location where they intersect, or nil if they did
+	/// not.
+	/// </summary>
+	/// <param name="line">The specified line.</param>
+	bound public variant IntersectWith(Engine::Collections::RLine2D line)
+	{
+		irr::core::vector2df out;
+		bool b = this->m_Line.intersectWith(line->GetObject(), out);
+
+		if (b)
+		{
+			RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
+			ret->SetObject(out);
+			return Bindings<RVector2D>::Result(L, ret);
+		}
+		else
+		{
+			return Bindings<variant>::Result(L);
+		}
+	}
+
+	/// <summary>
+	/// Check if the given point is between start and end of the line.  Assumes
+	/// that the point is already somewhere on the line, therefore you must check
+	/// with IsPointOnRay first before using this function.
+	/// </summary>
+	/// <param name="point">The specified point.</param>
+	bound public bool IsPointBetweenStartAndEnd(Engine::Collections::RVector2D point)
+	{
+		return this->m_Line.isPointBetweenStartAndEnd(point->GetObject());
+	}
+
+	/// <summary>
+	/// Check if the given point is a member of the line.
+	/// </summary>
+	/// <param name="point">The specified point.</param>
+	bound public bool IsPointOnLine(Engine::Collections::RVector2D point)
+	{
+		return this->m_Line.isPointOnLine(point->GetObject());
+	}
+
+	/// <summary>
+	/// The start point of the line.
+	/// <summary>
+	bound property Engine::Collections::RVector2D Start
+	{
+		get: call GetStart;
+		set: call SetStart;
+	}
+
+	/// <summary>
+	/// The end point of the line.
+	/// <summary>
+	bound property Engine::Collections::RVector2D End
+	{
+		get: call GetEnd;
+		set: call SetEnd;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Irrlicht object to associate with this RLine2D instance.</param>
+	unbound public void SetObject(irr::core::line2df obj)
+	{
+		this->m_Line = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::core::line2df GetObject()
+	{
+		return this->m_Line;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::core::line2d<int> GetObjectAsIntLine()
+	{
+		return irr::core::line2d<int>(this->p_X1, this->p_Y1, this->p_X2, this->p_Y2);
+	}
+
+	// Property handlers
+	unbound void SetStart(Engine::Collections::RVector2D value)
+	{
+		this->p_X1 = value->GetObject().X;
+		this->p_Y1 = value->GetObject().Y;
+		this->m_Line.start = value->GetObject();
+
+		return;
+	}
+
+	unbound Engine::Collections::RVector2D GetStart()
+	{
+		if ((float)this->p_X1 == this->m_Line.start.X && (float)this->p_Y1 == this->m_Line.start.Y)
+		{
+			RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
+			irr::core::vector2df irrvec = irr::core::vector2df(0, 0);
+			ret->SetObject(irrvec);
+			ret->SetHighPrecisionXY(this->p_X1, this->p_Y1);
+
+			return ret;
+		}
+		else
+		{
+			RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
+			ret->SetObject(this->m_Line.start);
+
+			return ret;
+		}
+	}
+
+	unbound void SetEnd(Engine::Collections::RVector2D value)
+	{
+		this->p_X2 = value->GetObject().X;
+		this->p_Y2 = value->GetObject().Y;
+		this->m_Line.end = value->GetObject();
+
+		return;
+	}
+
+	unbound Engine::Collections::RVector2D GetEnd()
+	{
+		if ((float)this->p_X2 == this->m_Line.end.X && (float)this->p_Y2 == this->m_Line.end.Y)
+		{
+			RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
+			irr::core::vector2df irrvec = irr::core::vector2df(0, 0);
+			ret->SetObject(irrvec);
+			ret->SetHighPrecisionXY(this->p_X2, this->p_Y2);
+
+			return ret;
+		}
+		else
+		{
+			RVector2D * ret = Bindings<RVector2D>::CreateNew(L);
+			ret->SetObject(this->m_Line.end);
+
+			return ret;
+		}
+	}
+}

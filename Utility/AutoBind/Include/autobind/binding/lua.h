@@ -555,6 +555,20 @@ template<class T>
 			return 1;
 		}
 
+		// Push numeric value onto stack.
+		static int Result(lua_State * L, unsigned int ret)
+		{
+			lua_pushnumber(L, ret);
+			return 1;
+		}
+
+		// Push numeric value onto stack.
+		static int Result(lua_State * L, signed int ret)
+		{
+			lua_pushnumber(L, ret);
+			return 1;
+		}
+
 		// Push string value onto stack.
 		static int Result(lua_State * L, ::string ret)
 		{
@@ -562,10 +576,38 @@ template<class T>
 			return 1;
 		}
 
+		// Push string value onto stack.
+		static int Result(lua_State * L, const char* ret)
+		{
+			lua_pushstring(L, ret);
+			return 1;
+		}
+
+		// Push string value onto stack.
+		static int Result(lua_State * L, const wchar_t* ret)
+		{
+			lua_pushstring(L, ::string(ret));
+			return 1;
+		}
+
 		// Push table value onto stack.
 		static int Result(lua_State * L, table & ret)
 		{
 			ret.PushAsResult(L);
+			return 1;
+		}
+
+		// Push boolean value onto stack.
+		static int Result(lua_State * L, bool ret)
+		{
+			lua_pushboolean(L, ret);
+			return 1;
+		}
+
+		// Push nil value onto stack.
+		static int Result(lua_State * L)
+		{
+			lua_pushnil(L);
 			return 1;
 		}
 

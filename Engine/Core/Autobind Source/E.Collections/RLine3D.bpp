@@ -1,0 +1,240 @@
+#import Engine.DivideByZeroException
+#import Engine.Collections.RVector3D
+#include "Irrlicht.h"
+#include "line3d.h"
+
+class Engine.Collections.RLine3D
+   as Engine.Collections.Line3D
+{
+	private double p_X1;
+	private double p_Y1;
+	private double p_Z1;
+	private double p_X2;
+	private double p_Y2;
+	private double p_Z2;
+	private irr::core::line3df m_Line;
+
+	/// <summary>
+	/// The default constructor for an RLine3D object, initalizing
+	/// the line information to have a value of (0, 0, 0) -> (1, 1, 1).
+	/// </summary>
+	bound RLine3D()
+	{
+		this->p_X1 = 0;
+		this->p_Y1 = 0;
+		this->p_Z1 = 0;
+		this->p_X2 = 1;
+		this->p_Y2 = 1;
+		this->p_Z2 = 1;
+		this->m_Line = irr::core::line3df(0, 0, 0, 1, 1, 1);
+	}
+
+	/// <summary>
+	/// One of the recommended constructors for an RLine3D object, initalizing
+	/// the line information to have a value of (x1, y1, z1) -> (x2, y2, z2).
+	/// </summary>
+	/// <param name="x1">The first X component.</param>
+	/// <param name="y1">The first Y component.</param>
+	/// <param name="z1">The first Z component.</param>
+	/// <param name="x2">The second X component.</param>
+	/// <param name="y2">The second Y component.</param>
+	/// <param name="z2">The second Z component.</param>
+	bound RLine3D(numeric x1, numeric y1, numeric z1, numeric x2, numeric y2, numeric z2)
+	{
+		this->p_X1 = x1;
+		this->p_Y1 = y1;
+		this->p_Z1 = z1;
+		this->p_X2 = x2;
+		this->p_Y2 = y2;
+		this->p_Z2 = z2;
+		this->m_Line = irr::core::line3df(x1, y1, z1, x2, y2, z2);
+	}
+
+	/// <summary>
+	/// One of the recommended constructors for an RLine3D object, initalizing
+	/// the line information to have a value of 'vec1' -> 'vec2'.
+	/// </summary>
+	/// <param name="start">The vector describing the first (start) position.</param>
+	/// <param name="end">The vector describing the second (end) position.</param>
+	bound RLine3D(Engine::Collections::RVector3D start, Engine::Collections::RVector3D end)
+	{
+		this->p_X1 = start->GetObject().X;
+		this->p_Y1 = start->GetObject().Y;
+		this->p_Z1 = start->GetObject().Z;
+		this->p_X2 = end->GetObject().X;
+		this->p_Y2 = end->GetObject().Y;
+		this->p_Z2 = end->GetObject().Z;
+		this->m_Line = irr::core::line3df(start->GetObject(), end->GetObject());
+	}
+
+	/// <summary>
+	/// Get the closest point on this line to a point. 
+	/// </summary>
+	/// <param name="point">The specified point.</param>
+	bound public Engine::Collections::RVector3D GetClosestPoint(Engine::Collections::RVector3D point)
+	{
+		RVector3D * ret = Bindings<RVector3D>::CreateNew(L);
+		irr::core::vector3df irrvec = this->m_Line.getClosestPoint(point->GetObject());
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	/// <summary>
+	/// The length of this line.
+	/// </summary>
+	bound numeric GetLength()
+	{
+		return this->m_Line.getLength();
+	}
+
+	/// <summary>
+	/// The squared length of this line.  This function is faster than GetLength()
+	/// as it does not have to perform the square root operation.
+	/// </summary>
+	bound numeric GetLengthSQ()
+	{
+		return this->m_Line.getLengthSQ();
+	}
+
+	/// <summary>
+	/// Get middle of the line.
+	/// </summary>
+	bound public Engine::Collections::RVector3D GetMiddle()
+	{
+		RVector3D * ret = Bindings<RVector3D>::CreateNew(L);
+		irr::core::vector3df irrvec = this->m_Line.getMiddle();
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	/// <summary>
+	/// Get a vector representing this line.
+	/// </summary>
+	bound public Engine::Collections::RVector3D GetVector()
+	{
+		RVector3D * ret = Bindings<RVector3D>::CreateNew(L);
+		irr::core::vector3df irrvec = this->m_Line.getVector();
+		ret->SetObject(irrvec);
+
+		return ret;
+	}
+
+	/// <summary>
+	/// Check if the given point is between start and end of the line.  Assumes
+	/// that the point is already somewhere on the line, therefore you must check
+	/// with IsPointOnRay first before using this function.
+	/// </summary>
+	/// <param name="point">The specified point.</param>
+	bound public bool IsPointBetweenStartAndEnd(Engine::Collections::RVector3D point)
+	{
+		return this->m_Line.isPointBetweenStartAndEnd(point->GetObject());
+	}
+
+	/// <summary>
+	/// The start point of the line.
+	/// <summary>
+	bound property Engine::Collections::RVector3D Start
+	{
+		get: call GetStart;
+		set: call SetStart;
+	}
+
+	/// <summary>
+	/// The end point of the line.
+	/// <summary>
+	bound property Engine::Collections::RVector3D End
+	{
+		get: call GetEnd;
+		set: call SetEnd;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Irrlicht object to associate with this RLine3D instance.</param>
+	unbound public void SetObject(irr::core::line3df obj)
+	{
+		this->m_Line = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::core::line3df GetObject()
+	{
+		return this->m_Line;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::core::line2d<int> GetObjectAsIntLine()
+	{
+		return irr::core::line2d<int>(this->p_X1, this->p_Y1, this->p_X2, this->p_Y2);
+	}
+
+	// Property handlers
+	unbound void SetStart(Engine::Collections::RVector3D value)
+	{
+		this->p_X1 = value->GetObject().X;
+		this->p_Y1 = value->GetObject().Y;
+		this->p_Z1 = value->GetObject().Z;
+		this->m_Line.start = value->GetObject();
+
+		return;
+	}
+
+	unbound Engine::Collections::RVector3D GetStart()
+	{
+		if ((float)this->p_X1 == this->m_Line.start.X && (float)this->p_Y1 == this->m_Line.start.Y && (float)this->p_Z1 == this->m_Line.start.Z)
+		{
+			RVector3D * ret = Bindings<RVector3D>::CreateNew(L);
+			irr::core::vector3df irrvec = irr::core::vector3df(0, 0, 0);
+			ret->SetObject(irrvec);
+			ret->SetHighPrecisionXYZ(this->p_X1, this->p_Y1, this->p_Z1);
+
+			return ret;
+		}
+		else
+		{
+			RVector3D * ret = Bindings<RVector3D>::CreateNew(L);
+			ret->SetObject(this->m_Line.start);
+
+			return ret;
+		}
+	}
+
+	unbound void SetEnd(Engine::Collections::RVector3D value)
+	{
+		this->p_X2 = value->GetObject().X;
+		this->p_Y2 = value->GetObject().Y;
+		this->p_Z2 = value->GetObject().Z;
+		this->m_Line.end = value->GetObject();
+
+		return;
+	}
+
+	unbound Engine::Collections::RVector3D GetEnd()
+	{
+		if ((float)this->p_X2 == this->m_Line.end.X && (float)this->p_Y2 == this->m_Line.end.Y && (float)this->p_Z2 == this->m_Line.end.Z)
+		{
+			RVector3D * ret = Bindings<RVector3D>::CreateNew(L);
+			irr::core::vector3df irrvec = irr::core::vector3df(0, 0, 0);
+			ret->SetObject(irrvec);
+			ret->SetHighPrecisionXYZ(this->p_X2, this->p_Y2, this->p_Z1);
+
+			return ret;
+		}
+		else
+		{
+			RVector3D * ret = Bindings<RVector3D>::CreateNew(L);
+			ret->SetObject(this->m_Line.end);
+
+			return ret;
+		}
+	}
+}

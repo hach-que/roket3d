@@ -520,10 +520,16 @@ namespace LibAutoBind.Transformers
                     // replace them with the appropriate bindings.
                     if (funcbound)
                     {
-                        Regex rr = new Regex("^([ \r\n\t]*)([^\\/][^\\/])([^/\n]*)([ \r\n\t]+)return[ \r\n\t]+(?<Val>[^\\;]+)\\;", RegexOptions.Multiline);
-                        string res = rr.Replace(r.Content, "${1}${2}${3}${4}return Bindings<" + functype + ">::Result(L, ${Val});");
-                        Regex brr = new Regex("([ \r\n\t]*)([^\\/][^\\/])([^/\n]*)([ \r\n\t]+)return[ \r\n\t]*\\;", RegexOptions.Multiline);
-                        res = brr.Replace(res, "${1}${2}${3}${4}return Bindings<void*>::EmptyResult;");
+                        string res = null;
+                        if (functype != "multi")
+                        {
+                            Regex rr = new Regex("^([ \r\n\t]*)([^\\/][^\\/])([^/\n]*)([ \r\n\t]+)return[ \r\n\t]+(?<Val>[^\\;]+)\\;", RegexOptions.Multiline);
+                            res = rr.Replace(r.Content, "${1}${2}${3}${4}return Bindings<" + functype + ">::Result(L, ${Val});");
+                            Regex brr = new Regex("([ \r\n\t]*)([^\\/][^\\/])([^/\n]*)([ \r\n\t]+)return[ \r\n\t]*\\;", RegexOptions.Multiline);
+                            res = brr.Replace(res, "${1}${2}${3}${4}return Bindings<void*>::EmptyResult;");
+                        }
+                        else
+                            res = r.Content;
                         this.WriteCodeLine("        " + res.TrimStart().TrimEnd('\n'));
                         string cc = res.TrimStart().TrimEnd('\n');
                         if (cc.LastIndexOf("///") != -1 && !cc.Substring(cc.LastIndexOf("///"), 0).Contains('\n'))

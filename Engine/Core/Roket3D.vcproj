@@ -330,6 +330,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Generated Source\E.Collections\RLine2D.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Generated Source\E.Collections\RLine3D.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Generated Source\E.Collections\rmatrix.cpp"
 					>
 				</File>
@@ -339,14 +347,6 @@
 				</File>
 				<File
 					RelativePath=".\Generated Source\E.Collections\rquaternion.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Generated Source\E.Collections\rray2d.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Generated Source\E.Collections\rray3d.cpp"
 					>
 				</File>
 				<File
@@ -818,6 +818,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Generated Headers\E.Collections\RLine2D.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Generated Headers\E.Collections\RLine3D.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Generated Headers\E.Collections\rmatrix.h"
 					>
 				</File>
@@ -827,14 +835,6 @@
 				</File>
 				<File
 					RelativePath=".\Generated Headers\E.Collections\rquaternion.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Generated Headers\E.Collections\rray2d.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Generated Headers\E.Collections\rray3d.h"
 					>
 				</File>
 				<File
@@ -2335,6 +2335,46 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\Autobind Source\E.Collections\RLine2D.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Autobind Source\E.Collections\RLine3D.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\Autobind Source\E.Collections\RMatrix.bpp"
 					>
 					<FileConfiguration
@@ -2376,46 +2416,6 @@
 				</File>
 				<File
 					RelativePath=".\Autobind Source\E.Collections\RQuaternion.bpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="AutoBind"
-							ClassPath="E.Collections"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="AutoBind"
-							ClassPath="E.Collections"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\Autobind Source\E.Collections\RRay2D.bpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="AutoBind"
-							ClassPath="E.Collections"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="AutoBind"
-							ClassPath="E.Collections"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\Autobind Source\E.Collections\RRay3D.bpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
