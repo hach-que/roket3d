@@ -77,7 +77,7 @@ namespace Roket3D
 
                 // Draw message
                 g.DrawString(this.m_Message, this.m_TextFont, this.m_TextBrush, 9, 163);
-                g.DrawString(@"Roket3D is an open source project, available under a GPL license.  The GPL license
+                g.DrawString(@"Roket3D is an open source project, available under an MIT license.  The MIT license
 only pertains to the IDE and engine.  Games created with Roket3D may be licensed", this.m_TextFont, this.m_TextBrush, 9, 202);
                 g.DrawString(@"
 

@@ -213,34 +213,34 @@ static int math_randomseed (lua_State *L) {
 
 
 static const luaL_Reg mathlib[] = {
-  {"abs",   math_abs},
-  {"acos",  math_acos},
-  {"asin",  math_asin},
-  {"atan2", math_atan2},
-  {"atan",  math_atan},
-  {"ceil",  math_ceil},
-  {"cosh",   math_cosh},
-  {"cos",   math_cos},
-  {"deg",   math_deg},
-  {"exp",   math_exp},
-  {"floor", math_floor},
-  {"fmod",   math_fmod},
-  {"frexp", math_frexp},
-  {"ldexp", math_ldexp},
-  {"log10", math_log10},
-  {"log",   math_log},
-  {"max",   math_max},
-  {"min",   math_min},
-  {"modf",   math_modf},
-  {"pow",   math_pow},
-  {"rad",   math_rad},
-  {"random",     math_random},
-  {"randomseed", math_randomseed},
-  {"sinh",   math_sinh},
-  {"sin",   math_sin},
-  {"sqrt",  math_sqrt},
-  {"tanh",   math_tanh},
-  {"tan",   math_tan},
+  {"Abs",   math_abs},
+  {"ACos",  math_acos},
+  {"ASin",  math_asin},
+  {"ATan2", math_atan2},
+  {"ATan",  math_atan},
+  {"Ceiling",  math_ceil},
+  {"CosH",   math_cosh},
+  {"Cos",   math_cos},
+  {"Deg",   math_deg},
+  {"Exp",   math_exp},
+  {"Floor", math_floor},
+  {"FMod",   math_fmod},
+  {"FRExp", math_frexp},
+  {"LDExp", math_ldexp},
+  {"Log10", math_log10},
+  {"Log",   math_log},
+  {"Max",   math_max},
+  {"Min",   math_min},
+  {"ModF",   math_modf},
+  {"Pow",   math_pow},
+  {"Rad",   math_rad},
+  {"Random",     math_random},
+  {"RandomSeed", math_randomseed},
+  {"SinH",   math_sinh},
+  {"Sin",   math_sin},
+  {"Sqrt",  math_sqrt},
+  {"TanH",   math_tanh},
+  {"Tan",   math_tan},
   {NULL, NULL}
 };
 
@@ -251,12 +251,12 @@ static const luaL_Reg mathlib[] = {
 LUALIB_API int luaopen_math (lua_State *L) {
   luaL_register(L, LUA_MATHLIBNAME, mathlib);
   lua_pushnumber(L, PI);
-  lua_setfield(L, -2, "pi");
+  lua_setfield(L, -2, "Pi");
   lua_pushnumber(L, HUGE_VAL);
-  lua_setfield(L, -2, "huge");
+  lua_setfield(L, -2, "Huge");
 #if defined(LUA_COMPAT_MOD)
-  lua_getfield(L, -1, "fmod");
-  lua_setfield(L, -2, "mod");
+  lua_getfield(L, -1, "FMod");
+  lua_setfield(L, -2, "Mod");
 #endif
   return 1;
 }

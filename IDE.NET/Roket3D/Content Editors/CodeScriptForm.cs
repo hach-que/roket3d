@@ -318,6 +318,8 @@ namespace Roket3D.ContentEditors
             SyntaxCheck();
             c_SyntaxLimitTimer.Stop();
             c_SyntaxLimitTimer.Start();
+
+            this.TabText = new FileInfo(this.Path).Name + " *";
         }
 
         private void SyntaxLimitTimer_Tick(object sender, EventArgs e)
@@ -359,6 +361,7 @@ namespace Roket3D.ContentEditors
                 StreamWriter sfile = new StreamWriter(this.Path);
                 sfile.Write(this.ScintillaEditor.Text);
                 sfile.Close();
+                this.TabText = this.File.Name;
             }
             catch (IOException e)
             {
@@ -377,6 +380,7 @@ namespace Roket3D.ContentEditors
                 sfile.Close();
                 this.Path = SaveAsName;
                 this.File = null;
+                this.TabText = this.File.Name;
             }
             catch (IOException e)
             {
@@ -388,6 +392,40 @@ namespace Roket3D.ContentEditors
 
         private void CodeScriptForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (this.TabText.EndsWith(" *"))
+            {
+                DialogResult r = MessageBox.Show(
+                    "Save changes to " + new FileInfo(this.Path).Name + " before closing?",
+                    "Save Changes",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Warning
+                    );
+
+                if (r == DialogResult.Yes)
+                {
+                    try
+                    {
+                        StreamWriter sfile = new StreamWriter(this.Path);
+                        sfile.Write(this.ScintillaEditor.Text);
+                        sfile.Close();
+                        this.TabText = this.File.Name;
+                    }
+                    catch (IOException)
+                    {
+                        MessageBox.Show("Unable to save the document.  Make sure the file is writable " +
+                                        "and that you have appropriate permissions to access the file " +
+                                        "and try again.");
+                        e.Cancel = true;
+                        return;
+                    }
+                }
+                else if (r == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
             this.c_ToolStripContainer.ContentPanel.Controls.Remove(this.ScintillaEditor);
             this.MainForm.RetireInuseEditor(this.ScintillaEditor);
         }

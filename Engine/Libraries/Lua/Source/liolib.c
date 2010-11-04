@@ -475,29 +475,29 @@ static int f_flush (lua_State *L) {
 
 
 static const luaL_Reg iolib[] = {
-  {"close", io_close},
-  {"flush", io_flush},
-  {"input", io_input},
-  {"lines", io_lines},
-  {"open", io_open},
-  {"output", io_output},
-  {"popen", io_popen},
-  {"read", io_read},
-  {"tmpfile", io_tmpfile},
-  {"type", io_type},
-  {"write", io_write},
+  {"Close", io_close},
+  {"Flush", io_flush},
+  {"Input", io_input},
+  {"Lines", io_lines},
+  {"Open", io_open},
+  {"Output", io_output},
+  {"POpen", io_popen},
+  {"Read", io_read},
+  {"TmpFile", io_tmpfile},
+  {"Type", io_type},
+  {"Write", io_write},
   {NULL, NULL}
 };
 
 
 static const luaL_Reg flib[] = {
-  {"close", io_close},
-  {"flush", f_flush},
-  {"lines", f_lines},
-  {"read", f_read},
-  {"seek", f_seek},
-  {"setvbuf", f_setvbuf},
-  {"write", f_write},
+  {"Close", io_close},
+  {"Flush", f_flush},
+  {"Lines", f_lines},
+  {"Read", f_read},
+  {"Seek", f_seek},
+  {"SetBuffering", f_setvbuf},
+  {"Write", f_write},
   {"__gc", io_gc},
   {"__tostring", io_tostring},
   {NULL, NULL}
@@ -540,9 +540,9 @@ LUALIB_API int luaopen_io (lua_State *L) {
   luaL_register(L, LUA_IOLIBNAME, iolib);
   /* create (and set) default files */
   newfenv(L, io_noclose);  /* close function for default files */
-  createstdfile(L, stdin, IO_INPUT, "stdin");
-  createstdfile(L, stdout, IO_OUTPUT, "stdout");
-  createstdfile(L, stderr, 0, "stderr");
+  createstdfile(L, stdin, IO_INPUT, "StandardInput");
+  createstdfile(L, stdout, IO_OUTPUT, "StandardOutput");
+  createstdfile(L, stderr, 0, "StandardError");
   lua_pop(L, 1);  /* pop environment for default files */
   lua_getfield(L, -1, "popen");
   newfenv(L, io_pclose);  /* create environment for 'popen' */
