@@ -823,21 +823,20 @@ static int str_format (lua_State *L) {
 
 
 static const luaL_Reg strlib[] = {
-  {"byte", str_byte},
-  {"char", str_char},
-  {"dump", str_dump},
-  {"find", str_find},
-  {"format", str_format},
-  {"gfind", gfind_nodef},
-  {"gmatch", gmatch},
-  {"gsub", str_gsub},
-  {"len", str_len},
-  {"lower", str_lower},
-  {"match", str_match},
-  {"rep", str_rep},
-  {"reverse", str_reverse},
-  {"sub", str_sub},
-  {"upper", str_upper},
+  {"Byte", str_byte},
+  {"Char", str_char},
+  {"Dump", str_dump},
+  {"Find", str_find},
+  {"Format", str_format},
+  {"IteratorMatch", gmatch},
+  {"Replace", str_gsub},
+  {"Length", str_len},
+  {"ToLowerCase", str_lower},
+  {"Match", str_match},
+  {"Repeat", str_rep},
+  {"Reverse", str_reverse},
+  {"Substring", str_sub},
+  {"ToUpperCase", str_upper},
   {NULL, NULL}
 };
 

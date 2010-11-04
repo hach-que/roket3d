@@ -267,15 +267,14 @@ static int sort (lua_State *L) {
 
 
 static const luaL_Reg tab_funcs[] = {
-  {"concat", tconcat},
-  {"foreach", foreach},
-  {"foreachi", foreachi},
-  {"getn", getn},
-  {"maxn", maxn},
-  {"insert", tinsert},
-  {"remove", tremove},
-  {"setn", setn},
-  {"sort", sort},
+  {"Concat", tconcat},
+  {"ForEach", foreach},
+  {"ForEachI", foreachi},
+  {"GetN", getn},
+  {"MaxN", maxn},
+  {"Insert", tinsert},
+  {"Remove", tremove},
+  {"Sort", sort},
   {NULL, NULL}
 };
 

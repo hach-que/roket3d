@@ -15,28 +15,28 @@
 #define LUA_FILEHANDLE		"FILE*"
 
 
-#define LUA_COLIBNAME	"coroutine"
+#define LUA_COLIBNAME	"Coroutine"
 LUALIB_API int (luaopen_base) (lua_State *L);
 
-#define LUA_TABLIBNAME	"table"
+#define LUA_TABLIBNAME	"Table"
 LUALIB_API int (luaopen_table) (lua_State *L);
 
-#define LUA_IOLIBNAME	"io"
+#define LUA_IOLIBNAME	"IO"
 LUALIB_API int (luaopen_io) (lua_State *L);
 
-#define LUA_OSLIBNAME	"os"
+#define LUA_OSLIBNAME	"OS"
 LUALIB_API int (luaopen_os) (lua_State *L);
 
-#define LUA_STRLIBNAME	"string"
+#define LUA_STRLIBNAME	"String"
 LUALIB_API int (luaopen_string) (lua_State *L);
 
-#define LUA_MATHLIBNAME	"math"
+#define LUA_MATHLIBNAME	"Math"
 LUALIB_API int (luaopen_math) (lua_State *L);
 
-#define LUA_DBLIBNAME	"debug"
+#define LUA_DBLIBNAME	"Debug"
 LUALIB_API int (luaopen_debug) (lua_State *L);
 
-#define LUA_LOADLIBNAME	"package"
+#define LUA_LOADLIBNAME	"Package"
 LUALIB_API int (luaopen_package) (lua_State *L);
 
 

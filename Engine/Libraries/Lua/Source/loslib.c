@@ -218,17 +218,17 @@ static int os_exit (lua_State *L) {
 }
 
 static const luaL_Reg syslib[] = {
-  {"clock",     os_clock},
-  {"date",      os_date},
-  {"difftime",  os_difftime},
-  {"execute",   os_execute},
-  {"exit",      os_exit},
-  {"getenv",    os_getenv},
-  {"remove",    os_remove},
-  {"rename",    os_rename},
-  {"setlocale", os_setlocale},
-  {"time",      os_time},
-  {"tmpname",   os_tmpname},
+  {"Clock",     os_clock},
+  {"Date",      os_date},
+  {"DiffTime",  os_difftime},
+  {"Execute",   os_execute},
+  {"Exit",      os_exit},
+  {"GetEnv",    os_getenv},
+  {"Remove",    os_remove},
+  {"Rename",    os_rename},
+  {"SetLocale", os_setlocale},
+  {"Time",      os_time},
+  {"TmpName",   os_tmpname},
   {NULL, NULL}
 };
 

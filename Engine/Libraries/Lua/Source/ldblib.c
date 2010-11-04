@@ -372,20 +372,20 @@ static int db_errorfb (lua_State *L) {
 
 
 static const luaL_Reg dblib[] = {
-  {"debug", db_debug},
-  {"getfenv", db_getfenv},
-  {"gethook", db_gethook},
-  {"getinfo", db_getinfo},
-  {"getlocal", db_getlocal},
-  {"getregistry", db_getregistry},
-  {"getmetatable", db_getmetatable},
-  {"getupvalue", db_getupvalue},
-  {"setfenv", db_setfenv},
-  {"sethook", db_sethook},
-  {"setlocal", db_setlocal},
-  {"setmetatable", db_setmetatable},
-  {"setupvalue", db_setupvalue},
-  {"traceback", db_errorfb},
+  {"Debug", db_debug},
+  {"GetFunctionEnvironment", db_getfenv},
+  {"GetHook", db_gethook},
+  {"GetInfo", db_getinfo},
+  {"GetLocal", db_getlocal},
+  {"GetRegistry", db_getregistry},
+  {"GetMetatable", db_getmetatable},
+  {"GetUpvalue", db_getupvalue},
+  {"SetFunctionEnvironment", db_setfenv},
+  {"SetHook", db_sethook},
+  {"SetLocal", db_setlocal},
+  {"SetMetatable", db_setmetatable},
+  {"SetUpvalue", db_setupvalue},
+  {"Traceback", db_errorfb},
   {NULL, NULL}
 };
 
