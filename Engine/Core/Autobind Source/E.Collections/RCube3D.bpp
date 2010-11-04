@@ -1,6 +1,28 @@
+#include "aabbox3d.h"
+
 class Engine.Collections.RCube3D
 {
+	private irr::core::aabbox3df m_Box;
+
 	bound RCube3D()
 	{
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Irrlicht object to associate with this RCube3D instance.</param>
+	unbound public void SetObject(irr::core::aabbox3df obj)
+	{
+		this->m_Box = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::core::aabbox3df GetObject()
+	{
+		return this->m_Box;
 	}
 }

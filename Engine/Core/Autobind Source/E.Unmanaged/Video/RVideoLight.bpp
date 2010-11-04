@@ -1,17 +1,18 @@
 #import Engine.InternalConstructorOnlyException
-#include "SMaterial.h"
+#include "vector3d.h"
+#include "SLight.h"
 
-class Engine.Unmanaged.Video.RVideoMaterial
-   as Engine.Unmanaged.Video.Material
+class Engine.Unmanaged.Video.RVideoLight
+   as Engine.Unmanaged.Video.Light
 {
-	private irr::video::SMaterial m_Material;
+	private irr::video::SLight m_Light;
 
 	/// <summary>
-	/// A non-public constructor for initalizing an RVideoMaterial instance.
+	/// A non-public constructor for initalizing an RVideoLight instance.
 	/// </summary>
 	/// <internal>true</internal>
 	/// <exception>Engine::InternalConstructorOnlyException</exception>
-	bound RVideoMaterial()
+	bound RVideoLight()
 	{
 		if (byuser)
 		{
@@ -23,18 +24,18 @@ class Engine.Unmanaged.Video.RVideoMaterial
 	/// <summary>
 	/// Sets the Irrlicht object to the parameter 'obj'.
 	/// </summary>
-	/// <param>The new Irrlicht object to associate with this RVideoMaterial instance.</param>
-	unbound public void SetObject(irr::video::SMaterial obj)
+	/// <param>The new Irrlicht object to associate with this RVideoLight instance.</param>
+	unbound public void SetObject(irr::video::SLight obj)
 	{
-		this->m_Material = obj;
+		this->m_Light = obj;
 	}
 
 	/// <summary>
 	/// Gets the Irrlicht object that this instance represents.
 	/// </summary>
 	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
-	unbound public irr::video::SMaterial GetObject()
+	unbound public irr::video::SLight GetObject()
 	{
-		return this->m_Material;
+		return this->m_Light;
 	}
 }

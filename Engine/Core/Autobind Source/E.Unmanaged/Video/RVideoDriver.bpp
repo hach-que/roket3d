@@ -1,10 +1,26 @@
 #import Engine.InternalConstructorOnlyException
+#import Engine.InvalidOperationException
 #import Engine.ObjectDisposedException
 #import Engine.Collections.RColor
 #import Engine.Collections.RVector2D
+#import Engine.Collections.RVector3D
 #import Engine.Collections.RLine2D
+#import Engine.Collections.RLine3D
 #import Engine.Collections.RRectangle
+#import Engine.Collections.RCube3D
+#import Engine.Collections.RTriangle3D
+#import Engine.Collections.RDimension2D
+#import Engine.Unmanaged.Video.RVideoFog
+#import Engine.Unmanaged.Video.RVideoLight
+#import Engine.Unmanaged.Video.RVideoTexture
+#import Engine.Unmanaged.Video.RVideoMaterial
 #include "IVideoDriver.h"
+#include "line2d.h"
+#include "line3d.h"
+#include "rect.h"
+#include "aabbox3d.h"
+#include "vector2d.h"
+#include "vector3d.h"
 
 class Engine.Unmanaged.Video.RVideoDriver
    as Engine.Unmanaged.Video.Driver
@@ -47,24 +63,9 @@ class Engine.Unmanaged.Video.RVideoDriver
 	}
 
 	/// <summary>
-	/// Places the contents of the screen buffer onto the actual screen.
-	/// </summary>
-	/// <exception>Engine::ObjectDisposedException</exception>
-	bound void EndScene()
-	{
-		if (this->m_IsDriverSet)
-		{
-			this->m_Driver->endScene();
-			return;
-		}
-		else
-			throw new Engine::ObjectDisposedException();
-	}
-
-	/// <summary>
 	/// Draws a 2D line on the screen.
 	/// </summary>
-	/// <param name="line">The line defined as a 2D ray.</param>
+	/// <param name="line">The 2D line.</param>
 	/// <param name="color">The color of the line.</param>
 	/// <exception>Engine::ObjectDisposedException</exception>
 	bound void Draw2DLine(Engine::Collections::RLine2D line, Engine::Collections::RColor color)
@@ -77,6 +78,25 @@ class Engine.Unmanaged.Video.RVideoDriver
 				irr::core::position2d<int>(irrline.end.X, irrline.end.Y),
 				color->GetObject()
 				);
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Draws a non-filled concyclic regular 2D polyon on the screen.
+	/// </summary>
+	/// <param name="center">The center of the polygon.</param>
+	/// <param name="radius">The radius, in pixels, of the polygon.</param>
+	/// <param name="vertexes">Amount of vertices of the polygon.  Specify 2 to draw a line, 3 to draw a triangle, 4 for tetragons and a lot (>10) for nearly a circle.</param>
+	/// <param name="color">The color of the rectangle.</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void Draw2DPolygon(Engine::Collections::RVector2D center, numeric radius, numeric vertexes, Engine::Collections::RColor color)
+	{
+		if (this->m_IsDriverSet)
+		{
+			this->m_Driver->draw2DPolygon(irr::core::position2d<int>(center->GetObject().X, center->GetObject().Y), radius, color->GetObject(), vertexes);
 			return;
 		}
 		else
@@ -101,6 +121,401 @@ class Engine.Unmanaged.Video.RVideoDriver
 	}
 
 	/// <summary>
+	/// Draws a 2D rectangle with a gradient on the screen.
+	/// </summary>
+	/// <param name="rect">The 2D rectangle.</param>
+	/// <param name="topleft">The top-left color of the rectangle.</param>
+	/// <param name="topright">The top-right color of the rectangle.</param>
+	/// <param name="bottomleft">The bottom-left color of the rectangle.</param>
+	/// <param name="bottomright">The bottom-right color of the rectangle.</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void Draw2DRectangle(Engine::Collections::RRectangle rect, Engine::Collections::RColor topleft, Engine::Collections::RColor topright, Engine::Collections::RColor bottomleft, Engine::Collections::RColor bottomright)
+	{
+		if (this->m_IsDriverSet)
+		{
+			this->m_Driver->draw2DRectangle(rect->GetObjectAsIntRect(), topleft->GetObject(), topright->GetObject(), bottomleft->GetObject(), bottomright->GetObject());
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Draws the outline of a 2D rectangle on the screen.
+	/// </summary>
+	/// <param name="rect">The 2D rectangle.</param>
+	/// <param name="color">The color of the rectangle.</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void Draw2DRectangleOutline(Engine::Collections::RRectangle rect, Engine::Collections::RColor color)
+	{
+		if (this->m_IsDriverSet)
+		{
+			this->m_Driver->draw2DRectangleOutline(rect->GetObjectAsIntRect(), color->GetObject());
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Draws the vertex primitive list in 2D.
+	/// </summary>
+	/// <param name="vertices">The vertices of the primitive.</param>
+	/// <exception>Engine::InvalidOperationException</exception>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void Draw2DVertexPrimitiveList(table vertices, Engine::Collections::RColor color)
+	{
+		if (this->m_IsDriverSet)
+		{
+			throw new Engine::InvalidOperationException();
+
+			//RObject * vertex = vertices[1];
+			//while (vertex != NULL)
+			//{
+			//
+			//}
+			//this->m_Driver->draw2DVertexPrimitiveList(color->GetObject(), rect->GetObjectAsIntRect());
+			//return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Draws an axix-aligned 3D box on the screen.  This method simply calls Draw3DLine for the edges of the box.
+	/// </summary>
+	/// <param name="box">The 3D box.</param>
+	/// <param name="color">The color of the rectangle.</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void Draw3DBox(Engine::Collections::RCube3D box, Engine::Collections::RColor color)
+	{
+		if (this->m_IsDriverSet)
+		{
+			this->m_Driver->draw3DBox(box->GetObject(), color->GetObject());
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Draws a 3D line on the screen.
+	/// </summary>
+	/// <param name="line">The 3D line.</param>
+	/// <param name="color">The color of the line.</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void Draw3DLine(Engine::Collections::RLine3D line, Engine::Collections::RColor color)
+	{
+		if (this->m_IsDriverSet)
+		{
+			this->m_Driver->draw3DLine(
+				line->GetObject().start,
+				line->GetObject().end,
+				color->GetObject()
+				);
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Draws a 3D triangle on the screen.  This method calls DrawVertexPrimitiveList for some
+	/// triangles. This method works with all drivers because it simply calls DrawVertexPrimitiveList,
+	/// but it is hence not very fast.
+	/// </summary>
+	/// <param name="triangle">The line defined as a 3D ray.</param>
+	/// <param name="color">The color of the line.</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void Draw3DTriangle(Engine::Collections::RTriangle3D triangle, Engine::Collections::RColor color)
+	{
+		if (this->m_IsDriverSet)
+		{
+			this->m_Driver->draw3DTriangle(
+				triangle->GetObject(),
+				color->GetObject()
+				);
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Draws a pixel on the screen.
+	/// </summary>
+	/// <param name="point">The location of the pixel.</param>
+	/// <param name="color">The color of the line.</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void DrawPixel(Engine::Collections::RVector2D point, Engine::Collections::RColor color)
+	{
+		if (this->m_IsDriverSet)
+		{
+			this->m_Driver->drawPixel(
+				point->GetObject().X,
+				point->GetObject().Y,
+				color->GetObject()
+				);
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Enable or disable a clipping plane.
+	/// </summary>
+	/// <param name="plane">The numeric ID of the clipping plane.</param>
+	/// <param name="enable">Whether the plane should be enabled (true) or disabled (false).</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void EnableClipPlane(numeric plane, bool enable)
+	{
+		if (this->m_IsDriverSet)
+		{
+			this->m_Driver->enableClipPlane(
+				(int)plane,
+				enable
+				);
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Enable or disable the 2D override texture.
+	/// </summary>
+	/// <param name="enable">Whether the 2D override texture should be enabled (true) or disabled (false).</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void EnableMaterial2D(bool enable)
+	{
+		if (this->m_IsDriverSet)
+		{
+			this->m_Driver->enableMaterial2D(
+				enable
+				);
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Checks if the image is already loaded, returning it as a Texture if it is, or nil if it is not.  Works
+	/// similar to GetTexture, except that it will not load the texture if it is not already loaded.
+	/// </summary>
+	/// <param name="path">The filename of the texture.</param>
+	bound variant FindTexture(::string path)
+	{
+		irr::video::ITexture * irrtex = this->m_Driver->findTexture((const char*)path);
+
+		if (irrtex == NULL)
+		{
+			Engine::Unmanaged::Video::RVideoTexture * ret = Bindings<Engine::Unmanaged::Video::RVideoTexture>::CreateNew(L);
+			ret->SetObject(irrtex);
+
+			return Bindings<Engine::Unmanaged::Video::RVideoTexture>::Result(L, ret);
+		}
+		else
+		{
+			return Bindings<void *>::Result(L);
+		}
+	}
+
+	/// <summary>
+	/// The current 2D override material.
+	/// </summary>
+	bound property Engine::Unmanaged::Video::RVideoMaterial Material2D
+	{
+		get: call GetMaterial2D;
+		set: call SetMaterial2D;
+	}
+
+	/// <summary>
+	/// Places the contents of the screen buffer onto the actual screen.
+	/// </summary>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void EndScene()
+	{
+		if (this->m_IsDriverSet)
+		{
+			this->m_Driver->endScene();
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// The current color format of the color buffer.
+	/// </summary>
+	/// <readonly>true</readonly>
+	bound property numeric ColorFormat
+	{
+		get: call GetColorFormat;
+	}
+
+	/// <summary>
+	/// The current render target size.  This will be the size of the screen if
+	/// there is no render target set, or the render target is the screen.
+	/// </summary>
+	/// <readonly>true</readonly>
+	bound property Engine::Collections::RVector2D RenderTargetSize
+	{
+		get: call GetRenderTargetSize;
+	}
+
+	/// <summary>
+	/// The current driver type.
+	/// </summary>
+	/// <readonly>true</readonly>
+	bound property numeric DriverType
+	{
+		get: call GetDriverType;
+	}
+
+	/// <summary>
+	/// Returns light data which was previously set by AddDynamicLight(), or nil if there is no light data available.
+	/// </summary>
+	/// <param name="index">The zero-based index of the light.  Must be 0 or greater, and smaller than the value of the DynamicLightCount property.</param>
+	bound variant GetDynamicLight(numeric index)
+	{
+		irr::video::SLight irrlight = this->m_Driver->getDynamicLight((int)index);
+
+		if (&irrlight == NULL)
+		{
+			Engine::Unmanaged::Video::RVideoLight * ret = Bindings<Engine::Unmanaged::Video::RVideoLight>::CreateNew(L);
+			ret->SetObject(irrlight);
+
+			return Bindings<Engine::Unmanaged::Video::RVideoLight>::Result(L, ret);
+		}
+		else
+		{
+			return Bindings<void *>::Result(L);
+		}
+	}
+
+	/// <summary>
+	/// The number of dynamic lights.
+	/// </summary>
+	/// <readonly>true</readonly>
+	bound property numeric DynamicLightCount
+	{
+		get: call GetDynamicLightCount;
+	}
+
+	/// <summary>
+	/// The current fog.
+	/// </summary>
+	bound property Engine::Unmanaged::Video::RVideoFog Fog
+	{
+		get: call GetFog;
+		set: call SetFog;
+	}
+
+	/// <summary>
+	/// The current frames-per-second.  Updated approximately every 1.5 seconds, so it's not suitable for high-resolution timing.
+	/// </summary>
+	/// <readonly>true</readonly>
+	bound property numeric FPS
+	{
+		get: call GetFPS;
+	}
+
+	/// <summary>
+	/// The screen size.
+	/// </summary>
+	/// <readonly>true</readonly>
+	bound property Engine::Collections::RVector2D ScreenSize
+	{
+		get: call GetScreenSize;
+	}
+
+	/// <summary>
+	/// Gets access to a named texture, or loads it from disk if it is not already loaded.  Automatically
+	/// generates mipmap levels if needed.  The texture can be in several formats; BMP, JPG, TGA, PCX, PNG, and PSD.
+	/// </summary>
+	/// <param name="path">The filename of the texture.</param>
+	bound variant GetTexture(::string path)
+	{
+		irr::video::ITexture * irrtex = this->m_Driver->getTexture((const char*)path);
+
+		if (irrtex == NULL)
+		{
+			Engine::Unmanaged::Video::RVideoTexture * ret = Bindings<Engine::Unmanaged::Video::RVideoTexture>::CreateNew(L);
+			ret->SetObject(irrtex);
+
+			return Bindings<Engine::Unmanaged::Video::RVideoTexture>::Result(L, ret);
+		}
+		else
+		{
+			return Bindings<void *>::Result(L);
+		}
+	}
+
+	/// <summary>
+	/// Gets access to a texture by index, returning it if there's a texture at the given index, or nil if there
+	/// is not.
+	/// </summary>
+	/// <param name="index">The index of the texture.  Must be 0 or greater, and less than the value of the TextureCount property.</param>
+	bound variant GetTexture(numeric index)
+	{
+		irr::video::ITexture * irrtex = this->m_Driver->getTextureByIndex((unsigned int)index);
+
+		if (irrtex == NULL)
+		{
+			Engine::Unmanaged::Video::RVideoTexture * ret = Bindings<Engine::Unmanaged::Video::RVideoTexture>::CreateNew(L);
+			ret->SetObject(irrtex);
+
+			return Bindings<Engine::Unmanaged::Video::RVideoTexture>::Result(L, ret);
+		}
+		else
+		{
+			return Bindings<void *>::Result(L);
+		}
+	}
+
+	/// <summary>
+	/// Returns the current texture count.
+	/// </summary>
+	/// <readonly>true</readonly>
+	bound property numeric TextureCount
+	{
+		get: call GetTextureCount;
+	}
+
+	/// <summary>
+	/// Returns the current graphics card vendor name.
+	/// </summary>
+	/// <readonly>true</readonly>
+	bound property ::string VendorInfo
+	{
+		get: call GetVendorInfo;
+	}
+
+	/// <summary>
+	/// The current view port.  This setting can be used to produce split-screen
+	/// games very easily.
+	/// </summary>
+	bound property Engine::Collections::RRectangle ViewPort
+	{
+		get: call GetViewPort;
+		set: call SetViewPort;
+	}
+
+	/// <summary>
+	/// Removes all of the textures from the texture cache and deletes them.  This function can free a lot of memory, but you must
+	/// ensure that all scene elements and other video rendering elements do not rely on any references to textures as they will
+	/// be invalidated.
+	/// </summary>
+	bound void RemoveAllTextures()
+	{
+		this->m_Driver->removeAllTextures();
+
+		return;
+	}
+
+	/// <summary>
 	/// Sets the Irrlicht object to the parameter 'obj'.
 	/// </summary>
 	/// <param name="obj">The new Irrlicht object to associate with this RVideoDriver instance.</param>
@@ -117,5 +532,150 @@ class Engine.Unmanaged.Video.RVideoDriver
 	unbound public irr::video::IVideoDriver * GetObject()
 	{
 		return this->m_Driver;
+	}
+
+	// Property functions.
+	unbound void SetMaterial2D(Engine::Unmanaged::Video::RVideoMaterial value)
+	{
+		irr::video::SMaterial & mat = this->m_Driver->getMaterial2D();
+		mat.AmbientColor = value->GetObject().AmbientColor;
+		mat.AntiAliasing = value->GetObject().AntiAliasing;
+		mat.BackfaceCulling = value->GetObject().BackfaceCulling;
+		mat.ColorMask = value->GetObject().ColorMask;
+		mat.ColorMaterial = value->GetObject().ColorMaterial;
+		mat.DiffuseColor = value->GetObject().DiffuseColor;
+		mat.EmissiveColor = value->GetObject().EmissiveColor;
+		mat.FogEnable = value->GetObject().FogEnable;
+		mat.FrontfaceCulling = value->GetObject().FrontfaceCulling;
+		mat.GouraudShading = value->GetObject().GouraudShading;
+		mat.Lighting = value->GetObject().Lighting;
+		mat.MaterialType = value->GetObject().MaterialType;
+		mat.MaterialTypeParam = value->GetObject().MaterialTypeParam;
+		mat.MaterialTypeParam2 = value->GetObject().MaterialTypeParam2;
+		mat.NormalizeNormals = value->GetObject().NormalizeNormals;
+		mat.PointCloud = value->GetObject().PointCloud;
+		mat.Shininess = value->GetObject().Shininess;
+		mat.SpecularColor = value->GetObject().SpecularColor;
+		mat.Thickness = value->GetObject().Thickness;
+		mat.Wireframe = value->GetObject().Wireframe;
+		mat.ZBuffer = value->GetObject().ZBuffer;
+		mat.ZWriteEnable = value->GetObject().ZWriteEnable;
+
+		return;
+	}
+
+	unbound Engine::Unmanaged::Video::RVideoMaterial GetMaterial2D()
+	{
+		Engine::Unmanaged::Video::RVideoMaterial * ret = Bindings<Engine::Unmanaged::Video::RVideoMaterial>::CreateNew(L);
+		irr::video::SMaterial & irrmat = this->m_Driver->getMaterial2D();
+		ret->SetObject(irrmat);
+
+		return ret;
+	}
+
+	unbound numeric GetColorFormat()
+	{
+		return (int)this->m_Driver->getColorFormat();
+	}
+
+	unbound Engine::Collections::RDimension2D GetRenderTargetSize()
+	{
+		Engine::Collections::RDimension2D * ret = Bindings<Engine::Collections::RDimension2D>::CreateNew(L);
+		irr::core::dimension2d<unsigned int> irrdim = this->m_Driver->getCurrentRenderTargetSize();
+		irr::core::dimension2df irrdim2 = irr::core::dimension2df(irrdim.Width, irrdim.Height);
+		ret->SetObject(irrdim2);
+
+		return ret;
+	}
+
+	unbound numeric GetDriverType()
+	{
+		return (int)this->m_Driver->getDriverType();
+	}
+
+	unbound numeric GetDynamicLightCount()
+	{
+		return (int)this->m_Driver->getDynamicLightCount();
+	}
+
+	unbound void SetFog(Engine::Unmanaged::Video::RVideoFog value)
+	{
+		irr::video::SColor color;
+		irr::video::E_FOG_TYPE type;
+		float start;
+		float end;
+		float density;
+		bool pixel;
+		bool range;
+
+		value->GetVariables(color, type, start, end, density, pixel, range);
+		this->m_Driver->setFog(color, type, start, end, density, pixel, range);
+
+		return;
+	}
+
+	unbound Engine::Unmanaged::Video::RVideoFog GetFog()
+	{
+		Engine::Unmanaged::Video::RVideoFog * ret = Bindings<Engine::Unmanaged::Video::RVideoFog>::CreateNew(L);
+
+		irr::video::SColor color;
+		irr::video::E_FOG_TYPE type;
+		float start;
+		float end;
+		float density;
+		bool pixel;
+		bool range;
+
+		this->m_Driver->getFog(color, type, start, end, density, pixel, range);
+		ret->SetVariables(color, type, start, end, density, pixel, range);
+
+		return ret;
+	}
+
+	unbound numeric GetFPS()
+	{
+		return this->m_Driver->getFPS();
+	}
+
+	unbound Engine::Collections::RVector2D GetScreenSize()
+	{
+		Engine::Collections::RDimension2D * ret = Bindings<Engine::Collections::RDimension2D>::CreateNew(L);
+		irr::core::dimension2d<unsigned int> irrdim = this->m_Driver->getScreenSize();
+		irr::core::dimension2df irrdim2 = irr::core::dimension2df(irrdim.Width, irrdim.Height);
+		ret->SetObject(irrdim2);
+
+		return ret;
+	}
+
+	unbound numeric GetTextureCount()
+	{
+		return (int)this->m_Driver->getTextureCount();
+	}
+
+	unbound ::string GetVendorInfo()
+	{
+		return ::string(this->m_Driver->getVendorInfo().c_str());
+	}
+
+	unbound void SetViewPort(Engine::Collections::RRectangle value)
+	{
+		const irr::core::rect<int> area = irr::core::rect<int>(
+											value->GetObject().UpperLeftCorner.X,
+											value->GetObject().UpperLeftCorner.Y,
+											value->GetObject().LowerRightCorner.X,
+											value->GetObject().LowerRightCorner.Y
+											);
+		this->m_Driver->setViewPort(area);
+
+		return ;
+	}
+
+	unbound Engine::Collections::RRectangle GetViewPort()
+	{
+		Engine::Collections::RRectangle * ret = Bindings<Engine::Collections::RRectangle>::CreateNew(L);
+		irr::core::rect<int> irrrect = this->m_Driver->getViewPort();
+		ret->SetObject(irrrect);
+
+		return ret;
 	}
 }

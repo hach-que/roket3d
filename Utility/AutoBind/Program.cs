@@ -88,8 +88,12 @@ namespace AutoBind
 
         static void Cleanup(string hbase, string cppbase, string basename)
         {
-            if (File.Exists(hbase + '/' + basename + ".h.tmp"))
-                File.Delete(hbase + '/' + basename + ".h.tmp");
+            try
+            {
+                if (File.Exists(hbase + '/' + basename + ".h.tmp"))
+                    File.Delete(hbase + '/' + basename + ".h.tmp");
+            }
+            catch (IOException) { }
         }
     }
 }

@@ -53,7 +53,7 @@ namespace LibAutoBind.Tokens
                     return; // Skip if we don't have a terminating character.
                 Regex r = new Regex(
                     "(?<Type>[a-zA-Z][a-zA-z0-9_\\:\\<\\>]+[ \t\r\n\\*]+)?" +
-                    "(?<Name>[a-zA-Z][a-zA-z0-9_]*[ \t\r\n]*\\([ \t\r\na-zA-z0-9_&,-\\.\\:\\*\\<\\>\\[\\]\\\"]*\\))[ \t\r\n]*\\{"
+                    "(?<Name>[a-zA-Z][a-zA-z0-9_]*[ \t\r\n]*\\([ \t\r\na-zA-Z0-9_&,-\\.\\:\\*\\<\\>\\[\\]\\\"]*\\))[ \t\r\n]*\\{"
                     );
                 Match m = r.Match(decl);
                 if (m.Success)

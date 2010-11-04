@@ -330,6 +330,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Generated Source\E.Collections\RDimension2D.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Generated Source\E.Collections\RLine2D.cpp"
 					>
 				</File>
@@ -577,6 +581,14 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Generated Source\E.Unmanaged\Video\RVideoFog.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Source\E.Unmanaged\Video\RVideoLight.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\Generated Source\E.Unmanaged\Video\rvideomaterial.cpp"
 						>
 					</File>
@@ -818,6 +830,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Generated Headers\E.Collections\RDimension2D.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Generated Headers\E.Collections\RLine2D.h"
 					>
 				</File>
@@ -1050,6 +1066,14 @@
 					>
 					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\Video\rvideodriver.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\Video\RVideoFog.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\Video\RVideoLight.h"
 						>
 					</File>
 					<File
@@ -1920,6 +1944,46 @@
 						</FileConfiguration>
 					</File>
 					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Video\RVideoFog.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Video"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Video"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Video\RVideoLight.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Video"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Video"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
 						RelativePath=".\Autobind Source\E.Unmanaged\Video\RVideoMaterial.bpp"
 						>
 						<FileConfiguration
@@ -2327,6 +2391,18 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\Autobind Source\E.Collections\RDimension2D.bpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
 						>
 						<Tool
 							Name="AutoBind"
