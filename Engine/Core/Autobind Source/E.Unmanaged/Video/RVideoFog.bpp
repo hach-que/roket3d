@@ -1,0 +1,57 @@
+#import Engine.InternalConstructorOnlyException
+#include "SColor.h"
+#include "IVideoDriver.h"
+
+class Engine.Unmanaged.Video.RVideoFog
+   as Engine.Unmanaged.Video.Fog
+{
+	private irr::video::SColor m_Color;
+	private irr::video::E_FOG_TYPE m_Type;
+	private float m_Start;
+	private float m_End;
+	private float m_Density;
+	private bool m_Pixel;
+	private bool m_Range;
+
+	/// <summary>
+	/// A non-public constructor for initalizing an RVideoFog instance.
+	/// </summary>
+	/// <internal>true</internal>
+	/// <exception>Engine::InternalConstructorOnlyException</exception>
+	bound RVideoFog()
+	{
+		if (byuser)
+		{
+			throw new Engine::InternalConstructorOnlyException();
+		}
+		// TODO: Implement.
+	}
+
+	/// <summary>
+	/// Sets the variables in this object.
+	/// </summary>
+	unbound public void SetVariables(irr::video::SColor color, irr::video::E_FOG_TYPE type, float start, float end, float density, bool pixel, bool range)
+	{
+		this->m_Color = color;
+		this->m_Type = type;
+		this->m_Start = start;
+		this->m_End = end;
+		this->m_Density = density;
+		this->m_Pixel = pixel;
+		this->m_Range = range;
+	}
+
+	/// <summary>
+	/// Gets the variables in this object.
+	/// </summary>
+	unbound public void GetVariables(irr::video::SColor & color, irr::video::E_FOG_TYPE & type, float & start, float & end, float & density, bool & pixel, bool & range)
+	{
+		color = this->m_Color;
+		type = this->m_Type;
+		start = this->m_Start;
+		end = this->m_End;
+		density = this->m_Density;
+		pixel = this->m_Pixel;
+		range = this->m_Range;
+	}
+}

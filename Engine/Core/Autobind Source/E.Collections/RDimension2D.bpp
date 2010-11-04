@@ -1,0 +1,164 @@
+#include "Irrlicht.h"
+#include "dimension2d.h"
+
+class Engine.Collections.RDimension2D
+   as Engine.Collections.Dimension2D
+{
+	private double p_Width;
+	private double p_Height;
+	private irr::core::dimension2df m_Dimension;
+
+	/// <summary>
+	/// The default constructor for an RDimension2D object, initalizing
+	/// the dimension information to have a value of (0, 0).
+	/// </summary>
+	bound RDimension2D()
+	{
+		this->p_Width = 0;
+		this->p_Height = 0;
+		this->m_Dimension = irr::core::dimension2df(0, 0);
+	}
+
+	/// <summary>
+	/// The recommended constructor for an RDimension2D object, initalizing
+	/// the dimension information to have a value of (width, height).
+	/// </summary>
+	/// <param name="width">The width component.</param>
+	/// <param name="height">The height component.</param>
+	bound RDimension2D(numeric width, numeric height)
+	{
+		this->p_Width = width;
+		this->p_Height = height;
+		this->m_Dimension = irr::core::dimension2df(width, height);
+	}
+
+	/// <summary>
+	/// The width value of the dimension.
+	/// </summary>	
+	bound property numeric Width
+	{
+		get: call GetWidth;
+		set: call SetWidth;
+	}
+
+	/// <summary>
+	/// The height value of the dimension.
+	/// </summary>
+	bound property numeric Height
+	{
+		get: call GetHeight;
+		set: call SetHeight;
+	}
+
+	/// <summary>
+	/// Gets the area of this dimension.
+	/// </summary>	
+	bound numeric GetArea()
+	{
+		return this->m_Dimension.getArea();
+	}
+
+	/// <summary>
+	/// Returns a dimension interpolated between this dimension and the target dimension by
+	/// the specified amount.
+	/// </summary>
+	/// <param name="dimension">The target dimension.</param>
+	/// <param name="d">The amount to interpolate by.  This value should lie between 0 and 1.</param>
+	bound RDimension2D GetInterpolated(RDimension2D dimension, numeric d)
+	{
+		RDimension2D * ret = Bindings<RDimension2D>::CreateNew(L);
+		irr::core::dimension2df irrdim = this->m_Dimension.getInterpolated(dimension->GetObject(), d);
+		ret->SetObject(irrdim);
+
+		return ret;
+	}
+
+	/// <summary>
+	/// Get the optimal size according to some properties. 
+	/// </summary>
+	/// <param name="power2">Require the width and height to be a power of 2.</param>
+	/// <param name="square">Makes the width equal to the height.</param>
+	/// <param name="larger">Choose whether the result is larger or smaller than the current dimension.</param>
+	/// <param name="max">Maximum texture size.  If value > 0 size is clamped to maxValue.</param>
+	bound RDimension2D GetOptimalSize(bool power2, bool square, bool larger, numeric max)
+	{
+		RDimension2D * ret = Bindings<RDimension2D>::CreateNew(L);
+		irr::core::dimension2df irrdim = this->m_Dimension.getOptimalSize(power2, square, larger, max);
+		ret->SetObject(irrdim);
+
+		return ret;
+	}
+
+	/// <summary>
+	/// Sets both the width and height values.
+	/// </summary>
+	/// <param name="width">The width value.</param>
+	/// <param name="height">The height value.</param>
+	bound void Set(numeric width, numeric height)
+	{
+		this->m_Dimension.set(width, height);
+		return;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Irrlicht object to associate with this RVector2D instance.</param>
+	unbound public void SetObject(irr::core::dimension2df obj)
+	{
+		this->m_Dimension = obj;
+	}
+
+	/// <summary>
+	/// Sets the high-precision width and height values.
+	/// </summary>
+	unbound public void SetHighPrecisionWidthHeight(double width, double height)
+	{
+		this->m_Dimension.Width = width;
+		this->m_Dimension.Height = height;
+		this->p_Width = width;
+		this->p_Height = height;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::core::dimension2df GetObject()
+	{
+		return this->m_Dimension;
+	}
+
+	// Property handlers
+	unbound void SetWidth(numeric value)
+	{
+		this->p_Width = value;
+		this->m_Dimension.Width = value;
+
+		return;
+	}
+
+	unbound numeric GetWidth()
+	{
+		if ((float)this->p_Width == this->m_Dimension.Width)
+			return this->p_Width;
+
+		return this->m_Dimension.Width;
+	}
+
+	unbound void SetHeight(numeric value)
+	{
+		this->p_Height = value;
+		this->m_Dimension.Height = value;
+
+		return;
+	}
+
+	unbound numeric GetHeight()
+	{
+		if ((float)this->p_Height == this->m_Dimension.Height)
+			return this->p_Height;
+
+		return this->m_Dimension.Height;
+	}
+}

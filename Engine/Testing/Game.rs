@@ -45,6 +45,7 @@ Player = {
 		Right = false,
 		Up = false
 	},
+	Collected = 0,
 	
 	BindKeys = function(device)
 		device:Bind(Events.Left, Player.OnLeft);
@@ -70,6 +71,32 @@ Player = {
 	HandleStep = function()
 		-- Get a rectangle that represents our position.
 		rect = Engine.Collections.Rectangle(Player.X, Player.Y, Player.X + Player.Width, Player.Y + Player.Height);
+		
+		-- Handle collecting coins.
+		tlcoin = Coins.AtPosition(Player.X, Player.Y)
+		trcoin = Coins.AtPosition(Player.X + 32, Player.Y)
+		blcoin = Coins.AtPosition(Player.X, Player.Y + 32)
+		brcoin = Coins.AtPosition(Player.X + 32, Player.Y + 32)
+		if (tlcoin ~= nil) then
+			Coins[tlcoin] = nil
+			Player.Collected = Player.Collected + 1
+			print("You now have " .. Player.Collected .. " coins!");
+		end
+		if (trcoin ~= nil) then
+			Coins[trcoin] = nil
+			Player.Collected = Player.Collected + 1
+			print("You now have " .. Player.Collected .. " coins!");
+		end
+		if (blcoin ~= nil) then
+			Coins[blcoin] = nil
+			Player.Collected = Player.Collected + 1
+			print("You now have " .. Player.Collected .. " coins!");
+		end
+		if (brcoin ~= nil) then
+			Coins[brcoin] = nil
+			Player.Collected = Player.Collected + 1
+			print("You now have " .. Player.Collected .. " coins!");
+		end
 		
 		-- Handle left-right movement.
 		if (Player.Movement["Left"]) then
@@ -183,9 +210,46 @@ Solids = {
 	end
 }
 
+-- A table which manages all of the coin objects.
+Coins = {
+	Generate = function()
+		-- Generate a coin.
+		Coins[#Coins + 1] = {128, 128}
+	end,
+	
+	Render = function(driver)
+		-- Render the solids.
+		for k, v in pairs(Coins) do
+			if (type(v) == "table") then
+				-- Coordinate pair.
+				device.VideoDriver:Draw2DPolygon(
+					Engine.Collections.Vector2D(v[1] + 16, v[2] + 16),
+					12,
+					18,
+					Engine.Collections.Color(255, 127, 127, 0)
+					);
+			end
+		end
+	end,
+	
+	AtPosition = function(x, y)
+		-- Check to see if there's a coin at the specified position.
+		for k, v in pairs(Coins) do
+			if (type(v) == "table") then
+				if (x >= v[1] - 12 and x <= v[1] + 12 and y >= v[2] - 12 and y <= v[2] + 12) then
+					return k
+				end
+			end
+		end
+		
+		return nil
+	end
+}
+
 -- Generate the border of solids.
 Solids.GenerateBorder();
 Solids.GenerateStairs();
+Coins.Generate();
 
 -- Run the game.
 function Run()
@@ -204,6 +268,7 @@ function Run()
 		-- Render our game.
 		device.VideoDriver:Draw2DRectangle(Engine.Collections.Rectangle(Player.X, Player.Y, Player.X + Player.Width, Player.Y + Player.Height), Player.Color);
 		Solids.Render(device.VideoDriver);
+		Coins.Render(device.VideoDriver);
 		
         device.VideoDriver:EndScene();
     end

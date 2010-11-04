@@ -1,8 +1,11 @@
 #import Engine.InternalConstructorOnlyException
+#include "ITexture.h"
 
 class Engine.Unmanaged.Video.RVideoTexture
    as Engine.Unmanaged.Video.Texture
 {
+	private irr::video::ITexture * m_Texture;
+
 	/// <summary>
 	/// A non-public constructor for initalizing an RVideoTexture instance.
 	/// </summary>
@@ -15,5 +18,23 @@ class Engine.Unmanaged.Video.RVideoTexture
 			throw new Engine::InternalConstructorOnlyException();
 		}
 		// TODO: Implement.
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Irrlicht object to associate with this RTriangle3D instance.</param>
+	unbound public void SetObject(irr::video::ITexture * obj)
+	{
+		this->m_Texture = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::video::ITexture * GetObject()
+	{
+		return this->m_Texture;
 	}
 }

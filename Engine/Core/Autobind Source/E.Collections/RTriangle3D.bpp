@@ -1,6 +1,28 @@
+#include "triangle3d.h"
+
 class Engine.Collections.RTriangle3D
 {
+	private irr::core::triangle3df m_Triangle;
+
 	bound RTriangle3D()
 	{
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param>The new Irrlicht object to associate with this RTriangle3D instance.</param>
+	unbound public void SetObject(irr::core::triangle3df obj)
+	{
+		this->m_Triangle = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>A copy of the Irrlicht object that this instance holds.</returns>
+	unbound public irr::core::triangle3df GetObject()
+	{
+		return this->m_Triangle;
 	}
 }
