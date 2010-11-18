@@ -95,6 +95,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="xcopy /Q /Y &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\IDE.NET\Roket3D\Deployment\Engines\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;xcopy /Q /Y &quot;$(OutDir)\*.dll&quot; &quot;$(SolutionDir)\IDE.NET\Roket3D\Deployment\Engines\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -177,6 +178,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="xcopy /Q /Y &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\IDE.NET\Roket3D\Deployment\Engines\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;xcopy /Q /Y &quot;$(OutDir)\*.dll&quot; &quot;$(SolutionDir)\IDE.NET\Roket3D\Deployment\Engines\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

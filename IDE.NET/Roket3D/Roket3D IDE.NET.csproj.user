@@ -19,6 +19,6 @@
     <StartWorkingDirectory>Y:\Projects\Roket3D\IDE.NET\Roket3D\Deployment</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <StartWorkingDirectory>C:\Server Storage\Roket3D\IDE.NET\Roket3D\Deployment\</StartWorkingDirectory>
+    <StartWorkingDirectory>Y:\Projects\Roket3D\IDE.NET\Roket3D\Deployment</StartWorkingDirectory>
   </PropertyGroup>
 </Project>

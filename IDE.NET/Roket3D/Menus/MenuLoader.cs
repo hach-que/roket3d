@@ -11,20 +11,22 @@ namespace Roket3D.Menus
 {
     class MenuLoader
     {
-        XmlReader Reader;
+        private XmlReader m_Reader;
         public MenuStrip MainMenu = new MenuStrip();
         public ToolStrip ToolBar = new ToolStrip();
 
-        private ToolStripMenuItem activeMenuItem = null;
-        private ToolStripDropDownButton activeDropDown = null;
-        private ToolStripComboBox activeComboBox = null;
-        private ToolStripItem activeItem = null;
-        private Assembly currentAssembly = Assembly.GetExecutingAssembly();
-        private MainForm window = null;
+        private ToolStripMenuItem c_ActiveMenuItem = null;
+        private ToolStripDropDownButton c_ActiveDropDown = null;
+        private ToolStripComboBox c_ActiveComboBox = null;
+        private ToolStripItem c_ActiveItem = null;
+        private Assembly m_CurrentAssembly = Assembly.GetExecutingAssembly();
+        private Menus.Manager m_Manager;
 
-        public MenuLoader(MainForm window)
+        public MenuLoader(Menus.Manager manager)
         {
-            if (!File.Exists(Program.ROOT_PATH + "\\Menus.xml"))
+            this.m_Manager = manager;
+
+            if (!File.Exists(Program.Manager.Settings["RootPath"] + "\\Menus.xml"))
             {
                 throw new Exception("Menu information file was not found.  Please make sure Menus.xml exists in the application directory.");
             }
@@ -34,17 +36,14 @@ namespace Roket3D.Menus
             //this.MainMenu.Renderer = new MenuRenderer();
             //this.ToolBar.Renderer = new ToolBarRenderer();
 
-            this.window = window;
-            this.window.MenuActions.Clear();
-
-            this.Reader = XmlReader.Create(new StreamReader(Program.ROOT_PATH + "\\Menus.xml"));
+            this.m_Reader = XmlReader.Create(new StreamReader(Program.Manager.Settings["RootPath"] + "\\Menus.xml"));
             
-            while (this.Reader.Read())
+            while (this.m_Reader.Read())
             {
-                switch (this.Reader.NodeType)
+                switch (this.m_Reader.NodeType)
                 {
                     case XmlNodeType.Element:
-                        switch (this.Reader.Name)
+                        switch (this.m_Reader.Name)
                         {
                             case "menus":
                             case "menubar":
@@ -52,118 +51,121 @@ namespace Roket3D.Menus
                                 // Nothing to do here.
                                 break;
                             case "menuitem":
-                                this.AddMenuItem(this.Reader.GetAttribute("text"));
+                                this.AddMenuItem(this.m_Reader.GetAttribute("text"));
 
-                                this.AddReflectionHandler(this.Reader.GetAttribute("action"));
+                                this.AddReflectionHandler(this.m_Reader.GetAttribute("action"));
 
-                                if (this.Reader.IsEmptyElement)
+                                if (this.m_Reader.IsEmptyElement)
                                 {
                                     // Automatically end element.
-                                    activeItem = activeItem.OwnerItem;
+                                    c_ActiveItem = c_ActiveItem.OwnerItem;
                                     this.UpdateObjects();
 
                                     // The parent had some menu items, therefore we
                                     // enable it regardless of whether it has an action.
-                                    if (activeItem != null && !(activeItem is ToolStripDropDownButton))
-                                        activeItem.Enabled = true;
+                                    if (c_ActiveItem != null && !(c_ActiveItem is ToolStripDropDownButton))
+                                        c_ActiveItem.Enabled = true;
                                 }
                                 break;
                             case "menuseperator":
                                 this.AddMenuItem("-");
 
-                                if (this.Reader.IsEmptyElement)
+                                if (this.m_Reader.IsEmptyElement)
                                 {
                                     // Automatically end element.
-                                    activeItem = activeItem.OwnerItem;
+                                    c_ActiveItem = c_ActiveItem.OwnerItem;
                                     this.UpdateObjects();
 
                                     // The parent had some menu items, therefore we
                                     // enable it regardless of whether it has an action.
-                                    if (activeItem != null && !(activeItem is ToolStripDropDownButton))
-                                        activeItem.Enabled = true;
+                                    if (c_ActiveItem != null && !(c_ActiveItem is ToolStripDropDownButton))
+                                        c_ActiveItem.Enabled = true;
                                 }
                                 break;
                             case "toolitem":
-                                if (this.Reader.GetAttribute("type") == "dropdown")
-                                    this.AddToolDropDown(this.Reader.GetAttribute("text"));
+                                if (this.m_Reader.GetAttribute("type") == "dropdown")
+                                    this.AddToolDropDown(this.m_Reader.GetAttribute("text"));
                                 else
-                                    this.AddToolItem(this.Reader.GetAttribute("text"));
+                                    this.AddToolItem(this.m_Reader.GetAttribute("text"));
 
-                                this.AddReflectionHandler(this.Reader.GetAttribute("action"));
+                                this.AddReflectionHandler(this.m_Reader.GetAttribute("action"));
 
-                                if (this.Reader.IsEmptyElement)
+                                if (this.m_Reader.IsEmptyElement)
                                 {
                                     // Automatically end element.
-                                    activeItem = activeItem.OwnerItem;
+                                    c_ActiveItem = c_ActiveItem.OwnerItem;
                                     this.UpdateObjects();
 
                                     // The parent had some menu items, therefore we
                                     // enable it regardless of whether it has an action.
-                                    if (activeItem != null)
-                                        activeItem.Enabled = true;
+                                    if (c_ActiveItem != null)
+                                        c_ActiveItem.Enabled = true;
                                 }
                                 break;
                             case "toolseperator":
                                 this.AddToolItem("-");
 
-                                if (this.Reader.IsEmptyElement)
+                                if (this.m_Reader.IsEmptyElement)
                                 {
                                     // Automatically end element.
-                                    activeItem = activeItem.OwnerItem;
+                                    c_ActiveItem = c_ActiveItem.OwnerItem;
                                     this.UpdateObjects();
 
                                     // The parent had some menu items, therefore we
                                     // enable it regardless of whether it has an action.
-                                    if (activeItem != null)
-                                        activeItem.Enabled = true;
+                                    if (c_ActiveItem != null)
+                                        c_ActiveItem.Enabled = true;
                                 }
                                 break;
                             case "toolcombo":
-                                this.AddToolComboBox(this.Reader.GetAttribute("text"));
+                                this.AddToolComboBox(this.m_Reader.GetAttribute("text"));
 
-                                if (this.Reader.GetAttribute("editable") == "false")
-                                    activeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+                                if (this.m_Reader.GetAttribute("editable") == "false")
+                                    c_ActiveComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
 
                                 //this.AddReflectionHandler(this.Reader.GetAttribute("action"));
 
-                                if (this.Reader.IsEmptyElement)
+                                if (this.m_Reader.IsEmptyElement)
                                 {
                                     // Automatically end element.
-                                    activeItem = activeItem.OwnerItem;
+                                    c_ActiveItem = c_ActiveItem.OwnerItem;
                                     this.UpdateObjects();
 
                                     // The parent had some menu items, therefore we
                                     // enable it regardless of whether it has an action.
-                                    if (activeItem != null)
-                                        activeItem.Enabled = true;
+                                    if (c_ActiveItem != null)
+                                        c_ActiveItem.Enabled = true;
                                 }
                                 break;
                             case "text":
                                 this.UpdateObjects();
 
-                                if (activeComboBox != null)
+                                if (c_ActiveComboBox != null)
                                 {
-                                    Type enumType = currentAssembly.GetType(this.Reader.GetAttribute("type"));
-                                    Array enumValues = Enum.GetValues(enumType);
-                                    foreach (object o in enumValues)
+                                    Type enumType = m_CurrentAssembly.GetType(this.m_Reader.GetAttribute("type"));
+                                    if (enumType != null)
                                     {
-                                        String name = Enum.GetName(enumType, o);
-                                        if (this.Reader.GetAttribute("type") + "." + name == this.Reader.GetAttribute("value"))
+                                        Array enumValues = Enum.GetValues(enumType);
+                                        foreach (object o in enumValues)
                                         {
-                                            // HACK: This could probably be organised better by
-                                            //       using classes instead of enums, but oh well..
-                                            switch (this.Reader.GetAttribute("type"))
+                                            String name = Enum.GetName(enumType, o);
+                                            if (this.m_Reader.GetAttribute("type") + "." + name == this.m_Reader.GetAttribute("value"))
                                             {
-                                                case "Roket3D.Compilation.BuildMode":
-                                                    activeComboBox.Items.Add(
-                                                        new EnumWrapper(
-                                                            (Int32)o,
-                                                            new List<String>() { "Debug", "Release" })
-                                                        );
-                                                    break;
-                                                default:
-                                                    activeComboBox.Items.Add(o);
-                                                    break;
+                                                // HACK: This could probably be organised better by
+                                                //       using classes instead of enums, but oh well..
+                                                switch (this.m_Reader.GetAttribute("type"))
+                                                {
+                                                    case "Roket3D.Compilation.BuildMode":
+                                                        c_ActiveComboBox.Items.Add(
+                                                            new EnumWrapper(
+                                                                (Int32)o,
+                                                                new List<String>() { "Debug", "Release" })
+                                                            );
+                                                        break;
+                                                    default:
+                                                        c_ActiveComboBox.Items.Add(o);
+                                                        break;
+                                                }
                                             }
                                         }
                                     }
@@ -172,7 +174,7 @@ namespace Roket3D.Menus
                         }
                         break;
                     case XmlNodeType.EndElement:
-                        switch (this.Reader.Name)
+                        switch (this.m_Reader.Name)
                         {
                             case "menus":
                             case "menubar":
@@ -180,97 +182,97 @@ namespace Roket3D.Menus
                                 // Nothing to do here.
                                 break;
                             case "menuitem":
-                                activeItem = activeItem.OwnerItem;
+                                c_ActiveItem = c_ActiveItem.OwnerItem;
                                 this.UpdateObjects();
 
                                 // The parent had some menu items, therefore we
                                 // enable it regardless of whether it has an action.
-                                if (activeItem != null && !(activeItem is ToolStripDropDownButton))
-                                    activeItem.Enabled = true;
+                                if (c_ActiveItem != null && !(c_ActiveItem is ToolStripDropDownButton))
+                                    c_ActiveItem.Enabled = true;
                                 break;
                             case "toolitem":
-                                activeItem = activeItem.OwnerItem;
+                                c_ActiveItem = c_ActiveItem.OwnerItem;
                                 this.UpdateObjects();
 
                                 // The parent had some menu items, therefore we
                                 // enable it regardless of whether it has an action.
-                                if (activeItem != null)
-                                    activeItem.Enabled = true;
+                                if (c_ActiveItem != null)
+                                    c_ActiveItem.Enabled = true;
                                 break;
                             case "menuseperator":
-                                activeItem = activeItem.OwnerItem;
+                                c_ActiveItem = c_ActiveItem.OwnerItem;
                                 this.UpdateObjects();
 
                                 // The parent had some menu items, therefore we
                                 // enable it regardless of whether it has an action.
-                                if (activeItem != null && !(activeItem is ToolStripDropDownButton))
-                                    activeItem.Enabled = true;
+                                if (c_ActiveItem != null && !(c_ActiveItem is ToolStripDropDownButton))
+                                    c_ActiveItem.Enabled = true;
                                 break;
                             case "toolseperator":
-                                activeItem = activeItem.OwnerItem;
+                                c_ActiveItem = c_ActiveItem.OwnerItem;
                                 this.UpdateObjects();
 
                                 // The parent had some menu items, therefore we
                                 // enable it regardless of whether it has an action.
-                                if (activeItem != null)
-                                    activeItem.Enabled = true;
+                                if (c_ActiveItem != null)
+                                    c_ActiveItem.Enabled = true;
                                 break;
                         }
                         break;
                 }
             }
 
-            this.Reader.Close();
+            this.m_Reader.Close();
         }
 
         private void AddMenuItem(String text)
         {
-            if (activeItem == null)
+            if (c_ActiveItem == null)
             {
-                activeItem = this.MainMenu.Items.Add(text);
+                c_ActiveItem = this.MainMenu.Items.Add(text);
                 this.UpdateObjects();
             }
-            else if (activeDropDown != null)
+            else if (c_ActiveDropDown != null)
             {
                 // Add to the drop down.
-                activeItem = activeDropDown.DropDownItems.Add(text);
+                c_ActiveItem = c_ActiveDropDown.DropDownItems.Add(text);
                 this.UpdateObjects();
             }
             else
             {
-                activeItem = activeMenuItem.DropDownItems.Add(text);
+                c_ActiveItem = c_ActiveMenuItem.DropDownItems.Add(text);
                 this.UpdateObjects();
             }
         }
 
         private void AddToolItem(String text)
         {
-            activeItem = this.ToolBar.Items.Add(text);
-            activeItem.TextImageRelation = TextImageRelation.ImageAboveText;
-            activeItem.Text = "";
-            activeItem.Image = Properties.Resources.tools_unknown;
+            c_ActiveItem = this.ToolBar.Items.Add(text);
+            c_ActiveItem.TextImageRelation = TextImageRelation.ImageAboveText;
+            c_ActiveItem.Text = "";
+            c_ActiveItem.Image = Properties.Resources.tools_unknown;
             this.UpdateObjects();
         }
 
         private void AddToolComboBox(String text)
         {
-            activeComboBox = new ToolStripComboBox(text);
-            activeItem = activeComboBox;
-            activeItem.TextImageRelation = TextImageRelation.ImageAboveText;
-            activeItem.Text = "";
-            activeItem.Image = null;
-            this.ToolBar.Items.Add(activeComboBox);
+            c_ActiveComboBox = new ToolStripComboBox(text);
+            c_ActiveItem = c_ActiveComboBox;
+            c_ActiveItem.TextImageRelation = TextImageRelation.ImageAboveText;
+            c_ActiveItem.Text = "";
+            c_ActiveItem.Image = null;
+            this.ToolBar.Items.Add(c_ActiveComboBox);
             this.UpdateObjects();
         }
 
         private void AddToolDropDown(String text)
         {
-            activeDropDown = new ToolStripDropDownButton(text);
-            activeItem = activeDropDown;
-            activeItem.TextImageRelation = TextImageRelation.ImageAboveText;
-            activeItem.Text = "";
-            activeItem.Image = Properties.Resources.tools_unknown;
-            this.ToolBar.Items.Add(activeDropDown);
+            c_ActiveDropDown = new ToolStripDropDownButton(text);
+            c_ActiveItem = c_ActiveDropDown;
+            c_ActiveItem.TextImageRelation = TextImageRelation.ImageAboveText;
+            c_ActiveItem.Text = "";
+            c_ActiveItem.Image = Properties.Resources.tools_unknown;
+            this.ToolBar.Items.Add(c_ActiveDropDown);
             this.UpdateObjects();
         }
 
@@ -280,62 +282,67 @@ namespace Roket3D.Menus
             {
                 // Use reflection to associate the menu item with a defined
                 // action.
-                Type actionType = currentAssembly.GetType("Roket3D.Menus.Definitions." + actionName);
+                Type actionType = m_CurrentAssembly.GetType("Roket3D.Menus.Definitions." + actionName);
                 if (actionType != null)
                 {
                     object actionObj = Activator.CreateInstance(actionType);
                     if (actionObj is Action)
                     {
                         Action action = (Action)actionObj;
-                        String resString = action.GetText();
+                        String resString = action.Text;
                         if (resString != null)
                         {
-                            if (activeMenuItem != null)
-                                activeItem.Text = resString;
+                            if (c_ActiveMenuItem != null)
+                                c_ActiveItem.Text = resString;
                             else
-                                activeItem.ToolTipText = resString;
+                                c_ActiveItem.ToolTipText = resString;
                         }
-                        action.MenuItem = activeMenuItem;
-                        action.Item = activeItem;
-                        activeItem.Click += new EventHandler(delegate(object sender, EventArgs e)
+                        action.SetItem(this.c_ActiveMenuItem, this.c_ActiveItem);
+                        if (this.c_ActiveMenuItem != null)
+                        {
+                            this.c_ActiveMenuItem.ShortcutKeys = action.Shortcut;
+                            this.c_ActiveMenuItem.ShowShortcutKeys = true;
+                        }
+                        c_ActiveItem.Click += new EventHandler(delegate(object sender, EventArgs e)
                             {
                                 action.OnActivate();
                             }
                         );
-                        this.window.MenuActions.Add(action);
+                        this.m_Manager.AssociateEvents(action);
+                        //this.m_Manager.Parent.IDEWindow.MenuActions.Add(action);
 
                         action.OnSetSettings();
-                        activeItem.Enabled = action.Enabled;
+                        c_ActiveItem.Enabled = action.Enabled;
                         if (action.ItemIcon != null)
-                            activeItem.Image = action.ItemIcon;
+                            c_ActiveItem.Image = action.ItemIcon;
                         action.OnLoad();
                     }
                     else
-                        activeItem.Enabled = false;
+                        c_ActiveItem.Enabled = false;
                 }
                 else
-                    activeItem.Enabled = false;
+                    c_ActiveItem.Enabled = false;
             }
             else
-                activeItem.Enabled = false;
+                c_ActiveItem.Enabled = false;
         }
 
         private void UpdateObjects()
         {
-            if (activeItem is ToolStripMenuItem)
-                activeMenuItem = (ToolStripMenuItem)activeItem;
+            if (c_ActiveItem is ToolStripMenuItem)
+                c_ActiveMenuItem = (ToolStripMenuItem)c_ActiveItem;
             else
-                activeMenuItem = null;
+                c_ActiveMenuItem = null;
             
-            if (activeItem is ToolStripDropDownButton)
-                activeDropDown = (ToolStripDropDownButton)activeItem;
+            if (c_ActiveItem is ToolStripDropDownButton)
+                c_ActiveDropDown = (ToolStripDropDownButton)c_ActiveItem;
             else
-                activeDropDown = null;
+                c_ActiveDropDown = null;
 
-            if (activeItem is ToolStripComboBox)
-                activeComboBox = (ToolStripComboBox)activeItem;
+            if (c_ActiveItem is ToolStripComboBox)
+                c_ActiveComboBox = (ToolStripComboBox)c_ActiveItem;
             else
-                activeComboBox = null;                     
+                c_ActiveComboBox = null;                     
         }
     }
 }

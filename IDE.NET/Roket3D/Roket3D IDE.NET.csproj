@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5BA158DE-7E14-42BD-8ABE-2FFBCD1CC268}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -73,6 +73,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -86,74 +87,54 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compilation\ProjectBuilder.cs" />
-    <Compile Include="Content Editors\CodeScriptForm.cs">
+    <Compile Include="Build\CodeGenerator.cs" />
+    <Compile Include="Build\Manager.cs" />
+    <Compile Include="Cache\Manager.cs" />
+    <Compile Include="Cache\Scintilla.cs" />
+    <Compile Include="Collections\Node.cs" />
+    <Compile Include="Collections\Tree.cs" />
+    <Compile Include="Debug\Breakpoint.cs" />
+    <Compile Include="Debug\Manager.cs" />
+    <Compile Include="Dependencies\FloatingWindow.cs" />
+    <Compile Include="Designers\Code\Designer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Content Editors\CodeScriptForm.Designer.cs">
-      <DependentUpon>CodeScriptForm.cs</DependentUpon>
+    <Compile Include="Designers\Code\Designer.Designer.cs">
+      <DependentUpon>Designer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Content Editors\Content Classes\Model.cs" />
-    <Compile Include="Content Editors\ControlColorSelector.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Content Editors\ControlColorSelector.Designer.cs">
-      <DependentUpon>ControlColorSelector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Content Editors\ControlColorSelectorDropDown.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Content Editors\ControlColorSelectorDropDown.Designer.cs">
-      <DependentUpon>ControlColorSelectorDropDown.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Content Editors\ControlImageEditor.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Content Editors\ControlImageEditor.Designer.cs">
-      <DependentUpon>ControlImageEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Content Editors\DesignerImageForm.cs">
+    <Compile Include="Designers\Code\SyntaxChecker.cs" />
+    <Compile Include="Designers\Designer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Content Editors\DesignerImageForm.Designer.cs">
-      <DependentUpon>DesignerImageForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Content Editors\DesignerModelForm.cs">
+    <Compile Include="Designers\Manager.cs" />
+    <Compile Include="IDE.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Content Editors\DesignerModelForm.Designer.cs">
-      <DependentUpon>DesignerModelForm.cs</DependentUpon>
+    <Compile Include="IDE.Designer.cs">
+      <DependentUpon>IDE.cs</DependentUpon>
     </Compile>
-    <Compile Include="Content Editors\EditorBase.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Content Editors\SpecialStartForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Content Editors\SpecialStartForm.Designer.cs">
-      <DependentUpon>SpecialStartForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FloatingWindow\FloatingWindow.cs" />
-    <Compile Include="Lua Debugging\Autocomplete.cs" />
-    <Compile Include="Lua Debugging\LuaConsole.cs" />
-    <Compile Include="Lua Debugging\SyntaxChecker.cs" />
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Management\Creation.cs" />
+    <Compile Include="Management\File.cs" />
+    <Compile Include="Management\Folder.cs" />
     <Compile Include="Management\NewImageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Management\NewImageForm.Designer.cs">
+    <Compile Include="Management\NewImageForm.designer.cs">
       <DependentUpon>NewImageForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Management\NewSolutionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Management\NewSolutionForm.designer.cs">
+      <DependentUpon>NewSolutionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\Project.cs" />
+    <Compile Include="Management\Solution.cs" />
+    <Compile Include="Manager.cs" />
     <Compile Include="Menus\Action.cs" />
     <Compile Include="Menus\Definitions\Actions.cs" />
     <Compile Include="Menus\Definitions\Project.cs" />
     <Compile Include="Menus\Definitions\Solution.cs" />
+    <Compile Include="Menus\Manager.cs" />
     <Compile Include="Menus\ToolBarRenderer.cs" />
     <Compile Include="Menus\Definitions\Tools.cs" />
     <Compile Include="Menus\Definitions\Views.cs" />
@@ -161,73 +142,43 @@
     <Compile Include="Menus\EnumWrapper.cs" />
     <Compile Include="Menus\MenuLoader.cs" />
     <Compile Include="Menus\MenuRenderer.cs" />
-    <Compile Include="Management\NewSolutionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Management\NewSolutionForm.Designer.cs">
-      <DependentUpon>NewSolutionForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Content Editors\CodeScriptForm.resx">
-      <DependentUpon>CodeScriptForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Designers\Code\Designer.resx">
+      <DependentUpon>Designer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content Editors\ControlColorSelector.resx">
-      <DependentUpon>ControlColorSelector.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Designers\Start\Designer.resx">
+      <DependentUpon>Designer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content Editors\ControlColorSelectorDropDown.resx">
-      <DependentUpon>ControlColorSelectorDropDown.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content Editors\ControlImageEditor.resx">
-      <DependentUpon>ControlImageEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content Editors\DesignerImageForm.resx">
-      <DependentUpon>DesignerImageForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content Editors\DesignerModelForm.resx">
-      <DependentUpon>DesignerModelForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content Editors\SpecialStartForm.resx">
-      <DependentUpon>SpecialStartForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="IDE.resx">
+      <DependentUpon>IDE.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Management\NewImageForm.resx">
       <DependentUpon>NewImageForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Management\NewSolutionForm.resx">
       <DependentUpon>NewSolutionForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tool Windows\ToolConsole.resx">
-      <DependentUpon>ToolConsole.cs</DependentUpon>
+    <EmbeddedResource Include="Tools\ConsoleTool.resx">
+      <DependentUpon>ConsoleTool.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tool Windows\ToolErrorList.resx">
-      <DependentUpon>ToolErrorList.cs</DependentUpon>
+    <EmbeddedResource Include="Tools\ErrorListTool.resx">
+      <DependentUpon>ErrorListTool.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tool Windows\ToolBuildOutput.resx">
-      <DependentUpon>ToolBuildOutput.cs</DependentUpon>
+    <EmbeddedResource Include="Tools\OutputTool.resx">
+      <DependentUpon>OutputTool.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tool Windows\ToolSolutionExplorer.resx">
-      <DependentUpon>ToolSolutionExplorer.cs</DependentUpon>
+    <EmbeddedResource Include="Tools\SolutionExplorerTool.resx">
+      <DependentUpon>SolutionExplorerTool.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -245,32 +196,31 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SplashScreen.cs" />
-    <Compile Include="Tool Windows\ToolConsole.cs">
+    <Compile Include="Tools\ConsoleTool.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tool Windows\ToolConsole.Designer.cs">
-      <DependentUpon>ToolConsole.cs</DependentUpon>
+    <Compile Include="Tools\ConsoleTool.Designer.cs">
+      <DependentUpon>ConsoleTool.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tool Windows\ToolErrorList.cs">
+    <Compile Include="Tools\ErrorListTool.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tool Windows\ToolErrorList.Designer.cs">
-      <DependentUpon>ToolErrorList.cs</DependentUpon>
+    <Compile Include="Tools\ErrorListTool.Designer.cs">
+      <DependentUpon>ErrorListTool.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tool Windows\ToolBuildOutput.cs">
+    <Compile Include="Tools\OutputTool.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tool Windows\ToolBuildOutput.Designer.cs">
-      <DependentUpon>ToolBuildOutput.cs</DependentUpon>
+    <Compile Include="Tools\OutputTool.Designer.cs">
+      <DependentUpon>OutputTool.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tool Windows\ToolSolutionExplorer.cs">
+    <Compile Include="Tools\Manager.cs" />
+    <Compile Include="Tools\SolutionExplorerTool.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tool Windows\ToolSolutionExplorer.Designer.cs">
-      <DependentUpon>ToolSolutionExplorer.cs</DependentUpon>
+    <Compile Include="Tools\SolutionExplorerTool.Designer.cs">
+      <DependentUpon>SolutionExplorerTool.cs</DependentUpon>
     </Compile>
-    <Compile Include="Management\Project.cs" />
-    <Compile Include="Management\Solution.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\table_multiple.png" />
@@ -492,6 +442,20 @@
     <None Include="Resources\page_white_cplusplus.png" />
     <None Include="Resources\arrow_redo.png" />
     <None Include="Resources\application_double.png" />
+    <Compile Include="Cache\DefinedClasses.cs" />
+    <Compile Include="Designers\Code\CodeEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Designers\Start\Designer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Designers\Start\Designer.Designer.cs">
+      <DependentUpon>Designer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\Associations.cs" />
+    <Compile Include="Tools\Tool.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -524,6 +488,10 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Designers\Image\" />
+    <Folder Include="Designers\Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

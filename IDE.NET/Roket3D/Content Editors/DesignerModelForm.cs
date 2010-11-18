@@ -16,7 +16,7 @@ namespace Roket3D.ContentEditors
 {
     public partial class DesignerModelForm : EditorBase
     {
-        public MainForm MainForm;
+        public IDE MainForm;
         private IrrlichtDevice p_Device;
         private Rect p_Dimensions;
         private Boolean p_DeviceClosed = false;
@@ -33,7 +33,7 @@ namespace Roket3D.ContentEditors
         private Point p_OriginalPoint = new Point(0, 0);
         private String m_Texture = "";
 
-        public DesignerModelForm(MainForm main)
+        public DesignerModelForm(IDE main)
         {
             InitializeComponent();
             this.MainForm = main;

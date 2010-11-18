@@ -9,7 +9,9 @@ namespace Roket3D.Menus.Definitions.Views
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.view_code;
+            this.Text = "Code";
             this.Enabled = false;
         }
 
@@ -20,18 +22,15 @@ namespace Roket3D.Menus.Definitions.Views
                 this.MenuItem.Checked = true;
             }
         }
-
-        public override String GetText()
-        {
-            return "Code";
-        }
     }
 
     class Designer : Action
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.view_designer;
+            this.Text = "Designer";
             this.Enabled = false;
         }
 
@@ -41,11 +40,6 @@ namespace Roket3D.Menus.Definitions.Views
             {
                 this.MenuItem.Checked = false;
             }
-        }
-
-        public override String GetText()
-        {
-            return "Designer";
         }
     }
 }
