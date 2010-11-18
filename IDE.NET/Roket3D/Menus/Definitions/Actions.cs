@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Roket3D.Designers;
 
 namespace Roket3D.Menus.Definitions.Actions
 {
@@ -10,13 +11,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.actions_open;
+            this.Text = "Open File";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Open File";
         }
     }
 
@@ -24,25 +22,23 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Close";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Close";
         }
     }
 
     class Save : Action
     {
-        private Roket3D.ContentEditors.EditorBase m_CurrentEditor = null;
-        private string m_Text = "Save";
+        private Designer m_CurrentEditor = null;
 
         public override void OnSetSettings()
         {
             this.ItemIcon = Properties.Resources.actions_save;
+            this.Text = "Save";
             this.Enabled = false;
+            this.Shortcut = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S;
         }
 
         public override void OnActivate()
@@ -50,12 +46,7 @@ namespace Roket3D.Menus.Definitions.Actions
             m_CurrentEditor.OnSaveFile();
         }
 
-        public override String GetText()
-        {
-            return this.m_Text;
-        }
-
-        public override void OnTabChanged(Roket3D.ContentEditors.EditorBase editor)
+        public override void OnTabChanged(Designer editor)
         {
             if (editor == null || editor.File == null)
             {
@@ -63,21 +54,21 @@ namespace Roket3D.Menus.Definitions.Actions
                 return;
             }
             
-            this.Enabled = editor.Properties.CanSave;
+            this.Enabled = editor.CanSave;
             this.m_CurrentEditor = editor;
-            this.m_Text = "Save " + editor.File.Name;
-            this.Item.Enabled = this.Enabled;
+            this.Text = "Save " + editor.File.FileInfo.Name;
         }
     }
 
     class SaveAs : Action
     {
-        private Roket3D.ContentEditors.EditorBase m_CurrentEditor = null;
-        private string m_Text = "Save as...";
+        private Designer m_CurrentEditor = null;
 
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Save as...";
             this.Enabled = false;
         }
 
@@ -86,12 +77,7 @@ namespace Roket3D.Menus.Definitions.Actions
             // TODO: Implement Save As...
         }
 
-        public override String GetText()
-        {
-            return this.m_Text;
-        }
-
-        public override void OnTabChanged(Roket3D.ContentEditors.EditorBase editor)
+        public override void OnTabChanged(Designer editor)
         {
             if (editor == null || editor.File == null)
             {
@@ -99,9 +85,9 @@ namespace Roket3D.Menus.Definitions.Actions
                 return;
             }
 
-            this.Enabled = false; // The activate event isn't implement yet..
+            this.Enabled = editor.CanSave;
             this.m_CurrentEditor = editor;
-            this.m_Text = "Save " + editor.File.Name + " as...";
+            this.Text = "Save " + editor.File.FileInfo.Name + " as...";
             this.Item.Enabled = this.Enabled;
         }
     }
@@ -110,13 +96,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.actions_save_all;
+            this.Text = "Save All";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Save All";
         }
     }
 
@@ -125,27 +108,23 @@ namespace Roket3D.Menus.Definitions.Actions
         public override void OnSetSettings()
         {
             this.ItemIcon = null;
+            this.Text = "Exit";
             this.Enabled = true;
         }
 
         public override void OnActivate()
         {
             // TODO: Add proper unsaved changes checking etc.. here
-            Program.MainWindow.Close();
+            Program.Manager.Stop();
         }
 
-        public override String GetText()
-        {
-            return "Exit";
-        }
-
-        public override void OnSolutionOpen()
+        public override void OnSolutionLoaded()
         {
             this.Enabled = true;
             this.Item.Enabled = this.Enabled;
         }
 
-        public override void OnSolutionClose()
+        public override void OnSolutionUnloaded()
         {
             this.Enabled = true;
             this.Item.Enabled = this.Enabled;
@@ -156,13 +135,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.actions_undo;
+            this.Text = "Undo";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Undo";
         }
     }
 
@@ -170,13 +146,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.actions_redo;
+            this.Text = "Redo";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Redo";
         }
     }
 
@@ -184,13 +157,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.actions_cut;
+            this.Text = "Cut";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Cut";
         }
     }
 
@@ -198,13 +168,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.actions_copy;
+            this.Text = "Copy";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Copy";
         }
     }
 
@@ -212,13 +179,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.actions_paste;
+            this.Text = "Paste";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Paste";
         }
     }
 
@@ -226,13 +190,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Delete";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Delete";
         }
     }
 
@@ -240,13 +201,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Select All";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Select All";
         }
     }
 
@@ -254,13 +212,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Quick Find";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Quick Find";
         }
     }
 
@@ -268,13 +223,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Quick Replace";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Quick Replace";
         }
     }
 
@@ -282,13 +234,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.actions_find_in_files;
+            this.Text = "Find in Files";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Find in Files";
         }
     }
 
@@ -296,13 +245,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Replace in Files";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Replace in Files";
         }
     }
 
@@ -310,13 +256,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Go To...";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Go To...";
         }
     }
 
@@ -324,13 +267,10 @@ namespace Roket3D.Menus.Definitions.Actions
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Preferences";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Preferences";
         }
     }
 }

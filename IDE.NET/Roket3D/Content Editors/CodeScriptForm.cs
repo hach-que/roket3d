@@ -53,12 +53,12 @@ namespace Roket3D.ContentEditors
     {
         private static Font m_FontSetting = new Font("Courier New", 9.0f);
         private Int32 m_StyleCount = 0;
-        public MainForm MainForm;
+        public IDE MainForm;
         private bool m_CanSyntaxCheck = true;
         private List<LuaError> m_Errors = new List<LuaError>();
         private ToolTip m_ToolTip = new ToolTip();
 
-        public CodeScriptForm(MainForm main, ScintillaNet.Scintilla editor)
+        public CodeScriptForm(IDE main, ScintillaNet.Scintilla editor)
         {
             InitializeComponent();
             this.MainForm = main;

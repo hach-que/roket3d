@@ -9,13 +9,10 @@ namespace Roket3D.Menus.Definitions.Tools
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.tools_build_output;
+            this.Text = "Build Output";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Build Output";
         }
     }
 
@@ -23,13 +20,10 @@ namespace Roket3D.Menus.Definitions.Tools
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.tools_error_list;
+            this.Text = "Error List";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Error List";
         }
     }
 
@@ -37,13 +31,10 @@ namespace Roket3D.Menus.Definitions.Tools
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.tools_properties_window;
+            this.Text = "Properties Window";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Properties Window";
         }
     }
 
@@ -51,13 +42,10 @@ namespace Roket3D.Menus.Definitions.Tools
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.tools_solution_explorer;
+            this.Text = "Solution Explorer";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Solution Explorer";
         }
     }
 
@@ -65,13 +53,10 @@ namespace Roket3D.Menus.Definitions.Tools
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.tools_console;
+            this.Text = "Lua Console";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Lua Console";
         }
     }
 
@@ -79,13 +64,10 @@ namespace Roket3D.Menus.Definitions.Tools
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.tools_object_browser;
+            this.Text = "Object Browser";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Object Browser";
         }
     }
 
@@ -93,13 +75,10 @@ namespace Roket3D.Menus.Definitions.Tools
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.tools_toolbox;
+            this.Text = "Toolbox";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Toolbox";
         }
     }
 
@@ -107,13 +86,10 @@ namespace Roket3D.Menus.Definitions.Tools
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.tools_addons_manage;
+            this.Text = "Manage Tools";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Manage Tools";
         }
     }
 }

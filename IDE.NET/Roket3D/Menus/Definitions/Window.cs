@@ -9,13 +9,10 @@ namespace Roket3D.Menus.Definitions.Window
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "New Window";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "New Window";
         }
     }
 
@@ -23,13 +20,10 @@ namespace Roket3D.Menus.Definitions.Window
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.windows_split;
+            this.Text = "Split";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Split";
         }
     }
 
@@ -37,13 +31,10 @@ namespace Roket3D.Menus.Definitions.Window
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Floating";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Floating";
         }
     }
 
@@ -51,13 +42,10 @@ namespace Roket3D.Menus.Definitions.Window
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Dockable";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Dockable";
         }
     }
 
@@ -65,13 +53,10 @@ namespace Roket3D.Menus.Definitions.Window
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Tabbed Document";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Tabbed Document";
         }
     }
 
@@ -79,13 +64,10 @@ namespace Roket3D.Menus.Definitions.Window
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.windows_autohide;
+            this.Text = "Auto Hide";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Auto Hide";
         }
     }
 
@@ -93,13 +75,10 @@ namespace Roket3D.Menus.Definitions.Window
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Hide";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Hide";
         }
     }
 
@@ -107,13 +86,10 @@ namespace Roket3D.Menus.Definitions.Window
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Auto Hide All";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Auto Hide All";
         }
     }
 
@@ -121,13 +97,10 @@ namespace Roket3D.Menus.Definitions.Window
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.windows_tile_horizontal;
+            this.Text = "New Horizontal Tab Group";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "New Horizontal Tab Group";
         }
     }
 
@@ -135,13 +108,10 @@ namespace Roket3D.Menus.Definitions.Window
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.windows_tile_vertical;
+            this.Text = "New Vertical Tab Group";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "New Vertical Tab Group";
         }
     }
 
@@ -149,13 +119,10 @@ namespace Roket3D.Menus.Definitions.Window
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Close All Documents";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Close All Documents";
         }
     }
 
@@ -163,13 +130,10 @@ namespace Roket3D.Menus.Definitions.Window
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Reset Window Layout";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Reset Window Layout";
         }
     }
 
@@ -177,13 +141,10 @@ namespace Roket3D.Menus.Definitions.Window
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Windows...";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Windows...";
         }
     }
 }

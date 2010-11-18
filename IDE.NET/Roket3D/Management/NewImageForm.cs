@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Roket3D.Management
+namespace Roket3D.ManagementOld
 {
     public partial class NewImageForm : Form
     {

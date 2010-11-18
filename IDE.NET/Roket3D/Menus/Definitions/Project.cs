@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Roket3D.Xml;
 using Roket3D.Management;
 
 namespace Roket3D.Menus.Definitions.Project
@@ -11,13 +10,10 @@ namespace Roket3D.Menus.Definitions.Project
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.project_create;
+            this.Text = "New Project";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "New Project";
         }
     }
 
@@ -25,13 +21,10 @@ namespace Roket3D.Menus.Definitions.Project
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.file_add;
+            this.Text = "Add New Item";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Add New Item";
         }
     }
 
@@ -41,24 +34,21 @@ namespace Roket3D.Menus.Definitions.Project
 
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.model_add;
+            this.Text = "Add Model...";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Add Model...";
         }
 
         public override void OnActivate()
         {
-            FileTreeNode ftn = new FileTreeNode();
+            /*FileTreeNode ftn = new FileTreeNode();
             if (TargetDirectory != null)
                 ftn.fileRef = TargetDirectory;
             else
                 // TODO: Make this check the solution based on what file is currently has focus.
                 ftn.projectRef = Program.MainWindow.CurrentSolution.Projects[0];
-            Creation.AddModel(ftn);
+            Creation.AddModel(ftn);*/
         }
     }
 
@@ -68,24 +58,21 @@ namespace Roket3D.Menus.Definitions.Project
 
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.image_add;
+            this.Text = "Add Image...";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Add Image...";
         }
 
         public override void OnActivate()
         {
-            FileTreeNode ftn = new FileTreeNode();
+            /*FileTreeNode ftn = new FileTreeNode();
             if (TargetDirectory != null)
                 ftn.fileRef = TargetDirectory;
             else
                 // TODO: Make this check the solution based on what file is currently has focus.
                 ftn.projectRef = Program.MainWindow.CurrentSolution.Projects[0];
-            Creation.AddImage(ftn);
+            Creation.AddImage(ftn);*/
         }
     }
 
@@ -95,13 +82,10 @@ namespace Roket3D.Menus.Definitions.Project
 
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.audio_add;
+            this.Text = "Add Audio...";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Add Audio...";
         }
     }
 
@@ -111,13 +95,10 @@ namespace Roket3D.Menus.Definitions.Project
 
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null; //Properties.Resources.template_add;
+            this.Text = "Add Template...";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Add Template...";
         }
     }
 
@@ -127,13 +108,10 @@ namespace Roket3D.Menus.Definitions.Project
 
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.area_add;
+            this.Text = "Add Area...";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Add Image...";
         }
     }
 
@@ -143,13 +121,10 @@ namespace Roket3D.Menus.Definitions.Project
 
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.world_add;
+            this.Text = "Add World...";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Add World...";
         }
     }
 
@@ -159,13 +134,10 @@ namespace Roket3D.Menus.Definitions.Project
 
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.class_add;
+            this.Text = "Add Class...";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Add Class...";
         }
     }
 
@@ -175,13 +147,10 @@ namespace Roket3D.Menus.Definitions.Project
 
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.script_add;
+            this.Text = "Add Script...";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Add Script...";
         }
     }
 
@@ -191,13 +160,10 @@ namespace Roket3D.Menus.Definitions.Project
 
         public override void OnSetSettings()
         {
-            this.ItemIcon = null; // Properties.Resources.script_add;
+            this.Implemented = false;
+            this.ItemIcon = null;
+            this.Text = "Add New Item";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Add New Item";
         }
     }
 
@@ -207,13 +173,10 @@ namespace Roket3D.Menus.Definitions.Project
 
         public override void OnSetSettings()
         {
-            this.ItemIcon = null; // Properties.Resources.script_add;
+            this.Implemented = false;
+            this.ItemIcon = null;
+            this.Text = "Add Existing Item";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Add Existing Item";
         }
     }
 
@@ -221,13 +184,10 @@ namespace Roket3D.Menus.Definitions.Project
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.reference;
+            this.Text = "Add Reference...";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Add Reference...";
         }
     }
 
@@ -235,13 +195,10 @@ namespace Roket3D.Menus.Definitions.Project
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Project Properties";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Project Properties";
         }
     }
 
@@ -249,13 +206,18 @@ namespace Roket3D.Menus.Definitions.Project
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Build MyProject";
             this.Enabled = false;
         }
 
-        public override String GetText()
+        public override void OnActivate()
         {
-            return "Build MyProject";
+            /*
+            Compilation.ProjectBuilder pb = new Compilation.ProjectBuilder(Program.MainWindow.CurrentSolution.Projects[0], Program.MainWindow.BuildOutput);
+            pb.Build(Roket3D.Compilation.BuildMode.DEBUG);
+            */
         }
     }
 
@@ -263,13 +225,10 @@ namespace Roket3D.Menus.Definitions.Project
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Rebuild MyProject";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Rebuild MyProject";
         }
     }
 
@@ -277,13 +236,10 @@ namespace Roket3D.Menus.Definitions.Project
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = null;
+            this.Text = "Clean MyProject";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Clean MyProject";
         }
     }
 }

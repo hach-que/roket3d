@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
+using Roket3D.Tools;
 
 namespace Roket3D.Menus.Definitions.Solution
 {
@@ -12,21 +13,17 @@ namespace Roket3D.Menus.Definitions.Solution
         public override void OnSetSettings()
         {
             this.ItemIcon = Properties.Resources.solution_create;
+            this.Text = "New Solution";
             this.Enabled = true;
         }
 
-        public override String GetText()
-        {
-            return "New Solution";
-        }
-
-        public override void OnSolutionOpen()
+        public override void OnSolutionLoaded()
         {
             this.Enabled = false;
             this.Item.Enabled = this.Enabled;
         }
 
-        public override void OnSolutionClose()
+        public override void OnSolutionUnloaded()
         {
             this.Enabled = true;
             this.Item.Enabled = this.Enabled;
@@ -47,21 +44,17 @@ namespace Roket3D.Menus.Definitions.Solution
         public override void OnSetSettings()
         {
             this.ItemIcon = Properties.Resources.solution_open;
+            this.Text = "Open Solution";
             this.Enabled = true;
         }
 
-        public override String GetText()
-        {
-            return "Open Solution";
-        }
-
-        public override void OnSolutionOpen()
+        public override void OnSolutionLoaded()
         {
             this.Enabled = false;
             this.Item.Enabled = this.Enabled;
         }
 
-        public override void OnSolutionClose()
+        public override void OnSolutionUnloaded()
         {
             this.Enabled = true;
             this.Item.Enabled = this.Enabled;
@@ -77,9 +70,7 @@ namespace Roket3D.Menus.Definitions.Solution
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 String filename = ofd.FileName;
-                Program.MainWindow.CurrentSolution.Load(filename);
-                Program.MainWindow.SolutionExplorer.ReloadTree();
-                Program.MainWindow.SendMenuEvent(MenuEvent.SOLUTION_OPEN);
+                Program.Manager.LoadSolution(filename);
             }
         }
     }
@@ -89,20 +80,14 @@ namespace Roket3D.Menus.Definitions.Solution
         public override void OnSetSettings()
         {
             this.ItemIcon = null;
+            this.Text = "Close Solution";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Close Solution";
         }
 
         public override void OnActivate()
         {
             // TODO: Implement asking whether to save changes here.
-            Program.MainWindow.CurrentSolution.Unload();
-            Program.MainWindow.SolutionExplorer.ReloadTree();
-            Program.MainWindow.SendMenuEvent(MenuEvent.SOLUTION_CLOSE);
+            Program.Manager.UnloadSolution();
         }
     }
 
@@ -111,12 +96,13 @@ namespace Roket3D.Menus.Definitions.Solution
         public override void OnSetSettings()
         {
             this.ItemIcon = Properties.Resources.debug;
+            this.Text = "Start with Debugging";
             this.Enabled = false;
         }
 
-        public override String GetText()
+        public override void OnActivate()
         {
-            return "Start with Debugging";
+            Program.Manager.DebugManager.Run(Program.Manager.ActiveProject);
         }
     }
 
@@ -124,13 +110,10 @@ namespace Roket3D.Menus.Definitions.Solution
     {
         public override void OnSetSettings()
         {
+            this.Implemented = false;
             this.ItemIcon = Properties.Resources.debug_without;
+            this.Text = "Start without Debugging";
             this.Enabled = false;
-        }
-
-        public override String GetText()
-        {
-            return "Start without Debugging";
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Roket3D.Management
+﻿namespace Roket3D.ManagementOld
 {
     partial class NewImageForm
     {

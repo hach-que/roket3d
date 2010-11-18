@@ -3,33 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Roket3D.Xml;
-using Roket3D.ToolWindows;
 using System.Threading;
 using System.IO;
 
 namespace Roket3D.Compilation
 {
-    enum BuildMode
+    public enum BuildMode
     {
         DEBUG,
         RELEASE
     }
 
-    class ProjectBuilder
+    public class ProjectBuilder
     {
         Project m_Project;
         ToolBuildOutput m_Output;
 
-        ProjectBuilder(Project Project, ToolBuildOutput Output)
+        public ProjectBuilder(Project Project, ToolBuildOutput Output)
         {
             this.m_Project = Project;
             this.m_Output = Output;
         }
 
-        void Build(BuildMode Mode)
+        public void Build(BuildMode Mode)
         {
             Thread bThread = new Thread(new ParameterizedThreadStart(this.BuildThread));
-            bThread.Start();
+            bThread.Start((Object)Mode);
         }
 
         void BuildThread(object RawMode)

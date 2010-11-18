@@ -16,11 +16,11 @@ namespace Roket3D
         {
             InitializeComponent();
 
-            if (!Directory.Exists(Program.DEFAULT_PROJECT_AREA))
+            if (!Directory.Exists(Program.Manager.Settings["DefaultProjectArea"]))
             {
-                Directory.CreateDirectory(Program.DEFAULT_PROJECT_AREA);
+                Directory.CreateDirectory(Program.Manager.Settings["DefaultProjectArea"]);
             }
-            c_SolutionLocationTextBox.Text = Program.DEFAULT_PROJECT_AREA;
+            c_SolutionLocationTextBox.Text = Program.Manager.Settings["DefaultProjectArea"];
             UpdateProjectFolderLabel();
         }
 
@@ -90,11 +90,11 @@ namespace Roket3D
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.Description = "Select a location to store the project or solution folder in.";
-            if (!Directory.Exists(Program.DEFAULT_PROJECT_AREA))
+            if (!Directory.Exists(Program.Manager.Settings["DefaultProjectArea"]))
             {
-                Directory.CreateDirectory(Program.DEFAULT_PROJECT_AREA);
+                Directory.CreateDirectory(Program.Manager.Settings["DefaultProjectArea"]);
             }
-            fbd.SelectedPath = Program.DEFAULT_PROJECT_AREA;
+            fbd.SelectedPath = Program.Manager.Settings["DefaultProjectArea"];
             fbd.ShowNewFolderButton = true;
             if (fbd.ShowDialog() == DialogResult.OK)
             {
@@ -208,10 +208,10 @@ namespace Roket3D
             }
 
             // TODO: Make use of the selected project type.
-            Program.MainWindow.CurrentSolution.New(solutionName, solutionFileLocation, solutionFolderLocation,
-                                                    projectName, projectFileLocation, projectFolderLocation);
-            Program.MainWindow.SolutionExplorer.ReloadTree();
-            Program.MainWindow.SendMenuEvent(MenuEvent.SOLUTION_OPEN);
+            //Program.Manager.ActiveSolution.New(solutionName, solutionFileLocation, solutionFolderLocation,
+            //                                        projectName, projectFileLocation, projectFolderLocation);
+            //Program.Manager.ActiveSolution.SolutionExplorer.ReloadTree();
+            //Program.Manager.ActiveSolution.SendMenuEvent(MenuEvent.SOLUTION_OPEN);
 
             // TODO: Capture exceptions and report false if the creation failed.
             return true;
