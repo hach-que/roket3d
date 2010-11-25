@@ -8,7 +8,7 @@ namespace Roket3D.Cache
     public class Manager
     {
         private Scintilla p_ScintillaCache = null;
-        private DefinedClasses p_DefinedClasses = null;
+        private AutoComplete p_AutoComplete = null;
 
         /// <summary>
         /// Creates a new cache manager, which manages all of the sub-caches.
@@ -16,7 +16,8 @@ namespace Roket3D.Cache
         public Manager()
         {
             this.p_ScintillaCache = new Scintilla();
-            this.p_DefinedClasses = new DefinedClasses();
+            this.p_AutoComplete = new AutoComplete();
+            this.p_AutoComplete.Import();
         }
 
         /// <summary>
@@ -31,13 +32,13 @@ namespace Roket3D.Cache
         }
 
         /// <summary>
-        /// The defined classes caching object.
+        /// The autocomplete caching object.
         /// </summary>
-        public DefinedClasses DefinedClasses
+        public AutoComplete AutoComplete
         {
             get
             {
-                return this.p_DefinedClasses;
+                return this.p_AutoComplete;
             }
         }
     }

@@ -321,11 +321,11 @@ template<class T>
 						// metamethods onto the metatable.
 						lua_pushstring(L, "__call");
 						lua_pushcfunction(L, &Bindings<T>::Constructor);
-						lua_settable(L, mt);
+						lua_rawset(L, mt);
 
 						lua_pushstring(L, "__type");
-						lua_pushcfunction(L, &Bindings<T>::Type);
-						lua_settable(L, mt);
+						Bindings<T>::Type(L);
+						lua_rawset(L, mt);
 
 						// Set the table's metatable to mt.  The table
 						// is directly below the metatable.  lua_setmetatable
@@ -351,11 +351,11 @@ template<class T>
 
 						lua_pushstring(L, "__call");
 						lua_pushcfunction(L, &Bindings<T>::Constructor);
-						lua_settable(L, mt);
+						lua_rawset(L, mt);
 
 						lua_pushstring(L, "__type");
-						lua_pushcfunction(L, &Bindings<T>::Type);
-						lua_settable(L, mt);
+						Bindings<T>::Type(L);
+						lua_rawset(L, mt);
 
 						lua_setmetatable(L, mt - 1);
 
@@ -375,19 +375,22 @@ template<class T>
 			// __setindex and __type.
 			lua_pushstring(L, "__gc");
 			lua_pushcfunction(L, &Bindings<T>::GCObj);
-			lua_settable(L, metatable);
-
-			lua_pushstring(L, "__type");
-			lua_pushcfunction(L, &Bindings<T>::Type);
-			lua_settable(L, metatable);
+			lua_rawset(L, metatable);
 
 			lua_pushstring(L, "__index");
 			lua_pushcfunction(L, &Bindings<T>::PropertyGetter);
-			lua_settable(L, metatable);
+			lua_rawset(L, metatable);
 
 			lua_pushstring(L, "__setindex");
 			lua_pushcfunction(L, &Bindings<T>::PropertySetter);
-			lua_settable(L, metatable);
+			lua_rawset(L, metatable);
+
+			// Execute our ::Type function to get our type
+			// data onto the top of the stack, then push it
+			// into __type.
+			lua_pushstring(L, "__type");
+			Bindings<T>::Type(L);
+			lua_rawset(L, metatable);
 		}
 
 		// The callback function used when a class is constructed.
@@ -611,6 +614,37 @@ template<class T>
 			return 1;
 		}
 
+		// Caches the object that is going to be returned in the C
+		// registry using luaL_ref.  Assumes that CreateNew or an
+		// equivilant function has been called and the object to
+		// be cached is on top of the stack.
+		static int CacheStore(lua_State * L)
+		{
+			int ref = luaL_ref(L, LUA_REGISTRYINDEX);
+			lua_rawgeti(L, LUA_REGISTRYINDEX, ref);
+			return ref;
+		}
+
+		// Retrieves the specific object from the cache.
+		static T* CacheRetrieve(lua_State * L, int ref)
+		{
+			lua_rawgeti(L, LUA_REGISTRYINDEX, ref);
+			
+			lua_pushnumber(L, 0);
+			lua_rawget(L, 1);
+
+			T** obj = static_cast<T**>(lua_touserdata(L, -1));
+			lua_pop(L, 1);
+
+			return (*obj);
+		}
+
+		// Removes the specified object from the cache.
+		static void CacheDelete(lua_State * L, int ref)
+		{
+			luaL_unref(L, LUA_REGISTRYINDEX, ref);
+		}
+
 	private:
 		// Sets up the object at the specified 'newtable' index and the
 		// userdata associated with it at the specified 'userdata' index.
@@ -625,7 +659,7 @@ template<class T>
 
 			// Set the first index of the table to the userdata
 			// (we pushed the index above using lua_pushnumber).
-			lua_settable(L, newtable);
+			lua_rawset(L, newtable);
 
 			// Now we set the same metatable that we associated with
 			// the userdata as the metatable on the new object we
@@ -642,7 +676,7 @@ template<class T>
 			{
 				lua_pushstring(L, T::Properties[i].Name);
 				lua_pushnumber(L, i);
-				lua_settable(L, -3);
+				lua_rawset(L, -3);
 			}
 			lua_pop(L, 1);
 
@@ -656,7 +690,7 @@ template<class T>
 				lua_pushstring(L, T::Functions[i].Name);
 				lua_pushnumber(L, i);
 				lua_pushcclosure(L, &Bindings<T>::FunctionDispatch, 1);
-				lua_settable(L, newtable);
+				lua_rawset(L, newtable);
 			}
 		}
 
@@ -741,12 +775,12 @@ template<class T>
 			// Push the class name as the first index.  The
 			// index of the table is -3 as it's directly below
 			// the key-value pair.  Note that the key and the
-			// value are pushed off the stack by lua_settable,
+			// value are pushed off the stack by lua_rawset,
 			// so after this process the table is on top of
 			// the stack.
 			lua_pushnumber(L, 1);
 			lua_pushstring(L, T::ClassName);
-			lua_settable(L, -3);
+			lua_rawset(L, -3);
 
 			// We use the std::string class to parse the
 			// T::Inherits variable.  T::Inherits not only
@@ -827,7 +861,7 @@ template<class T>
 						topop = 0;
 						lua_pushnumber(L, 2);
 						lua_getglobal(L, elms[i].c_str());
-						lua_settable(L, -3);
+						lua_rawset(L, -3);
 					}
 					else
 					{
@@ -843,7 +877,7 @@ template<class T>
 						lua_pushvalue(L, -topop - 1);
 						lua_pushnumber(L, 2);
 						lua_getfield(L, -3, elms[i].c_str());
-						lua_settable(L, -3);
+						lua_rawset(L, -3);
 
 						// Now clean up the stack by popping the table
 						// off the top of the stack (remember it's still
@@ -879,8 +913,8 @@ template<class T>
 		lua_newtable(L);
 		int metatable = lua_gettop(L);
 		lua_pushstring(L, "__type");
-		lua_pushcfunction(L, &Bindings<T>::Type);
-		lua_settable(L, metatable);
+		Bindings<T>::Type(L);
+		lua_rawset(L, metatable);
 		lua_setmetatable(L, tbl);
 		return 1;
 	}
@@ -1094,7 +1128,7 @@ template<class T>
 
 		// Set the first index of the table to the userdata
 		// (we pushed the index above using lua_pushnumber).
-		lua_settable(L, newtable);
+		lua_rawset(L, newtable);
 
 		// Now we set the same metatable that we associated with
 		// the userdata as the metatable on the new object we
@@ -1111,7 +1145,7 @@ template<class T>
 		{
 			lua_pushstring(L, err->Properties[i].Name);
 			lua_pushnumber(L, i);
-			lua_settable(L, -3);
+			lua_rawset(L, -3);
 		}
 		lua_pop(L, 1);
 
@@ -1125,7 +1159,7 @@ template<class T>
 			lua_pushstring(L, err->Functions[i].Name);
 			lua_pushnumber(L, i);
 			lua_pushcclosure(L, err->Dispatcher, 1);
-			lua_settable(L, newtable);
+			lua_rawset(L, newtable);
 		}
 
 		// Now we push the top of the stack via lua_error.

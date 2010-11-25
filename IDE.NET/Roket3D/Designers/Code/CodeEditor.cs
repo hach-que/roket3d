@@ -78,12 +78,16 @@ namespace Roket3D.Designers.Code
             this.NativeInterface.SetFoldMarginColour(true, 0xE6F0FA); // Color.FromArgb(250, 240, 230)
             this.NativeInterface.SetFoldMarginHiColour(true, 0xF5F5F5); // Color.FromArgb(245, 245, 245)
 
+            // Configure autocomplete.
+            this.CharAdded += new EventHandler<ScintillaNet.CharAddedEventArgs>(CodeEditor_CharAdded);
+            this.AutoComplete.RegisterImages(Program.Manager.CacheManager.AutoComplete.Images, Color.Black);
+
             // Configure keywords.
             this.SetKeywords(LexerKeywordGroupConstants.LUA_KEYWORDS,
                 "and break catch do else elseif " +
                 "end false for function if " +
                 "in is local nil not or repeat return " +
-                "then true try until when while");
+                "then throw true try until when while");
             this.SetKeywords(LexerKeywordGroupConstants.LUA_BASIC_FUNCTIONS,
                 "_G _VERSION assert collectgarbage " +
                 "dofile error getfenv getmetatable " +
@@ -92,7 +96,10 @@ namespace Roket3D.Designers.Code
                 "rawequal rawget rawset require " +
                 "select setfenv setmetatable tonumber " +
                 "tostring type unpack xpcall");
-            this.SetKeywords(LexerKeywordGroupConstants.LUA_STRING_TABLE_MATH,
+            /*this.SetKeywords(LexerKeywordGroupConstants.LUA_BASIC_CLASSES,
+                "Math String Table Coroutine Debug IO OS Package");
+
+            
                 // Math
                 "math.abs math.acos math.asin math.atan math.atan2 math.ceil math.cos " +
                 "math.cosh math.deg math.exp math.floor math.fmod math.frexp math.huge " +
@@ -104,7 +111,8 @@ namespace Roket3D.Designers.Code
                 "string.gmatch string.gsub string.len string.lower string.match " +
                 "string.rep string.reverse string.sub string.upper " +
                 // Table
-                "table.concat table.insert table.maxn table.remove table.sort");
+                "table.concat table.insert table.maxn table.remove table.sort"
+                     
             this.SetKeywords(LexerKeywordGroupConstants.LUA_COROUTINE_IO_SYSTEM,
                 // Coroutine
                 "coroutine.create coroutine.resume coroutine.running coroutine.status " +
@@ -123,10 +131,11 @@ namespace Roket3D.Designers.Code
                 // Package
                 "package.cpath package.loaded package.loaders package.loadlib " +
                 "package.path package.preload package.seeall");
-            this.SetKeywords(LexerKeywordGroupConstants.LUA_ROKET3D_CLASSES, string.Join(" ", this.m_Manager.DefinedClasses.AllClasses.ToArray()));
+            
+            this.SetKeywords(LexerKeywordGroupConstants.LUA_ROKET3D_CLASSES, string.Join(" ", this.m_Manager.DefinedClasses.AllClasses.ToArray()));*/
             this.SetKeywords(LexerKeywordGroupConstants.LUA_CLASS_KEYWORDS,
                 // Class keywords
-                "name inherits description lastmodified author");
+                "class inherits context visibility private protected public static instance");
 
             // Configure colours.
             this.SetStyle(LexerStyleConstants.SCE_LUA_DEFAULT, Color.FromArgb(0, 0, 0));
@@ -141,8 +150,8 @@ namespace Roket3D.Designers.Code
             this.SetStyle(LexerStyleConstants.SCE_LUA_IDENTIFIER, Color.FromArgb(0, 0, 0));
             this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_KEYWORDS, Color.FromArgb(21, 24, 255));
             this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_BASIC_FUNCTIONS, Color.FromArgb(21, 24, 255));
-            this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_STRING_TABLE_MATH, Color.FromArgb(21, 24, 255));
-            this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_COROUTINE_IO_SYSTEM, Color.FromArgb(21, 24, 255));
+            this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_BASIC_CLASSES, Color.FromArgb(0, 128, 128));
+            this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_UNUSED, Color.FromArgb(21, 24, 255));
             this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_ROKET3D_CLASSES, Color.FromArgb(0, 128, 128));
             this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_CLASS_KEYWORDS, Color.FromArgb(160, 0, 200));
 
@@ -200,6 +209,73 @@ namespace Roket3D.Designers.Code
 
             this.c_SyntaxLimitTimer.Stop();
             this.c_SyntaxLimitTimer.Start();
+
+            // Check the last character.
+            int lci = this.Selection.Start - 1;
+            if (lci < 0 || lci > this.Text.Length) return;
+            char lc = this.Text[lci];
+            if ((lc == ' ' || lc == '\t' || lc == '\n' || lc == '\r') && e.KeyCode == Keys.ShiftKey)
+            {
+                // Show global list.
+                this.AutoComplete.List = Program.Manager.CacheManager.AutoComplete.GetList(null);
+                this.AutoComplete.Show();
+            }
+        }
+
+        void CodeEditor_CharAdded(object sender, ScintillaNet.CharAddedEventArgs e)
+        {
+            // Check the last non-space character.
+            int lci = this.Selection.Start - 1;
+            char lc = this.Text[lci];
+            while (lci >= 0)
+            {
+                if (lc != ' ' && lc != '\t' && lc != '\n' && lc != '\r')
+                    break;
+
+                lc = this.Text[lci];
+                lci -= 1;
+            }
+            if (lci == -1)
+                return;
+
+            if (lc == '.')
+            {
+                // Scan back.
+                int b = this.Selection.Start - 1;
+                int i = b;
+                string s = "";
+                char c = this.Text[i];
+                while (true)
+                {
+                    if (c != '.' && (c < 'a' || c > 'z') && (c < 'A' || c > 'Z'))
+                        break;
+
+                    if (c == '.')
+                    {
+                        s = s.Insert(0, this.Text.Substring(i + 1, b - i));
+                        b = i;
+                    }
+
+                    i -= 1;
+                    c = this.Text[i];
+                }
+                if (b != i)
+                {
+                    s = s.Insert(0, this.Text.Substring(i + 1, b - i));
+                    b = i;
+                }
+                if (s.Length == 0) return;
+                else s = s.Substring(0, s.Length - 1);
+
+                this.AutoComplete.List = Program.Manager.CacheManager.AutoComplete.GetList(s);
+                this.AutoComplete.Show();
+            }
+            else if (lc == '=')
+            {
+                // Show global list.
+                this.AutoComplete.List = Program.Manager.CacheManager.AutoComplete.GetList(null);
+                this.AutoComplete.Show();
+            }
         }
 
         /// <summary>
@@ -229,8 +305,8 @@ namespace Roket3D.Designers.Code
         /// </summary>
         public void UpdateClassKeywords()
         {
-            this.SetKeywords(LexerKeywordGroupConstants.LUA_ROKET3D_CLASSES,
-                string.Join(" ", this.m_Manager.DefinedClasses.AllClasses.ToArray()));
+            //this.SetKeywords(LexerKeywordGroupConstants.LUA_ROKET3D_CLASSES,
+            //    string.Join(" ", this.m_Manager.DefinedClasses.AllClasses.ToArray()));
         }
 
         /// <summary>

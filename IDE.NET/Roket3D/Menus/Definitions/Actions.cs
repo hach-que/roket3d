@@ -46,6 +46,10 @@ namespace Roket3D.Menus.Definitions.Actions
             m_CurrentEditor.OnSaveFile();
         }
 
+        public override void OnSolutionLoaded()
+        {
+        }
+
         public override void OnTabChanged(Designer editor)
         {
             if (editor == null || editor.File == null)

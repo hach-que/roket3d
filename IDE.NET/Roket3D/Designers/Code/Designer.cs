@@ -32,7 +32,9 @@ namespace Roket3D.Designers.Code
 
             this.c_CodeEditor = new CodeEditor(
                 manager.CacheManager,
-                (file.FileInfo.Extension.Substring(1) == "rks" || file.FileInfo.Extension.Substring(1) == "rs")
+                (file.FileInfo.Extension.Substring(1) == "lua" ||
+                 file.FileInfo.Extension.Substring(1) == "rks" ||
+                 file.FileInfo.Extension.Substring(1) == "rs")
                 );
             this.c_CodeEditor.DwellStart += new EventHandler<ScintillaNet.ScintillaMouseEventArgs>(c_CodeEditor_DwellStart);
             this.c_CodeEditor.DwellEnd += new EventHandler<ScintillaNet.ScintillaMouseEventArgs>(c_CodeEditor_DwellEnd);

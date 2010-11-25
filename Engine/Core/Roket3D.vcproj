@@ -2614,6 +2614,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Static Headers\Profiler.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Static Headers\Program.h"
 				>
 			</File>
@@ -2624,6 +2628,20 @@
 			<File
 				RelativePath=".\Static Headers\roket3d.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Static Headers\StackPoint.h"
@@ -2727,6 +2745,10 @@
 			</File>
 			<File
 				RelativePath=".\Static Source\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Static Source\Profiler.cpp"
 				>
 			</File>
 			<File

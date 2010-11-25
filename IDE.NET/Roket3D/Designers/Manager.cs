@@ -64,6 +64,11 @@ namespace Roket3D.Designers
                 }
             }
 
+            // Ensure that FileInfo property is valid (if it is not, then we
+            // are dealing with a non-file).
+            if (file.FileInfo == null)
+                return null;
+
             // Detect the type of designer to create by the file's extension.
             Type t = Associations.GetDesignerType(file.FileInfo.Extension.Substring(1));
             if (t == null)

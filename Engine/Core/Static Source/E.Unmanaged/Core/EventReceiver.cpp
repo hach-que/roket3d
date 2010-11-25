@@ -14,8 +14,22 @@ namespace Engine { namespace Unmanaged { namespace Core
 			this->m_PressedKeys[i] = false;
 	}
 
+    EventReceiver::~EventReceiver()
+    {
+		for (std::map<Engine::Unmanaged::Core::REvent *, function>::iterator i = this->m_Handlers.begin();
+				i != this->m_Handlers.end(); i++)
+		{
+			// Reduce the reference count of the event by one.
+			i->first->Drop();
+		}
+	}
+
 	bool EventReceiver::OnEvent(const irr::SEvent& event)
 	{
+		// Ignore any non-keyboard events for the time being.
+		if (event.EventType != irr::EET_KEY_INPUT_EVENT)
+			return false;
+
 		// Loop through all of the handlers and see if they
 		// want to accept the event.
 		bool handled = false;
@@ -39,6 +53,10 @@ namespace Engine { namespace Unmanaged { namespace Core
 
 	void EventReceiver::AddHandler(Engine::Unmanaged::Core::REvent * event, function handler)
 	{
+		// Make sure the event isn't freed.
+		event->Grab();
+
+		// Add the event.
 		this->m_Handlers.insert(this->m_Handlers.end(),
 			std::pair<Engine::Unmanaged::Core::REvent *, function>(event, handler)
 			);

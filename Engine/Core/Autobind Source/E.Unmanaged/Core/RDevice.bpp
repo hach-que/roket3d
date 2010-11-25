@@ -19,6 +19,9 @@ class Engine.Unmanaged.Core.RDevice
 	private bool m_IsDeviceSet;
 	// TODO: Add the physics manager declaration here.
 
+	// Cached references to the wrapping classes.
+	private int m_CachedVideoDriver;
+	private int m_CachedGUIEnvironment;
 
 	/// <summary>
 	/// The default constructor which takes a screen resolution argument
@@ -38,13 +41,15 @@ class Engine.Unmanaged.Core.RDevice
 		dimensions.Height = size->GetObject().Y;
 
 		this->m_IsDeviceSet = false;
+		this->m_CachedVideoDriver = -1;
+		this->m_CachedGUIEnvironment = -1;
 
 		// Create the event receiver.
 		this->m_Receiver = new Engine::Unmanaged::Core::EventReceiver(L);
 
 		// Attempt to initalize the device.
 		this->m_Device = irr::createDevice(
-			irr::video::EDT_SOFTWARE,
+			irr::video::EDT_OPENGL,
 			dimensions,
 			bits,
 			fullscreen,
@@ -72,6 +77,17 @@ class Engine.Unmanaged.Core.RDevice
 			this->m_IsDeviceSet = false;
 			this->m_Device->closeDevice();
 			this->m_Device = NULL;
+
+			if (this->m_CachedVideoDriver != NULL)
+			{
+				Bindings<Engine::Unmanaged::Video::RVideoDriver>::CacheDelete(L, this->m_CachedVideoDriver);
+				this->m_CachedVideoDriver = -1;
+			}
+			if (this->m_CachedGUIEnvironment != NULL)
+			{
+				Bindings<Engine::Unmanaged::GUI::RGUIEnvironment>::CacheDelete(L, this->m_CachedGUIEnvironment);
+				this->m_CachedGUIEnvironment = -1;
+			}
 
 			// Cleanup the event receiver.
 			delete this->m_Receiver;
@@ -139,18 +155,40 @@ class Engine.Unmanaged.Core.RDevice
 	// Property functions
 	unbound Engine::Unmanaged::GUI::RGUIEnvironment GetGUIEnvironment()
 	{
-		Engine::Unmanaged::GUI::RGUIEnvironment * env =
-			Bindings<Engine::Unmanaged::GUI::RGUIEnvironment>::CreateNew(L);
-		env->SetObject(this->m_Device->getGUIEnvironment());
-		return env;
+		if (this->m_CachedGUIEnvironment == -1)
+		{
+			Engine::Unmanaged::GUI::RGUIEnvironment * env =
+				Bindings<Engine::Unmanaged::GUI::RGUIEnvironment>::CreateNew(L);
+			env->SetObject(this->m_Device->getGUIEnvironment());
+
+			this->m_CachedGUIEnvironment =
+				Bindings<Engine::Unmanaged::GUI::RGUIEnvironment>::CacheStore(L);
+
+			return env;
+		}
+		else
+		{
+			return Bindings<Engine::Unmanaged::GUI::RGUIEnvironment>::CacheRetrieve(L, this->m_CachedGUIEnvironment);
+		}
 	}
 
 	unbound Engine::Unmanaged::Video::RVideoDriver GetVideoDriver()
 	{
-		Engine::Unmanaged::Video::RVideoDriver * drv =
-			Bindings<Engine::Unmanaged::Video::RVideoDriver>::CreateNew(L);
-		drv->SetObject(this->m_Device->getVideoDriver());
-		return drv;
+		if (this->m_CachedVideoDriver == -1)
+		{
+			Engine::Unmanaged::Video::RVideoDriver * drv =
+				Bindings<Engine::Unmanaged::Video::RVideoDriver>::CreateNew(L);
+			drv->SetObject(this->m_Device->getVideoDriver());
+
+			this->m_CachedVideoDriver =
+				Bindings<Engine::Unmanaged::Video::RVideoDriver>::CacheStore(L);
+
+			return drv;
+		}
+		else
+		{
+			return Bindings<Engine::Unmanaged::Video::RVideoDriver>::CacheRetrieve(L, this->m_CachedVideoDriver);
+		}
 	}
 
 	unbound bool GetRunning()
