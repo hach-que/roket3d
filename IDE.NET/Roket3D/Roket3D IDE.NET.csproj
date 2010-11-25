@@ -404,6 +404,8 @@
     <Content Include="Menus.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\box.png" />
+    <None Include="Resources\bricks.png" />
     <None Include="Resources\image_new.png" />
     <None Include="Resources\image_import.png" />
     <None Include="Resources\error.png" />
@@ -442,7 +444,7 @@
     <None Include="Resources\page_white_cplusplus.png" />
     <None Include="Resources\arrow_redo.png" />
     <None Include="Resources\application_double.png" />
-    <Compile Include="Cache\DefinedClasses.cs" />
+    <Compile Include="Cache\AutoComplete.cs" />
     <Compile Include="Designers\Code\CodeEditor.cs">
       <SubType>Component</SubType>
     </Compile>

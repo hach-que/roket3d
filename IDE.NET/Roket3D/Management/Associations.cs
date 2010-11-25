@@ -16,6 +16,7 @@ namespace Roket3D.Management
             {
                 { "rs", "Script", typeof(Designers.Code.Designer) },
                 { "rks", "Script", typeof(Designers.Code.Designer) },
+                { "lua", "Script", typeof(Designers.Code.Designer) },
                 { "xml", "XML", typeof(Designers.Code.Designer) },
                 { "rkw", "World", null },
                 { "rka", "Area", null },
@@ -45,7 +46,8 @@ namespace Roket3D.Management
                 { "cc", "CScript", null },
                 { "cpp", "CScript", null },
                 { "h", "CHeader", null },
-                { "hpp", "CHeader", null }
+                { "hpp", "CHeader", null },
+                { "folder", "Folder", null }
             };
 
         private static Bitmap m_ReprImage = Properties.Resources.image;

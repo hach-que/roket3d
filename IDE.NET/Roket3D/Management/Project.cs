@@ -72,7 +72,60 @@ namespace Roket3D.Management
             Node p = t.GetChildElement("project");
             foreach (Node f in p.GetChildElements("file"))
             {
-                this.p_Files.Add(new File(this, file.Directory.FullName, f));
+                List<string> sf = f.Attributes["Include"].Split(new char[] { '\\', '/' }).ToList();
+                string fn = sf[sf.Count - 1];
+                sf.RemoveAt(sf.Count - 1);
+                Folder ff = null;
+                
+                // Loop through until we get the parent directory
+                // if needed.
+                string path = "";
+                foreach (string s in sf)
+                {
+                    path += s + "\\";
+                    bool handled = false;
+                    if (ff == null)
+                    {
+                        foreach (File f2 in this.p_Files)
+                            if (f2 is Folder && (f2 as Folder).FolderInfo.Name == s)
+                            {
+                                ff = f2 as Folder;
+                                handled = true;
+                                break;
+                            }
+
+                        if (!handled)
+                        {
+                            Folder newf = new Folder(this, file.Directory.FullName, path.Substring(0, path.Length - 1));
+                            this.p_Files.Add(newf);
+                            ff = newf;
+                        }
+                    }
+                    else
+                    {
+                        foreach (File f2 in ff.Files)
+                            if (f2 is Folder && (f2 as Folder).FolderInfo.Name == s)
+                            {
+                                ff = f2 as Folder;
+                                handled = true;
+                                break;
+                            }
+
+                        if (!handled)
+                        {
+                            Folder newf = new Folder(this, file.Directory.FullName, path.Substring(0, path.Length - 1));
+                            ff.Add(newf);
+                            ff = newf;
+                        }
+                    }
+                }
+
+                // Now associate the file with the directory or project,
+                // depending on whether or not we have a parent directory.
+                if (ff == null)
+                    this.p_Files.Add(new File(this, file.Directory.FullName, f.Attributes["Include"]));
+                else
+                    ff.Add(new File(this, file.Directory.FullName, f.Attributes["Include"]));
             }
         }
 
@@ -88,6 +141,17 @@ namespace Roket3D.Management
             foreach (File f in this.p_Files)
                 f.Associate(node);
             return node;
+        }
+
+        /// <summary>
+        /// A read-only list of the files within the root directory of the project.
+        /// </summary>
+        public System.Collections.ObjectModel.ReadOnlyCollection<File> Files
+        {
+            get
+            {
+                return this.p_Files.AsReadOnly();
+            }
         }
     }
 }

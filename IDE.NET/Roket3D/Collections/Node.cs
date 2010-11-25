@@ -179,14 +179,14 @@ namespace Roket3D.Collections
         /// <summary>
         /// Returns a list of child XML elements whose XML type is equal to name.
         /// </summary>
-        /// <param name="name">The XML type of the elements.</param>
+        /// <param name="name">The XML type of the elements.  Use null to indicate all child elements.</param>
         /// <returns>A list of child XML elements.</returns>
         public List<Node> GetChildElements(string name)
         {
             List<Node> ns = new List<Node>();
             foreach (Node c in this.p_Children)
             {
-                if (c.p_Type == "element" && c.p_Name.ToLowerInvariant() == name.ToLowerInvariant())
+                if (c.p_Type == "element" && (name == null || c.p_Name.ToLowerInvariant() == name.ToLowerInvariant()))
                     ns.Add(c);
             }
             return ns;

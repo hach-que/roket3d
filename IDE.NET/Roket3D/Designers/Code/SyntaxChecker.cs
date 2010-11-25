@@ -42,6 +42,10 @@ namespace Roket3D.Designers.Code
 
         static public List<LuaError> CheckBlocks(String text, Scintilla editor)
         {
+            // Temporarily disabling block checking due to
+            // http://code.google.com/p/roket3d/issues/detail?id=3.
+            return new List<LuaError>();
+
             text += "\r\n"; // add a newline at the end
 
             // Define block stack and return list.
@@ -202,8 +206,8 @@ namespace Roket3D.Designers.Code
         SCE_LUA_IDENTIFIER = 11,
         SCE_LUA_STRINGEOL = 12,
         SCE_LUA_WORD_BASIC_FUNCTIONS = 13,
-        SCE_LUA_WORD_STRING_TABLE_MATH = 14,
-        SCE_LUA_WORD_COROUTINE_IO_SYSTEM = 15,
+        SCE_LUA_WORD_BASIC_CLASSES = 14,
+        SCE_LUA_WORD_UNUSED = 15,
         SCE_LUA_WORD_ROKET3D_CLASSES = 16,
         SCE_LUA_WORD_CLASS_KEYWORDS = 17,
         SCE_LUA_WORD7 = 18,
@@ -214,8 +218,8 @@ namespace Roket3D.Designers.Code
     {
         LUA_KEYWORDS = 0,
         LUA_BASIC_FUNCTIONS = 1,
-        LUA_STRING_TABLE_MATH = 2,
-        LUA_COROUTINE_IO_SYSTEM = 3,
+        LUA_BASIC_CLASSES = 2,
+        LUA_UNUSED = 3,
         LUA_ROKET3D_CLASSES = 4,
         LUA_CLASS_KEYWORDS = 5,
         LUA_USER3 = 6,

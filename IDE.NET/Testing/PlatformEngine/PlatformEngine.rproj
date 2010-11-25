@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="1.5">
+  <File Include="_Unmanaged/Bootstrap.lua"></File>
+  <File Include="_Unmanaged/ModuleLoader.lua"></File>
+  <File Include="Engine/Actor.rs"></File>
+  <File Include="Engine/Area.rs"></File>
+  <File Include="Engine/Audio.rs"></File>
+  <File Include="Engine/Events.rs"></File>
+  <File Include="Engine/Image.rs"></File>
+  <File Include="Engine/Model.rs"></File>
+  <File Include="Engine/Template.rs"></File>
+  <File Include="Engine/World.rs"></File>
   <File Include="Game.rs"></File>
+  <File Include="Game/Player.rs"></File>
+  <File Include="Game/Solid.rs"></File>
+  <File Include="Game/Areas/Main.rs"></File>
   <File Include="GameInfo.xml"></File>
 </Project>

@@ -622,6 +622,7 @@ namespace DockPanelSuite
 			{
 				IsHidden = false;
 				Pane.ActiveContent = Content;
+                Pane.ActiveTab = Content;
                 if (DockState == DockState.Document && DockPanel.DocumentStyle == DocumentStyle.SystemMdi)
                 {
                     Form.Activate();

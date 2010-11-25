@@ -614,8 +614,8 @@ static const luaL_Reg pk_funcs[] = {
 
 
 static const luaL_Reg ll_funcs[] = {
-  {"Module", ll_module},
-  {"Require", ll_require},
+  /* {"module", ll_module}, */
+  {"require", ll_require},
   {NULL, NULL}
 };
 

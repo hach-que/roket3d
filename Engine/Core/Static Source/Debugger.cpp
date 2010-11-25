@@ -8,6 +8,7 @@
 #include "InterpreterException.h"
 #include "InvalidObjectThrownException.h"
 #include <iostream>
+#include "Profiler.h"
 
 namespace Roket3D
 {
@@ -134,7 +135,7 @@ namespace Roket3D
 			// of the exception.
 
 			// First push the type onto the stack.
-			Bindings<Engine::Exception>::PushType(L);
+			Bindings<Engine::Exception>::Type(L);
 
 			// Now repush the error object on top.
 			lua_pushvalue(L, -2);   // TODO: This value is not valid when errors are raised by OP_RAISE
@@ -192,7 +193,7 @@ namespace Roket3D
 			// of the exception.
 
 			// First push the type onto the stack.
-			Bindings<Engine::Exception>::PushType(L);
+			Bindings<Engine::Exception>::Type(L);
 
 			// Now repush the error object on top.
 			lua_pushvalue(L, -2);
@@ -231,6 +232,8 @@ namespace Roket3D
 
 	void Debugger::LuaHookOnEvent(lua_State * L, lua_Debug * D)
 	{
+		Profiler::LuaHookOnEvent(L, D);
+
 		if (Debugger::m_IsConnected)
 		{
 			// TODO: Send the debugging information back to the IDE over the socket.
@@ -238,5 +241,4 @@ namespace Roket3D
 			//       (i.e. pause at a breakpoint).
 		}
 	}
-
 }

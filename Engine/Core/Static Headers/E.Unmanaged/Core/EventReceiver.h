@@ -22,6 +22,7 @@ namespace Engine { namespace Unmanaged { namespace Core
 
         /* Method and constructor declarations */
         public: EventReceiver(lua_State * L);
+        public: ~EventReceiver();
 		public: virtual bool OnEvent(const irr::SEvent& event);
 		public: virtual bool IsKeyDown(irr::EKEY_CODE key) const;
 		public: void AddHandler(Engine::Unmanaged::Core::REvent *, function);

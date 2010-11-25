@@ -11,6 +11,11 @@ class RObject
 		long m_ReferenceCount;
 
 	public:
+		inline RObject()
+		{
+			this->m_ReferenceCount = 0;
+		}
+
 		inline void Grab()
 		{
 			this->m_ReferenceCount += 1;

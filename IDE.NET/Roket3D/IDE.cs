@@ -29,10 +29,12 @@ namespace Roket3D
             this.p_Manager.DesignersManager.DesignerCreated += (sender, e) =>
                 {
                     this.ShowDock(e.Designer, DockState.Document);
+                    this.OnActiveTabChanged();
                 };
             this.p_Manager.DesignersManager.DesignerRefocused += (sender, e) =>
                 {
                     e.Designer.Activate();
+                    this.OnActiveTabChanged();
                 };
         }
 
@@ -68,7 +70,6 @@ namespace Roket3D
 
             // Show the start page.
             this.ShowDock(new Designers.Start.Designer(this.p_Manager, null), DockState.Document);
-            this.OnActiveTabChanged();
         }
 
         /// <summary>
@@ -112,7 +113,7 @@ namespace Roket3D
         {
             get
             {
-                return this.c_DockWorkspace.ActiveContent;
+                return this.c_DockWorkspace.ActiveTab;
             }
         }
     }

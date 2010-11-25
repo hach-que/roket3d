@@ -24,18 +24,22 @@ namespace Roket3D.Management
         }
 
         /// <summary>
-        /// Creates a new File object based on an XML node and a Project object.
+        /// Creates a new File object based on an relative path and a Project object.
         /// </summary>
         /// <param name="p">The project that owns this folder.</param>
         /// <param name="parent">The parent director (the directory the project file is located in).</param>
-        /// <param name="n">The XML node.</param>
-        public File(Project p, string parent, Node n)
+        /// <param name="relpath">The relative path to the file.</param>
+        public File(Project p, string parent, string relpath)
         {
             this.p_Project = p;
-            this.p_FileInfo = new FileInfo(Path.Combine(parent, n.Attributes["Include"]));
+            this.p_FileInfo = new FileInfo(Path.Combine(parent, relpath));
         }
 
-        public void Associate(System.Windows.Forms.TreeNode node)
+        /// <summary>
+        /// Associates this file with a tree node.
+        /// </summary>
+        /// <param name="node"></param>
+        public virtual void Associate(System.Windows.Forms.TreeNode node)
         {
             // Set properties.
             this.Text = this.ToString();
