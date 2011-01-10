@@ -41,7 +41,14 @@ namespace Roket3D.Debug
                 this.m_OutputTool.ClearLog();
 
             Process proc = new Process();
-            proc.StartInfo.FileName = Path.Combine(Program.Manager.Settings["RootPath"], "Engines\\Win32\\Release\\Roket3D.exe");
+            /*if (File.Exists("C:\\Windows\\system32\\vsjitdebugger.exe"))
+            {
+                proc.StartInfo.FileName = "C:\\Windows\\system32\\vsjitdebugger.exe";
+                proc.StartInfo.Arguments = '"' + Path.Combine(Program.Manager.Settings["RootPath"], "Engines\\Win32\\Debug\\Roket3D.exe") + '"';
+            }
+            else*/
+                proc.StartInfo.FileName = Path.Combine(Program.Manager.Settings["RootPath"], "Engines\\Win32\\Debug\\Roket3D.exe");
+
             proc.StartInfo.WorkingDirectory = project.ProjectInfo.Directory.FullName;
             proc.StartInfo.UseShellExecute = false;
             proc.StartInfo.RedirectStandardOutput = true;

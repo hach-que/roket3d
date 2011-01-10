@@ -1,20 +1,20 @@
-#import Engine.InterpreterException
+#import Engine.InvalidOperationException
 
-class Engine.InvalidOperationException : Engine.InterpreterException
+class Engine.Unmanaged.Scene.InvalidMeshOperationException : Engine.InvalidOperationException
 {
-	public static const char* Message = "An operation was attempted that is not valid for the current state.";
+	public static const char* Message = "The attempted operation is not a valid for this mesh.  Ensure the mesh is editable if required.";
 
 	/// <summary>
 	/// Exception constructor for C++ code.
 	/// </summay>
-	unbound public InvalidOperationException()
+	unbound public InvalidMeshOperationException()
 	{
 	}
 
 	/// <summary>
 	/// Exception constructor for Lua code.
 	/// </summary>
-	bound InvalidOperationException()
+	bound InvalidMeshOperationException()
 	{	
 	}
 

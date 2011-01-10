@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="1.5">
+  <File Include="_Unmanaged/Bootstrap.lua"></File>
+  <File Include="_Unmanaged/ModuleLoader.lua"></File>
+  <File Include="Engine/Actor.rs"></File>
+  <File Include="Engine/Area.rs"></File>
+  <File Include="Engine/Audio.rs"></File>
+  <File Include="Engine/Events.rs"></File>
+  <File Include="Engine/Image.rs"></File>
+  <File Include="Engine/Model.rs"></File>
+  <File Include="Engine/Template.rs"></File>
+  <File Include="Engine/World.rs"></File>
+  <File Include="Game.rs"></File>
+  <File Include="Game/Player.rs"></File>
+  <File Include="Game/Solid.rs"></File>
+  <File Include="Game/Worlds/Main.rs"></File>
+  <File Include="Game/Models/D3DModel.rs"></File>
+  <File Include="Game/Models/Shade/Run.rs"></File>
+  <File Include="Game/Models/Shade/Run0.mod"></File>
+  <File Include="Game/Models/Shade/Run1.mod"></File>
+  <File Include="Game/Models/Shade/Run2.mod"></File>
+  <File Include="Game/Models/Shade/Run3.mod"></File>
+  <File Include="Game/Models/Shade/Run4.mod"></File>
+  <File Include="Game/Models/Shade/Run5.mod"></File>
+  <File Include="Game/Models/Shade/Run6.mod"></File>
+  <File Include="Game/Models/Shade/Run7.mod"></File>
+  <File Include="Game/Models/Shade/Run8.mod"></File>
+  <File Include="Game/Models/Shade/Run9.mod"></File>
+  <File Include="Game/Models/Shade/Run10.mod"></File>
+  <File Include="Game/Models/Shade/Run11.mod"></File>
+  <File Include="Game/Models/Shade/Run12.mod"></File>
+  <File Include="Game/Models/Shade/Run13.mod"></File>
+  <File Include="Game/Textures/Shade.rs"></File>
+  <File Include="Game/Textures/Shade.bmp"></File>
+  <File Include="GameInfo.xml"></File>
+</Project>

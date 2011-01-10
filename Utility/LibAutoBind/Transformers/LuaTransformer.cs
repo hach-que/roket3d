@@ -284,8 +284,8 @@ namespace LibAutoBind.Transformers
             }
             this.WriteHeaderLine();
 
-            this.WriteHeaderLine("#pragma message(\"DEFINED " + cls.Class + "...\")");
-            this.WriteHeaderLine();
+            //this.WriteHeaderLine("#pragma message(\"DEFINED " + cls.Class + "...\")");
+            //this.WriteHeaderLine();
 
             // Add the #endif.
             this.WriteHeaderLine("#endif");
@@ -405,7 +405,7 @@ namespace LibAutoBind.Transformers
             {
                 if (r is ClassFunctionDeclarationNode)
                 {
-                    this.WriteCodeLine("#line " + r.LineNumber + " \"" + r.FileName.Replace("\\", "\\\\") + "\"");
+                    //this.WriteCodeLine("#line " + r.LineNumber + " \"" + r.FileName.Replace("\\", "\\\\") + "\"");
                     ClassFunctionDeclarationNode n = (ClassFunctionDeclarationNode)r;
                     string keys = "";
                     functype = n.Type;
@@ -521,10 +521,25 @@ namespace LibAutoBind.Transformers
                     if (funcbound)
                     {
                         string res = null;
-                        if (functype != "multi")
+                        if (functype != "variant")
                         {
                             Regex rr = new Regex("^([ \r\n\t]*)([^\\/][^\\/])([^/\n]*)([ \r\n\t]+)return[ \r\n\t]+(?<Val>[^\\;]+)\\;", RegexOptions.Multiline);
-                            res = rr.Replace(r.Content, "${1}${2}${3}${4}return Bindings<" + functype + ">::Result(L, ${Val});");
+                            res = rr.Replace(r.Content, (match) =>
+                                {
+                                    if (match.Groups["Val"].Value.StartsWith("Bindings<"))
+                                        return match.Value;
+                                    else
+                                        return String.Format(
+                                            "{0}{1}{2}{3}return Bindings<" + functype + ">::Result(L, {4});",
+                                            match.Groups[1].Value,
+                                            match.Groups[2].Value,
+                                            match.Groups[3].Value,
+                                            match.Groups[4].Value,
+                                            match.Groups["Val"].Value
+                                        );
+                                }
+                            );
+ 
                             Regex brr = new Regex("([ \r\n\t]*)([^\\/][^\\/])([^/\n]*)([ \r\n\t]+)return[ \r\n\t]*\\;", RegexOptions.Multiline);
                             res = brr.Replace(res, "${1}${2}${3}${4}return Bindings<void*>::EmptyResult;");
                         }
@@ -615,7 +630,7 @@ namespace LibAutoBind.Transformers
                         if (elsestmt == "") elsestmt = "else ";
                     }
                     this.WriteCodeLine("        else");
-                    this.WriteCodeLine("            throw Engine::ArgumentCountMismatchException();");
+                    this.WriteCodeLine("            throw new Engine::ArgumentCountMismatchException();");
                     this.WriteCodeLine("    }");
                     this.WriteCodeLine();
                 }
@@ -671,7 +686,7 @@ namespace LibAutoBind.Transformers
                         if (elsestmt == "") elsestmt = "else ";
                     }
                     this.WriteCodeLine("        else");
-                    this.WriteCodeLine("            throw Engine::ArgumentCountMismatchException();");
+                    this.WriteCodeLine("            throw new Engine::ArgumentCountMismatchException();");
                     this.WriteCodeLine("    }");
                     this.WriteCodeLine();
                 }

@@ -603,6 +603,10 @@
 					Name="Scene"
 					>
 					<File
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\InvalidMeshOperationException.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\Generated Source\E.Unmanaged\Scene\rparticlesystemnode.cpp"
 						>
 					</File>
@@ -636,6 +640,18 @@
 					</File>
 					<File
 						RelativePath=".\Generated Source\E.Unmanaged\Scene\rscenemesh.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\RSceneMeshBuffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\RSceneMeshFrame.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Source\E.Unmanaged\Scene\RSceneMeshLoader.cpp"
 						>
 					</File>
 					<File
@@ -1091,6 +1107,10 @@
 					Name="Scene"
 					>
 					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\InvalidMeshOperationException.h"
+						>
+					</File>
+					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rparticlesystemnode.h"
 						>
 					</File>
@@ -1124,6 +1144,18 @@
 					</File>
 					<File
 						RelativePath=".\Generated Headers\E.Unmanaged\Scene\rscenemesh.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\RSceneMeshBuffer.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\RSceneMeshFrame.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Generated Headers\E.Unmanaged\Scene\RSceneMeshLoader.h"
 						>
 					</File>
 					<File
@@ -1263,6 +1295,10 @@
 			</File>
 			<File
 				RelativePath=".\Autobind Source\InterpreterStateNotValidException.bpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Autobind Source\InvalidMetamethodOperationException.bpp"
 				>
 			</File>
 			<File
@@ -1446,6 +1482,14 @@
 								ClassPath="E.Unmanaged\Core"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Core"
+							/>
+						</FileConfiguration>
 					</File>
 				</Filter>
 				<Filter
@@ -1526,6 +1570,14 @@
 								ClassPath="E.Unmanaged\GUI"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIComboBox.bpp"
@@ -1552,6 +1604,14 @@
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
 							>
 							<Tool
 								Name="AutoBind"
@@ -1690,6 +1750,14 @@
 								ClassPath="E.Unmanaged\GUI"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIListBox.bpp"
@@ -1782,12 +1850,28 @@
 								ClassPath="E.Unmanaged\GUI"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUISpriteBank.bpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
 							>
 							<Tool
 								Name="AutoBind"
@@ -1827,12 +1911,28 @@
 								ClassPath="E.Unmanaged\GUI"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUITabControl.bpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
 							>
 							<Tool
 								Name="AutoBind"
@@ -1851,12 +1951,28 @@
 								ClassPath="E.Unmanaged\GUI"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\Autobind Source\E.Unmanaged\GUI\RGUIToolBar.bpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
 							>
 							<Tool
 								Name="AutoBind"
@@ -1870,6 +1986,14 @@
 						<FileConfiguration
 							Name="Debug|Win32"
 							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\GUI"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
 							>
 							<Tool
 								Name="AutoBind"
@@ -2029,6 +2153,26 @@
 				<Filter
 					Name="Scene"
 					>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\InvalidMeshOperationException.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
 					<File
 						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RParticleSystemNode.bpp"
 						>
@@ -2191,6 +2335,66 @@
 					</File>
 					<File
 						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneMesh.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneMeshBuffer.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneMeshFrame.bpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="AutoBind"
+								ClassPath="E.Unmanaged\Scene"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Autobind Source\E.Unmanaged\Scene\RSceneMeshLoader.bpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -2405,6 +2609,14 @@
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
+						>
+						<Tool
+							Name="AutoBind"
+							ClassPath="E.Collections"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
 						>
 						<Tool
 							Name="AutoBind"

@@ -138,6 +138,9 @@ namespace Roket3D
 		// Initalize the function bindings table.
 		function::Setup(L);
 
+		// Initalize the return cache table.
+		Bindings<void *>::CacheInit(L);
+
 		// Initalize all of the classes.
 		Roket3D::RegisterAllClasses(L);
 

@@ -1,0 +1,12 @@
+#import Engine.InternalConstructorOnlyException
+
+class Engine.Unmanaged.Scene.RSceneMeshLoader
+   as Engine.Unmanaged.Scene.MeshLoader
+{
+	/// <summary>
+	/// A public constructor for creating a new custom mesh loader.
+	/// </summary>
+	bound RSceneMeshLoader()
+	{
+	}
+}
