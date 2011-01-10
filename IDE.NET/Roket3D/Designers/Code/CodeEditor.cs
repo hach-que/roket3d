@@ -218,7 +218,7 @@ namespace Roket3D.Designers.Code
             {
                 // Show global list.
                 this.AutoComplete.List = Program.Manager.CacheManager.AutoComplete.GetList(null);
-                this.AutoComplete.Show();
+                //this.AutoComplete.Show();
             }
         }
 
@@ -268,13 +268,13 @@ namespace Roket3D.Designers.Code
                 else s = s.Substring(0, s.Length - 1);
 
                 this.AutoComplete.List = Program.Manager.CacheManager.AutoComplete.GetList(s);
-                this.AutoComplete.Show();
+                //this.AutoComplete.Show();
             }
             else if (lc == '=')
             {
                 // Show global list.
                 this.AutoComplete.List = Program.Manager.CacheManager.AutoComplete.GetList(null);
-                this.AutoComplete.Show();
+                //this.AutoComplete.Show();
             }
         }
 

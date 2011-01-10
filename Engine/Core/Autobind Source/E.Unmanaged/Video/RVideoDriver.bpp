@@ -440,7 +440,7 @@ class Engine.Unmanaged.Video.RVideoDriver
 	{
 		irr::video::ITexture * irrtex = this->m_Driver->getTexture((const char*)path);
 
-		if (irrtex == NULL)
+		if (irrtex != NULL)
 		{
 			Engine::Unmanaged::Video::RVideoTexture * ret = Bindings<Engine::Unmanaged::Video::RVideoTexture>::CreateNew(L);
 			ret->SetObject(irrtex);
@@ -462,7 +462,7 @@ class Engine.Unmanaged.Video.RVideoDriver
 	{
 		irr::video::ITexture * irrtex = this->m_Driver->getTextureByIndex((unsigned int)index);
 
-		if (irrtex == NULL)
+		if (irrtex != NULL)
 		{
 			Engine::Unmanaged::Video::RVideoTexture * ret = Bindings<Engine::Unmanaged::Video::RVideoTexture>::CreateNew(L);
 			ret->SetObject(irrtex);

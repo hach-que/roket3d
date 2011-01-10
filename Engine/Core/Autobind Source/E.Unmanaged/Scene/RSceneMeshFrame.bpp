@@ -1,0 +1,85 @@
+#import Engine.Unmanaged.Scene.RSceneMeshBuffer
+#import Engine.Unmanaged.Scene.InvalidMeshOperationException
+#include "IMesh.h"
+#include "SMesh.h"
+
+class Engine.Unmanaged.Scene.RSceneMeshFrame
+   as Engine.Unmanaged.Scene.MeshFrame
+{
+	private irr::scene::IMesh * m_Frame;
+	private irr::scene::SMesh * m_EditableFrame;
+	private bool m_IsFrameSet;
+
+	/// <summary>
+	/// A public constructor for initalizing an RSceneMeshFrame instance.
+	/// </summary>
+	bound RSceneMeshFrame()
+	{
+		if (byuser)
+		{
+			this->m_IsFrameSet = true;
+			this->m_EditableFrame = new irr::scene::SMesh();
+			this->m_Frame = this->m_EditableFrame;
+		}
+		else
+		{
+			this->m_IsFrameSet = false;
+			this->m_EditableFrame = NULL;
+			this->m_Frame = NULL;
+		}
+	}
+
+	/// <summary>
+	/// Adds the specified mesh buffer to the model.
+	/// </summary>
+	bound void AddMeshBuffer(Engine::Unmanaged::Scene::RSceneMeshBuffer buffer)
+	{
+		if (this->m_EditableFrame == NULL)
+		{
+			// Not editable!
+			throw new Engine::Unmanaged::Scene::InvalidMeshOperationException();
+		}
+
+		this->m_EditableFrame->addMeshBuffer(buffer->GetObject());
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param name="obj">The new Irrlicht object to associate with this RSceneMeshFrame instance.</param>
+	unbound public void SetObject(irr::scene::IMesh * obj)
+	{
+		this->m_IsFrameSet = (obj != NULL);
+		this->m_EditableFrame = NULL;
+		this->m_Frame = obj;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param name="obj">The new Irrlicht object to associate with this RSceneMeshFrame instance.</param>
+	unbound public void SetEditableObject(irr::scene::SMesh * obj)
+	{
+		this->m_IsFrameSet = (obj != NULL);
+		this->m_EditableFrame = obj;
+		this->m_Frame = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::scene::IMesh * GetObject()
+	{
+		return this->m_Frame;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::scene::SMesh * GetEditableObject()
+	{
+		return this->m_EditableFrame;
+	}
+}

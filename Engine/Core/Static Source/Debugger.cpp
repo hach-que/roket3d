@@ -135,7 +135,7 @@ namespace Roket3D
 			// of the exception.
 
 			// First push the type onto the stack.
-			Bindings<Engine::Exception>::Type(L);
+			Bindings<Engine::Exception>::PushType(L);
 
 			// Now repush the error object on top.
 			lua_pushvalue(L, -2);   // TODO: This value is not valid when errors are raised by OP_RAISE
@@ -193,7 +193,7 @@ namespace Roket3D
 			// of the exception.
 
 			// First push the type onto the stack.
-			Bindings<Engine::Exception>::Type(L);
+			Bindings<Engine::Exception>::PushType(L);
 
 			// Now repush the error object on top.
 			lua_pushvalue(L, -2);

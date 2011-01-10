@@ -11,6 +11,7 @@ function Run()
 		Engine.Collections.Vector2D(640, 480),
 		16, false, true, false)
 	Engine.Area.Device = device
+	print(Engine.Area.Device)
 
 	-- Create the game area.
 	main = Game.Areas.Main()
@@ -21,14 +22,5 @@ function Run()
 	-- Close the device.
 	device:Close()
 end
-
-
-
-
-
-
-
-
-
 
 

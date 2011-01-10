@@ -1,7 +1,7 @@
 class "Game.Player"
 inherits "Engine.Actor"
 
-require "Game.Solid"
+require "Game.Models.Shade.Run"
 
 -- Mark our variables as per-instance.
 context
@@ -17,30 +17,31 @@ context
 Movement = {
 	Left = false,
 	Right = false,
-	Up = false
+	Up = false,
+	Down = false
 }
-
--- Basic collision stuff
-Width = 32
-Height = 32
-Color = Engine.Collections.Color(255, 64, 64, 64)
 
 -- Override the default position and gravity settings
 X = 200
 Y = 200
-Gravity = Engine.Collections.Vector2D(0, 0.5)
+Z = 0
+Gravity = Engine.Collections.Vector3D(0, 0, 0)
 
 function Player:__init(device)
 	base.__init(self)
 
+	-- Get our model
+	self.Model = Game.Models.Shade.Run(device)
+	
+	-- Bind keyboard events
 	device:Bind(Engine.Events.Keyboard.Held["Left"], function(pressed) self:OnLeft(pressed) end);
 	device:Bind(Engine.Events.Keyboard.Held["Right"], function(pressed) self:OnRight(pressed) end);
 	device:Bind(Engine.Events.Keyboard.Held["Up"], function(pressed) self:OnUp(pressed) end);
+	device:Bind(Engine.Events.Keyboard.Held["Down"], function(pressed) self:OnDown(pressed) end);
 end
 
 function Player:OnLeft(pressed)
 	-- On keyboard left
-	print("OnLeft triggered!")
 	self.Movement["Left"] = pressed;
 end
 
@@ -54,23 +55,29 @@ function Player:OnUp(pressed)
 	self.Movement["Up"] = pressed;
 end
 
+function Player:OnDown(pressed)
+	-- On keyboard down
+	self.Movement["Down"] = pressed;
+end
+
 function Player:Contacting(offset)
-	if (not self:AtPosition(self.X + 1, self.Y + 32 + offset) and
+	--[[if (not self:AtPosition(self.X + 1, self.Y + 32 + offset) and
 		not self:AtPosition(self.X + 31, self.Y + 32 + offset)) then
 		return false
 	end
 	
-	return true
+	return true]]
 end
 
 function Player:AtPosition(x, y)
-	return Game.Solid.AtPosition(self.Area, x, y)
+	--return Game.Solid.AtPosition(self.Area, x, y)
 end
 
 function Player:__step()
 	-- Get the template to handle movement and collisions.
 	base.__step(self)
 
+	--[[
 	-- Get a rectangle that represents our position.
 	rect = Engine.Collections.Rectangle(self.X, self.Y, self.X + self.Width, self.Y + self.Height);
 	
@@ -122,9 +129,12 @@ function Player:__step()
 			self.Y = self.Y - 1
 		end
 	end
+	]]
 end
 
 function Player:__draw(device)
-	device.VideoDriver:Draw2DRectangle(Engine.Collections.Rectangle(self.X, self.Y, self.X + self.Width, self.Y + self.Height), self.Color);
+	--device.VideoDriver:Draw2DRectangle(Engine.Collections.Rectangle(self.X, self.Y, self.X + self.Width, self.Y + self.Height), self.Color);
 end
+
+
 

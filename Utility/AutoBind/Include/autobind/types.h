@@ -485,34 +485,83 @@ public:
 
 	function(lua_State * L, int pos)
 	{
+		if (!lua_isfunction(L, pos))
+		{
+			this->m_L = NULL;
+			this->m_Reference = -1;
+			return;
+		}
+
 		this->m_L = L;
 		lua_getfield(this->m_L, LUA_REGISTRYINDEX, "Roket3D_Function_Bindings");
-		int tbl = lua_gettop(this->m_L);
 		lua_pushvalue(this->m_L, pos);
-		this->m_Reference = luaL_ref(this->m_L, tbl);
+
+		if (!lua_isfunction(this->m_L, -1))
+		{
+			this->m_L = NULL;
+			this->m_Reference = -1;
+			return;
+		}
+
+		this->m_Reference = luaL_ref(this->m_L, -2);
+		lua_pop(this->m_L, 1);
 	}
 
 	function(const function & copy)
 	{
 		this->m_L = copy.m_L;
 		lua_getfield(this->m_L, LUA_REGISTRYINDEX, "Roket3D_Function_Bindings");
-		int tbl = lua_gettop(this->m_L);
-		lua_pushvalue(this->m_L, tbl);
-		lua_pushnumber(this->m_L, copy.m_Reference);
-		lua_rawget(this->m_L, -2);
-		this->m_Reference = luaL_ref(this->m_L, tbl);
+		lua_rawgeti(this->m_L, -1, copy.m_Reference);
+
+		if (!lua_isfunction(this->m_L, -1))
+		{
+			this->m_L = NULL;
+			this->m_Reference = -1;
+			return;
+		}
+
+		this->m_Reference = luaL_ref(this->m_L, -2);
+		lua_pop(this->m_L, 1);
 	}
 
 	~function()
 	{
 		if (this->m_L != NULL)
-			luaL_unref(this->m_L, LUA_REGISTRYINDEX, this->m_Reference);
+		{
+			lua_getfield(this->m_L, LUA_REGISTRYINDEX, "Roket3D_Function_Bindings");
+			luaL_unref(this->m_L, -1, this->m_Reference);
+			lua_pop(this->m_L, 1);
+		}
 	}
 
 	static void Setup(lua_State * L)
 	{
-		lua_newtable(L);
+		lua_newtable(L); int tbl = lua_gettop(L);
+		lua_newtable(L); int meta = lua_gettop(L);
+		lua_pushstring(L, "__setindex");
+		lua_pushcfunction(L, &function::CheckSet);
+		lua_settable(L, meta);
+		lua_setmetatable(L, tbl);
 		lua_setfield(L, LUA_REGISTRYINDEX, "Roket3D_Function_Bindings");
+	}
+
+	static int CheckSet(lua_State * L)
+	{
+		// 1 - table
+		// 2 - key
+		// 3 - value
+
+		if (lua_isfunction(L, 3))
+		{
+			// set only functions
+			lua_rawset(L, 1);
+		}
+		else
+		{
+			int x = 0;
+		}
+
+		return 0;
 	}
 
 	void Call(table args)
@@ -523,8 +572,7 @@ public:
 		lua_getfield(this->m_L, LUA_REGISTRYINDEX, "Roket3D_Function_Bindings");
 		int tbl = lua_gettop(this->m_L);
 
-		lua_pushnumber(this->m_L, this->m_Reference);
-		lua_rawget(this->m_L, tbl);
+		lua_rawgeti(this->m_L, tbl, this->m_Reference);
 		if (!lua_isfunction(this->m_L, lua_gettop(this->m_L)))
 			return;
 
@@ -554,6 +602,7 @@ public:
 		}
 
 		lua_call(this->m_L, count, 0);
+		lua_pop(this->m_L, 1);
 	}
 
 	bool CallBool(table args)
@@ -564,8 +613,7 @@ public:
 		lua_getfield(this->m_L, LUA_REGISTRYINDEX, "Roket3D_Function_Bindings");
 		int tbl = lua_gettop(this->m_L);
 
-		lua_pushnumber(this->m_L, this->m_Reference);
-		lua_rawget(this->m_L, tbl);
+		lua_rawgeti(this->m_L, tbl, this->m_Reference);
 		if (!lua_isfunction(this->m_L, lua_gettop(this->m_L)))
 			return false;
 
@@ -596,9 +644,15 @@ public:
 
 		lua_call(this->m_L, count, 1);
 		if (lua_toboolean(this->m_L, -1) == 1)
+		{
+			lua_pop(this->m_L, 1);
 			return true;
+		}
 		else
+		{
+			lua_pop(this->m_L, 1);
 			return false;
+		}
 	}
 
 	table CallTable(table args)
@@ -609,8 +663,7 @@ public:
 		lua_getfield(this->m_L, LUA_REGISTRYINDEX, "Roket3D_Function_Bindings");
 		int tbl = lua_gettop(this->m_L);
 
-		lua_pushnumber(this->m_L, this->m_Reference);
-		lua_rawget(this->m_L, tbl);
+		lua_rawgeti(this->m_L, tbl, this->m_Reference);
 		if (!lua_isfunction(this->m_L, lua_gettop(this->m_L)))
 			return table();
 
@@ -640,7 +693,9 @@ public:
 		}
 
 		lua_call(this->m_L, count, 1);
-		return table::GetFromStack(this->m_L, -1);
+		table ret = table::GetFromStack(this->m_L, -1);
+		lua_pop(this->m_L, 1);
+		return ret;
 	}
 };
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<game>
+  <!--
+    The working directory that the engine should change
+    to once it has started.  Often this XML field is
+    written out by installation software to ensure
+    consistant file locations.  It is also used when
+    looking for the entrypoint file.
+  -->
+  <cwd>./</cwd>
+  <!--
+    Defines the entrypoint for the game.
+  -->
+  <entrypoint>
+    <call>Run()</call>
+    <file>Game.rs</file>
+  </entrypoint>
+  <!--
+    Whether or not the game is debuggable.  Ignored if
+    the Roket3D engine executable was not built with
+    debugging.
+  -->
+  <debuggable>true</debuggable>
+</game>

@@ -1,20 +1,20 @@
-#import Engine.InterpreterException
+#import Engine.InvalidOperationException
 
-class Engine.InvalidOperationException : Engine.InterpreterException
+class Engine.InvalidMetamethodOperationException : Engine.InvalidOperationException
 {
-	public static const char* Message = "An operation was attempted that is not valid for the current state.";
+	public static const char* Message = "The Lua interpreter attempted to perform an operation on two objects where neither of them defined a metamethod for the operation attempted.";
 
 	/// <summary>
 	/// Exception constructor for C++ code.
 	/// </summay>
-	unbound public InvalidOperationException()
+	unbound public InvalidMetamethodOperationException()
 	{
 	}
 
 	/// <summary>
 	/// Exception constructor for Lua code.
 	/// </summary>
-	bound InvalidOperationException()
+	bound InvalidMetamethodOperationException()
 	{	
 	}
 

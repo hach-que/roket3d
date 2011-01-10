@@ -1,0 +1,89 @@
+#import Engine.Collections.RColor
+#import Engine.Unmanaged.Scene.InvalidMeshOperationException
+#include "IMeshBuffer.h"
+#include "SSkinMeshBuffer.h"
+#include "S3DVertex.h"
+
+class Engine.Unmanaged.Scene.RSceneMeshBuffer
+   as Engine.Unmanaged.Scene.MeshBuffer
+{
+	private irr::scene::IMeshBuffer * m_Buffer;
+	private irr::scene::SSkinMeshBuffer * m_EditableBuffer;
+	private bool m_IsBufferSet;
+
+	/// <summary>
+	/// A public constructor for initalizing an RSceneMesh instance.
+	/// </summary>
+	bound RSceneMeshBuffer()
+	{
+		if (byuser)
+		{
+			this->m_IsBufferSet = true;
+			this->m_EditableBuffer = new irr::scene::SSkinMeshBuffer();
+			this->m_Buffer = this->m_EditableBuffer;
+		}
+		else
+		{
+			this->m_IsBufferSet = false;
+			this->m_EditableBuffer = NULL;
+			this->m_Buffer = NULL;
+		}
+	}
+
+	/// <summary>
+	/// Appends a set of textured vertices to the mesh buffer.
+	/// </summary>
+	bound void Append(numeric x, numeric y, numeric z, numeric nx, numeric ny, numeric nz, Engine::Collections::RColor col, numeric tu, numeric tv, numeric tu2, numeric tv2)
+	{
+		if (this->m_EditableBuffer == NULL)
+		{
+			// Not editable!
+			throw new Engine::Unmanaged::Scene::InvalidMeshOperationException();
+		}
+
+		this->m_EditableBuffer->Vertices_2TCoords.insert(
+			irr::video::S3DVertex2TCoords(x, y, z, nx, ny, nz, col->GetObject(), tu, tv, tu2, tv2)
+			);
+		this->m_EditableBuffer->Indices.push_back(this->m_EditableBuffer->Indices.size());
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param name="obj">The new Irrlicht object to associate with this RSceneMeshFrame instance.</param>
+	unbound public void SetObject(irr::scene::IMeshBuffer * obj)
+	{
+		this->m_IsBufferSet = (obj != NULL);
+		this->m_EditableBuffer = NULL;
+		this->m_Buffer = obj;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param name="obj">The new Irrlicht object to associate with this RSceneMeshFrame instance.</param>
+	unbound public void SetEditableObject(irr::scene::SSkinMeshBuffer * obj)
+	{
+		this->m_IsBufferSet = (obj != NULL);
+		this->m_EditableBuffer = obj;
+		this->m_Buffer = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::scene::IMeshBuffer * GetObject()
+	{
+		return this->m_Buffer;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::scene::SSkinMeshBuffer * GetEditableObject()
+	{
+		return this->m_EditableBuffer;
+	}
+}

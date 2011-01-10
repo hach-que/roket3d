@@ -1,8 +1,20 @@
+#import Engine.ObjectDisposedException
 #import Engine.InternalConstructorOnlyException
+#import Engine.Unmanaged.Scene.RSceneMesh
+#import Engine.Unmanaged.Scene.RSceneMeshNode
+#import Engine.Unmanaged.Scene.RSceneCamera
+#import Engine.Unmanaged.Scene.RSceneNode
+#import Engine.Collections.RVector3D
+#include "ISceneManager.h"
+#include "IAnimatedMesh.h"
+#include "ICameraSceneNode.h"
 
 class Engine.Unmanaged.Scene.RSceneManager
    as Engine.Unmanaged.Scene.Manager
 {
+	private irr::scene::ISceneManager * m_Manager;
+	private bool m_IsManagerSet;
+
 	/// <summary>
 	/// A non-public constructor for initalizing an RSceneManager instance.
 	/// </summary>
@@ -14,6 +26,194 @@ class Engine.Unmanaged.Scene.RSceneManager
 		{
 			throw new Engine::InternalConstructorOnlyException();
 		}
-		// TODO: Implement.
+		this->m_IsManagerSet = false;
+		this->m_Manager = NULL;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param name="obj">The new Irrlicht object to associate with this RSceneManager instance.</param>
+	unbound public void SetObject(irr::scene::ISceneManager * obj)
+	{
+		this->m_IsManagerSet = (obj != NULL);
+		this->m_Manager = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::scene::ISceneManager * GetObject()
+	{
+		return this->m_Manager;
+	}
+
+	/// <summary>
+	/// Draws all of the nodes owned by this scene manager.
+	/// </summary>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound void Draw()
+	{
+		if (this->m_IsManagerSet)
+		{
+			this->m_Manager->drawAll();
+			return;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Adds an animated mesh scene node to the scene.
+	/// </summary>
+	/// <param name="mesh">The animated mesh to be displayed.</param>
+	/// <param name="parent">Parent of the scene node.  Use nil for no parent.</param>
+	/// <param name="id">The numeric ID of the scene node.</param>
+	/// <param name="position">The position of the scene node relative to it's parent.</param>
+	/// <param name="rotation">Initial rotation of the scene node.</param>
+	/// <param name="scale">Initial scale of the scene node.</param>
+	/// <param name="addifzero">Add the scene node even if the mesh is nil.</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound Engine::Unmanaged::Scene::RSceneMeshNode AddAnimatedMeshSceneNode(Engine::Unmanaged::Scene::RSceneMesh mesh, Engine::Unmanaged::Scene::RSceneNode parent [NULL], numeric id [-1], Engine::Collections::RVector3D position, Engine::Collections::RVector3D rotation, Engine::Collections::RVector3D scale, bool addifzero)
+	{
+		if (this->m_IsManagerSet)
+		{
+			irr::scene::ISceneNode * irrparent = NULL;
+			if (parent != NULL)
+				irrparent = parent->GetObject();
+
+			Engine::Unmanaged::Scene::RSceneMeshNode * ret = Bindings<Engine::Unmanaged::Scene::RSceneMeshNode>::CreateNew(L);
+			irr::scene::IAnimatedMeshSceneNode * irrnode = this->m_Manager->addAnimatedMeshSceneNode(
+				mesh->GetObject(),
+				irrparent,
+				id,
+				position->GetObject(),
+				rotation->GetObject(),
+				scale->GetObject(),
+				addifzero
+				);
+			irrnode->setCurrentFrame(0);
+			ret->SetObject(irrnode);
+
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Adds an camera scene node to the scene.
+	/// </summary>
+	/// <param name="parent">Parent of the scene node.  Use nil for no parent.</param>
+	/// <param name="position">The position of the scene node relative to it's parent.</param>
+	/// <param name="lookat">The target position to look at.</param>
+	/// <param name="id">The numeric ID of the scene node.</param>
+	/// <param name="activate">Should this camera be made the active camera on creation?</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound Engine::Unmanaged::Scene::RSceneCamera AddCameraSceneNode(Engine::Unmanaged::Scene::RSceneNode parent [NULL], Engine::Collections::RVector3D position, Engine::Collections::RVector3D lookat, numeric id [-1], bool activate [true])
+	{
+		if (this->m_IsManagerSet)
+		{
+			irr::scene::ISceneNode * irrparent = NULL;
+			if (parent != NULL)
+				irrparent = parent->GetObject();
+
+			Engine::Unmanaged::Scene::RSceneCamera * ret = Bindings<Engine::Unmanaged::Scene::RSceneCamera>::CreateNew(L);
+			irr::scene::ICameraSceneNode * irrnode = this->m_Manager->addCameraSceneNode(
+				irrparent,
+				position->GetObject(),
+				lookat->GetObject(),
+				id,
+				activate
+				);
+			ret->SetObject(irrnode);
+
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Adds a FPS camera scene node to the scene.
+	/// </summary>
+	/// <todo>Add relevant parameters.</todo>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound Engine::Unmanaged::Scene::RSceneCamera AddCameraSceneNodeFPS()
+	{
+		if (this->m_IsManagerSet)
+		{
+			Engine::Unmanaged::Scene::RSceneCamera * ret = Bindings<Engine::Unmanaged::Scene::RSceneCamera>::CreateNew(L);
+			irr::scene::ICameraSceneNode * irrnode = this->m_Manager->addCameraSceneNodeFPS();
+			ret->SetObject(irrnode);
+
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Adds a cube scene node to the scene.
+	/// </summary>
+	/// <param name="size">The size of the cube in each dimension.</param>
+	/// <param name="parent">Parent of the scene node.  Use nil for no parent.</param>
+	/// <param name="id">The numeric ID of the scene node.</param>
+	/// <param name="position">The position of the scene node relative to it's parent.</param>
+	/// <param name="rotation">Initial rotation of the scene node.</param>
+	/// <param name="scale">Initial scale of the scene node.</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound Engine::Unmanaged::Scene::RSceneNode AddCubeSceneNode(numeric size, Engine::Unmanaged::Scene::RSceneNode parent [NULL], numeric id [-1], Engine::Collections::RVector3D position, Engine::Collections::RVector3D rotation, Engine::Collections::RVector3D scale)
+	{
+		if (this->m_IsManagerSet)
+		{
+			irr::scene::ISceneNode * irrparent = NULL;
+			if (parent != NULL)
+				irrparent = parent->GetObject();
+
+			Engine::Unmanaged::Scene::RSceneNode * ret = Bindings<Engine::Unmanaged::Scene::RSceneNode>::CreateNew(L);
+			irr::scene::ISceneNode * irrnode = this->m_Manager->addCubeSceneNode(
+				size,
+				irrparent,
+				id,
+				position->GetObject(),
+				rotation->GetObject(),
+				scale->GetObject()
+				);
+			irrnode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+			ret->SetObject(irrnode);
+
+			return ret;
+		}
+		else
+			throw new Engine::ObjectDisposedException();
+	}
+
+	/// <summary>
+	/// Loads a model from file if it is not already loaded, or returns the model that already exists in memory.
+	/// </summary>
+	/// <param name="path">The filename of the model.</param>
+	/// <exception>Engine::ObjectDisposedException</exception>
+	bound variant GetMesh(::string path)
+	{
+		if (this->m_IsManagerSet)
+		{
+			irr::scene::IAnimatedMesh * irrmsh = this->m_Manager->getMesh((const char*)path);
+
+			if (irrmsh != NULL)
+			{
+				Engine::Unmanaged::Scene::RSceneMesh * ret = Bindings<Engine::Unmanaged::Scene::RSceneMesh>::CreateNew(L);
+				ret->SetObject(irrmsh);
+
+				return Bindings<Engine::Unmanaged::Scene::RSceneMesh>::Result(L, ret);
+			}
+			else
+			{
+				return Bindings<void *>::Result(L);
+			}
+		}
+		else
+			throw new Engine::ObjectDisposedException();
 	}
 }

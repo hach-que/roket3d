@@ -1,19 +1,108 @@
-#import Engine.InternalConstructorOnlyException
+#import Engine.Unmanaged.Scene.RSceneMeshFrame
+#import Engine.Unmanaged.Scene.InvalidMeshOperationException
+#include "IAnimatedMesh.h"
+#include "SAnimatedMesh.h"
+#include "SMesh.h"
 
 class Engine.Unmanaged.Scene.RSceneMesh
    as Engine.Unmanaged.Scene.Mesh
 {
+	private irr::scene::IAnimatedMesh * m_Mesh;
+	private irr::scene::SAnimatedMesh * m_EditableMesh;
+	private bool m_IsMeshSet;
+
 	/// <summary>
-	/// A non-public constructor for initalizing an RSceneMesh instance.
+	/// A public constructor for initalizing an RSceneMesh instance.
 	/// </summary>
-	/// <internal>true</internal>
-	/// <exception>Engine::InternalConstructorOnlyException</exception>
 	bound RSceneMesh()
 	{
 		if (byuser)
 		{
-			throw new Engine::InternalConstructorOnlyException();
+			this->m_IsMeshSet = true;
+			this->m_EditableMesh = new irr::scene::SAnimatedMesh();
+			this->m_Mesh = this->m_EditableMesh;
 		}
-		// TODO: Implement.
+		else
+		{
+			this->m_IsMeshSet = false;
+			this->m_Mesh = NULL;
+			this->m_EditableMesh = NULL;
+		}
+	}
+
+	/// <summary>
+	/// Adds a frame to the animated mesh.
+	/// </summary>
+	bound void AddFrame(Engine::Unmanaged::Scene::RSceneMeshFrame frame)
+	{
+		if (this->m_EditableMesh == NULL)
+		{
+			// Not editable!
+			throw new Engine::Unmanaged::Scene::InvalidMeshOperationException();
+		}
+
+		this->m_EditableMesh->addMesh(frame->GetObject());
+	}
+
+	/// <summary>
+	/// Adds an empty, editable frame to the animated mesh.
+	/// </summary>
+	bound Engine::Unmanaged::Scene::RSceneMeshFrame AddFrame()
+	{
+		if (this->m_EditableMesh == NULL)
+		{
+			// Not editable!
+			throw new Engine::Unmanaged::Scene::InvalidMeshOperationException();
+		}
+
+		irr::scene::SMesh * mesh = new irr::scene::SMesh();
+		this->m_EditableMesh->addMesh(mesh);
+		
+		Engine::Unmanaged::Scene::RSceneMeshFrame * frame =
+			Bindings<Engine::Unmanaged::Scene::RSceneMeshFrame>::CreateNew(L);
+		frame->SetEditableObject(mesh);
+		mesh->grab();
+
+		return frame;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param name="obj">The new Irrlicht object to associate with this RSceneMesh instance.</param>
+	unbound public void SetObject(irr::scene::IAnimatedMesh * obj)
+	{
+		this->m_IsMeshSet = (obj != NULL);
+		this->m_EditableMesh = NULL;
+		this->m_Mesh = obj;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param name="obj">The new Irrlicht object to associate with this RSceneMesh instance.</param>
+	unbound public void SetEditableObject(irr::scene::SAnimatedMesh * obj)
+	{
+		this->m_IsMeshSet = (obj != NULL);
+		this->m_EditableMesh = obj;
+		this->m_Mesh = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::scene::IAnimatedMesh * GetObject()
+	{
+		return this->m_Mesh;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::scene::SAnimatedMesh * GetEditableObject()
+	{
+		return this->m_EditableMesh;
 	}
 }

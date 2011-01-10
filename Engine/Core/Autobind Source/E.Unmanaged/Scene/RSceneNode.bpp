@@ -1,8 +1,19 @@
 #import Engine.InternalConstructorOnlyException
+#include "ISceneNode.h"
 
 class Engine.Unmanaged.Scene.RSceneNode
    as Engine.Unmanaged.Scene.Node
 {
+	protected irr::scene::ISceneNode * m_Node;
+	protected bool m_IsNodeSet;
+
+	/// <summary>
+	/// Default constructor for inherited objects.
+	/// </summary>
+	unbound protected RSceneNode()
+	{
+	}
+
 	/// <summary>
 	/// A non-public constructor for initalizing an RSceneNode instance.
 	/// </summary>
@@ -14,6 +25,37 @@ class Engine.Unmanaged.Scene.RSceneNode
 		{
 			throw new Engine::InternalConstructorOnlyException();
 		}
-		// TODO: Implement.
+		this->m_IsNodeSet = false;
+		this->m_Node = NULL;
+	}
+
+	/// <summary>
+	/// Clears the current Irrlicht object.  Virtual so that derived classes
+	/// can set the pre-casted values to NULL (in case SetObject isn't of the
+	/// same type).
+	/// </summary>
+	unbound public virtual void ClearObject()
+	{
+		this->m_IsNodeSet = false;
+		this->m_Node = NULL;
+	}
+
+	/// <summary>
+	/// Sets the Irrlicht object to the parameter 'obj'.
+	/// </summary>
+	/// <param name="obj">The new Irrlicht object to associate with this RSceneNode instance.</param>
+	unbound public void SetObject(irr::scene::ISceneNode * obj)
+	{
+		this->m_IsNodeSet = (obj != NULL);
+		this->m_Node = obj;
+	}
+
+	/// <summary>
+	/// Gets the Irrlicht object that this instance represents.
+	/// </summary>
+	/// <returns>The Irrlicht object that this instance holds.</returns>
+	unbound public irr::scene::ISceneNode * GetObject()
+	{
+		return this->m_Node;
 	}
 }

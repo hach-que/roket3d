@@ -1,6 +1,7 @@
 #import Engine.Unmanaged.Core.EventReceiver
 #import Engine.Unmanaged.GUI.RGUIEnvironment
 #import Engine.Unmanaged.Video.RVideoDriver
+#import Engine.Unmanaged.Scene.RSceneManager
 #import Engine.Collections.RVector2D
 #import Engine.GraphicsEngineNotFoundException
 #import Engine.ObjectDisposedException
@@ -22,6 +23,7 @@ class Engine.Unmanaged.Core.RDevice
 	// Cached references to the wrapping classes.
 	private int m_CachedVideoDriver;
 	private int m_CachedGUIEnvironment;
+	private int m_CachedSceneManager;
 
 	/// <summary>
 	/// The default constructor which takes a screen resolution argument
@@ -43,6 +45,7 @@ class Engine.Unmanaged.Core.RDevice
 		this->m_IsDeviceSet = false;
 		this->m_CachedVideoDriver = -1;
 		this->m_CachedGUIEnvironment = -1;
+		this->m_CachedSceneManager = -1;
 
 		// Create the event receiver.
 		this->m_Receiver = new Engine::Unmanaged::Core::EventReceiver(L);
@@ -132,6 +135,16 @@ class Engine.Unmanaged.Core.RDevice
 	}
 
 	/// <summary>
+	/// The current scene manager.
+	/// </summary>
+	/// <readonly>true</readonly>
+	/// <exception>Engine.ObjectDisposedException</exception>
+	bound property Engine::Unmanaged::Scene::RSceneManager SceneManager
+	{
+		get: call GetSceneManager;
+	}
+
+	/// <summary>
 	/// Whether the device is currently running.  When this property is
 	/// accessed, the internal device->Run() function is called, progressing
 	/// engine execution.  Therefore, this property should be used in a
@@ -188,6 +201,25 @@ class Engine.Unmanaged.Core.RDevice
 		else
 		{
 			return Bindings<Engine::Unmanaged::Video::RVideoDriver>::CacheRetrieve(L, this->m_CachedVideoDriver);
+		}
+	}
+
+	unbound Engine::Unmanaged::Scene::RSceneManager GetSceneManager()
+	{
+		if (this->m_CachedSceneManager == -1)
+		{
+			Engine::Unmanaged::Scene::RSceneManager * drv =
+				Bindings<Engine::Unmanaged::Scene::RSceneManager>::CreateNew(L);
+			drv->SetObject(this->m_Device->getSceneManager());
+
+			this->m_CachedSceneManager =
+				Bindings<Engine::Unmanaged::Scene::RSceneManager>::CacheStore(L);
+
+			return drv;
+		}
+		else
+		{
+			return Bindings<Engine::Unmanaged::Scene::RSceneManager>::CacheRetrieve(L, this->m_CachedSceneManager);
 		}
 	}
 

@@ -614,35 +614,45 @@ template<class T>
 			return 1;
 		}
 
+		// Sets up the cache.
+		static void CacheInit(lua_State * L)
+		{
+			lua_newtable(L);
+			lua_setfield(L, LUA_REGISTRYINDEX, "Roket3D_Return_Cache");
+		}
+
 		// Caches the object that is going to be returned in the C
 		// registry using luaL_ref.  Assumes that CreateNew or an
 		// equivilant function has been called and the object to
 		// be cached is on top of the stack.
 		static int CacheStore(lua_State * L)
 		{
-			int ref = luaL_ref(L, LUA_REGISTRYINDEX);
-			lua_rawgeti(L, LUA_REGISTRYINDEX, ref);
+			lua_getfield(L, LUA_REGISTRYINDEX, "Roket3D_Return_Cache");
+			int tbl = lua_gettop(L);
+			lua_pushvalue(L, -2);
+			int ref = luaL_ref(L, tbl);
+			lua_rawgeti(L, tbl, ref);
+			lua_remove(L, tbl);
+
 			return ref;
 		}
 
 		// Retrieves the specific object from the cache.
-		static T* CacheRetrieve(lua_State * L, int ref)
+		static int CacheRetrieve(lua_State * L, int ref)
 		{
-			lua_rawgeti(L, LUA_REGISTRYINDEX, ref);
-			
-			lua_pushnumber(L, 0);
-			lua_rawget(L, 1);
-
-			T** obj = static_cast<T**>(lua_touserdata(L, -1));
-			lua_pop(L, 1);
-
-			return (*obj);
+			lua_getfield(L, LUA_REGISTRYINDEX, "Roket3D_Return_Cache");
+			int tbl = lua_gettop(L);
+			lua_rawgeti(L, tbl, ref);
+			lua_remove(L, tbl);
+			return 1;
 		}
 
 		// Removes the specified object from the cache.
 		static void CacheDelete(lua_State * L, int ref)
 		{
-			luaL_unref(L, LUA_REGISTRYINDEX, ref);
+			lua_getfield(L, LUA_REGISTRYINDEX, "Roket3D_Return_Cache");
+			luaL_unref(L, -1, ref);
+			lua_pop(L, 1);
 		}
 
 	private:
