@@ -14,3 +14,5 @@ glob:Utility/LibAutoBind/bin/*
 glob:Utility/AutoBind/bin/*
 glob:Engine/Build/Output/*
 glob:*.vcproj.*user
+glob:IDE.NET/Roket3D/Deployment/Engines/*
+glob:Utility/AutoAttach
